@@ -38,8 +38,8 @@ def DB_URL():
         return EB_DEV_DB
 
 S3_BUCKET = 'covid-dc-images'
-S3_KEY = ''#ENV_VARIABLE('S3_KEY')
-S3_SECRET = ''#ENV_VARIABLE('S3_SECRET')
+S3_KEY = ENV_VARIABLE('S3_KEY')
+S3_SECRET = ENV_VARIABLE('S3_SECRET')
 S3_LOCATION = 'https://{}.s3.us-east-2.amazonaws.com/'.format(S3_BUCKET)
 
 def PASSWORD_SECRET_KEY():
