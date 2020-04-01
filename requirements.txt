@@ -78,7 +78,7 @@ PyMySQL==0.9.3
 pyrsistent==0.14.11
 python-amazon-simple-product-api==2.2.11
 python-dateutil==2.8.0
-python-engineio==3.6.0
+python-engineio==3.8.2.post1
 pytz==2018.9
 requests==2.21.0
 requests-file==1.4.3
