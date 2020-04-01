@@ -22,8 +22,8 @@ def IS_PROD_ENV():
     return os.environ['environment_type'] != ''
 
 LOCAL_DB = 'mysql+pymysql://root:COVID1234@localhost:3306/dbCOVID'
-EB_PROD_DB = ''#ENV_VARIABLE('EB_PROD_DB')
-EB_DEV_DB = ''#ENV_VARIABLE('EB_DEV_DB')
+EB_PROD_DB = ENV_VARIABLE('EB_PROD_DB')
+EB_DEV_DB = ENV_VARIABLE('EB_DEV_DB')
 
 def DB_URL():
     if 'environment_type' not in os.environ:
