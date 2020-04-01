@@ -1,0 +1,59 @@
+{% extends "admin_panel.html" %}
+
+{% block panel_title %}Literature Posts{% endblock %}
+
+{% block header %}
+
+
+{% endblock %}
+
+{% block panel_buttons %}
+
+<div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+        <a href="{{ url_for('Literatures_create_literature') }}" class="btn btn-sm btn-outline-primary">Create Literature</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block literaturesButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
+    <div class="card-body">
+        <table id="container" class="table table-hover table-normal">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">ID</th>
+                </tr>
+            </thead>
+            <tbody id="container">
+                {% for literature in literatures %}
+                
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Literatures_view', id=literature.id  ) }}">
+                    <a>
+                        <th scope="row">{{ literature.title }}</th>
+                        <td>{{ literature.id }}</td>
+                    </a>
+                </tr>
+                
+                
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+{% endblock %}

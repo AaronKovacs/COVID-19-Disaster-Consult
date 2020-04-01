@@ -1,0 +1,57 @@
+{% extends "admin_panel.html" %}
+
+{% block panel_title %}Posts{% endblock %}
+
+{% block header %}
+
+
+{% endblock %}
+
+{% block panel_buttons %}
+<div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+        <a href="{{ url_for('Posts_create_post') }}" class="btn btn-sm btn-outline-primary">Create Post</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block postsButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
+    <div class="card-body">
+        <table id="container" class="table table-hover table-normal">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">ID</th>
+                </tr>
+            </thead>
+            <tbody id="container">
+                {% for post in posts %}
+
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id  ) }}">
+                    <a href="{{ url_for('Posts_create_post', id=post.id  ) }}">
+                        <th scope="row" style="color: #007bff;">{{ post.title }}</th>
+                        <td>{{ post.id }}</td>
+                    </a>
+                </tr>
+
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+{% endblock %}

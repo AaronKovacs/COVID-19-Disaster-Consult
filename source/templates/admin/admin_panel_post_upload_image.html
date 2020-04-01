@@ -1,0 +1,36 @@
+{% extends "admin_panel.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block panel_title %}Upload Image{% endblock %}
+
+{% block panel_buttons %}
+{% endblock %}
+
+{% block sectionsButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 30rem; margin-left: auto; margin-right: auto;">
+	<div class="card-body">
+		<form method="post" enctype=multipart/form-data action="{{ url_for('Posts_upload_image', postID=id) }}">
+			<div class="form-group">
+				<label>Alt-Text (For accessibility and when image doesn't load) <i>Optional</i></label>
+				<input name="title" type="text" placeholder="Alt-Text" class="form-control" value=""/>
+			</div>
+			<div class="input-group">
+				<div class="custom-file" style="margin-bottom: 2em;">
+					<input type="file" name="image">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Upload Image</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+{% endblock %}

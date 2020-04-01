@@ -1,0 +1,49 @@
+{% extends "admin_panel.html" %}
+
+{% block panel_title %}Add Section To Category{% endblock %}
+
+{% block header %}
+
+
+{% endblock %}
+
+
+{% block categoriesButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
+    <div class="card-body">
+        <table id="container" class="table table-hover table-normal">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">ID</th>
+                </tr>
+            </thead>
+            <tbody id="container">
+                {% for section in sections %}
+
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Categories_add_section_category', categoryID=category.id, sectionID=section.id ) }}">
+                    <a>
+                        <th scope="row">{{ section.title }}</th>
+                        <td>{{ section.id }}</td>
+                    </a>
+                </tr>
+
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+{% endblock %}

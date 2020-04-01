@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>COVID-19 Disaster Consult Register</title>
+
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/feather-icons"></script>
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	
+	<link href="{{ url_for('static', filename = 'admin/admin_panel.css') }}" rel="stylesheet">
+
+	<link href="{{ url_for('static', filename = 'admin/bootstrap-markdown-editor/bootstrap-markdown.min.css') }}" rel="stylesheet">
+	<script src="{{ url_for('static', filename = 'admin/bootstrap-markdown-editor/bootstrap-markdown.js') }}"></script>
+
+	{% block head %}{% endblock %}
+</head>
+
+<body>
+	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Disaster Consult Admin</a>
+		<ul class="navbar-nav px-3">
+			<li class="nav-item text-nowrap">
+				<a class="nav-link" href="{{ url_for('logout') }}">Sign out</a>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							
+							<a class="nav-link {% block homeButton %}{% endblock %}" href="{{ url_for('admin') }}">
+								<span data-feather="home"></span>
+								Home
+							</a>
+						</li>
+					</ul>
+					<ul class="nav flex-column">
+						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+							<span>Content</span>
+						</h6>
+						<li class="nav-item">
+							<a class="nav-link {% block postsButton %}{% endblock %}" href="{{ url_for('Posts_list_posts') }}">
+								<span data-feather="file"></span>
+								Posts
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {% block sectionsButton %}{% endblock %}" href="{{ url_for('Sections_list_sections') }}">
+								<span data-feather="bookmark"></span>
+								Sections
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {% block categoriesButton %}{% endblock %}" href="{{ url_for('Categories_list_categories') }}">
+								<span data-feather="layers"></span>
+								Categories
+							</a>
+						</li>
+					</ul>
+
+					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<span>News</span>
+					</h6>
+
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link {% block newsButton %}{% endblock %}" href="{{ url_for('Links_list_links') }}">
+								<span data-feather="link"></span>
+								Links
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {% block literaturesButton %}{% endblock %}" href="{{ url_for('Literatures_list_literatures') }}">
+								<span data-feather="book"></span>
+								Literature
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<input class="btn btn-sm btn-outline-primary" type="button" value="Go Back" onclick="window.history.back()" />
+
+					<h1 class="h2" style="margin-right: auto; margin-left: 1em;">{% block panel_title %}Home{% endblock %}</h1>
+					<div class="btn-toolbar mb-2 mb-md-0">
+						<div class="btn-group mr-2">
+							{% block panel_buttons %}{% endblock %}
+						</div>
+					</div>
+				</div>
+				{% block content %}{% endblock %}
+			</main>
+		</div>
+
+	</div>
+</body>
+
+<footer style="margin-bottom: 2em;">
+	{% block footer %}{% endblock %}
+	<script>
+		feather.replace()
+	</script>
+</footer>
+</html>

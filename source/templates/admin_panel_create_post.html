@@ -1,0 +1,79 @@
+{% extends "admin_panel.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block panel_title %}Create Post{% endblock %}
+
+{% block panel_buttons %}
+{% endblock %}
+
+{% block postsButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 30rem; margin-left: auto; margin-right: auto;">
+	<div class="card-body">
+		<form method="post">
+			<div class="form-group">
+				<label>Title</label>
+				<input name="title" type="text" placeholder="Title" class="form-control" value="{{ post.title }}" required/>
+			</div>
+			<div class="form-group">
+				<label>Text Content</label>
+				<textarea name="content" class="form-control" data-provide="markdown" data-hidden-buttons="[cmdImage]" rows="10" required>{{ post.content }}</textarea>
+			</div>
+			<div class="form-check">
+				<div class="custom-control custom-checkbox checkbox-xl">
+					<input name="public" type="checkbox" class="custom-control-input" id="checkbox-3" {% if post.public==True %}checked{% else %}{% endif %}>
+					<label class="custom-control-label" for="checkbox-3">Public</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Save Post</button>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#target-editor").markdown({
+		savable:true,
+		onShow: function(e){
+			alert("Showing "
+				+e.$textarea.prop("tagName").toLowerCase()
+				+"#"
+				+e.$textarea.attr("id")
+				+" as Markdown Editor...")
+		},
+		onPreview: function(e) {
+			var previewContent
+
+			if (e.isDirty()) {
+				var originalContent = e.getContent()
+
+				previewContent = "Prepended text here..."
+				+ "\n"
+				+ originalContent
+				+ "\n"
+				+"Apended text here..."
+			} else {
+				previewContent = "Default content"
+			}
+
+			return previewContent
+		},
+		onSave: function(e) {
+			alert("Saving '"+e.getContent()+"'...")
+		},
+		onChange: function(e){
+			console.log("Changed!")
+		},
+		onFocus: function(e) {
+			alert("Focus triggered!")
+		},
+		onBlur: function(e) {
+			alert("Blur triggered!")
+		}
+	})
+</script>
+{% endblock %}
