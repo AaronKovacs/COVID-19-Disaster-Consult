@@ -6,7 +6,8 @@ PAGE_SIZE = 20
 def ENV_VARIABLE(key):
     if key not in os.environ:
         #fallback for local
-        return ''
+        from ..secrets.secrets import secrets_dict
+        return secrets_dict[key]
     return os.environ[key]
 
 def ENV_NAME():

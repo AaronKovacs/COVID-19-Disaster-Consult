@@ -10,3 +10,5 @@ COMMON COMMANDS.txt
 /__pycache__
 baja.sublime-workspace
 *.sublime-workspace
+/secrets
+/source/secrets
