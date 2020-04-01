@@ -96,8 +96,7 @@ def admin():
     headers = {'Content-Type': 'text/html'}
     return make_response(render_template('admin_panel.html'), 200, headers)
 
-
-# handle login failed
+# Error Pages
 @application.errorhandler(401)
 def login_failed(e):
     return Response('<p>Login failed</p>')
@@ -109,6 +108,7 @@ def unauthorized_access(e):
 @application.errorhandler(410)
 def register_failed(e):
     return Response('<p>Register failed</p>')
+
 
 def render(template):
     headers = {'Content-Type': 'text/html'}
