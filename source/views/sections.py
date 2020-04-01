@@ -63,7 +63,7 @@ class AddPostSectionViewPosts(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_section_add_posts.html', posts=postsJS, section=sectionJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_section_add_posts.html', posts=postsJS, section=sectionJS), 200, headers)
 
 @api.route('/<sectionID>/add/<postID>')
 class AddPostSection(Resource):
@@ -147,7 +147,7 @@ class ListSections(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_sections.html', sections=sectionsJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_sections.html', sections=sectionsJS), 200, headers)
 
 @api.route('/view')
 class ViewSection(Resource):
@@ -170,7 +170,7 @@ class ViewSection(Resource):
         sectionJS = section.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_view_section.html', section=sectionJS, posts=postsJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_view_section.html', section=sectionJS, posts=postsJS), 200, headers)
 
 
 
@@ -213,10 +213,10 @@ class CreateSection(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/admin_panel_create_section.html', section=Section().blankJSON()), 200, headers)
+            return make_response(render_template('admin/sections/admin_panel_create_section.html', section=Section().blankJSON()), 200, headers)
 
         sectionJS = section.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_create_section.html', section=sectionJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_create_section.html', section=sectionJS), 200, headers)
 

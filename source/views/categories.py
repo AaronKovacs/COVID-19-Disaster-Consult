@@ -63,7 +63,7 @@ class AddSectionCategoryViewSections(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_category_add_sections.html', sections=sectionsJS, category=categoryJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_category_add_sections.html', sections=sectionsJS, category=categoryJS), 200, headers)
 
 @api.route('/<categoryID>/add/<sectionID>')
 class AddSectionCategory(Resource):
@@ -144,7 +144,7 @@ class ListCategories(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_categories.html', categories=categoriesJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_categories.html', categories=categoriesJS), 200, headers)
 
 @api.route('/view')
 class ViewCategory(Resource):
@@ -167,7 +167,7 @@ class ViewCategory(Resource):
         categoryJS = category.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_view_category.html', category=categoryJS, sections=sectionsJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_view_category.html', category=categoryJS, sections=sectionsJS), 200, headers)
 
 
 
@@ -211,10 +211,10 @@ class CreateCategory(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/admin_panel_create_category.html', category=Section().blankJSON()), 200, headers)
+            return make_response(render_template('admin/categories/admin_panel_create_category.html', category=Section().blankJSON()), 200, headers)
 
         categoryJS = category.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_create_category.html', category=categoryJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_create_category.html', category=categoryJS), 200, headers)
 

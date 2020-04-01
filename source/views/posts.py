@@ -77,7 +77,7 @@ class ListPosts(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin_panel_posts.html', posts=postsJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_posts.html', posts=postsJS), 200, headers)
 
 @api.route('/view')
 class View(Resource):
@@ -103,7 +103,7 @@ class View(Resource):
         postJS = post.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin_panel_view_post.html', post=postJS, links=contentsJS, images=imagesJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_view_post.html', post=postJS, links=contentsJS, images=imagesJS), 200, headers)
 
 @api.route('/<postID>/delete')
 class DeletePost(Resource):
@@ -205,12 +205,12 @@ class CreatePost(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin_panel_create_post.html', post=Post().blankJSON()), 200, headers)
+            return make_response(render_template('admin/posts/admin_panel_create_post.html', post=Post().blankJSON()), 200, headers)
 
         postJS = post.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin_panel_create_post.html', post=postJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_create_post.html', post=postJS), 200, headers)
 
 
 @api.route('/<postID>/url/add')
@@ -260,12 +260,12 @@ class AddURL(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/admin_panel_post_add_content.html', content=PostContent().blankJSON()), 200, headers)
+            return make_response(render_template('admin/posts/admin_panel_post_add_content.html', content=PostContent().blankJSON()), 200, headers)
 
         contentJS = content.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_post_add_content.html', content=contentJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_post_add_content.html', content=contentJS), 200, headers)
 
 
 @api.route('/<postID>/upload/image')
@@ -320,7 +320,7 @@ class UploadImage(Resource):
 
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/admin_panel_post_upload_image.html', id=postID), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_post_upload_image.html', id=postID), 200, headers)
 
 # Image Upload Helpers
 
