@@ -122,6 +122,7 @@ h5{
 }
 .providerTypeButton:hover {
   background-color: #8AA3E8;
+  cursor: pointer;
 }
 
 .providerTypeButtonClicked {
@@ -143,7 +144,10 @@ h5{
   margin: 4px 0;
   text-align: left;
 }
-.infoSectionButton:hover {background-color: #D7D7D7;}
+.infoSectionButton:hover {
+	background-color: #D7D7D7;
+	cursor: pointer;
+}
 
 .collapsible {
   background:#ACBBE6;
@@ -156,6 +160,7 @@ h5{
 
 .collapsible:hover {
   background-color: #8AA3E8;
+  cursor: pointer;
 }
 
 .collapsibleContent {
