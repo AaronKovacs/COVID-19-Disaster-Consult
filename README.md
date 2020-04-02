@@ -50,19 +50,25 @@ pip install virtualenv
 virtualenv -p python3 venv
 ```
 
-6. Install the dependencies
+6. Open virtual environment
+
+```
+source venv/bin/activate
+```
+
+7. Install the dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-7. Run the server
+8. Run the server
 
 ```
 FLASK_APP=application.py FLASK_ENV=development flask run --host=0.0.0.0
 ```
 
-8. Server can be accessed at:
+9. Server can be accessed at:
 
 ```
 http://127.0.0.1:5000
