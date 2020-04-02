@@ -15,6 +15,11 @@
 
 <body class="text-center">
     <form class="form-signin" method="post">
+        {% if alert %}
+        <div class="alert alert-danger" role="alert">
+            {{ alert }}
+        </div>
+        {% endif %}
         <h1 class="h3 mb-3 font-weight-normal">Login</h1>
 
         <label for="inputEmail" class="sr-only">Username</label>
@@ -22,6 +27,9 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p style="margin-top: 1em;">or</p>
+        <a class="btn btn-lg btn-secondary" href="{{ url_for('Authentication_register') }}">Create Account</a>
     </form>
+
 </body>
 </html>

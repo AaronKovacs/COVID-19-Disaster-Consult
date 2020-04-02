@@ -89,7 +89,7 @@ def load_user(user_id):
 @login_required
 def logout():
     logout_user()
-    return Response('<p>Logged out</p>')
+    return redirect(url_for('Authentication_login'))
 
 @application.route('/register/success')
 def registerSuccess():
@@ -106,7 +106,7 @@ def admin():
 # Error Pages
 @application.errorhandler(401)
 def login_failed(e):
-    return Response('<p>Login failed</p>')
+    return redirect(url_for('Authentication_login'))
 
 @application.errorhandler(403)
 def unauthorized_access(e):

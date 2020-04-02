@@ -56,10 +56,13 @@ class Register(Resource):
         session = Session()
 
         user = session.query(User).filter_by(username=username).first()
+        if user is not None:
+            session.close()
+            return redirect(url_for('Authentication_register', alert='Error: User with that username already exists.'))
         user = session.query(User).filter_by(email=email).first()
         if user is not None:
             session.close()
-            return abort(410)
+            return redirect(url_for('Authentication_register', alert='Error: User with that email already exists.'))
 
         user = User(username=username, realname=realname, email=email)
         user.hash_password(password)
@@ -69,8 +72,9 @@ class Register(Resource):
         return redirect(url_for('registerSuccess'))
         
     def get(self):
+        alert = request.args.get('alert', None)
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('register.html'), 200, headers)
+        return make_response(render_template('register.html', alert=alert), 200, headers)
 
 @api.route('/login')
 class Login(Resource):
@@ -81,7 +85,8 @@ class Login(Resource):
         user = session.query(User).filter_by(username=username).first()
         if user is None:
             session.close()
-            return abort(401)
+            return redirect(url_for('Authentication_login', alert='Error: User does not exist.'))
+
 
         if user.verify_password(password):
             #if user.privilege == 0:
@@ -92,5 +97,6 @@ class Login(Resource):
             return redirect(url_for('admin'))
         
     def get(self):
+        alert = request.args.get('alert', None)
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('login.html'), 200, headers)
+        return make_response(render_template('login.html', alert=alert), 200, headers)
