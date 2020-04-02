@@ -27,6 +27,7 @@ from source.views.sections import api as sections
 from source.views.categories import api as categories
 from source.views.links import api as links
 from source.views.literatures import api as literatures
+from source.views.pages import api as pages
 
 from source.views.authentication import api as authentication
 
@@ -57,8 +58,13 @@ login_manager.init_app(application)
 application.config['DEBUG'] = False
 application.config['SECRET_KEY'] = PASSWORD_SECRET_KEY
 
+@application.route("/")
+def redirect_home():
+    return redirect(url_for('Pages_home'))
 
-api = Api(application, title='COVID-19 Disaster Consult', version='1.0')
+
+api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
+api.add_namespace(pages, path='')
 api.add_namespace(posts, path='/posts')
 api.add_namespace(sections, path='/sections')
 api.add_namespace(categories, path='/categories')
@@ -77,6 +83,7 @@ def load_user(user_id):
     session.expunge(user)
     session.close()
     return user
+
 
 @application.route("/logout")
 @login_required

@@ -1,0 +1,34 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<body>
+	<div class="container" style="max-width: 900px;">
+		<br>
+		<h1>Provider Details</h1>
+		<div class="blueLine"></div>
+		<h5>Provider Type</h5>
+		<div class="row">
+			{% for cat in categories %}
+			<div class="col-sm-3"><button class="{% if category and category.title == cat.title %}providerTypeButtonClicked{% else %}providerTypeButton{% endif %}" onclick="window.location.href = '{{ url_for('Pages_view_category', categoryID=cat.id) }}';">{{ cat.title }}</button></div>
+			{% endfor %}
+		</div>
+		<div class="greyLine"></div>
+		{% if sections %}
+		<h5>{{ category.title }} Information Sections</h5>
+
+		{% for section in sections %}
+		<button class="infoSectionButton" onclick="window.location.href = '{{ url_for('Pages_view_section', sectionID=section.id) }}';">
+			<div class="row">
+				<div class="col-10">
+					<b>{{ section.title }}</b><br><div style = "font-size:12px">{{ section.description }}</div>
+				</div>
+				<div class="col-2">
+					<div class = "vertical-center">➔</div>
+				</div>
+			</div>
+		</button>
+		{% endfor %}
+		{% endif %}
+		
+	</div>
+	{% endblock %}

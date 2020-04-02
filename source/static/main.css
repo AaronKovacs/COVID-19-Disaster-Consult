@@ -1,0 +1,198 @@
+body{
+  font-family: "Montserrat", sans-serif;  
+  min-height: 2em;
+  color: black;
+  width: 100%
+}
+
+h1{
+  font-weight: 900;
+}
+
+h2{
+  font-weight: 800;
+}
+
+h3{
+  font-weight: 700;
+}
+
+h4{
+  font-weight: 700;
+}
+
+h5{
+  font-weight: 600;
+}
+
+.navbar{
+  background-color: #25353F;
+  height: 5em;
+}
+
+.navbar-nav li{
+  padding-left: 1.5em;
+}
+
+.btnContainer{
+  background-color: #FFFFFF;
+  padding-top: 3em;
+  padding-bottom: 3em;
+  width: 100%;
+  text-align: center;
+}
+
+.btn{
+  text-align: left;
+  background-color: #EBDFC1;
+  border: none;
+  color: #000000;
+}
+
+
+#providerBtn{
+  width: 90%;
+  padding: 1.5em 3em 1.5em 3em;
+}
+
+.container-fluid{
+  width: 90%;
+}
+
+#usefulLinks{
+  border: 0.25em solid #D8D8D8;
+  border-radius: 1em;
+  padding: 1em 2em 1em 2em;
+}
+
+.usefulLinksTitle{
+  border-width: 80%;
+  border-bottom: 0.5em solid #ACBBE6;
+}
+
+.linkRow{
+  padding-top: 1em;
+}
+
+.newsRow{
+  padding-top: 1.5em;
+}
+
+.btnRow{
+  text-align: right;
+  padding-right: 1.5em;
+}
+
+.image-container {
+  background-size:cover;
+  background-repeat:no-repeat;
+  width: 12em;
+  height: 12em;
+  border-radius: 1.5em;
+
+}
+
+#anyContainer{
+  padding-top: 3em;
+} 
+
+.literature{
+  padding-bottom: 1em;
+}
+
+#stats{
+  text-align: center;
+  padding-top: 1.5em;
+}
+
+#graphContainer{
+  height: 20em;
+  border-radius: 2em;
+  background-color: #D8D8D8;
+}
+
+.providerTypeButton {
+  background: #ACBBE6; 
+  border-radius: 10px; 
+  border: none;
+  width: 100%; 
+  padding: 10px; 
+  margin: 2px 0;
+  text-align: center;
+}
+.providerTypeButton:hover {
+  background-color: #8AA3E8;
+}
+
+.providerTypeButtonClicked {
+  background: #25353F; 
+  color: white;
+  border: 3px solid #ACBBE6;
+  border-radius: 10px; 
+  width: 100%; 
+  padding: 10px; 
+  margin: 2px 0;
+  text-align: center;
+}
+
+.infoSectionButton {
+  border: 2px solid #D7D7D7;
+  border-radius: 8px;
+  width: 100%; 
+  padding: 10px; 
+  margin: 4px 0;
+  text-align: left;
+}
+.infoSectionButton:hover {background-color: #D7D7D7;}
+
+.collapsible {
+  background:#ACBBE6;
+  border: none;
+  border-radius: .8em .8em 0em 0em / .8em .8em;
+  width: 100%; 
+  padding: 14px; 
+  text-align: left;
+}
+
+.collapsible:hover {
+  background-color: #8AA3E8;
+}
+
+.collapsibleContent {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  border-radius: 0em 0em .8em .8em / .8em .8em;
+  border: 4px solid #ACBBE6;
+}
+
+.blueLine {
+  height: 8px;
+  width: 100%;
+  margin: 16px 0;
+  background-color: #ACBBE6;
+}
+
+.greyLine {
+  height: 4px;
+  width: 100%;
+  margin: 16px 0;
+  background-color: #EBDFC1;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#infoContainer{
+  padding-top: 2em;
+}
+
+.btn-link{
+  background-color: none;
+}

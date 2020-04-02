@@ -1,0 +1,119 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<div class="btnContainer">
+  <div class="btn-lg">
+    <button type="button" class="btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';">
+      <h2>I am a Provider!</h2>
+      <h3>For guidance on procedures, click here.
+        <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="30" width="30">
+      </h3>
+    </button>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <!--newsContainerStart-->
+    <div class="col-9" id="newsContainer">
+      <h2>Latest News</h2>
+
+
+      {% for link in links %}
+      <div class="row newsRow">
+        <div class="col-3 image-container" style="background-image: url('{{ link.large_url }}');">
+        </div>
+        <div class="col-9">
+          <h4>{{ link.title }}</h4>
+          <p>{{ link.description }}</p>
+          <a href="{{ link.url }}">{{ link.url }}</a>
+        </div>
+      </div>
+      {% endfor %}
+
+
+      <div class="btnRow">
+        <p><a class="btn btn-secondary" href="#" role="button" style="font-weight: 700">See more news &raquo;</a></p>
+      </div>
+    </div><!--NewsContainerEnd-->
+
+    <div class="col-3" id="usefulLinks">
+      <div class="usefulLinksTitle">
+        <h3>Useful Links</h3>
+      </div>
+      <div class="linkRow">
+        <h4>CDC</h4>
+        <p>
+          For the latest update to news visit the Center of Disease Control.
+          <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
+        </p>
+      </div>
+
+      <div class="linkRow">
+        <h4>CDC</h4>
+        <p>
+          For the latest update to news visit the Center of Disease Control.
+          <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
+        </p>
+      </div>
+
+      <div class="linkRow">
+        <h4>CDC</h4>
+        <p>
+          For the latest update to news visit the Center of Disease Control.
+          <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
+        </p>
+      </div>
+    </div><!--usefulLinks-->
+  </div>
+</div><!--topContainerEnd-->
+
+<div class="container-fluid" id="anyContainer"><!--middleContainerStart-->
+  <h2 class="literature">Latest Literature</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    </div>
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    </div>
+    <div class="col-md-4">
+      <h2>Heading</h2>
+      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    </div>
+  </div>
+  <div class="btnRow">
+    <p><a class="btn btn-secondary" href="#" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+  </div>
+</div> <!-- middleContainerEnd -->
+
+<div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
+  <h2>Latest Numbers</h2>
+  <span style="color: #D8D8D8"><h4>Data from John Hopkins</h4></span>
+  <div class="container-fluid" id="graphContainer">
+
+  </div>
+  <div class="row" id="stats">
+    <div class="col-md-3">
+      <h1>10</h1>
+      <h4>Description</h4>
+    </div> 
+    <div class="col-md-3">
+      <h1>10</h1>
+      <h4>Description</h4>
+    </div>
+    <div class="col-md-3">
+      <h1>10</h1>
+      <h4>Description</h4>
+    </div>
+    <div class="col-md-3">
+      <h1>10</h1>
+      <h4>Description</h4>
+    </div>
+  </div>
+  <hr>
+</div>
+
+{% endblock %}

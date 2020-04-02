@@ -11,26 +11,27 @@ def ENV_VARIABLE(key):
     return os.environ[key]
 
 def ENV_NAME():
-    if 'environment_type' not in os.environ:
-        return ''
+    return ENV_VARIABLE('environment_type')
+    #if 'environment_type' not in os.environ:
+    #    return ''
 
-    return os.environ['environment_type']
+    #return os.environ['environment_type']
 
 def IS_PROD_ENV():
-    if 'environment_type' not in os.environ:
-        return False
+    #if 'environment_type' not in os.environ:
+    #    return False
 
-    return os.environ['environment_type'] != ''
+    return True#os.environ['environment_type'] != ''
 
 LOCAL_DB = 'mysql+pymysql://root:COVID1234@localhost:3306/dbCOVID'
 EB_PROD_DB = ENV_VARIABLE('EB_PROD_DB')
 EB_DEV_DB = ENV_VARIABLE('EB_DEV_DB')
 
 def DB_URL():
-    if 'environment_type' not in os.environ:
-        return LOCAL_DB
+    #if 'environment_type' not in os.environ:
+    #    return LOCAL_DB
 
-    ENVIRO_NAME = os.environ['environment_type']
+    ENVIRO_NAME = ENV_VARIABLE('environment_type')
     if ENVIRO_NAME == '':
         return LOCAL_DB
     elif ENVIRO_NAME == 'prod':

@@ -1,0 +1,117 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px;">
+	<br>
+	<div class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8"> <h1>Useful Information</h1><div class="blueLine"></div></div>
+		<div class="col-sm-2"></div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-2"></div>
+
+		<div class="col-sm-8">
+			<button class="collapsible">
+				<div class="row">
+					<div class="col-10">
+						<b>General Safety Tips</b>
+					</div>
+					<div class="col-2">
+						<div class = "vertical-center"><b>+</b></div>
+					</div>
+				</div>
+			</button>
+			<div class="collapsibleContent">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			</div>
+			<br>
+			<button class="collapsible">
+				<div class="row">
+					<div class="col-10">
+						<b>Proper PPE for Patients</b>
+					</div>
+					<div class="col-2">
+						<div class = "vertical-center"><b>+</b></div>
+					</div>
+				</div>
+			</button>
+			<div class="collapsibleContent">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			</div>
+			<br>
+			<button class="collapsible">
+				<div class="row">
+					<div class="col-10">
+						<b>Protecting You and Others</b>
+					</div>
+					<div class="col-2">
+						<div class = "vertical-center"><b>+</b></div>
+					</div>
+				</div>
+			</button>
+			<div class="collapsibleContent">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			</div>
+			<br>
+			<button class="collapsible">
+				<div class="row">
+					<div class="col-10">
+						<b>Must Read Papers</b>
+					</div>
+					<div class="col-2">
+						<div class = "vertical-center"><b>+</b></div>
+					</div>
+				</div>
+			</button>
+			<div class="collapsibleContent">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			</div>
+			<br>
+
+		</div>
+		<div class="col-sm-2">
+			<center>
+				<div style = "border: 2px solid #D7D7D7;
+				border-radius: 10px;
+				width: 95%; 
+				padding: 10px; 
+				margin: 4px 0;
+				text-align: left;
+				height: 12em;">
+
+				<h4>Useful Links</h4>
+				<div class="blueLine"></div>
+				<ul>
+					<li><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style = "color:black">CDC</a></li>
+					<li><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style = "color:black">WHO</a></li>
+					<li><a href="https://www.osha.gov/SLTC/covid-19/" style = "color:black">OSHA</a></li>
+				</ul>
+			</div>
+		</center>
+	</div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block footer %}
+<script>
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.maxHeight){
+				content.style.maxHeight = null;
+			} else {
+				content.style.maxHeight = content.scrollHeight + "px";
+			} 
+		});
+	}
+</script>
+{% endblock %}
+
