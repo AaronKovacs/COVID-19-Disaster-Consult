@@ -142,6 +142,7 @@ h5{
   padding: 10px; 
   margin: 4px 0;
   text-align: left;
+  cursor: pointer;
 }
 .infoSectionButton:hover {background-color: #D7D7D7;}
 
