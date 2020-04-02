@@ -38,31 +38,31 @@ cd COVID-19-Disaster-Consult
 
 3. Copy provided /secrets folder to /source
 
-5. Install python virtual-env
+4. Install python virtual-env
 
 ```
 pip install virtualenv
 ```
 
-4. Create a virtual python environment to install dependencies in
+5. Create a virtual python environment to install dependencies in
 
 ```
 virtualenv -p python3 venv
 ```
 
-5. Install the dependencies
+6. Install the dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-6. Run the server
+7. Run the server
 
 ```
 FLASK_APP=application.py FLASK_ENV=development flask run --host=0.0.0.0
 ```
 
-7. Server can be accessed at:
+8. Server can be accessed at:
 
 ```
 http://127.0.0.1:5000
