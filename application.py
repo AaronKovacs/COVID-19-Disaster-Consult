@@ -55,8 +55,9 @@ application = Flask(__name__, template_folder='./source/templates', static_folde
 login_manager = LoginManager()
 login_manager.init_app(application)
 
-application.config['DEBUG'] = False
+application.config['DEBUG'] = True
 application.config['SECRET_KEY'] = PASSWORD_SECRET_KEY
+application.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @application.route("/")
 def redirect_home():
@@ -72,6 +73,8 @@ api.add_namespace(links, path='/links')
 api.add_namespace(literatures, path='/literatures')
 
 api.add_namespace(authentication, path='/auth')
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -120,3 +123,10 @@ def register_failed(e):
 def render(template):
     headers = {'Content-Type': 'text/html'}
     return make_response(render_template(template), 200, headers)
+
+
+if __name__ == '__main__':
+    application.jinja_env.auto_reload = True
+    application.config['TEMPLATES_AUTO_RELOAD'] = True
+    application.run(debug=True, host='0.0.0.0')
+

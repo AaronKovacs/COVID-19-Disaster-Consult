@@ -1,0 +1,29 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!--newsContainerStart-->
+    <div class="col-9" id="newsContainer">
+      <h2>Latest News</h2>
+
+
+      {% for link in links %}
+      <div class="row newsRow">
+        <div class="col-3 image-container" style="background-image: url('{{ link.large_url }}');">
+        </div>
+        <div class="col-9">
+          <h4>{{ link.title }}</h4>
+          <p>{{ link.description }}</p>
+          <a href="{{ link.url }}">{{ link.url }}</a>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div><!--topContainerEnd-->
+</div>
+
+
+{% endblock %}

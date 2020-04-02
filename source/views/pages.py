@@ -60,26 +60,84 @@ class Home(Resource):
         for link in links:
             linksJS.append(link.publicJSON())
 
+        litJS = []
+        lits = session.query(Literature).order_by(desc(Literature.created), Literature.id).limit(3)
+        for lit in lits:
+            litJS.append(lit.publicJSON())
+
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS), 200, headers)
+        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS), 200, headers)
+
+
+@api.route('/news')
+class ViewAllNews(Resource):
+    def get(self):
+        session = Session()
+
+        linksJS = []
+        links = session.query(Link).order_by(desc(Link.created), Link.id).all()
+        for link in links:
+            linksJS.append(link.publicJSON())
+
+        session.close()
+
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/view_all_links.html', links=linksJS), 200, headers)
+
+@api.route('/literature')
+class ViewAllLiterature(Resource):
+    def get(self):
+        session = Session()
+
+        literatureJS = []
+        literatures = session.query(Literature).order_by(desc(Literature.created), Literature.id).all()
+        for link in literatures:
+            literatureJS.append(link.publicJSON())
+
+        session.close()
+
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/view_all_literature.html', literatures=literatureJS), 200, headers)
+
 
 @api.route('/other')
 class Other(Resource):
     def get(self):
+        sectionID = 's1gemu'
+
+
+        session = Session()
+
+        section = session.query(Section).filter_by(id=sectionID).first()
+        sectionJS = section.publicJSON()
+
+        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
+        postsJS = []
+        for link in section_posts:
+            post = session.query(Post).filter_by(id=link.post).first()
+            if post is not None:
+                postsJS.append(post.publicJSON())
+
+        session.close()
+
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/other_information.html'), 200, headers)
+        return make_response(render_template('pages/other_information.html', section=sectionJS, posts=postsJS), 200, headers)
+
 
 @api.route('/categories')
 class Categories(Resource):
     def get(self):
         session = Session()
 
+        fixed_categories = ['srxnj8', 's7gmcl', 's9v3pn', 'szlxjv']
+
         catJS = []
-        cats = session.query(Category).order_by(desc(Category.created), Category.id).limit(4)
-        for cat in cats:
-            catJS.append(cat.publicJSON())
+        for cat_id in fixed_categories:
+            cat = session.query(Category).filter_by(id=cat_id).first()
+            if cat is not None:
+                catJS.append(cat.publicJSON())
 
         session.close()
 
@@ -94,10 +152,13 @@ class ViewCategory(Resource):
         category = session.query(Category).filter_by(id=categoryID).first()
         categoryJS = category.publicJSON()
 
+        fixed_categories = ['srxnj8', 's7gmcl', 's9v3pn', 'szlxjv']
+
         catJS = []
-        cats = session.query(Category).order_by(desc(Category.created), Category.id).limit(4)
-        for cat in cats:
-            catJS.append(cat.publicJSON())
+        for cat_id in fixed_categories:
+            cat = session.query(Category).filter_by(id=cat_id).first()
+            if cat is not None:
+                catJS.append(cat.publicJSON())
 
         category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(desc(CategorySection.created), CategorySection.id).all()
         sectionsJS = []
@@ -113,8 +174,36 @@ class ViewCategory(Resource):
 @api.route('/section/<sectionID>')
 class ViewSection(Resource):
     def get(self, sectionID):
+        categoryID = request.args.get('categoryID', None)
+
+        session = Session()
+
+        category = session.query(Category).filter_by(id=categoryID).first()
+        categoryJS = None
+        if category is not None:
+            categoryJS = category.publicJSON()
+
+        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(desc(CategorySection.created), CategorySection.id).all()
+        allsectionsJS = []
+        for link in category_sections:
+            section = session.query(Section).filter_by(id=link.section).first()
+            if section is not None:
+                allsectionsJS.append(section.publicJSON())
+
+        section = session.query(Section).filter_by(id=sectionID).first()
+        sectionJS = section.publicJSON()
+
+        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
+        postsJS = []
+        for link in section_posts:
+            post = session.query(Post).filter_by(id=link.post).first()
+            if post is not None:
+                postsJS.append(post.publicJSON())
+
+        session.close()
+
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/section.html'), 200, headers)
+        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, sections=allsectionsJS), 200, headers)
 
 
 @api.route('/contact')

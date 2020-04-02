@@ -5,7 +5,7 @@
 	<br>
 	<div class="row">
 		<div class="col-sm-2"></div>
-		<div class="col-sm-8"> <h1>Useful Information</h1><div class="blueLine"></div></div>
+		<div class="col-sm-8"> <h1>{{ section.title }}</h1><div class="blueLine"></div></div>
 		<div class="col-sm-2"></div>
 	</div>
 
@@ -13,10 +13,13 @@
 		<div class="col-sm-2"></div>
 
 		<div class="col-sm-8">
+
+			{% for post in posts %}
+
 			<button class="collapsible">
 				<div class="row">
 					<div class="col-10">
-						<b>General Safety Tips</b>
+						<b>{{ post.title }}</b>
 					</div>
 					<div class="col-2">
 						<div class = "vertical-center"><b>+</b></div>
@@ -24,51 +27,11 @@
 				</div>
 			</button>
 			<div class="collapsibleContent">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<p>{{ post.content }}</p>
 			</div>
 			<br>
-			<button class="collapsible">
-				<div class="row">
-					<div class="col-10">
-						<b>Proper PPE for Patients</b>
-					</div>
-					<div class="col-2">
-						<div class = "vertical-center"><b>+</b></div>
-					</div>
-				</div>
-			</button>
-			<div class="collapsibleContent">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-			</div>
-			<br>
-			<button class="collapsible">
-				<div class="row">
-					<div class="col-10">
-						<b>Protecting You and Others</b>
-					</div>
-					<div class="col-2">
-						<div class = "vertical-center"><b>+</b></div>
-					</div>
-				</div>
-			</button>
-			<div class="collapsibleContent">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-			</div>
-			<br>
-			<button class="collapsible">
-				<div class="row">
-					<div class="col-10">
-						<b>Must Read Papers</b>
-					</div>
-					<div class="col-2">
-						<div class = "vertical-center"><b>+</b></div>
-					</div>
-				</div>
-			</button>
-			<div class="collapsibleContent">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-			</div>
-			<br>
+
+			{% endfor %}
 
 		</div>
 		<div class="col-sm-2">
@@ -95,6 +58,7 @@
 
 </div>
 {% endblock %}
+
 
 {% block footer %}
 <script>

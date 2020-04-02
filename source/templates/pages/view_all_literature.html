@@ -1,0 +1,26 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!--newsContainerStart-->
+    <div class="col-9" id="newsContainer">
+      <h2>Latest Literature</h2>
+
+
+      {% for lit in literatures %}
+      <div class="row newsRow">
+        <div class="col-9">
+          <h4>{{ lit.title }}</h4>
+          <p>{{ lit.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div><!--topContainerEnd-->
+</div>
+
+
+{% endblock %}

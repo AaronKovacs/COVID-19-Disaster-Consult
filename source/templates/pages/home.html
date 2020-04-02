@@ -33,7 +33,7 @@
 
 
       <div class="btnRow">
-        <p><a class="btn btn-secondary" href="#" role="button" style="font-weight: 700">See more news &raquo;</a></p>
+        <p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
       </div>
     </div><!--NewsContainerEnd-->
 
@@ -71,21 +71,17 @@
 <div class="container-fluid" id="anyContainer"><!--middleContainerStart-->
   <h2 class="literature">Latest Literature</h2>
   <div class="row">
+
+    {% for lit in literatures %}
     <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <h2>{{ lit.title }}</h2>
+      <p>{{ lit.description }}</p>
     </div>
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-    </div>
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-    </div>
+    {% endfor %}
+
   </div>
   <div class="btnRow">
-    <p><a class="btn btn-secondary" href="#" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+    <p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
   </div>
 </div> <!-- middleContainerEnd -->
 

@@ -1,7 +1,27 @@
+# COVID-19 Disaster Consult Website
+
+
 ## Prerequisites
 
 - Python 3.6
 - pip ( For python 3.6)
+
+
+
+## Links
+
+Local server is run at:
+
+```
+http://127.0.0.1:5000
+```
+
+Admin panel:
+
+```
+<site address>/admin
+```
+
 
 ## Starting Server
 
@@ -16,7 +36,7 @@ source venv/bin/activate
 3. Start Server
 
 ```
-FLASK_APP=application.py FLASK_ENV=development flask run --host=0.0.0.0
+python application.py
 ```
 
 
@@ -65,7 +85,7 @@ pip install -r requirements.txt
 8. Run the server
 
 ```
-FLASK_APP=application.py FLASK_ENV=development flask run --host=0.0.0.0
+python application.py
 ```
 
 9. Server can be accessed at:
