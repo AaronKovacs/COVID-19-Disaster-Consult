@@ -55,7 +55,7 @@ class Register(Resource):
 
         session = Session()
 
-        user = session.query(User).filter_by(username=username).first()
+        user = session.query(User).filter_by(username=username.lower()).first()
         if user is not None:
             session.close()
             return redirect(url_for('Authentication_register', alert='Error: User with that username already exists.'))
@@ -64,7 +64,7 @@ class Register(Resource):
             session.close()
             return redirect(url_for('Authentication_register', alert='Error: User with that email already exists.'))
 
-        user = User(username=username, realname=realname, email=email)
+        user = User(username=username.lower(), realname=realname, email=email)
         user.hash_password(password)
         session.add(user)
         session.commit()
@@ -82,7 +82,7 @@ class Login(Resource):
         session = Session()
         username = request.form['username']
         password = request.form['password']
-        user = session.query(User).filter_by(username=username).first()
+        user = session.query(User).filter_by(username=username.lower()).first()
         if user is None:
             session.close()
             return redirect(url_for('Authentication_login', alert='Error: User does not exist.'))
