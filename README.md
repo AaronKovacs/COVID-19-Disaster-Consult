@@ -10,6 +10,11 @@
 
 ## Links
 
+[AWS Master Website](http://covid19disasterconsult-env.eba-3a2xstkc.us-east-2.elasticbeanstalk.com/)
+
+[AWS Dev Website](http://covid19disasterconsult-dev.us-east-2.elasticbeanstalk.com/)
+
+
 Local server is run at:
 
 ```
