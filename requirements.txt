@@ -38,9 +38,6 @@ Flask-WTF==0.14.2
 gevent==1.4.0
 gfycat==0.1.4
 google-api-python-client==1.7.9
-Flask-Debug-API==0.1.0
-Flask-DebugToolbar==0.10.1
-Flask-DebugToolbar-LineProfilerPanel==1.0.2
 google-auth==1.6.3
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.4.0
