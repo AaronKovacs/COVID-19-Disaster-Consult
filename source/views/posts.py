@@ -286,7 +286,7 @@ class UploadImage(Resource):
             imgSize = (1000, 1000)
             img_data = file.read()
 
-            og_img = Image.open(io.BytesIO(img_data))
+            og_img = Image.open(io.BytesIO(img_data)).convert('RGB')
             width, height = og_img.size
 
             #Resize image
