@@ -332,7 +332,7 @@ def uploadImage(image, name):
         abort(400, 'Upload Error')
 
 def resizeIOImage(file, size):
-    img = Image.open(BytesIO(file))
+    img = Image.open(BytesIO(file)).convert('RGB')
     if img.mode in ('RGBA', 'LA'):
         background = Image.new(img.mode[:-1], img.size, '#FFF')
         background.paste(img, img.split()[-1])
