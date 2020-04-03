@@ -3,7 +3,7 @@
 {% block content %}
 <div class="btnContainer">
   <div class="btn-lg">
-    <button type="button" class="btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';">
+    <button type="button" class="btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
       <h2>I am a Provider!</h2>
       <h3>For guidance on procedures, click here.
         <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="30" width="30">
@@ -15,7 +15,7 @@
 <div class="container-fluid">
   <div class="row">
     <!--newsContainerStart-->
-    <div class="col-9" id="newsContainer">
+    <div class="col-sm-9" id="newsContainer">
       <h2>Latest News</h2>
 
 
@@ -31,13 +31,13 @@
       </div>
       {% endfor %}
 
-
+	  <br>
       <div class="btnRow">
         <p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
       </div>
     </div><!--NewsContainerEnd-->
 
-    <div class="col-3" id="usefulLinks">
+    <div class="col-sm-3" id="usefulLinks">
       <div class="usefulLinksTitle">
         <h3>Useful Links</h3>
       </div>

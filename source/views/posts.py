@@ -286,7 +286,7 @@ class UploadImage(Resource):
             imgSize = (1000, 1000)
             img_data = file.read()
 
-            og_img = Image.open(io.BytesIO(img_data))
+            og_img = Image.open(io.BytesIO(img_data)).convert('RGB')
             width, height = og_img.size
 
             #Resize image
@@ -332,7 +332,7 @@ def uploadImage(image, name):
         abort(400, 'Upload Error')
 
 def resizeIOImage(file, size):
-    img = Image.open(BytesIO(file))
+    img = Image.open(BytesIO(file)).convert('RGB')
     if img.mode in ('RGBA', 'LA'):
         background = Image.new(img.mode[:-1], img.size, '#FFF')
         background.paste(img, img.split()[-1])
