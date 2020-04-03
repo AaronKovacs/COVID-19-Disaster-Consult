@@ -35,8 +35,13 @@ Admin panel:
 2. Open virtual environment
 
 ```
-source venv/bin/activate
+MacOS: venv\Scripts\activate.bat
 ```
+
+```
+Windows: source venv/bin/activate
+```
+
 
 3. Start Server
 
