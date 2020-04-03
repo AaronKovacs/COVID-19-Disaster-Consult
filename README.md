@@ -35,11 +35,11 @@ Admin panel:
 2. Open virtual environment
 
 ```
-MacOS: venv\Scripts\activate.bat
+Windows: venv\Scripts\activate.bat
 ```
 
 ```
-Windows: source venv/bin/activate
+MacOS: source venv/bin/activate
 ```
 
 
