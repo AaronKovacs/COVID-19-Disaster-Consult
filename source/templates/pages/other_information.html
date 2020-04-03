@@ -5,15 +5,9 @@
 	<br>
 	<div class="row">
 		<div class="col-sm-2"></div>
-		<div class="col-sm-8"> <h1>{{ section.title }}</h1><div class="blueLine"></div></div>
-		<div class="col-sm-2"></div>
-	</div>
 
-	<div class="row">
-		<div class="col-sm-2"></div>
-
-		<div class="col-sm-8">
-
+		<div class="col-sm-7">
+			<h1>{{ section.title }}</h1><div class="blueLine"></div>
 			{% for post in posts %}
 
 			<button class="collapsible">
@@ -34,25 +28,33 @@
 			{% endfor %}
 
 		</div>
-		<div class="col-sm-2">
-			<center>
-				<div style = "border: 2px solid #D7D7D7;
-				border-radius: 10px;
-				width: 95%; 
-				padding: 10px; 
-				margin: 4px 0;
-				text-align: left;
-				height: 12em;">
+		<div class="col-sm-3" id="usefulLinks">
+				<div class="usefulLinksTitle">
+					<h3>Useful Links</h3>
+				</div>
+				<div class="linkRow">
+					<h4>CDC</h4>
+					<p>
+						For the latest update to news visit the Center of Disease Control.
+						<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
+					</p>
+				</div>
 
-				<h4>Useful Links</h4>
-				<div class="blueLine"></div>
-				<ul>
-					<li><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style = "color:black">CDC</a></li>
-					<li><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style = "color:black">WHO</a></li>
-					<li><a href="https://www.osha.gov/SLTC/covid-19/" style = "color:black">OSHA</a></li>
-				</ul>
-			</div>
-		</center>
+				<div class="linkRow">
+					<h4>CDC</h4>
+					<p>
+						For the latest update to news visit the Center of Disease Control.
+						<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
+					</p>
+				</div>
+
+				<div class="linkRow">
+					<h4>CDC</h4>
+					<p>
+						For the latest update to news visit the Center of Disease Control.
+						<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
+					</p>
+				</div>
 	</div>
 </div>
 
