@@ -171,7 +171,6 @@ class CreatePost(Resource):
     def post(self):
         postID = request.args.get('id', None)
 
-        print(request.form)
 
         title = request.form['title']
         content = request.form['content']
