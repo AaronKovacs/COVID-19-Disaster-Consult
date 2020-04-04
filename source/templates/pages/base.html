@@ -58,8 +58,13 @@
 	{% block content %}{% endblock %}
 </body>
 
-<footer style="margin-bottom: 2em;">
-	<p style = "padding:16px">&copy; All Rights Reserved 2020</p>
+<footer style="margin-bottom: 2em; text-align: center;">
+	<p><a href="{{ url_for('Pages_home') }}">Home</a> &nbsp; | &emsp; 
+	<a href="{{ url_for('Pages_categories') }}">Provider</a>&nbsp; | &emsp; 
+	<a href="{{ url_for('Pages_other') }}">Information</a>&nbsp; | &emsp; 
+	<a href="{{ url_for('Pages_contact') }}">Contact</a></p>
+	<p>Copyright &copy; 2020. All Rights Reserved. &emsp; &emsp; 
+	<a href="#">Privacy Policy</a> &nbsp; | &emsp; <a href="#">Terms of Use</a></p>
 	{% block footer %}{% endblock %}
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
