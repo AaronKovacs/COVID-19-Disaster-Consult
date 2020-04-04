@@ -121,7 +121,6 @@ h5{
 }
 .providerTypeButton:hover {
   background-color: #8AA3E8;
-  cursor: pointer;
 }
 
 .providerTypeButtonClicked {
@@ -144,10 +143,7 @@ h5{
   text-align: left;
   cursor: pointer;
 }
-.infoSectionButton:hover {
-	background-color: #D7D7D7;
-	cursor: pointer;
-}
+.infoSectionButton:hover {background-color: #D7D7D7;}
 
 .collapsible {
   background:#ACBBE6;
@@ -160,7 +156,6 @@ h5{
 
 .collapsible:hover {
   background-color: #8AA3E8;
-  cursor: pointer;
 }
 
 .collapsibleContent {
@@ -201,3 +196,70 @@ h5{
 .btn-link{
   background-color: none;
 }
+
+.api-data {
+    left: 30%;
+    top: 0.4%;
+    height: auto;
+    width: 100%;
+    padding: 2px;
+    min-width: 249px;
+    text-align: center;
+    align-content: center;
+    border: none;
+    display: grid;
+}
+
+.api-data h3, h4 {
+    padding-left: 5pt;
+    padding-right: 5pt;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.global-data {
+    max-width: 100%;
+}
+
+.country-specific-data {
+    max-width: 100%;
+}
+
+#select {
+    max-width: 99%;
+    border-radius: 10px;
+    background-color: white;
+    border-top: 1px #212121 solid;
+    border-left: 1px #212121 solid;
+    border-bottom: 1px #444444 solid;
+    border-right: 1px #444444 solid;
+    color: #e80000;
+}
+
+.canvas {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    max-width: 800px;
+}
+
+#graph {
+    height: 200px;
+    width: inherit;
+}
+
+#loading {
+    display: block;
+}
+
+@media (max-width: 550px) {
+    .api-data {
+        left: 0;
+        right: 0;
+        font-size: small;
+        max-width: 100% + 4px;
+        width: 100%;
+        margin: 0;
+    }
+} 

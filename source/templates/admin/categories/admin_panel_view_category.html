@@ -48,7 +48,7 @@
 <div class="card" style="width: 30rem; margin-left: auto; margin-right: auto;">
     <div class="card-body">
         <h5 class="card-title">{{ category.title }}</h5>
-        <p class="card-text">{{ category.description }}</p>  
+        <p class="card-text">{{ category.description|safe }}</p>  
         <p class="card-text"><b>Public:</b> {{ category.public }}</p>     
         {% for section in sections %}
         <div class="card-footer text-muted " style="border: 1px solid rgba(0,0,0,.125); border-radius: 4px 4px 4px 4px; margin-top: 1em;">

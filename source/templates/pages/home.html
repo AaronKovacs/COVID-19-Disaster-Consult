@@ -15,7 +15,7 @@
 <div class="container-fluid">
   <div class="row">
     <!--newsContainerStart-->
-    <div class="col-sm-9" id="newsContainer">
+    <div class="col-sm-9" id="newsContainer"  style="white-space: normal;">
       <h2>Latest News</h2>
 
 
@@ -37,36 +37,28 @@
       </div>
     </div><!--NewsContainerEnd-->
 
-    <div class="col-sm-3" id="usefulLinks">
-      <div class="usefulLinksTitle">
-        <h3>Useful Links</h3>
-      </div>
-      <div class="linkRow">
-        <h4>CDC</h4>
-        <p>
-          For the latest update to news visit the Center of Disease Control.
-          <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
-        </p>
-      </div>
+    <div class="col-sm-3">
+		<center>
+			<div style = "border: 2px solid #D7D7D7;
+			border-radius: 10px;
+			width: 95%; 
+			padding: 10px; 
+			margin: 4px 0;
+			text-align: left;
+			height: 12em;">
 
-      <div class="linkRow">
-        <h4>CDC</h4>
-        <p>
-          For the latest update to news visit the Center of Disease Control.
-          <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
-        </p>
-      </div>
-
-      <div class="linkRow">
-        <h4>CDC</h4>
-        <p>
-          For the latest update to news visit the Center of Disease Control.
-          <img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
-        </p>
-      </div>
-    </div><!--usefulLinks-->
-  </div>
-</div><!--topContainerEnd-->
+				<h4>Useful Links</h4>
+				<div class="blueLine"></div>
+				<ul>
+					<li><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style = "color:black">CDC</a></li>
+					<li><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style = "color:black">WHO</a></li>
+					<li><a href="https://www.osha.gov/SLTC/covid-19/" style = "color:black">OSHA</a></li>
+				</ul>
+			</div> <!--end link box style-->
+		</center>
+  	</div><!--end col-->
+  </div><!--end row-->
+</div><!--end container-->
 
 <div class="container-fluid" id="anyContainer"><!--middleContainerStart-->
   <h2 class="literature">Latest Literature</h2>
@@ -86,30 +78,244 @@
 </div> <!-- middleContainerEnd -->
 
 <div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
+	
   <h2>Latest Numbers</h2>
   <span style="color: #D8D8D8"><h4>Data from John Hopkins</h4></span>
-  <div class="container-fluid" id="graphContainer">
-
-  </div>
-  <div class="row" id="stats">
-    <div class="col-md-3">
-      <h1>10</h1>
-      <h4>Description</h4>
-    </div> 
-    <div class="col-md-3">
-      <h1>10</h1>
-      <h4>Description</h4>
-    </div>
-    <div class="col-md-3">
-      <h1>10</h1>
-      <h4>Description</h4>
-    </div>
-    <div class="col-md-3">
-      <h1>10</h1>
-      <h4>Description</h4>
-    </div>
-  </div>
+	   <div class="api-data">
+			
+	              <div class="selectcountry">
+	                  <select id="select" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
+					  
+					  <center>
+		              	<div class="canvas">
+		                  <p id="loading">Loading Chart...</p>
+		                  <canvas id="graph"></canvas>
+		              	</div><!-- canvas end-->
+				  	  </center>
+					  
+					  <br><br>
+					  
+	                  <div class="country-specific-data">
+	                  	<h3 id="currentcountry"></h3>
+	   				   	<div class="row" id="stats">
+	      				  <div class="col-md-4">
+	        			  	<h1 id="currentcases"></h1>
+	        			  	<h4>Cases</h4>
+	      			      </div>
+	      				  <div class="col-md-4">
+	        				  <h1 id="currentdeaths"></h1>
+	       				   	  <h4>Deaths</h4>
+	      				  </div>
+	      				  <div class="col-md-4">
+	        				  <h1 id="currentrecovered"></h1>
+	        				  <h4>Recovered</h4>
+	      				  </div><!--col end-->
+	    			  </div><!--row end-->
+				   </div><!--country end-->
+	              </div><!-- select country end-->
+				  
+				  <br><div class = "greyLine"></div><br>
+      
+	   	       <div class="global-data">
+	   	           <h3>Global Data</h3>
+	   	  		   <div class="row" id="stats">
+	   	     		  	<div class="col-md-4">
+	   	        			<h1 id="globalcases"></h1>
+	   	        			<h4>Cases</h4>
+	   	      		    </div>
+	   	      		    <div class="col-md-4">
+	   	        			<h1 id="globaldeaths"></h1>
+	   	        			<h4>Deaths</h4>
+	   	      		  	</div>
+	   	      		  	<div class="col-md-4">
+	   	        			<h1 id="globalrecovered"></h1>
+	   	        			<h4>Recovered</h4>
+	   	      		    </div><!--col end-->
+	   	    		</div><!--row end-->
+	   	   	 	</div><!--global end-->	  
+				
+				<br>
+				  
+	 </div><!--api data end-->
+  </div><!--numbers container end-->
   <hr>
-</div>
+
+<script>
+	let requestOptions = {
+	    method: 'GET',
+	    redirect: 'follow'
+	    };
+	let dataArray = [];            //holds parsed data for each country
+	let globalTotals = [0, 0, 0]; // holds the global number of cases, deaths, and recovered
+	let allThisData = [];
+	let chartMap = new Map();
+	let myChart;
+
+	getData();
+
+	//****************************************************************************************
+	// Fetches and parses data from API and accumulates global aggregates for cases, deaths, 
+	// and recovered.
+	//****************************************************************************************
+	function getData() {
+	    fetch("https://api.covid19api.com/summary", requestOptions)
+	    .then(res => {
+	        return res.json();
+	    }).then(obj => {
+	        globalTotals = [0, 0, 0];
+	        idx = 0;
+	        for (let [key, value] of Object.entries(obj.Countries)) {
+	            if(!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
+	                let newEntry = {
+	                    id: idx = 0,
+	                    country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
+	                    slug: value.Slug,
+	                    totalconfirmed: value.TotalConfirmed,
+	                    totaldeaths: value.TotalDeaths,
+	                    totalrecovered: value.TotalRecovered
+	                }
+	                idx++;
+	                dataArray.push(newEntry);
+	                globalTotals[0] += newEntry.totalconfirmed;
+	                globalTotals[1] += newEntry.totaldeaths;
+	                globalTotals[2] += newEntry.totalrecovered;
+	            }  
+	            dataArray.sort((a, b) => a.country.localeCompare(b.country));
+	        }
+	    })
+	    .then(() => {
+	        document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
+	        document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
+	        document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]); 
+	        populateGlobal(); // calls next function after this one is finished
+	    })
+	    .catch(error => console.log('error', error));    
+	}  
+
+	//****************************************************************************************
+	// Fires when each time a new country is selected from the dropdown. Displays data in the 
+	// bottom box relevant to the country selected.
+	//****************************************************************************************
+	function getDataForCountry(selectedIndex) {
+	    document.getElementById('currentcountry').innerText = dataArray[selectedIndex]?.country;
+	    document.getElementById('currentcases').innerText = numFormat(dataArray[selectedIndex]?.totalconfirmed);
+	    document.getElementById('currentdeaths').innerText = numFormat(dataArray[selectedIndex]?.totaldeaths);
+	    document.getElementById('currentrecovered').innerText = numFormat(dataArray[selectedIndex]?.totalrecovered);
+	    getDailyByCountry(dataArray[selectedIndex]);
+	}
+
+	//****************************************************************************************
+	// Populates the dropdown menu drawing from the contents of dataArray.
+	//****************************************************************************************
+	function populateGlobal() {
+	    document.getElementById('select').innerHTML = dataArray
+	    .map(
+	            d => d.country == 'United States' ? `<option selected>${d.country}</option>` :  `<option>${d.country}</option>`
+	        );
+	    getDataForCountry(document.getElementById('select').selectedIndex); // calls next function after this one is finished
+	}
+
+
+	//****************************************************************************************
+	// Formats numbers for display in the Global Data and Country Specific boxes
+	//****************************************************************************************
+	function numFormat(num) {
+	    let s = '';
+
+	    let x = 0;
+	    while(num > 0) {
+	        if(x % 3 == 0 && x != 0) {
+	            s+= ',';
+	        }
+	        s += num % 10;
+	        num = Math.floor(num / 10);
+	        x++;
+	    }
+
+	    return s.split("").reverse().join("") || "0";
+	}
+
+
+	//****************************************************************************************
+	// Gets and parses data for each country by number of cases and date
+	//****************************************************************************************
+	function getDailyByCountry(country) {
+	    document.getElementById('graph').style.display = "none";
+	    document.getElementById('loading').style.display = "block";
+	    chartMap.clear();
+	    fetch("https://api.covid19api.com/country/" + country.slug +"/status/confirmed", requestOptions)
+	  .then(response => response.json())
+	  .then(result => allThisData = result)
+	  .then(_=> {
+	      let date;
+	    for(let o of allThisData) {
+	        if(o.Status == "confirmed") {
+	            date = new Date(o.Date).getTime();
+	            chartMap.set(date, (chartMap.get(date) || 0) + o.Cases); 
+	        }
+	    }
+	    makeChart(chartMap);
+	  })
+	  .catch(error => console.log('error', error));
+	}
+
+
+	//****************************************************************************************
+	// Draws chart using the data in chartMap
+	//****************************************************************************************
+	function makeChart(map) {
+	    document.getElementById('graph').style.display = "block";
+	    document.getElementById('loading').style.display = "none";
+	    const ctx = document.getElementById('graph').getContext('2d');
+	    ctx.clearRect(0, 0, document.getElementById('graph').width, document.getElementById('graph').height);
+	    let xlabels = [];
+	    xlabels = Array.from(map.keys());
+	    for(let i = 0; i < xlabels.length; i++) {
+	        xlabels[i] = new Date(xlabels[i]).toString().substring(4, 10);
+	    }
+	    let ylabels = [];
+	    ylabels = Array.from(map.values());
+    
+	    if(myChart) {
+	        myChart.destroy();
+	    }
+	    myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: xlabels,
+	        datasets: [{
+	            label: 'COVID-19 Cases',
+	            data: ylabels,
+	            pointRadius: 2,
+	            backgroundColor: 
+	                'rgba(232, 0, 0, 0.15)',
+	            borderColor: 
+	                'rgba(232, 0, 0, 1)',
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            xAxes :[{
+	                ticks: {fontSize: 10}
+	            }],
+	            yAxes: [{
+	                ticks: {
+	                    fontSize: 10,
+	                    beginAtZero: true,
+	                    callback: function(value, index, values) {
+	                        if(Math.floor(value / 1000) > 1) {
+	                            return value/1000 + 'k';
+	                        } else {
+	                            return value;
+	                        }
+	                    }
+	                }
+	            }]
+	        }
+	    }
+	});
+	}
+</script>
 
 {% endblock %}
