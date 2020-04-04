@@ -210,7 +210,7 @@
 	function populateGlobal() {
 	    document.getElementById('select').innerHTML = dataArray
 	    .map(
-	            d => d.country == 'United States' ? `<option selected>${d.country}</option>` :  `<option>${d.country}</option>`
+	            d => d.country == 'United States of America' ? `<option selected>${d.country}</option>` :  `<option>${d.country}</option>`
 	        );
 	    getDataForCountry(document.getElementById('select').selectedIndex); // calls next function after this one is finished
 	}
