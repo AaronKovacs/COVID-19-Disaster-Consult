@@ -5,9 +5,15 @@
 	<br>
 	<div class="row">
 		<div class="col-sm-2"></div>
+		<div class="col-sm-8"> <h1>{{ section.title }}</h1><div class="blueLine"></div></div>
+		<div class="col-sm-2"></div>
+	</div>
 
-		<div class="col-sm-7">
-			<h1>{{ section.title }}</h1><div class="blueLine"></div>
+	<div class="row">
+		<div class="col-sm-2"></div>
+
+		<div class="col-sm-8">
+
 			{% for post in posts %}
 
 			<button class="collapsible">
@@ -21,14 +27,14 @@
 				</div>
 			</button>
 			<div class="collapsibleContent">
-				<p>{{ post.content|safe }}</p>
+				<p>{{ post.content }}</p>
 			</div>
 			<br>
 
 			{% endfor %}
 
 		</div>
-		<div class="col-sm-3">
+		<div class="col-sm-2">
 			<center>
 				<div style = "border: 2px solid #D7D7D7;
 				border-radius: 10px;
