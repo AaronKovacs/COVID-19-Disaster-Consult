@@ -85,9 +85,9 @@ h5{
 .image-container {
   background-size:cover;
   background-repeat:no-repeat;
-  width: 12em;
-  height: 12em;
-  border-radius: 1.5em;
+  width: 12vw;
+  height: 12vw;
+  border-radius: 1.5vw;
 
 }
 
@@ -263,3 +263,38 @@ h5{
         margin: 0;
     }
 } 
+
+@media (max-width: 480px){
+  .btnText{
+      font-size: 4vw;
+      font-weight: bold;
+    }
+
+  .btnResp{
+    height: 100px;
+  }
+
+  #providerBtn{
+  width: 90%;
+  padding: 0.5em;
+  }
+
+  .chevron{
+    height: 15px;
+    width: 15px;
+  }
+
+  .image-container{
+    background-size:cover;
+  background-repeat:no-repeat;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 1.5vw;
+  }
+}
+
+.newsLink {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
