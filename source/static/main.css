@@ -19,6 +19,7 @@ h3{
 
 h4{
   font-weight: 700;
+  white-space: normal;
 }
 
 h5{
@@ -75,6 +76,15 @@ h5{
 
 .newsRow{
   padding-top: 1.5em;
+  display: inline-block;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.news-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btnRow{
@@ -87,8 +97,12 @@ h5{
   background-repeat:no-repeat;
   width: 12em;
   height: 12em;
-  border-radius: 1.5em;
-
+  border-radius: 1.0em;
+  float: left;
+  margin-right: 1.5em;
+  border-style: solid;
+  border-width: 1.0px;
+  border-color: black;
 }
 
 #anyContainer{
@@ -167,10 +181,26 @@ h5{
   border: 4px solid #ACBBE6;
 }
 
+.useful-links-box {
+  border: 2px solid #D7D7D7;
+  border-radius: 10px;
+  width: 95%; 
+  padding: 1em; 
+  padding-top: 1em;
+  padding-bottom: 0.5em;
+  text-align: left;
+}
+
+.useful-link {
+  color: black;
+  margin-bottom: 0.5em;
+}
+
 .blueLine {
-  height: 8px;
+  height: 5px;
   width: 100%;
-  margin: 16px 0;
+  margin: 0;
+  margin-bottom: 0.5em;
   background-color: #ACBBE6;
 }
 
@@ -198,68 +228,68 @@ h5{
 }
 
 .api-data {
-    left: 30%;
-    top: 0.4%;
-    height: auto;
-    width: 100%;
-    padding: 2px;
-    min-width: 249px;
-    text-align: center;
-    align-content: center;
-    border: none;
-    display: grid;
+  left: 30%;
+  top: 0.4%;
+  height: auto;
+  width: 100%;
+  padding: 2px;
+  min-width: 249px;
+  text-align: center;
+  align-content: center;
+  border: none;
+  display: grid;
 }
 
 .api-data h3, h4 {
-    padding-left: 5pt;
-    padding-right: 5pt;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  padding-left: 0pt;
+  padding-right: 0pt;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .global-data {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .country-specific-data {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 #select {
-    max-width: 99%;
-    border-radius: 10px;
-    background-color: white;
-    border-top: 1px #212121 solid;
-    border-left: 1px #212121 solid;
-    border-bottom: 1px #444444 solid;
-    border-right: 1px #444444 solid;
-    color: #e80000;
+  max-width: 99%;
+  border-radius: 10px;
+  background-color: white;
+  border-top: 1px #212121 solid;
+  border-left: 1px #212121 solid;
+  border-bottom: 1px #444444 solid;
+  border-right: 1px #444444 solid;
+  color: #e80000;
 }
 
 .canvas {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    max-width: 800px;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  max-width: 800px;
 }
 
 #graph {
-    height: 200px;
-    width: inherit;
+  height: 200px;
+  width: inherit;
 }
 
 #loading {
-    display: block;
+  display: block;
 }
 
 @media (max-width: 550px) {
-    .api-data {
-        left: 0;
-        right: 0;
-        font-size: small;
-        max-width: 100% + 4px;
-        width: 100%;
-        margin: 0;
-    }
+  .api-data {
+    left: 0;
+    right: 0;
+    font-size: small;
+    max-width: 100% + 4px;
+    width: 100%;
+    margin: 0;
+  }
 } 
