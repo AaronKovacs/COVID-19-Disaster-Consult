@@ -6,83 +6,13 @@
 	<div class="row">
 		<!--newsContainerStart-->
 		<div class="col-sm-2"></div>
-		<div class="col-sm-7" id="newsContainer">
+		<div class="col-sm-7">
 			<h1>Contact Us</h1>
 			<div class="blueLine"></div>
-			<form id="contact-form" name="contact-form" action="mail.php" method="POST">
 
-				<!--Grid row-->
-				<div class="row">
-
-					<!--Grid column-->
-					<div class="col-md-6">
-						<div class="md-form mb-0">
-							<label for="name" class=""><h4>Your name</h4></label>
-							<input type="text" id="name" name="name" class="form-control">
-						</div>
-					</div>
-					<!--Grid column-->
-
-					<!--Grid column-->
-					<div class="col-md-6">
-						<div class="md-form mb-0">
-							<label for="email" class=""><h4>Your email</h4></label>
-							<input type="text" id="email" name="email" class="form-control">
-						</div>
-					</div>
-					<!--Grid column-->
-				</div>
-				<!--Grid row-->
-
-				<!--Grid row-->
-				<div class="row">
-
-					<!--Grid column-->
-					<div class="col-md-12" style="padding-top: 3em">
-						<label for="message"><h4>Leave your suggestions, comments or feedback here.</h4></label>
-						<div class="md-form">
-							<textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
-
-						</div>
-
-					</div>
-				</div>
-				<!--Grid row-->
-
-			</form>
-			<div style="text-align: left; padding-top: 3em">
-				<p><a class="btn btn-secondary" href="#" role="button" onclick="document.getElementById('contact-form').submit();" style="font-weight: 700">Submit &raquo;</a></p>
-			</div>
 		</div><!--NewsContainerEnd-->
 
-		<div class="col-sm-3" id="usefulLinks">
-			<div class="usefulLinksTitle">
-				<h3>Useful Links</h3>
-			</div>
-			<div class="linkRow">
-				<h4>CDC</h4>
-				<p>
-					For the latest update to news visit the Center of Disease Control.
-					<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
-				</p>
-			</div>
 
-			<div class="linkRow">
-				<h4>CDC</h4>
-				<p>
-					For the latest update to news visit the Center of Disease Control.
-					<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
-				</p>
-			</div>
-
-			<div class="linkRow">
-				<h4>CDC</h4>
-				<p>
-					For the latest update to news visit the Center of Disease Control.
-					<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="18" width="18">
-				</p>
-			</div>
-		</div><!--usefulLinks-->
 	</div>
 </div><!--topContainerEnd-->
 {% endblock %}
