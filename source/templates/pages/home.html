@@ -54,39 +54,54 @@
 	</div><!--end row-->
 </div><!--end container-->
 
+
 <div class="container-fluid" id="anyContainer"><!--middleContainerStart-->
-	<h2 class="literature">Latest Literature</h2>
+	<br><div class = "greyLine"></div><br>
+
 	<div class="row">
 
-		{% for lit in literatures %}
-		<div class="col-md-4">
-			<h2>{{ lit.title }}</h2>
-			<p>{{ lit.description }}</p>
-		</div>
-		{% endfor %}
+		<div class="col-sm-9" id="newsContainer" style="white-space: normal;">
+			<h2 >Latest Literature</h2>
 
-	</div>
-	<div class="btnRow">
-		<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+			{% for lit in literatures %}
+			<div class="row newsRow">
+				<div>
+					<h4 style="white-space: normal;">{{ lit.title }}</h4>
+					<p>{{ lit.description }}</p>
+					<a href="#" >View Literature</a>
+				</div>
+			</div>
+			{% endfor %}
+
+			<br>
+			<div class="btnRow">
+				<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+			</div>
+		</div>
 	</div>
 </div> <!-- middleContainerEnd -->
 
+
 <div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
-	
+	<br><div class = "greyLine"></div><br>
+
 	<h2>Latest Numbers</h2>
-	<span style="color: #D8D8D8"><h4>Data from John Hopkins</h4></span>
+	<span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE</i></span>
 	<div class="api-data">
 
 		<div class="selectcountry">
-			<select id="select" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
+			<select id="select" class="custom-select" style="margin-top: 0.5em;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
 
 			<center>
 				<div class="canvas">
-					<p id="loading">Loading Chart...</p>
-					<canvas id="graph"></canvas>
+					<div id="loading" class="d-flex justify-content-center" style="margin-top: 1em; height: 400px; width: 800px; border-radius: 6px; background-color: #f0f0f0">
+						<div class="spinner-border" style="margin-top: auto; margin-bottom: auto;" role="status">
+							<span class="sr-only">Loading...</span>
+						</div>
+					</div>
+					<canvas id="graph" style="display: none;margin-top: 1em;"></canvas>
 				</div><!-- canvas end-->
 			</center>
-
 			<br><br>
 
 			<div class="country-specific-data">
@@ -108,7 +123,7 @@
 			</div><!--country end-->
 		</div><!-- select country end-->
 
-		<br><div class = "greyLine"></div><br>
+		<br><div class = "greyLine" style="width: 50%;"></div><br>
 
 		<div class="global-data">
 			<h3>Global Data</h3>
@@ -236,6 +251,9 @@
 	function getDailyByCountry(country) {
 		document.getElementById('graph').style.display = "none";
 		document.getElementById('loading').style.display = "block";
+		document.getElementById('loading').className = "d-flex justify-content-center";
+
+		let count = 0
 		chartMap.clear();
 		fetch("https://api.covid19api.com/country/" + country.slug +"/status/confirmed", requestOptions)
 		.then(response => response.json())
@@ -248,6 +266,7 @@
 					chartMap.set(date, (chartMap.get(date) || 0) + o.Cases); 
 				}
 			}
+
 			makeChart(chartMap);
 		})
 		.catch(error => console.log('error', error));
@@ -260,6 +279,8 @@
 	function makeChart(map) {
 		document.getElementById('graph').style.display = "block";
 		document.getElementById('loading').style.display = "none";
+		document.getElementById('loading').className = "";
+
 		const ctx = document.getElementById('graph').getContext('2d');
 		ctx.clearRect(0, 0, document.getElementById('graph').width, document.getElementById('graph').height);
 		let xlabels = [];
@@ -282,9 +303,9 @@
 					data: ylabels,
 					pointRadius: 2,
 					backgroundColor: 
-					'rgba(232, 0, 0, 0.15)',
+					'rgba(233, 223, 196, 0.15)',
 					borderColor: 
-					'rgba(232, 0, 0, 1)',
+					'rgba(40, 53, 62, 1)',
 					borderWidth: 1
 				}]
 			},

@@ -106,7 +106,7 @@ h5{
 }
 
 #anyContainer{
-  padding-top: 3em;
+  padding-top: 1.5em;
 } 
 
 .literature{
@@ -209,6 +209,8 @@ h5{
   width: 100%;
   margin: 16px 0;
   background-color: #EBDFC1;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .vertical-center {
@@ -234,7 +236,7 @@ h5{
   width: 100%;
   padding: 2px;
   min-width: 249px;
-  text-align: center;
+  text-align: left;
   align-content: center;
   border: none;
   display: grid;
@@ -257,14 +259,8 @@ h5{
 }
 
 #select {
-  max-width: 99%;
-  border-radius: 10px;
-  background-color: white;
-  border-top: 1px #212121 solid;
-  border-left: 1px #212121 solid;
-  border-bottom: 1px #444444 solid;
-  border-right: 1px #444444 solid;
-  color: #e80000;
+  width: 20%;
+  color: black;
 }
 
 .canvas {
