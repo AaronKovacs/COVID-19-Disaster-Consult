@@ -13,7 +13,7 @@
       <div class="row newsRow">
         <div class="col-9">
           <h4>{{ lit.title }}</h4>
-          <p>{{ lit.description }}</p>
+          <p>{{ lit.description|safe }}</p>
         </div>
       </div>
       {% endfor %}
