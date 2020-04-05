@@ -8,24 +8,26 @@
 
 		<div class="col-sm-7">
 			<h1>{{ section.title }}</h1><div class="blueLine"></div>
-			{% for post in posts %}
 
-			<button class="collapsible">
-				<div class="row">
-					<div class="col-10">
-						<b>{{ post.title }}</b>
+			<div class="accordion" id="accordionExample">
+				<div class="card">
+					{% for post in posts %}
+					<div class="card-header" id="headingOne">
+						<h2 class="mb-0">
+							<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne">
+								{{ post.title }}
+							</button>
+						</h2>
 					</div>
-					<div class="col-2">
-						<div class = "vertical-center"><b>+</b></div>
+					<div id="{{ post.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div class="card-body">
+							{{ post.content|safe }}
+						</div>
 					</div>
+					{% endfor %}
 				</div>
-			</button>
-			<div class="collapsibleContent">
-				<p>{{ post.content|safe }}</p>
 			</div>
-			<br>
 
-			{% endfor %}
 
 		</div>
 		<div class="col-sm-3">
