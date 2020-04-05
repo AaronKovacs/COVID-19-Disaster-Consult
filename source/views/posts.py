@@ -9,6 +9,7 @@ import copy
 import boto3
 import botocore
 import io
+import re
 
 from urllib.parse import urlparse
 import urllib.parse
@@ -171,8 +172,6 @@ class CreatePost(Resource):
     def post(self):
         postID = request.args.get('id', None)
 
-        print(request.form)
-
         title = request.form['title']
         content = request.form['content']
         public = False
@@ -189,6 +188,15 @@ class CreatePost(Resource):
         post.content = content
         post.public = public
 
+        '''
+        matches = re.findall(r'(?:<oembed[^>]*)(?:(?:\/>)|(?:>.*?<\/oembed>))', post.content)
+        for match in matches:
+            src = re.findall(r'(?<=url=").*?(?=[\*"])', match)[0]
+            iframe_start = """<iframe width="100%" height="315" src=\""""
+            iframe_end = """" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""
+            content = content.replace(match, iframe_start + src + iframe_end)
+        post.content = content
+        '''
         session.add(post)
         session.commit()
         postID = post.id
