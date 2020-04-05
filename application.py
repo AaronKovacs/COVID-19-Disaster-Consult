@@ -51,6 +51,7 @@ Base.metadata.create_all(bind=engine)
 
 # Create app
 application = Flask(__name__, template_folder='./source/templates', static_folder='./source/static')
+CORS(application)
 
 login_manager = LoginManager()
 login_manager.init_app(application)
