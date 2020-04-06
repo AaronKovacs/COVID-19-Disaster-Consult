@@ -41,7 +41,10 @@
 </div>
 <script>
 	ClassicEditor
-	.create( document.querySelector( '#editor' ) )
+	.create( document.querySelector( '#editor' ), {
+		ckfinder: {
+			uploadUrl: '{{ url_for('Posts_upload_just_image') }}'
+		}} )
 	.catch( error => {
 		console.error( error );
 	} );

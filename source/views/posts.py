@@ -19,7 +19,7 @@ from io import BytesIO
 from werkzeug.utils import secure_filename
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask import send_from_directory
-
+from flask import jsonify
 from random import randrange
 
 from requests_oauthlib import OAuth1Session
@@ -276,6 +276,44 @@ class AddURL(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/posts/admin_panel_post_add_content.html', content=contentJS), 200, headers)
 
+@api.route('/upload/image')
+class UploadJustImage(Resource):
+    @login_required
+    def post(self):
+        callback = request.args.get("CKEditorFuncNum")
+        error = ''
+        file = ''
+        if 'upload' in request.files:
+            file = request.files['upload']
+        if file.filename == '':
+            return
+        if file and allowed_file(file.filename):
+            filename = secure_filename(alphaNumericID())
+
+
+            imgSize = (1000, 1000)
+            img_data = file.read()
+
+            og_img = Image.open(io.BytesIO(img_data)).convert('RGB')
+            width, height = og_img.size
+
+            #Resize image
+            originalImage = resizeIOImage(img_data, (width, height))
+            resizedImage = resizeIOImage(img_data, imgSize)
+
+            #Upload image to S3 bucket
+            uploadImage(originalImage, "%soriginal" % filename)
+            uploadImage(resizedImage, filename)
+
+            original_url = "{}{}original.jpeg".format(S3_LOCATION, filename)
+            url = "{}{}.jpeg".format(S3_LOCATION, filename)
+            print(url)
+            res = """<script type="text/javascript"> 
+             window.parent.CKEDITOR.tools.callFunction(%s, '%s', '%s');
+             </script>""" % (callback, url, error)
+            response = make_response(res)
+            response.headers["Content-Type"] = "text/html"
+            return jsonify({ 'url': url, 'error': '', 'uploaded': 1, 'fileName': filename })
 
 @api.route('/<postID>/upload/image')
 class UploadImage(Resource):
