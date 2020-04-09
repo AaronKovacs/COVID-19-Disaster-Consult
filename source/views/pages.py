@@ -17,7 +17,7 @@ from urllib.request import Request, urlopen
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-from flask import Flask, request, render_template, g, jsonify, Blueprint, current_app, make_response
+from flask import Flask, request, render_template, g, jsonify, Blueprint, current_app, make_response, send_from_directory
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth, HTTPAuth
 from flask_restplus import Resource, Api, abort, Namespace
 from flask import redirect, render_template, url_for
@@ -233,3 +233,12 @@ class Contact(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/contact.html'), 200, headers)
+
+
+
+# Mark file expose
+@api.route('/loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
+class LoaderIO(Resource):
+    def get(self):
+        return send_from_directory('./source/static', filename='loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
+
