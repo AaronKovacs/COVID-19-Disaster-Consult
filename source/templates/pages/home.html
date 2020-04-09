@@ -4,9 +4,9 @@
 <div class="btnContainer">
 	<div class="btn-lg">
 		<button type="button" class="btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
-			<h2>I am a Provider!</h2>
-			<h3>For guidance on procedures, click here.
-				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" height="30" width="30">
+			<h2 class="provider-btn-title">I am a Provider!</h2>
+			<h3 class="provider-btn-subtitle">For guidance on procedures, click here.
+				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron">
 			</h3>
 		</button>
 	</div>
@@ -146,7 +146,6 @@
 
 	</div><!--api data end-->
 </div><!--numbers container end-->
-<hr>
 
 <script>
 	let requestOptions = {
