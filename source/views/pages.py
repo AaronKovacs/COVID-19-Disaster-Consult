@@ -205,6 +205,28 @@ class ViewSection(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, sections=allsectionsJS), 200, headers)
 
+@api.route('/literature/<literatureID>')
+class ViewLiterature(Resource):
+    def get(self, literatureID):
+        session = Session()
+
+        lit = session.query(Literature).filter_by(id=literatureID).first()
+        if lit is None:
+            abort(404)
+
+        litLinks = session.query(LiteratureLink).filter_by(literature=literatureID).all()
+        linksJS = []
+        for content in litLinks:
+            linksJS.append(content.publicJSON())
+
+        litJS = lit.publicJSON()
+
+        session.close()
+
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/view_literature.html', literature=litJS, links=linksJS), 200, headers)
+
+
 
 @api.route('/contact')
 class Contact(Resource):
