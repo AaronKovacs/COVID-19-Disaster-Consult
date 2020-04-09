@@ -276,7 +276,8 @@ h5{
 }
 
 .btn-link{
-  background-color: none;
+  border: 2px solid #e8d29b;
+  padding: 16px; 
 }
 
 .api-data {

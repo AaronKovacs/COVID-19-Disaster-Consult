@@ -10,15 +10,11 @@
 			<h1>{{ section.title }}</h1><div class="blueLine"></div>
 
 			<div class="accordion" id="accordionExample">
-				<div class="card">
+				<div class="card" style="border:2px solid #e8d29b; border-radius:7px">
 					{% for post in posts %}
-					<div class="card-header" id="headingOne">
-						<h2 class="mb-0">
-							<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne">
+					<button class="btn btn-link" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne">
 								{{ post.title }}
-							</button>
-						</h2>
-					</div>
+					</button>
 					<div id="{{ post.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 						<div class="card-body">
 							{{ post.content|safe }}
