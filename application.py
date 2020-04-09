@@ -28,6 +28,7 @@ from source.views.categories import api as categories
 from source.views.links import api as links
 from source.views.literatures import api as literatures
 from source.views.pages import api as pages
+from source.views.api import api as mobileapi
 
 from source.views.authentication import api as authentication
 
@@ -71,6 +72,7 @@ api.add_namespace(sections, path='/sections')
 api.add_namespace(categories, path='/categories')
 api.add_namespace(links, path='/links')
 api.add_namespace(literatures, path='/literatures')
+api.add_namespace(mobileapi, path='/api/v1')
 
 api.add_namespace(authentication, path='/auth')
 
