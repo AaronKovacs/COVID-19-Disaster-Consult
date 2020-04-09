@@ -67,7 +67,7 @@
 				<div>
 					<h4 style="white-space: normal;">{{ lit.title }}</h4>
 					<p>{{ lit.description|safe }}</p>
-					<a href="#" >View Literature</a>
+					<a href="{{ url_for('Pages_view_literature', literatureID=lit.id) }}" >View Literature</a>
 				</div>
 			</div>
 			{% endfor %}
