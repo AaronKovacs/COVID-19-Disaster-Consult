@@ -160,18 +160,36 @@ class ViewSection(Resource):
         if section is None:
             abort(404)
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
         postsJS = []
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
             if post is not None:
-                postsJS.append(post.publicJSON())
+                js = post.publicJSON()
+                js['order'] = link.order
+                postsJS.append(js)
 
         sectionJS = section.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/sections/admin_panel_view_section.html', section=sectionJS, posts=postsJS), 200, headers)
 
+@api.route('/<sectionID>/<postID>/order')
+class UpdateSectionOrder(Resource):
+    @login_required
+    def post(self, sectionID, postID):
+        order = request.form['order']
+       
+        session = Session()
+
+        category_section = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
+        if category_section is None:
+            return redirect(url_for('Sections_view_section', id=sectionID))
+        category_section.order = order
+        session.commit()
+        session.close()
+
+        return redirect(url_for('Sections_view_section', id=sectionID))
 
 
 @api.route('/create')

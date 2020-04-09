@@ -160,7 +160,7 @@ class ViewCategory(Resource):
             if cat is not None:
                 catJS.append(cat.publicJSON())
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(desc(CategorySection.created), CategorySection.id).all()
+        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         sectionsJS = []
         for link in category_sections:
             section = session.query(Section).filter_by(id=link.section).first()
@@ -183,7 +183,7 @@ class ViewSection(Resource):
         if category is not None:
             categoryJS = category.publicJSON()
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(desc(CategorySection.created), CategorySection.id).all()
+        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         allsectionsJS = []
         for link in category_sections:
             section = session.query(Section).filter_by(id=link.section).first()
@@ -193,7 +193,7 @@ class ViewSection(Resource):
         section = session.query(Section).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
         postsJS = []
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()

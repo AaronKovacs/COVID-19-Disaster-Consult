@@ -157,17 +157,36 @@ class ViewCategory(Resource):
         if category is None:
             abort(404)
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(desc(CategorySection.created), CategorySection.id).all()
+        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         sectionsJS = []
         for link in category_sections:
             section = session.query(Section).filter_by(id=link.section).first()
             if section is not None:
-                sectionsJS.append(section.publicJSON())
+                js = section.publicJSON()
+                js['order'] = link.order
+                sectionsJS.append(js)
 
         categoryJS = category.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/categories/admin_panel_view_category.html', category=categoryJS, sections=sectionsJS), 200, headers)
+
+@api.route('/<categoryID>/<sectionID>/order')
+class UpdateCategoryOrder(Resource):
+    @login_required
+    def post(self, categoryID, sectionID):
+        order = request.form['order']
+       
+        session = Session()
+
+        category_section = session.query(CategorySection).filter_by(section=sectionID, category=categoryID).first()
+        if category_section is None:
+            return redirect(url_for('Categories_view_category', id=categoryID))
+        category_section.order = order
+        session.commit()
+        session.close()
+
+        return redirect(url_for('Categories_view_category', id=categoryID))
 
 
 
