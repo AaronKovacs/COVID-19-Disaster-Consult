@@ -93,12 +93,12 @@
 
 			<center>
 				<div class="canvas">
-					<div id="loading" class="d-flex justify-content-center" style="margin-top: 1em; height: 400px; width: 800px; border-radius: 6px; background-color: #f0f0f0">
+					<div id="loading" class="d-flex justify-content-center" style="margin-top: 1em; height: 400px; width: 100%; border-radius: 6px; background-color: #f0f0f0">
 						<div class="spinner-border" style="margin-top: auto; margin-bottom: auto;" role="status">
 							<span class="sr-only">Loading...</span>
 						</div>
 					</div>
-					<canvas id="graph" style="display: none;margin-top: 1em;"></canvas>
+					<canvas class="chart" id="graph" style="display: none;margin-top: 1em;"></canvas>
 				</div><!-- canvas end-->
 			</center>
 			<br><br>
@@ -308,6 +308,7 @@
 				}]
 			},
 			options: {
+				responsive: false,
 				scales: {
 					xAxes :[{
 						ticks: {fontSize: 10}
