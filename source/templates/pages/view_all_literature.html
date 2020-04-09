@@ -5,16 +5,15 @@
 <div class="container-fluid">
   <div class="row">
     <!--newsContainerStart-->
-    <div class="col-9" id="newsContainer">
-      <h2>Latest Literature</h2>
+
+    <div class="longlist" id="newsContainer">
+      <h2 style="margin-top: 2em;">Latest Literature</h2>
 
 
       {% for lit in literatures %}
-      <div class="row newsRow" style="width: 100%;">
-        <div class="col-9">
-          <h4>{{ lit.title }}</h4>
-          <p>{{ lit.description|safe }}</p>
-        </div>
+      <div class="newsRow" style="white-space: normal; word-wrap: break-word; display: block;">
+        <h4 style="white-space: normal; word-wrap: break-word;">{{ lit.title }}</h4>
+        <p>{{ lit.description|safe }}</p>
       </div>
       {% endfor %}
 

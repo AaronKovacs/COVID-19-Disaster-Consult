@@ -107,6 +107,8 @@ h5{
   display: inline-block;
   margin-left: 0;
   margin-right: 0;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .news-link {
@@ -140,6 +142,10 @@ h5{
     height: 12em;
     margin-bottom: 1em;
     border-radius: 0.5em;
+  }
+
+  .newsRow{
+    display: block;
   }
 }
 
@@ -323,6 +329,24 @@ h5{
   display: block;
 }
 
+.chart {
+  width: 400px;
+}
+
+.longlist {
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+}
+
+@media only screen and (max-width: 800px) {
+  .chart {
+    width: 100%;
+  }
+}
+
 @media (max-width: 550px) {
   .api-data {
     left: 0;
@@ -333,3 +357,4 @@ h5{
     margin: 0;
   }
 } 
+
