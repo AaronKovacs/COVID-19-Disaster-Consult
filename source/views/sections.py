@@ -115,7 +115,7 @@ class DeleteSection(Resource):
         session.commit()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Sections_list_section'))
+        return redirect(url_for('Sections_list_sections'))
 
 @api.route('/<sectionID>/<postID>/post/delete')
 class DeletePost(Resource):
