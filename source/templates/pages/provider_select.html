@@ -15,7 +15,7 @@
 
 
 		<div class="col-sm-3">
-			<button class="{% if category and category.title == cat.title %}providerTypeButtonClicked{% else %}providerTypeButton{% endif %}" onclick="window.location.href = '{{ url_for('Pages_view_category', categoryID=cat.id) }}';">{{ cat.title }}</button>
+			<button style="height: 70px;" class="{% if category and category.title == cat.title %}providerTypeButtonClicked{% else %}providerTypeButton{% endif %}" onclick="window.location.href = '{{ url_for('Pages_view_category', categoryID=cat.id) }}';">{{ cat.title }}</button>
 		</div>
 
 
@@ -36,7 +36,7 @@
 	<button class="infoSectionButton" onclick="window.location.href = '{{ url_for('Pages_view_section', sectionID=section.id, categoryID=category.id) }}';">
 		<div class="row">
 			<div class="col-10">
-				<b>{{ section.title }}</b><br><div style = "font-size:12px">{{ section.description|safe }}</div>
+				<b>{{ section.title }}</b><br><div class="provider-select-description" style = "font-size:12px">{{ section.description|safe }}</div>
 			</div>
 			<div class="col-2">
 				<div class = "vertical-center">➔</div>

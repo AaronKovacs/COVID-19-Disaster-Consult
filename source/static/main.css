@@ -109,6 +109,17 @@ h5{
   border-bottom: 0.5em solid #ACBBE6;
 }
 
+.dropdown-item.active {
+  background-color: #EBDFC1;
+  color: black;
+}
+
+.provider-select-description {}
+
+.provider-select-description p {
+  margin: 0;
+}
+
 .linkRow{
   padding-top: 1em;
 }
