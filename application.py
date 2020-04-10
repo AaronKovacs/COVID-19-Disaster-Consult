@@ -2,6 +2,7 @@ import datetime
 import uuid
 import os
 import json
+import requests
 
 from flask import Flask, request, render_template, g, jsonify, Blueprint, redirect, url_for, make_response, Response
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
@@ -15,6 +16,12 @@ from sqlalchemy import DateTime
 from sqlalchemy import desc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.declarative import DeclarativeMeta
+
+scheduler_enabled = True
+try:
+    from apscheduler.schedulers.background import BackgroundScheduler
+except:
+    scheduler_enabled = False
 
 from flask_login import LoginManager, login_required, login_user, logout_user 
 
@@ -46,6 +53,7 @@ from source.models.post_image import PostImage
 from source.models.link import Link
 from source.models.literature import Literature
 from source.models.literature_link import LiteratureLink
+from source.models.graph_cache import GraphCache
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
@@ -59,6 +67,85 @@ login_manager.init_app(application)
 application.config['DEBUG'] = True
 application.config['SECRET_KEY'] = PASSWORD_SECRET_KEY
 application.config['TEMPLATES_AUTO_RELOAD'] = True
+
+def cache_graph():
+    print('Fetching Fresh US Graph Data')
+    final_js_str = ''
+    try:
+        url = 'https://api.covid19api.com/country/us/status/confirmed'
+        resp = requests.get(url)
+        js = resp.json()
+
+        day_dict = {}
+        for case in js:
+            if case['Cases'] > 0 and case['Status'] == 'confirmed':
+                date = case['Date'].split('T')[0]
+                fixed_date = '%sT00:00:00Z' % date
+
+                if fixed_date not in day_dict:
+                    day_dict[fixed_date] = 0
+                day_dict[fixed_date] += case['Cases']
+
+        day_js = []
+        for key in day_dict.keys():
+            small_js = { 'Date': key, 'Cases': day_dict[key], 'Status': 'confirmed' }
+            day_js.append(small_js)
+        final_js_str = json.dumps(day_js)
+    except:
+        print('Failed Fetching US Graph Data')
+
+    session = Session()
+    us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
+    if us_graph == None:
+        us_graph = GraphCache(country='us', data_type='country')
+        session.add(us_graph)
+    us_graph.json = final_js_str
+    session.commit()
+    session.close()
+
+def cache_summary():
+    print('Fetching Fresh Graph Summary Data')
+    final_js_str = ''
+    try:
+        final_dict = {}
+        url = 'https://api.covid19api.com/summary'
+        resp = requests.get(url)
+        js = resp.json()
+
+        final_dict['Global'] = js['Global']
+
+        country_dict = []
+        for case in js["Countries"]:
+            country_dict.append({"Country": case['Country'], "Slug": case['Slug'], "TotalConfirmed": case['TotalConfirmed'], "TotalDeaths": case['TotalDeaths'], "TotalRecovered": case['TotalRecovered']})
+
+        final_dict['Countries'] = country_dict
+        final_js_str = json.dumps(final_dict)
+    except:
+        print('Failed Fetching Graph Summary Data')
+
+    session = Session()
+    us_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
+    if us_graph == None:
+        us_graph = GraphCache(country='us', data_type='summary')
+        session.add(us_graph)
+    us_graph.json = final_js_str
+    session.commit()
+    session.close()
+    
+if scheduler_enabled:
+    session = Session()
+    us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
+    if us_graph is None:
+        cache_graph()
+
+    summary_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
+    if summary_graph is None:
+        cache_summary()
+    sched = BackgroundScheduler(daemon=True)
+    sched.add_job(cache_graph,'interval',minutes=60)
+    sched.add_job(cache_summary,'interval',minutes=50)
+
+    sched.start()
 
 @application.route("/")
 def redirect_home():

@@ -46,6 +46,8 @@ from ..models.post_image import PostImage
 from ..models.link import Link
 from ..models.literature import Literature
 from ..models.literature_link import LiteratureLink
+from ..models.graph_cache import GraphCache
+
 from itsdangerous import URLSafeTimedSerializer
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
@@ -189,3 +191,25 @@ class ViewLiterature(Resource):
 
         return jsonify({'literature': litJS})
 
+@api.route('/us/graph')
+class USGraphData(Resource):
+    def get(self):
+        session = Session()
+        us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
+        if us_graph is None:
+            abort(404)
+        js = json.loads(us_graph.json)
+        session.close()
+        return jsonify(js)
+
+
+@api.route('/graph/summary')
+class GraphSummaryData(Resource):
+    def get(self):
+        session = Session()
+        us_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
+        if us_graph is None:
+            abort(404)
+        js = json.loads(us_graph.json)
+        session.close()
+        return jsonify(js)
