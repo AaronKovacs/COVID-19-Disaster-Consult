@@ -64,7 +64,7 @@ class LinksGet(Resource):
         session = Session()
 
         linksJS = []
-        links = get_page(session.query(Link).order_by(desc(Link.created), Link.id), per_page=1, page=currentPage)
+        links = get_page(session.query(Link).order_by(desc(Link.created), Link.id), per_page=5, page=currentPage)
         next_page = links.paging.bookmark_next
         if links.paging.has_next == False:
             next_page = ""
@@ -87,7 +87,7 @@ class LiteratureGet(Resource):
         session = Session()
 
         litJS = []
-        lits = get_page(session.query(Literature).order_by(desc(Literature.created), Literature.id), per_page=1, page=currentPage)
+        lits = get_page(session.query(Literature).order_by(desc(Literature.created), Literature.id), per_page=5, page=currentPage)
         next_page = lits.paging.bookmark_next
         if lits.paging.has_next == False:
             next_page = ""
