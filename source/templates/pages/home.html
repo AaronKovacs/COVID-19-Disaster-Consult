@@ -163,7 +163,7 @@
 	// and recovered.
 	//****************************************************************************************
 	function getData() {
-		fetch("https://api.covid19api.com/summary", requestOptions)
+		fetch("{{ url_for('API_graph_summary_data') }}", requestOptions)
 		.then(res => {
 			return res.json();
 		}).then(obj => {
@@ -251,11 +251,17 @@
 
 		let count = 0
 		chartMap.clear();
-		fetch("https://api.covid19api.com/country/" + country.slug +"/status/confirmed", requestOptions)
+		let requestURL = "https://api.covid19api.com/country/" + country.slug +"/status/confirmed"
+		if (country.slug == "united-states") {
+			requestURL = "{{ url_for('API_us_graph_data') }}";
+		}
+		
+		fetch(requestURL, requestOptions)
 		.then(response => response.json())
 		.then(result => allThisData = result)
 		.then(_=> {
 			let date;
+			
 			for(let o of allThisData) {
 				if(o.Status == "confirmed") {
 					date = new Date(o.Date).getTime();
