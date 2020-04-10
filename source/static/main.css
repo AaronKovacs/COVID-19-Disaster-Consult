@@ -109,6 +109,11 @@ h5{
   border-bottom: 0.5em solid #ACBBE6;
 }
 
+.dropdown-item.active {
+  background-color: #EBDFC1;
+  color: black;
+}
+
 .linkRow{
   padding-top: 1em;
 }

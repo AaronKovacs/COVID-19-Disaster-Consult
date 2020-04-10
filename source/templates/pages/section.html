@@ -18,7 +18,7 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 1em;">
 							Change Section
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -42,9 +42,9 @@
 
 
 					
-							<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne">
-								{{ post.title }}
-							</button>
+					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne">
+						{{ post.title }}
+					</button>
 
 					<div id="{{ post.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
 						<div class="card-body">
