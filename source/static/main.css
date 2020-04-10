@@ -114,6 +114,12 @@ h5{
   color: black;
 }
 
+.provider-select-description {}
+
+.provider-select-description p {
+  margin: 0;
+}
+
 .linkRow{
   padding-top: 1em;
 }
