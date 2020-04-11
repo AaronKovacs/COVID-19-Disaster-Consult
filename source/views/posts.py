@@ -73,7 +73,10 @@ class ListPosts(Resource):
         postsJS = []
         posts = session.query(Post).order_by(desc(Post.created), Post.id).all()
         for post in posts:
-            postsJS.append(post.publicJSON())
+            js = post.publicJSON()
+            #js['last_updated'] = format(post.last_updated, datetime.datetime.now())
+            
+            postsJS.append(js)
 
         session.close()
 

@@ -25,8 +25,8 @@
         <table id="container" class="table table-hover table-normal">
             <thead>
                 <tr>
+                    <th scope="col">Public</th>
                     <th scope="col">Title</th>
-                    <th scope="col">URL</th>
                     <th scope="col">ID</th>
                 </tr>
             </thead>
@@ -35,7 +35,18 @@
                 
                 <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Literatures_view', id=literature.id  ) }}">
                     <a>
-                        <th scope="row">{{ literature.title }}</th>
+                        <td style="max-width: 4em;">
+                            {% if literature.public %}
+                            <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+                                Public
+                            </div>
+                            {% else %}
+                            <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+                                Private
+                            </div>
+                            {% endif %}
+                        </td>
+                        <th scope="row" style="max-width: 300px;">{{ literature.title }}</th>
                         <td>{{ literature.id }}</td>
                     </a>
                 </tr>

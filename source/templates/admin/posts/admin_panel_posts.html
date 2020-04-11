@@ -24,8 +24,9 @@
         <table id="container" class="table table-hover table-normal">
             <thead>
                 <tr>
+                    <th scope="col">Public</th>
                     <th scope="col">Title</th>
-                    <th scope="col">ID</th>
+                    <th scope="col">Updated</th>
                 </tr>
             </thead>
             <tbody id="container">
@@ -33,8 +34,19 @@
 
                 <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id  ) }}">
                     <a href="{{ url_for('Posts_create_post', id=post.id  ) }}">
-                        <th scope="row" style="color: #007bff;">{{ post.title }}</th>
-                        <td>{{ post.id }}</td>
+                        <td style="max-width: 4em;">
+                            {% if post.public %}
+                            <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+                                Public
+                            </div>
+                            {% else %}
+                            <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+                                Private
+                            </div>
+                            {% endif %}
+                        </td>
+                        <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
+                        <td>{{ post.last_updated }}</td>
                     </a>
                 </tr>
 
