@@ -63,7 +63,8 @@ class Home(Resource):
         litJS = []
         lits = session.query(Literature).order_by(desc(Literature.created), Literature.id).limit(3)
         for lit in lits:
-            litJS.append(lit.publicJSON())
+            if lit.public:
+                litJS.append(lit.publicJSON())
 
         session.close()
 
@@ -94,7 +95,8 @@ class ViewAllLiterature(Resource):
         literatureJS = []
         literatures = session.query(Literature).order_by(desc(Literature.created), Literature.id).all()
         for link in literatures:
-            literatureJS.append(link.publicJSON())
+            if link.public:
+                literatureJS.append(link.publicJSON())
 
         session.close()
 
@@ -118,7 +120,8 @@ class Other(Resource):
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
             if post is not None:
-                postsJS.append(post.publicJSON())
+                if post.public:
+                    postsJS.append(post.publicJSON())
 
         session.close()
 
@@ -198,7 +201,8 @@ class ViewSection(Resource):
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
             if post is not None:
-                postsJS.append(post.publicJSON())
+                if post.public:
+                    postsJS.append(post.publicJSON())
 
         session.close()
 

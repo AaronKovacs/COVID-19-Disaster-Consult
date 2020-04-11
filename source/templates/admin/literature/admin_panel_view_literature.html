@@ -47,11 +47,24 @@
 {% block content %}
 
 
-<div class="card" style="width: 30rem; margin-left: auto; margin-right: auto;">
+<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
+    {% if literature.public %}
+    <div class="alert alert-success" role="alert" style="margin: 1em;">
+        <b>Public Literature</b>
+        <br/>
+        This literature is public and visible on the main website.
+    </div>
+    {% else %}
+    <div class="alert alert-danger" role="alert" style="margin: 1em;">
+        <b>Private Literature</b>
+        <br/>
+        This literature is not visible on the main website.
+    </div>
+    {% endif %}
     <div class="card-body">
         <h5 class="card-title">{{ literature.title }}</h5>
-        <p class="card-text">{{ literature.description|safe }}</p>     
-        <p class="card-text"><b>Public:</b> {{ literature.public }}</p>     
+        <hr/>
+        <div class="card-body ck-content">{{ literature.description|safe }}</div>     
         {% for link in links %}
         <div class="card-footer text-muted " style="border: 1px solid rgba(0,0,0,.125); border-radius: 4px 4px 4px 4px;">
             <a href="{{ link.url }}" class="card-link">{{ link.text }} - {{ link.url }}</a>
