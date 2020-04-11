@@ -21,6 +21,31 @@
   <hr>
   <p class="mb-0">US Data should update in 60 minute intervals. Summary data should update in 50 minute intervals.</p>
 </div>
+
+<hr/>
+<h2>Recent Updates</h2>
+<table id="container" class="table table-normal">
+  <thead>
+    <tr>
+      <th scope="col">Action</th>
+      <th scope="col">Time</th>
+      <th scope="col">Type</th>
+      <th scope="col">ID</th>
+    </tr>
+  </thead>
+  <tbody id="container">
+
+    {% for activity in activities %}
+    <tr>
+      <td>{{ activity.user.realname }}: {{ activity.text }}</td>
+      <td>{{ activity.created }}</td>
+      <td>{{ activity.object_type }}</td>
+      <td>{{ activity.object_id }}</td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
 
 {% block footer %}

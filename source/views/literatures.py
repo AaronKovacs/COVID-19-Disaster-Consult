@@ -120,6 +120,8 @@ class DeleteLiterature(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted literature', literatureID, 'literature')
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Literatures_list_literatures'))
 
@@ -136,6 +138,9 @@ class DeleteURL(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted url from literature', literatureID, 'literature')
+
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Literatures_view', id=literatureID))
 
@@ -168,6 +173,7 @@ class AddURL(Resource):
         session.commit()
         session.close()
 
+        track_activity('Added url to literature', literatureID, 'literature')
         return redirect(url_for('Literatures_view', id=literatureID))
 
     @login_required
@@ -225,6 +231,8 @@ class CreateLiterature(Resource):
         session.commit()
         litID = literature.id
         session.close()
+
+        track_activity('Updated literature', litID, 'literature')
 
         return redirect(url_for('Literatures_view', id=litID))
 

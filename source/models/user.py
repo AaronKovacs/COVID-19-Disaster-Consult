@@ -50,6 +50,14 @@ class User(Base, UserMixin):
     privilege = Column(Integer(), default=0)
     active = Column(Boolean())
 
+    def publicJSON(self):
+        return {
+        'id': self.id,
+        'email': self.email,
+        'username': self.username,
+        'realname': self.realname
+        }
+
     def is_active(self):
         # Here you should write whatever the code is
         # that checks the database if your user is active

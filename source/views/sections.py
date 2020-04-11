@@ -62,6 +62,7 @@ class AddPostSectionViewPosts(Resource):
 
         session.close()
 
+
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/sections/admin_panel_section_add_posts.html', posts=postsJS, section=sectionJS), 200, headers)
 
@@ -92,6 +93,8 @@ class AddPostSection(Resource):
         session.commit()
         session.close()
 
+        track_activity('Added post to section', sectionID, 'section')
+
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Sections_view_section', id=sectionID))
 
@@ -114,6 +117,9 @@ class DeleteSection(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted section', sectionID, 'section')
+
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Sections_list_sections'))
 
@@ -129,6 +135,9 @@ class DeletePost(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted post from section', sectionID, 'section')
+
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Sections_view_section', id=sectionID))
 
@@ -189,6 +198,8 @@ class UpdateSectionOrder(Resource):
         session.commit()
         session.close()
 
+        track_activity('Changed order of section', sectionID, 'section')
+
         return redirect(url_for('Sections_view_section', id=sectionID))
 
 
@@ -219,6 +230,8 @@ class CreateSection(Resource):
         session.commit()
         sectionID = section.id
         session.close()
+
+        track_activity('Updated section', sectionID, 'section')
 
         return redirect(url_for('Sections_view_section', id=sectionID))
     @login_required

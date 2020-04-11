@@ -136,6 +136,8 @@ class DeletePost(Resource):
         session.commit()
         session.close()
         headers = {'Content-Type': 'text/html'}
+        track_activity('Deleted post', postID, 'post')
+
         return redirect(url_for('Posts_list_posts'))
 
 
@@ -151,6 +153,9 @@ class DeleteImage(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Added image from post', postID, 'post')
+
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Posts_view', id=postID))
 
@@ -166,6 +171,9 @@ class DeleteURL(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted url from post', postID, 'post')
+
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Posts_view', id=postID))
 
@@ -205,6 +213,7 @@ class CreatePost(Resource):
         postID = post.id
         session.close()
 
+        track_activity('Saved updates to post', postID, 'post')
         return redirect(url_for('Posts_view', id=postID))
 
     @login_required
@@ -255,6 +264,7 @@ class AddURL(Resource):
         session.commit()
         session.close()
 
+        track_activity('Added url to post', postID, 'post')
         return redirect(url_for('Posts_view', id=postID))
 
     @login_required
@@ -357,7 +367,7 @@ class UploadImage(Resource):
             session.commit()
 
             session.close()
-
+            track_activity('Added image to post', postID, 'post')
             return redirect(url_for('Posts_view', id=postID))
 
     @login_required
