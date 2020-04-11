@@ -115,6 +115,8 @@ class DeleteLink(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted news link', linkID, 'link')
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Links_list_links'))
 
@@ -199,6 +201,8 @@ class CreateLink(Resource):
         session.commit()
         linkID = link.id
         session.close()
+
+        track_activity('Updated news link', linkID, 'link')
 
         return redirect(url_for('Links_view', id=linkID))
 

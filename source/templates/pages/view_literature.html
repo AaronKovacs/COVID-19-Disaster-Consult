@@ -7,7 +7,7 @@
     <!--newsContainerStart-->
     <div class="longlist" id="newsContainer" style="margin-bottom: 2em;">
       <h2 style="margin-top: 2em;">{{ literature.title }}</h2>
-      <p>{{ literature.description|safe }}</p>
+      <div class="ck-content">{{ literature.description|safe }}</div>
 
       {% for link in links %}
       <div class="card-footer text-muted " style="border: 1px solid rgba(0,0,0,.125); border-radius: 4px 4px 4px 4px;">

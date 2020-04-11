@@ -10,6 +10,11 @@ import string
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+from flask_login import current_user
+
+from ..database.database import Session
+
+
 from flask import Flask, request, render_template, g, jsonify, Blueprint
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from sqlalchemy import or_
@@ -19,6 +24,14 @@ from flask_restplus import Resource, Api, abort, Namespace
 
 from flask import render_template, make_response
 
+from ..models.activity_track import ActivityTrack
+
+
+def track_activity(text, object_id, object_type):
+    session = Session()
+    session.add(ActivityTrack(text=text, object_id=object_id, object_type=object_type, user_id=current_user.id))
+    session.commit()
+    session.close()
 
 def success():
     return jsonify({ 'status_code': 200})

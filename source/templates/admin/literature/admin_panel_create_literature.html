@@ -12,7 +12,7 @@
 {% block literaturesButton %}active{% endblock %}
 
 {% block content %}
-<div class="card" style="width: 30rem; margin-left: auto; margin-right: auto;">
+<div class="card" style="width: 60rem; margin-left: auto; margin-right: auto;">
 	<div class="card-body">
 		<form method="post">
 			<div class="form-group">
@@ -20,10 +20,18 @@
 				<input name="title" type="text" placeholder="Title" class="form-control" value="{{ literature.title }}"/>
 			</div>
 			<div class="form-group">
+				<label>Excerpt</label>
+				<input name="excerpt" type="text" placeholder="Excerpt" class="form-control" value="{{ literature.excerpt }}"/>
+			</div>
+			<div class="form-group">
 				<label>Description</label>
-				<textarea name="description" class="ckeditor" id="editor" rows="10">
-					{{ literature.description|safe }}
-				</textarea>
+				<div class="document-editor">
+					<div class="document-editor__toolbar" id="toolbar-container"></div>
+					<div class="ckeditor" id="editor" rows="10">
+						{{ literature.description|safe }}
+					</div>
+					<textarea style='display:none;' name='description' id='editor1'></textarea>
+				</div>
 			</div>
 			<div class="form-check">
 				<div class="custom-control custom-checkbox checkbox-xl">
@@ -38,14 +46,41 @@
 	</div>
 </div>
 <script>
-	ClassicEditor
+	var theEditor;
+
+	DecoupledEditor
 	.create( document.querySelector( '#editor' ), {
+		fontSize: {
+			options: [
+			'tiny',
+			'default',
+			'big'
+			]
+		},
 		ckfinder: {
 			uploadUrl: '{{ url_for('Posts_upload_just_image') }}'
 		}} )
+	.then( editor => {
+		theEditor = editor;
+		const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+		toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+	} )
 	.catch( error => {
 		console.error( error );
 	} );
+
+	function getDataFromTheEditor() {
+		return theEditor.getData();
+	}
+
+	$(document).on("submit", "form", function (e) {
+		console.log('here');
+		html = getDataFromTheEditor();
+		$("#editor1").val(html);
+		console.log(html);
+		return true;
+	})
 </script>
 {% endblock %}
 

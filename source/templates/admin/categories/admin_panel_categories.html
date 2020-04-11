@@ -24,6 +24,7 @@
         <table id="container" class="table table-hover table-normal">
             <thead>
                 <tr>
+                    <th scope="col">Public</th>
                     <th scope="col">Title</th>
                     <th scope="col">ID</th>
                 </tr>
@@ -33,6 +34,17 @@
 
                 <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Categories_view_category', id=category.id  ) }}">
                     <a href="{{ url_for('Categories_create_category', id=category.id  ) }}">
+                        <td style="max-width: 4em; min-width: 4em;">
+                            {% if category.public %}
+                            <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+                                Public
+                            </div>
+                            {% else %}
+                            <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+                                Private
+                            </div>
+                            {% endif %}
+                        </td>
                         <th scope="row">{{ category.title }}</th>
                         <td>{{ category.id }}</td>
                     </a>

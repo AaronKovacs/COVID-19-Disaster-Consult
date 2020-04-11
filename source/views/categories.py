@@ -62,6 +62,7 @@ class AddSectionCategoryViewSections(Resource):
 
         session.close()
 
+
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/categories/admin_panel_category_add_sections.html', sections=sectionsJS, category=categoryJS), 200, headers)
 
@@ -92,6 +93,7 @@ class AddSectionCategory(Resource):
         session.commit()
         session.close()
 
+        track_activity('Added section to category', categoryID, 'category')
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Categories_view_category', id=categoryID))
 
@@ -112,6 +114,8 @@ class DeleteCategory(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted category', categoryID, 'category')
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Categories_list_categories'))
 
@@ -127,6 +131,8 @@ class DeleteSection(Resource):
 
         session.commit()
         session.close()
+
+        track_activity('Deleted section from category', categoryID, 'category')
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Categories_view_category', id=categoryID))
 
@@ -186,6 +192,7 @@ class UpdateCategoryOrder(Resource):
         session.commit()
         session.close()
 
+        track_activity('Updated order of sections in category', categoryID, 'category')
         return redirect(url_for('Categories_view_category', id=categoryID))
 
 
@@ -217,6 +224,8 @@ class CreateCategory(Resource):
         session.commit()
         categoryID = category.id
         session.close()
+
+        track_activity('Updated category', categoryID, 'category')
 
         return redirect(url_for('Categories_view_category', id=categoryID))
 

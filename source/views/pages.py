@@ -58,12 +58,14 @@ class Home(Resource):
         linksJS = []
         links = session.query(Link).order_by(desc(Link.created), Link.id).limit(2)
         for link in links:
-            linksJS.append(link.publicJSON())
+            if link.public:
+                linksJS.append(link.publicJSON())
 
         litJS = []
         lits = session.query(Literature).order_by(desc(Literature.created), Literature.id).limit(3)
         for lit in lits:
-            litJS.append(lit.publicJSON())
+            if lit.public:
+                litJS.append(lit.publicJSON())
 
         session.close()
 
@@ -79,7 +81,8 @@ class ViewAllNews(Resource):
         linksJS = []
         links = session.query(Link).order_by(desc(Link.created), Link.id).all()
         for link in links:
-            linksJS.append(link.publicJSON())
+            if link.public:
+                linksJS.append(link.publicJSON())
 
         session.close()
 
@@ -94,7 +97,8 @@ class ViewAllLiterature(Resource):
         literatureJS = []
         literatures = session.query(Literature).order_by(desc(Literature.created), Literature.id).all()
         for link in literatures:
-            literatureJS.append(link.publicJSON())
+            if link.public:
+                literatureJS.append(link.publicJSON())
 
         session.close()
 
@@ -118,7 +122,8 @@ class Other(Resource):
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
             if post is not None:
-                postsJS.append(post.publicJSON())
+                if post.public:
+                    postsJS.append(post.publicJSON())
 
         session.close()
 
@@ -165,7 +170,8 @@ class ViewCategory(Resource):
         for link in category_sections:
             section = session.query(Section).filter_by(id=link.section).first()
             if section is not None:
-                sectionsJS.append(section.publicJSON())
+                if section.public:
+                    sectionsJS.append(section.publicJSON())
 
         session.close()
         headers = {'Content-Type': 'text/html'}
@@ -188,7 +194,8 @@ class ViewSection(Resource):
         for link in category_sections:
             section = session.query(Section).filter_by(id=link.section).first()
             if section is not None:
-                allsectionsJS.append(section.publicJSON())
+                if section.public:
+                    allsectionsJS.append(section.publicJSON())
 
         section = session.query(Section).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
@@ -198,7 +205,8 @@ class ViewSection(Resource):
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
             if post is not None:
-                postsJS.append(post.publicJSON())
+                if post.public:
+                    postsJS.append(post.publicJSON())
 
         session.close()
 
