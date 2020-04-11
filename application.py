@@ -141,6 +141,7 @@ if scheduler_enabled:
     summary_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
     if summary_graph is None:
         cache_summary()
+    session.close()
     sched = BackgroundScheduler(daemon=True)
     sched.add_job(cache_graph,'interval',minutes=60)
     sched.add_job(cache_summary,'interval',minutes=50)
@@ -192,8 +193,16 @@ def registerSuccess():
 @application.route('/admin')
 @login_required
 def admin():
+    session = Session()
+    us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
+    us_graphjs = us_graph.last_updated
+    summary_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
+    summary_graphjs = summary_graph.last_updated
+    session.close()
+
+
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('admin_panel.html'), 200, headers)
+    return make_response(render_template('admin/admin_panel_home.html', usgraph=us_graphjs, summary=summary_graphjs), 200, headers)
 
 # Error Pages
 @application.errorhandler(401)

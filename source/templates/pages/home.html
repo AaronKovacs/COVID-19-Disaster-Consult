@@ -5,151 +5,151 @@
 	<div class="btn-lg">
 		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
 			<h2 class="provider-btn-title">Clinical Resources
-			<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron"></h2>
-		</button>
-	</div>
-</div>
-
-<div class="container-fluid">
-	<div class="row">
-		<!--newsContainerStart-->
-		<div class="col-sm-9" id="newsContainer"  style="white-space: normal;">
-			<h2>Latest News</h2>
-
-
-			{% for link in links %}
-			<div class="row newsRow">
-				<div class="image-container" style="background-image: url('{{ link.large_url }}');">
-				</div>
-				<div>
-					<h4 style="white-space: normal;">{{ link.title }}</h4>
-					<p>{{ link.description }}</p>
-					<a href="{{ link.url }}" >{{ link.url }}</a>
-				</div>
-			</div>
-			{% endfor %}
-
-			<br>
-			<div class="btnRow">
-				<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
-			</div>
-		</div><!--NewsContainerEnd-->
-
-		<div class="col-sm-3">
-			<center>
-				<div class="useful-links-box">
-					<h4>Useful Links</h4>
-					<div class="blueLine"></div>
-					<ul style="margin: 0; margin-top: 0.5em;">
-						<li class="useful-link"><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style="color: #28353e;">CDC</a></li>
-						<li class="useful-link"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style="color: #28353e;">WHO</a></li>
-						<li class="useful-link"><a href="https://www.osha.gov/SLTC/covid-19/" style="color: #28353e;">OSHA</a></li>
-					</ul>
-				</div> <!--end link box style-->
-			</center>
-		</div><!--end col-->
-	</div><!--end row-->
-</div><!--end container-->
-
-
-<div class="container-fluid" id="anyContainer"><!--middleContainerStart-->
-	<br><div class = "greyLine"></div><br>
-
-	<div class="row">
-
-		<div class="col-sm-9" id="newsContainer" style="white-space: normal;">
-			<h2 >Latest Literature</h2>
-
-			{% for lit in literatures %}
-			<div class="row newsRow" style="width: 100%;">
-				<div>
-					<h4 style="white-space: normal;">{{ lit.title }}</h4>
-					<p>{{ lit.description|safe }}</p>
-					<a href="{{ url_for('Pages_view_literature', literatureID=lit.id) }}" >View Literature</a>
-				</div>
-			</div>
-			{% endfor %}
-
-			<br>
-			<div class="btnRow">
-				<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
-			</div>
+				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron"></h2>
+			</button>
 		</div>
 	</div>
-</div> <!-- middleContainerEnd -->
+
+	<div class="container-fluid">
+		<div class="row">
+			<!--newsContainerStart-->
+			<div class="col-sm-9" id="newsContainer"  style="white-space: normal;">
+				<h2>Latest News</h2>
 
 
-<div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
-	<br><div class = "greyLine"></div><br>
-
-	<h2>Latest Numbers</h2>
-	<span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE</i></span>
-	<div class="api-data">
-
-		<div class="selectcountry">
-			<select id="select" class="custom-select" style="margin-top: 0.5em;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
-
-			<center>
-				<div class="canvas">
-					<div id="loading" class="d-flex justify-content-center" style="margin-top: 1em; height: 400px; width: 100%; border-radius: 6px; background-color: #f0f0f0">
-						<div class="spinner-border" style="margin-top: auto; margin-bottom: auto;" role="status">
-							<span class="sr-only">Loading...</span>
-						</div>
+				{% for link in links %}
+				<div class="row newsRow">
+					<div class="image-container" style="background-image: url('{{ link.large_url }}');">
 					</div>
-					<canvas class="chart" id="graph" style="display: none;margin-top: 1em;"></canvas>
-				</div><!-- canvas end-->
-			</center>
-			<br><br>
+					<div>
+						<h4 style="white-space: normal;">{{ link.title }}</h4>
+						<p>{{ link.description }}</p>
+						<a href="{{ link.url }}" >{{ link.url }}</a>
+					</div>
+				</div>
+				{% endfor %}
 
-			<div class="country-specific-data">
-				<h3 id="currentcountry"></h3>
+				<br>
+				<div class="btnRow">
+					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
+				</div>
+			</div><!--NewsContainerEnd-->
+
+			<div class="col-sm-3">
+				<center>
+					<div class="useful-links-box">
+						<h4>Useful Links</h4>
+						<div class="blueLine"></div>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style="color: #28353e;">CDC</a></li>
+							<li class="useful-link"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style="color: #28353e;">WHO</a></li>
+							<li class="useful-link"><a href="https://www.osha.gov/SLTC/covid-19/" style="color: #28353e;">OSHA</a></li>
+						</ul>
+					</div> <!--end link box style-->
+				</center>
+			</div><!--end col-->
+		</div><!--end row-->
+	</div><!--end container-->
+
+
+	<div class="container-fluid" id="anyContainer"><!--middleContainerStart-->
+		<br><div class = "greyLine"></div><br>
+
+		<div class="row">
+
+			<div class="col-sm-9" id="newsContainer" style="white-space: normal;">
+				<h2 >Latest Literature</h2>
+
+				{% for lit in literatures %}
+				<div class="row newsRow" style="width: 100%;">
+					<div>
+						<h4 style="white-space: normal;">{{ lit.title }}</h4>
+						<p>{{ lit.excerpt }}</p>
+						<a href="{{ url_for('Pages_view_literature', literatureID=lit.id) }}" >View Literature</a>
+					</div>
+				</div>
+				{% endfor %}
+
+				<br>
+				<div class="btnRow">
+					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+				</div>
+			</div>
+		</div>
+	</div> <!-- middleContainerEnd -->
+
+
+	<div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
+		<br><div class = "greyLine"></div><br>
+
+		<h2>Latest Numbers</h2>
+		<span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE</i></span>
+		<div class="api-data">
+
+			<div class="selectcountry">
+				<select id="select" class="custom-select" style="margin-top: 0.5em;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
+
+				<center>
+					<div class="canvas">
+						<div id="loading" class="d-flex justify-content-center" style="margin-top: 1em; height: 400px; width: 100%; border-radius: 6px; background-color: #f0f0f0">
+							<div class="spinner-border" style="margin-top: auto; margin-bottom: auto;" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+						</div>
+						<canvas class="chart" id="graph" style="display: none;margin-top: 1em;"></canvas>
+					</div><!-- canvas end-->
+				</center>
+				<br><br>
+
+				<div class="country-specific-data">
+					<h3 id="currentcountry"></h3>
+					<div class="row" id="stats">
+						<div class="col-md-4">
+							<h1 id="currentcases"></h1>
+							<h4>Cases</h4>
+						</div>
+						<div class="col-md-4">
+							<h1 id="currentdeaths"></h1>
+							<h4>Deaths</h4>
+						</div>
+						<div class="col-md-4">
+							<h1 id="currentrecovered"></h1>
+							<h4>Recovered</h4>
+						</div><!--col end-->
+					</div><!--row end-->
+				</div><!--country end-->
+			</div><!-- select country end-->
+
+			<br><div class = "greyLine" style="width: 50%;"></div><br>
+
+			<div class="global-data">
+				<h3>Global Data</h3>
 				<div class="row" id="stats">
 					<div class="col-md-4">
-						<h1 id="currentcases"></h1>
+						<h1 id="globalcases"></h1>
 						<h4>Cases</h4>
 					</div>
 					<div class="col-md-4">
-						<h1 id="currentdeaths"></h1>
+						<h1 id="globaldeaths"></h1>
 						<h4>Deaths</h4>
 					</div>
 					<div class="col-md-4">
-						<h1 id="currentrecovered"></h1>
+						<h1 id="globalrecovered"></h1>
 						<h4>Recovered</h4>
 					</div><!--col end-->
 				</div><!--row end-->
-			</div><!--country end-->
-		</div><!-- select country end-->
+			</div><!--global end-->	  
 
-		<br><div class = "greyLine" style="width: 50%;"></div><br>
+			<br>
 
-		<div class="global-data">
-			<h3>Global Data</h3>
-			<div class="row" id="stats">
-				<div class="col-md-4">
-					<h1 id="globalcases"></h1>
-					<h4>Cases</h4>
-				</div>
-				<div class="col-md-4">
-					<h1 id="globaldeaths"></h1>
-					<h4>Deaths</h4>
-				</div>
-				<div class="col-md-4">
-					<h1 id="globalrecovered"></h1>
-					<h4>Recovered</h4>
-				</div><!--col end-->
-			</div><!--row end-->
-		</div><!--global end-->	  
+		</div><!--api data end-->
+	</div><!--numbers container end-->
 
-		<br>
-
-	</div><!--api data end-->
-</div><!--numbers container end-->
-
-<script>
-	let requestOptions = {
-		method: 'GET',
-		redirect: 'follow'
-	};
+	<script>
+		let requestOptions = {
+			method: 'GET',
+			redirect: 'follow'
+		};
 	let dataArray = [];            //holds parsed data for each country
 	let globalTotals = [0, 0, 0]; // holds the global number of cases, deaths, and recovered
 	let allThisData = [];
