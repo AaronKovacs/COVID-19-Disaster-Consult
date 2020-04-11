@@ -204,6 +204,7 @@ class CreateLiterature(Resource):
 
         title = request.form['title']
         description = request.form['description']
+        excerpt = request.form['excerpt']
 
         public = False
         if request.form.get('public') != None:
@@ -218,6 +219,7 @@ class CreateLiterature(Resource):
         literature.title = title
         literature.description = description
         literature.public = public
+        literature.excerpt = excerpt
 
         session.add(literature)
         session.commit()

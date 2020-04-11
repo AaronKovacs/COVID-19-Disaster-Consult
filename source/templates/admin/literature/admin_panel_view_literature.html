@@ -63,6 +63,7 @@
     {% endif %}
     <div class="card-body">
         <h5 class="card-title">{{ literature.title }}</h5>
+        <p><b>Excerpt: </b>{{ literature.excerpt }}</p>
         <hr/>
         <div class="card-body ck-content">{{ literature.description|safe }}</div>     
         {% for link in links %}

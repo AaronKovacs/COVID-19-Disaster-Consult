@@ -44,12 +44,15 @@ class Literature(Base):
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
+    excerpt = Column(String(255), default='')
+
     def publicJSON(self):
         return {
         'id': self.id,
         'title': self.title,
         'description': self.description,
         'author': self.author,
+        'excerpt': self.excerpt,
         'public': self.public,
         'last_updated': str(self.last_updated)
         }
@@ -59,6 +62,7 @@ class Literature(Base):
         'id': '',
         'title': '',
         'description': '',
+        'excerpt': '',
         'author': '',
         'public': False,
         'last_updated': ''
