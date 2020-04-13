@@ -242,7 +242,23 @@ class Contact(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/contact.html'), 200, headers)
 
+@api.route('/privacy')
+class Privacy(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/privacy.html'), 200, headers)
 
+@api.route('/medical')
+class Medical(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/medical.html'), 200, headers)
+
+@api.route('/tos')
+class TOS(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/tos.html'), 200, headers)
 
 # Mark file expose
 @api.route('/loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
