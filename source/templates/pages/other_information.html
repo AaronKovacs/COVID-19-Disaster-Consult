@@ -12,7 +12,7 @@
 			<div class="accordion" id="accordionExample">
 				<div class="card" style="border:2px solid #e8d29b; border-radius:7px">
 					{% for post in posts %}
-					<button class="btn btn-link" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne">
+					<button class="btn btn-link" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne" style="border-radius: 0;">
 								{{ post.title }}
 					</button>
 					<div id="{{ post.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">

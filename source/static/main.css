@@ -79,14 +79,14 @@ h5{
 
 .hero-btn{
   text-align: left;
-  background-color: #ed4848;
+  background-color: #bf0000;
   border: none;
   border-radius: 12px;
   color: #000000;
-  box-shadow: 0px 6px 0px #B63531, 0px 3px 15px rgba(0,0,0,.4);
+  box-shadow: 0px 6px 0px #ad0000, 0px 3px 15px rgba(0,0,0,.4);
 }
 .hero-btn:hover {
-  background-color: #b84946;
+  background-color: #cf0000;
 }
 
 #providerBtn{
@@ -409,7 +409,6 @@ blockquote p {
 }
 
 
-
 :root {
   --ck-highlight-marker-blue: #72cdfd;
   --ck-highlight-marker-green: #63f963;
@@ -705,4 +704,24 @@ blockquote p {
   .ck-content .page-break::after {
     display: none;
   }
+}
+
+.feedback {
+z-index: 401;
+  background-color : #25353f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border-color: #1d2930;
+}
+.feedback:hover {
+	
+	background-color:#304350;
+}
+
+#mybutton {
+z-index: 400;
+  position: fixed;
+  bottom: -4px;
+  right: 10px;
 }
