@@ -161,7 +161,7 @@ if scheduler_enabled:
 
 @application.route("/")
 def redirect_home():
-    return redirect(url_for('Pages_home'))
+    return redirect(url_for('Pages_home', _scheme='https'))
 
 
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
@@ -235,14 +235,14 @@ def unauthorized_access(e):
 @application.errorhandler(410)
 def register_failed(e):
     return Response('<p>Register failed</p>')
-
+'''
 @application.before_request
 def before_request():
     if request.url.startswith('http://'):
         url = request.url.replace('http://', 'https://', 1)
         code = 301
         return redirect(url, code=code)
-
+'''
 def render(template):
     headers = {'Content-Type': 'text/html'}
     return make_response(render_template(template), 200, headers)
