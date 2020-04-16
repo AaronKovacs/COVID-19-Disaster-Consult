@@ -705,3 +705,23 @@ blockquote p {
     display: none;
   }
 }
+
+.feedback {
+z-index: 401;
+  background-color : #25353f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border-color: #1d2930;
+}
+.feedback:hover {
+	
+	background-color:#304350;
+}
+
+#mybutton {
+z-index: 400;
+  position: fixed;
+  bottom: -4px;
+  right: 10px;
+}
