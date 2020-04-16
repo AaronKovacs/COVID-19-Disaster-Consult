@@ -161,7 +161,7 @@ if scheduler_enabled:
 
 @application.route("/")
 def redirect_home():
-    return redirect(url_for('Pages_home', _scheme='https'))
+    return redirect(url_for('Pages_home', _scheme='https', _external=True))
 
 
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
