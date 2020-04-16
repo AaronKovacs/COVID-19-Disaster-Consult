@@ -68,7 +68,7 @@ Base.metadata.create_all(bind=engine)
 # Create app
 application = Flask(__name__, template_folder='./source/templates', static_folder='./source/static')
 
-if ssl_lify_en:
+if ssl_lify_en and ENV_NAME() == 'prod':
     print("Using SSL")
     sslify = SSLify(application)
 
