@@ -33,7 +33,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user
 
 from source.helpers.helpers import BError
 
-from source.configuration.config import PASSWORD_SECRET_KEY
+from source.configuration.config import PASSWORD_SECRET_KEY, ENV_NAME
 
 from source.views.posts import api as posts
 from source.views.sections import api as sections
@@ -161,7 +161,10 @@ if scheduler_enabled:
 
 @application.route("/")
 def redirect_home():
-    return redirect(url_for('Pages_home', _scheme='https', _external=True))
+    if ENV_NAME() == 'prod':
+        return redirect(url_for('Pages_home', _scheme='https', _external=True))
+    else:
+        return redirect(url_for('Pages_home'))
 
 
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
