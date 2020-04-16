@@ -11,6 +11,12 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS,cross_origin
 
+ssl_lify_en = True
+try:
+    from flask_sslify import SSLify
+except:
+    ssl_lify_en = False
+
 from sqlalchemy import or_
 from sqlalchemy import DateTime
 from sqlalchemy import desc
@@ -61,6 +67,9 @@ Base.metadata.create_all(bind=engine)
 
 # Create app
 application = Flask(__name__, template_folder='./source/templates', static_folder='./source/static')
+
+if ssl_lify_en:
+    sslify = SSLify(application)
 
 login_manager = LoginManager()
 login_manager.init_app(application)

@@ -26,6 +26,10 @@ h5{
   font-weight: 600;
 }
 
+a{
+	color: #1373b0;
+}
+
 .provider-btn-title {
   font-size: 2rem;
 }
@@ -191,7 +195,7 @@ h5{
 }
 
 .providerTypeButton {
-  background: #ACBBE6; 
+  background: #C0E1EA; 
   border-radius: 10px; 
   border: none;
   width: 100%; 
@@ -200,13 +204,13 @@ h5{
   text-align: center;
 }
 .providerTypeButton:hover {
-  background-color: #8AA3E8;
+  background-color: #9fc6d1;
 }
 
 .providerTypeButtonClicked {
   background: #25353F; 
   color: white;
-  border: 3px solid #ACBBE6;
+  border: 3px solid #C0E1EA;
   border-radius: 10px; 
   width: 100%; 
   padding: 10px; 
@@ -273,7 +277,7 @@ h5{
   width: 100%;
   margin: 0;
   margin-bottom: 0.5em;
-  background-color: #ACBBE6;
+  background-color: #C0E1EA;
 }
 
 .greyLine {
@@ -332,7 +336,7 @@ h5{
 }
 
 #select {
-  width: 20%;
+	width: 20em;
   color: black;
 }
 
@@ -368,6 +372,12 @@ h5{
   .chart {
     width: 100%;
   }
+  #navtitle{
+      font-size: 16px;
+    }
+	#subtitle{
+		font-size: 18px;
+	}
 }
 
 @media (max-width: 550px) {
