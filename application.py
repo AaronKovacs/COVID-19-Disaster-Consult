@@ -69,6 +69,7 @@ Base.metadata.create_all(bind=engine)
 application = Flask(__name__, template_folder='./source/templates', static_folder='./source/static')
 
 if ssl_lify_en:
+    print("Using SSL")
     sslify = SSLify(application)
 
 login_manager = LoginManager()
@@ -244,5 +245,5 @@ def render(template):
 if __name__ == '__main__':
     application.jinja_env.auto_reload = True
     application.config['TEMPLATES_AUTO_RELOAD'] = True
-    application.run(debug=True, host='0.0.0.0')
+    application.run(debug=False, host='0.0.0.0')
 
