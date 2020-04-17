@@ -260,6 +260,11 @@ class TOS(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/tos.html'), 200, headers)
 
+@api.route('/cookies')
+class Cookies(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/cookies.html'), 200, headers)
 # Mark file expose
 @api.route('/loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
 class LoaderIO(Resource):
