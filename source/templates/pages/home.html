@@ -1,8 +1,27 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
+<script>
+	$(document).ready(function(){
+		$("#myModal").modal('show');
+	});
+</script>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                
+            </div>
+            <div class="modal-body">
+				<center>This site is in an Alpha Stage.<br> All information is subject to change and update.</center>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="btnContainer">
 <h3><i>Your Consultant for Just-in-Time Information When Disasters Strike</i></h3>
+<h3> Topic: COVID-19</h3>
 	<div class="btn-lg">
 		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
 			<h2 class="provider-btn-title">Go To Clinical Resources
