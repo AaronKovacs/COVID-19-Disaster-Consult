@@ -4,7 +4,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+	<meta name="norton-safeweb-site-verification" content="kud1lss1bncw3-m1q4mjk8g-7rwrmgf0xktbhr0hwdzz6fwd3boq3foifvnxjzdffvpptqzj07f7wf573hjuipsjbbs7gqx7jmkt94xevohvgygm4t1clp-4gu289gst" />
+	<meta name="wot-verification" content="e04658b7c06577e52c32"/>
+	<meta name="title" content="Disaster Consult">
+	<meta name="description" content="Your Consultant for Just-in-Time Information When Disasters Strike">
+	<meta name="keywords" content="disaster, consult, disaster consult, disaster consult covid, covid-19, covid 19, covid 19 resources, provider covid, provider covid-19">
+	<meta name="robots" content="index, follow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="language" content="English">
+	
 	<title>Disaster Consult | COVID-19 </title>
 
 	<!-- Bootstrap core CSS and JS -->
@@ -25,18 +33,28 @@
 	<link rel='icon' href='../../static/images/favicon.png' type='image/png' >
 	<style>
 
-</style>
+	</style>
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163879908-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-163879908-1');
+	</script>
 	{% block head %}{% endblock %}
 </head>
 
 <body>
 <div id="mybutton">
-<button class="feedback" onclick="window.open('mailto:disasterconsultmd@gmail.com')">Feedback</button>
+<button class="feedback" onclick="window.open('{{ url_for('Pages_contact') }}')">Feedback</button>
 </div>
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="d-flex flex-grow-1">
 			<!--span class="w-100 d-lg-none d-block"><hidden spacer to center brand on mobile></span-->
-			<a class="navbar-brand" href="{{ url_for('Pages_home') }}" id="navtitle">
+			<a class="navbar-brand" href="{{ url_for('Pages_home') }}">
 				<img src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
 				<span style="font-weight: 700">Disaster Consult</span> | COVID- 19
 			</a>
@@ -76,7 +94,7 @@
 <footer style="margin-bottom: 2em;">
 	<hr>
 	<center>
-		<p style = "padding:16px">&copy; All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home') }}">Home</a> · <a href="{{ url_for('Pages_categories') }}">Clinical Resources</a> · <a href="{{ url_for('Pages_other') }}">Information</a> · <a href="{{ url_for('Pages_contact') }}">Contact</a> <br><br> <a style="color:grey" href="{{ url_for('Pages_tos') }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy') }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical') }}">Medical Disclaimer</a></p>
+		<p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home') }}">Home</a> · <a href="{{ url_for('Pages_categories') }}">Clinical Resources</a> · <a href="{{ url_for('Pages_other') }}">Information</a> · <a href="{{ url_for('Pages_contact') }}">Contact</a> <br><br> <a style="color:grey" href="{{ url_for('Pages_tos') }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy') }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies') }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical') }}">Medical Disclaimer</a></p>
 	</center>
 	
 	{% block footer %}{% endblock %}
