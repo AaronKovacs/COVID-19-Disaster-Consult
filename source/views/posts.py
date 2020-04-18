@@ -196,7 +196,7 @@ class CreatePost(Resource):
             post = Post()
             
         modifypost = content.replace("oembed url", "iframe width=\"560\" height=\"315\" src")
-		modifypost2 = modifypost.replace("oembed", "iframe")
+	modifypost2 = modifypost.replace("oembed", "iframe")
         post.title = title
         post.content = modifypost2
         post.public = public
