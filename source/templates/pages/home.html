@@ -1,8 +1,32 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
+<script>
+    $(window).load(function(){
+                $('#onload').modal('show');
+            });
+</script>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="onload">
+
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title"><i class="fa fa-exclamation-circle"></i>Notice</h4>
+        </div>
+        <div class="modal-body">
+         All content on this site is preliminary<br>It is subject to update and editing
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+        </div>
+      </div>
+
+    </di
 <div class="btnContainer">
-<h3 id="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i></h3>
+<h3><i>Your Consultant for Just-in-Time Information When Disasters Strike</i><br>Topic: COVID-19</h3>
 	<div class="btn-lg">
 		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
 			<h2 class="provider-btn-title">Go To Clinical Resources
