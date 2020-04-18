@@ -194,9 +194,11 @@ class CreatePost(Resource):
         post = session.query(Post).filter_by(id=postID).first()
         if post is None:
             post = Post()
-
+            
+        modifypost = content.replace("oembed url", "iframe width=\"560\" height=\"315\" src")
+		modifypost2 = modifypost.replace("oembed", "iframe")
         post.title = title
-        post.content = content
+        post.content = modifypost2
         post.public = public
 
         '''
