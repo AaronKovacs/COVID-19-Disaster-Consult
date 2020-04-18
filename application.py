@@ -11,6 +11,12 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS,cross_origin
 
+ssl_lify_en = True
+try:
+    from flask_sslify import SSLify
+except:
+    ssl_lify_en = False
+
 from sqlalchemy import or_
 from sqlalchemy import DateTime
 from sqlalchemy import desc
@@ -27,7 +33,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user
 
 from source.helpers.helpers import BError
 
-from source.configuration.config import PASSWORD_SECRET_KEY
+from source.configuration.config import PASSWORD_SECRET_KEY, ENV_NAME
 
 from source.views.posts import api as posts
 from source.views.sections import api as sections
@@ -61,6 +67,10 @@ Base.metadata.create_all(bind=engine)
 
 # Create app
 application = Flask(__name__, template_folder='./source/templates', static_folder='./source/static')
+
+if ssl_lify_en and ENV_NAME() == 'prod':
+    print("Using SSL")
+    sslify = SSLify(application)
 
 login_manager = LoginManager()
 login_manager.init_app(application)
@@ -151,7 +161,10 @@ if scheduler_enabled:
 
 @application.route("/")
 def redirect_home():
-    return redirect(url_for('Pages_home'))
+    if ENV_NAME() == 'prod':
+        return redirect(url_for('Pages_home', _scheme='https', _external=True))
+    else:
+        return redirect(url_for('Pages_home'))
 
 
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
@@ -225,8 +238,14 @@ def unauthorized_access(e):
 @application.errorhandler(410)
 def register_failed(e):
     return Response('<p>Register failed</p>')
-
-
+'''
+@application.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+'''
 def render(template):
     headers = {'Content-Type': 'text/html'}
     return make_response(render_template(template), 200, headers)
@@ -235,5 +254,5 @@ def render(template):
 if __name__ == '__main__':
     application.jinja_env.auto_reload = True
     application.config['TEMPLATES_AUTO_RELOAD'] = True
-    application.run(debug=True, host='0.0.0.0')
+    application.run(debug=False, host='0.0.0.0')
 
