@@ -38,6 +38,10 @@ img {
   width: 100%;
 }
 
+.btn-link {
+  font-weight: 600;
+}
+
 .provider-btn-title {
   font-size: 2rem;
   margin: 0;

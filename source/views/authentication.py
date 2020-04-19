@@ -89,8 +89,8 @@ class Login(Resource):
 
 
         if user.verify_password(password):
-            #if user.privilege == 0:
-            #    return abort(403)
+            if user.privilege == 0:
+                return abort(403)
             session.expunge(user)
             login_user(user)
             session.close()
