@@ -194,6 +194,7 @@ class CreatePost(Resource):
         post = session.query(Post).filter_by(id=postID).first()
         if post is None:
             post = Post()
+         
 
         post.title = title
         post.content = content
