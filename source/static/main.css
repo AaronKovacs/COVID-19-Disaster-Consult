@@ -30,6 +30,14 @@ a{
 	color: #1373b0;
 }
 
+p {
+  margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
 .provider-btn-title {
   font-size: 2rem;
 }
@@ -373,11 +381,11 @@ a{
     width: 100%;
   }
   #navtitle{
-      font-size: 16px;
-    }
-	#subtitle{
-		font-size: 18px;
-	}
+    font-size: 16px;
+  }
+  #subtitle{
+    font-size: 18px;
+  }
 }
 
 @media (max-width: 550px) {
@@ -717,7 +725,7 @@ blockquote p {
 }
 
 .feedback {
-z-index: 401;
+  z-index: 401;
   background-color : #25353f;
   color: white;
   padding: 10px 20px;
@@ -730,7 +738,7 @@ z-index: 401;
 }
 
 #mybutton {
-z-index: 400;
+  z-index: 400;
   position: fixed;
   bottom: -4px;
   right: 10px;
