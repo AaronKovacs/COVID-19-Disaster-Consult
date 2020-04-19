@@ -267,7 +267,7 @@ class Cookies(Resource):
         return make_response(render_template('pages/cookies.html'), 200, headers)
     
 @api.route('/sponsor')
-class sponsor(Resource):
+class Sponsor(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/sponsor.html'), 200, headers)
