@@ -265,6 +265,13 @@ class Cookies(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/cookies.html'), 200, headers)
+    
+@api.route('/sponsor')
+class sponsor(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/sponsor.html'), 200, headers)
+    
 # Mark file expose
 @api.route('/loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
 class LoaderIO(Resource):
