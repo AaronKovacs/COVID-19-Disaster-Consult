@@ -25,7 +25,7 @@
 		</div>
 	</div>
 </div>
-<div class="btnContainer">
+	<div class="btnContainer">
 	<h3 id ="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i><br>Topic: COVID-19</h3>
 	<div class="btn-lg">
 		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
@@ -33,13 +33,31 @@
 				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron"></h2>
 			</button>
 		</div>
+	<br>
+	<p>*This clinical resource is under constant development due to our rapidly evolving understanding of COVID-19,<br> 
+	please check back frequently for updates and help us improve by providing feedback.</p>	
+	</div>
+
+	<div class="container-fluid" style="text-align: center; ">
+		<div class="row">
+			<div class="col-sm-4">
+				<h4><a href="#newsHere" style="color: #25353F;"><u>Latest News</u></a></h4>
+			</div>
+			<div class="col-sm-4">
+				<h4><a href="#literatureHere" style="color: #25353F;"><u>Latest Literature</u></a></h4>
+			</div>
+			<div class="col-sm-4">
+				<h4><a href="#numbersHere" style="color: #25353F;"><u>Latest Numbers</u></a></h4>
+			</div>
+		</div>
 	</div>
 
 	<div class="container-fluid">
-		<div class = "greyLine"></div><br>
-		<div class="row">
+	<div class="row">
+		<div class = "greyLine"></div><br><br>
+		<div class="col-sm-9">
 			<!--newsContainerStart-->
-			<div class="col-sm-9" id="newsContainer"  style="white-space: normal;">
+			<div class="row" id="newsContainer"  style="white-space: normal;" id="newsHere">
 				<h2>Latest News</h2>
 
 
@@ -56,34 +74,15 @@
 				{% endfor %}
 
 				<br>
-				<div class="btnRow">
+				<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
 					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
 				</div>
 			</div><!--NewsContainerEnd-->
 
-			<div class="col-sm-3">
-				<center>
-					<div class="useful-links-box">
-						<h4>Useful Links</h4>
-						<div class="blueLine"></div>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style="color: #28353e;">CDC</a></li>
-							<li class="useful-link"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style="color: #28353e;">WHO</a></li>
-							<li class="useful-link"><a href="https://www.osha.gov/SLTC/covid-19/" style="color: #28353e;">OSHA</a></li>
-						</ul>
-					</div> <!--end link box style-->
-				</center>
-			</div><!--end col-->
-		</div><!--end row-->
-	</div><!--end container-->
-
-
-	<div class="container-fluid" id="anyContainer"><!--middleContainerStart-->
-		<div class = "greyLine"></div><br>
-
-		<div class="row">
-
-			<div class="col-sm-9" id="newsContainer" style="white-space: normal;">
+			<!--middleContainerStart-->
+			<div class = "greyLine"></div><br>
+			<div class="row" id="literatureHere">
+			<!-- <div class="col-sm-9" id="newsContainer" style="white-space: normal;"> -->
 				<h2 >Latest Literature</h2>
 
 				{% for lit in literatures %}
@@ -97,18 +96,77 @@
 				{% endfor %}
 
 				<br>
-				<div class="btnRow">
+				<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
 					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
 				</div>
+			<!-- </div> -->
 			</div>
+			<!-- middleContainerEnd -->
+			</div><!--end col-->
+
+			<div class="col-sm-3">
+				<center>
+					<div class="useful-links-box">
+						<h4>Useful Links</h4>
+						<div class="blueLine"></div>
+						<h5>National/ International</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style="color: #28353e;">CDC</a></li>
+							<li class="useful-link"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style="color: #28353e;">WHO</a></li>
+							<li class="useful-link"><a href="https://www.osha.gov/SLTC/covid-19/" style="color: #28353e;">OSHA</a></li>
+							<li class="useful-link"><a href="http://www.med.umich.edu/surgery/mcccn/documents/DoD-COVID-19-Practice-Management-Guide-V10" style="color: #28353e;">Military/ DOD</a></li>
+						</ul>
+						<h5>Emergency Medicine</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.acep.org/corona/covid-19-field-guide/cover-page/" style="color: #28353e;">ACEP</a></li>
+						</ul>
+						<h5>Critical Care</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.sccm.org/SurvivingSepsisCampaign/Guidelines/COVID-19" style="color: #28353e;">SCCM</a></li>
+							<li class="useful-link"><a href="https://www.chestnet.org/Guidelines-and-Resources/COVID-19/Updates-and-Resources" style="color: #28353e;">ACCP</a></li>
+						</ul>
+						<h5>Infectious Disease</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.idsociety.org/public-health/COVID-19-Resource-Center/" style="color: #28353e;">IDSA</a></li>
+						</ul>
+						<h5>Surgery</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.facs.org/covid-19" style="color: #28353e;">ACS</a></li>
+						</ul>
+						<h5>EMS</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://naemsp.org/resources/covid-19-resources/" style="color: #28353e;">NAEMSP</a></li>
+						</ul>
+						<h5>OB/GYN</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.acog.org/en/Topics/COVID-19" style="color: #28353e;">ACOG</a></li>
+						</ul>
+						<h5>Pediatrics</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://services.aap.org/en/pages/2019-novel-coronavirus-covid-19-infections/" style="color: #28353e;">AAP</a></li>
+						</ul>
+						<h5>Psychiatry</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.psychiatry.org/psychiatrists/covid-19-coronavirus/practice-guidance-for-covid-19" style="color: #28353e;">APA</a></li>
+						</ul>
+						<h5>Radiology</h5>
+						<ul style="margin: 0; margin-top: 0.5em;">
+							<li class="useful-link"><a href="https://www.acr.org/Clinical-Resources/COVID-19-Radiology-Resources" style="color: #28353e;">ACR</a></li>
+						</ul>
+					</div> <!--end link box style-->
+				</center>
+			</div><!--end col-->
 		</div>
-	</div> <!-- middleContainerEnd -->
+	</div><!--end container-->
+
+
+	
 
 
 	<div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
 		<div class = "greyLine"></div><br>
 
-		<h2>Latest Numbers</h2>
+		<h2 id="numbersHere">Latest Numbers</h2>
 		<span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
 		<div class="api-data">
 
