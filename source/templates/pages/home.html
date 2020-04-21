@@ -7,7 +7,7 @@
 	});
 </script>
 
-	<div class="btnContainer">
+<div class="btnContainer">
 	<h3 id ="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i><br>Topic: COVID-19</h3>
 	<div class="btn-lg">
 		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
@@ -15,9 +15,9 @@
 				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron"></h2>
 			</button>
 		</div>
-	<br>
-	<p>*This clinical resource is under constant development due to our rapidly evolving understanding of COVID-19,<br> 
-	please check back frequently for updates and help us improve by providing feedback.</p>	
+		<br>
+		<p style="padding-left: 1em; padding-right: 1em;">This clinical resource is under constant development due to our rapidly evolving understanding of COVID-19,<br> 
+		please check back frequently for updates and help us improve by providing feedback.</p>	
 	</div>
 
 	<div class="container-fluid" style="text-align: center; ">
@@ -35,182 +35,182 @@
 	</div>
 
 	<div class="container-fluid">
-	<div class="row">
-		<div class = "greyLine"></div><br><br>
-		<div class="col-sm-9">
-			<!--newsContainerStart-->
-			<div class="row" id="newsContainer"  style="white-space: normal;" id="newsHere">
-				<h2>Latest News</h2>
+		<div class="row">
+			<div class = "greyLine"></div><br><br>
+			<div class="col-sm-9">
+				<!--newsContainerStart-->
+				<div class="col-sm-9" id="newsContainer"  style="white-space: normal; max-width: 100%; padding-left: 0;" id="newsHere">
+					<h2>Latest News</h2>
 
 
-				{% for link in links %}
-				<div class="row newsRow">
-					<div class="image-container" style="background-image: url('{{ link.large_url }}');">
+					{% for link in links %}
+					<div class="row newsRow">
+						<div class="image-container" style="background-image: url('{{ link.large_url }}');">
+						</div>
+						<div>
+							<h4 style="white-space: normal;">{{ link.title }}</h4>
+							<p>{{ link.description }}</p>
+							<a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
+						</div>
 					</div>
-					<div>
-						<h4 style="white-space: normal;">{{ link.title }}</h4>
-						<p>{{ link.description }}</p>
-						<a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
+					{% endfor %}
+
+					<br>
+					<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+						<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
 					</div>
-				</div>
-				{% endfor %}
+				</div><!--NewsContainerEnd-->
 
-				<br>
-				<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
-				</div>
-			</div><!--NewsContainerEnd-->
+				<!--middleContainerStart-->
+				<div class = "greyLine"></div><br>
+				<div class="col-sm-9" id="literatureHere" style="white-space: normal; max-width: 100%; padding-left: 0;">
+					<!-- <div class="col-sm-9" id="newsContainer" style="white-space: normal;"> -->
+						<h2 >Latest Literature</h2>
 
-			<!--middleContainerStart-->
-			<div class = "greyLine"></div><br>
-			<div class="row" id="literatureHere">
-			<!-- <div class="col-sm-9" id="newsContainer" style="white-space: normal;"> -->
-				<h2 >Latest Literature</h2>
+						{% for lit in literatures %}
+						<div class="row newsRow" style="width: 100%;">
+							<div>
+								<h4 style="white-space: normal;">{{ lit.title }}</h4>
+								<p>{{ lit.excerpt }}</p>
+								<a href="{{ url_for('Pages_view_literature', literatureID=lit.id) }}" >View Literature</a>
+							</div>
+						</div>
+						{% endfor %}
 
-				{% for lit in literatures %}
-				<div class="row newsRow" style="width: 100%;">
-					<div>
-						<h4 style="white-space: normal;">{{ lit.title }}</h4>
-						<p>{{ lit.excerpt }}</p>
-						<a href="{{ url_for('Pages_view_literature', literatureID=lit.id) }}" >View Literature</a>
+						<br>
+						<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+							<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+						</div>
+						<!-- </div> -->
 					</div>
-				</div>
-				{% endfor %}
+					<!-- middleContainerEnd -->
+				</div><!--end col-->
 
-				<br>
-				<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
-				</div>
-			<!-- </div> -->
+				<div class="col-sm-3">
+					<center>
+						<div class="useful-links-box">
+							<h4>Useful Links</h4>
+							<div class="blueLine"></div>
+							<h5>National/ International</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style="color: #28353e;">CDC</a></li>
+								<li class="useful-link"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style="color: #28353e;">WHO</a></li>
+								<li class="useful-link"><a href="https://www.osha.gov/SLTC/covid-19/" style="color: #28353e;">OSHA</a></li>
+								<li class="useful-link"><a href="http://www.med.umich.edu/surgery/mcccn/documents/DoD-COVID-19-Practice-Management-Guide-V10" style="color: #28353e;">Military/ DOD</a></li>
+							</ul>
+							<h5>Emergency Medicine</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.acep.org/corona/covid-19-field-guide/cover-page/" style="color: #28353e;">ACEP</a></li>
+							</ul>
+							<h5>Critical Care</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.sccm.org/SurvivingSepsisCampaign/Guidelines/COVID-19" style="color: #28353e;">SCCM</a></li>
+								<li class="useful-link"><a href="https://www.chestnet.org/Guidelines-and-Resources/COVID-19/Updates-and-Resources" style="color: #28353e;">ACCP</a></li>
+							</ul>
+							<h5>Infectious Disease</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.idsociety.org/public-health/COVID-19-Resource-Center/" style="color: #28353e;">IDSA</a></li>
+							</ul>
+							<h5>Surgery</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.facs.org/covid-19" style="color: #28353e;">ACS</a></li>
+							</ul>
+							<h5>EMS</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://naemsp.org/resources/covid-19-resources/" style="color: #28353e;">NAEMSP</a></li>
+							</ul>
+							<h5>OB/GYN</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.acog.org/en/Topics/COVID-19" style="color: #28353e;">ACOG</a></li>
+							</ul>
+							<h5>Pediatrics</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://services.aap.org/en/pages/2019-novel-coronavirus-covid-19-infections/" style="color: #28353e;">AAP</a></li>
+							</ul>
+							<h5>Psychiatry</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.psychiatry.org/psychiatrists/covid-19-coronavirus/practice-guidance-for-covid-19" style="color: #28353e;">APA</a></li>
+							</ul>
+							<h5>Radiology</h5>
+							<ul style="margin: 0; margin-top: 0.5em;">
+								<li class="useful-link"><a href="https://www.acr.org/Clinical-Resources/COVID-19-Radiology-Resources" style="color: #28353e;">ACR</a></li>
+							</ul>
+						</div> <!--end link box style-->
+					</center>
+				</div><!--end col-->
 			</div>
-			<!-- middleContainerEnd -->
-			</div><!--end col-->
-
-			<div class="col-sm-3">
-				<center>
-					<div class="useful-links-box">
-						<h4>Useful Links</h4>
-						<div class="blueLine"></div>
-						<h5>National/ International</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" style="color: #28353e;">CDC</a></li>
-							<li class="useful-link"><a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" style="color: #28353e;">WHO</a></li>
-							<li class="useful-link"><a href="https://www.osha.gov/SLTC/covid-19/" style="color: #28353e;">OSHA</a></li>
-							<li class="useful-link"><a href="http://www.med.umich.edu/surgery/mcccn/documents/DoD-COVID-19-Practice-Management-Guide-V10" style="color: #28353e;">Military/ DOD</a></li>
-						</ul>
-						<h5>Emergency Medicine</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.acep.org/corona/covid-19-field-guide/cover-page/" style="color: #28353e;">ACEP</a></li>
-						</ul>
-						<h5>Critical Care</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.sccm.org/SurvivingSepsisCampaign/Guidelines/COVID-19" style="color: #28353e;">SCCM</a></li>
-							<li class="useful-link"><a href="https://www.chestnet.org/Guidelines-and-Resources/COVID-19/Updates-and-Resources" style="color: #28353e;">ACCP</a></li>
-						</ul>
-						<h5>Infectious Disease</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.idsociety.org/public-health/COVID-19-Resource-Center/" style="color: #28353e;">IDSA</a></li>
-						</ul>
-						<h5>Surgery</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.facs.org/covid-19" style="color: #28353e;">ACS</a></li>
-						</ul>
-						<h5>EMS</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://naemsp.org/resources/covid-19-resources/" style="color: #28353e;">NAEMSP</a></li>
-						</ul>
-						<h5>OB/GYN</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.acog.org/en/Topics/COVID-19" style="color: #28353e;">ACOG</a></li>
-						</ul>
-						<h5>Pediatrics</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://services.aap.org/en/pages/2019-novel-coronavirus-covid-19-infections/" style="color: #28353e;">AAP</a></li>
-						</ul>
-						<h5>Psychiatry</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.psychiatry.org/psychiatrists/covid-19-coronavirus/practice-guidance-for-covid-19" style="color: #28353e;">APA</a></li>
-						</ul>
-						<h5>Radiology</h5>
-						<ul style="margin: 0; margin-top: 0.5em;">
-							<li class="useful-link"><a href="https://www.acr.org/Clinical-Resources/COVID-19-Radiology-Resources" style="color: #28353e;">ACR</a></li>
-						</ul>
-					</div> <!--end link box style-->
-				</center>
-			</div><!--end col-->
-		</div>
-	</div><!--end container-->
+		</div><!--end container-->
 
 
-	
 
 
-	<div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
-		<div class = "greyLine"></div><br>
 
-		<h2 id="numbersHere">Latest Numbers</h2>
-		<span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
-		<div class="api-data">
+		<div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
+			<div class = "greyLine"></div><br>
 
-			<div class="selectcountry">
-				<select id="select" class="custom-select" style="margin-top: 0.5em; display: none;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
+			<h2 id="numbersHere">Latest Numbers</h2>
+			<span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
+			<div class="api-data">
 
-				<center>
-					<iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA" style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
-				</center>
-				<br><br>
+				<div class="selectcountry">
+					<select id="select" class="custom-select" style="margin-top: 0.5em; display: none;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
 
-				<div class="country-specific-data">
-					<h3 id="currentcountry"></h3>
-					<span style="color: #5a5a5a"><i>Updated Hourly</i></span>
+					<center>
+						<iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA" style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
+					</center>
+					<br><br>
+
+					<div class="country-specific-data">
+						<h3 id="currentcountry"></h3>
+						<span style="color: #5a5a5a"><i>Updated Hourly</i></span>
+						<div class="row" id="stats">
+							<div class="col-md-4">
+								<h1 id="currentcases"></h1>
+								<h4>Cases</h4>
+							</div>
+							<div class="col-md-4">
+								<h1 id="currentdeaths"></h1>
+								<h4>Deaths</h4>
+							</div>
+							<div class="col-md-4">
+								<h1 id="currentrecovered"></h1>
+								<h4>Recovered</h4>
+							</div><!--col end-->
+						</div><!--row end-->
+					</div><!--country end-->
+				</div><!-- select country end-->
+
+				<br><div class = "greyLine" style="width: 50%;"></div><br>
+
+				<div class="global-data">
+					<h3>Global Data</h3>
+					<span style="color: #5a5a5a"><i>Updated Daily</i></span>
 					<div class="row" id="stats">
 						<div class="col-md-4">
-							<h1 id="currentcases"></h1>
+							<h1 id="globalcases"></h1>
 							<h4>Cases</h4>
 						</div>
 						<div class="col-md-4">
-							<h1 id="currentdeaths"></h1>
+							<h1 id="globaldeaths"></h1>
 							<h4>Deaths</h4>
 						</div>
 						<div class="col-md-4">
-							<h1 id="currentrecovered"></h1>
+							<h1 id="globalrecovered"></h1>
 							<h4>Recovered</h4>
 						</div><!--col end-->
 					</div><!--row end-->
-				</div><!--country end-->
-			</div><!-- select country end-->
+				</div><!--global end-->	  
 
-			<br><div class = "greyLine" style="width: 50%;"></div><br>
+				<br>
 
-			<div class="global-data">
-				<h3>Global Data</h3>
-				<span style="color: #5a5a5a"><i>Updated Daily</i></span>
-				<div class="row" id="stats">
-					<div class="col-md-4">
-						<h1 id="globalcases"></h1>
-						<h4>Cases</h4>
-					</div>
-					<div class="col-md-4">
-						<h1 id="globaldeaths"></h1>
-						<h4>Deaths</h4>
-					</div>
-					<div class="col-md-4">
-						<h1 id="globalrecovered"></h1>
-						<h4>Recovered</h4>
-					</div><!--col end-->
-				</div><!--row end-->
-			</div><!--global end-->	  
+			</div><!--api data end-->
+		</div><!--numbers container end-->
 
-			<br>
-
-		</div><!--api data end-->
-	</div><!--numbers container end-->
-
-	<script>
-		let requestOptions = {
-			method: 'GET',
-			redirect: 'follow'
-		};
+		<script>
+			let requestOptions = {
+				method: 'GET',
+				redirect: 'follow'
+			};
 	let dataArray = [];            //holds parsed data for each country
 	let globalTotals = [0, 0, 0]; // holds the global number of cases, deaths, and recovered
 	let allThisData = [];
