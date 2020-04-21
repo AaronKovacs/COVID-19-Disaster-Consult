@@ -15,7 +15,7 @@
 		{% for cat in categories %}
 
 
-		<div class="col-sm-3">
+		<div class="col-sm">
 			<button style="height: 70px;" class="{% if category and category.title == cat.title %}providerTypeButtonClicked{% else %}providerTypeButton{% endif %}" onclick="window.location.href = '{{ url_for('Pages_view_category', categoryID=cat.id) }}';">{{ cat.title }}</button>
 		</div>
 
