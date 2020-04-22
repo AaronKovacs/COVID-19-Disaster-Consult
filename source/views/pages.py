@@ -157,7 +157,7 @@ class ViewCategory(Resource):
         category = session.query(Category).filter_by(id=categoryID).first()
         categoryJS = category.publicJSON()
 
-        fixed_categories = ['srxnj8', 's7gmcl', 's9v3pn', 'szlxjv']
+        fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
 
         catJS = []
         for cat_id in fixed_categories:
@@ -271,7 +271,13 @@ class Sponsor(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/sponsor.html'), 200, headers)
-    
+
+@api.route('/aboutus')
+class Aboutus(Resource):
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/about_us.html'), 200, headers)
+		
 # Mark file expose
 @api.route('/loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
 class LoaderIO(Resource):

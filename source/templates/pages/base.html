@@ -90,9 +90,15 @@
 					<a href="{{ url_for('Pages_other') }}" class="nav-link">Information</a>
 				</li>-->
 				<li class="nav-item">
+					<a href="{{ url_for('Pages_aboutus') }}" class="nav-link">About Us</a>
+				</li>
+				<li class="nav-item">
 					<a href="{{ url_for('Pages_contact') }}" class="nav-link">Contact</a>
 				</li>
-
+				<li class="nav-item">
+					<a href="{{ url_for('Pages_sponsor') }}" class="nav-link">Sponsors</a>
+				</li>
+				
 				{% if current_user.is_authenticated %}
 				<li class="nav-item">
 					<a href="{{ url_for('admin') }}" class="nav-link">Admin</a>
@@ -108,7 +114,7 @@
 <footer style="margin-bottom: 2em;">
 	<hr>
 	<center>
-		<p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home') }}">Home</a> · <a href="{{ url_for('Pages_categories') }}">Clinical Resources</a><!-- · <a href="{{ url_for('Pages_other') }}">Information</a>--> · <a href="{{ url_for('Pages_contact') }}">Contact</a> · <a href="{{ url_for('Pages_sponsor') }}">Sponsors</a> <br><br> <a style="color:grey" href="{{ url_for('Pages_tos') }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy') }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies') }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical') }}">Medical Disclaimer</a></p>
+		<p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home') }}">Home</a> · <a href="{{ url_for('Pages_categories') }}">Clinical Resources</a><!-- · <a href="{{ url_for('Pages_other') }}">Information</a>--> · <a href="{{ url_for('Pages_aboutus') }}">About Us</a> · <a href="{{ url_for('Pages_contact') }}">Contact</a> · <a href="{{ url_for('Pages_sponsor') }}">Sponsors</a> <br><br> <a style="color:grey" href="{{ url_for('Pages_tos') }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy') }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies') }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical') }}">Medical Disclaimer</a></p>
 	</center>
 	
 	{% block footer %}{% endblock %}
