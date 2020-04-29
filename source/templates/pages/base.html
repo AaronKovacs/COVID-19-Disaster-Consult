@@ -52,40 +52,40 @@
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163879908-1"></script>
 	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-	  gtag('config', 'UA-163879908-1');
+		gtag('config', 'UA-163879908-1');
 	</script>
 	{% block head %}{% endblock %}
 </head>
 
 <body>
-<div id="mybutton">
-<button class="feedback" onclick="window.open('{{ url_for('Pages_contact') }}')">Feedback</button>
-</div>
+	<div id="mybutton">
+		<button class="feedback" onclick="window.open('{{ url_for('Pages_contact') }}')">Feedback</button>
+	</div>
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="d-flex flex-grow-1">
 			<!--span class="w-100 d-lg-none d-block"><hidden spacer to center brand on mobile></span-->
-			<a class="navbar-brand" href="{{ url_for('Pages_home') }}" id="navtitle">
-				<img src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
-				<span style="font-weight: 700">Disaster Consult</span> | COVID- 19
-			</a>
-			<div class="w-100 text-right">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+				<a class="navbar-brand" href="{{ url_for('Pages_home') }}" id="navtitle">
+					<img src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
+					<span style="font-weight: 700">Disaster Consult</span> | COVID- 19
+				</a>
+				<div class="w-100 text-right">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+				</div>
 			</div>
-		</div>
-		<div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-			<ul class="navbar-nav ml-auto flex-nowrap">
-				<li class="nav-item">
-					<a href="{{ url_for('Pages_home') }}" class="nav-link">Home</a>
-				</li>
-				<li class="nav-item">
-					<a href="{{ url_for('Pages_categories') }}" class="nav-link">Clinical and Operational Resources</a>
-				</li>
+			<div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+				<ul class="navbar-nav ml-auto flex-nowrap">
+					<li class="nav-item">
+						<a href="{{ url_for('Pages_home') }}" class="nav-link">Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ url_for('Pages_categories') }}" class="nav-link">Clinical and Operational Resources</a>
+					</li>
 				<!--<li class="nav-item">
 					<a href="{{ url_for('Pages_other') }}" class="nav-link">Information</a>
 				</li>-->
@@ -115,30 +115,27 @@
 	<hr>
 	<center>
 		<p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home') }}">Home</a> · <a href="{{ url_for('Pages_categories') }}">Clinical and Operational Resources</a><!-- · <a href="{{ url_for('Pages_other') }}">Information</a>--> · <a href="{{ url_for('Pages_aboutus') }}">About Us</a> · <a href="{{ url_for('Pages_contact') }}">Contact</a> · <a href="{{ url_for('Pages_sponsor') }}">Sponsors</a> 
-		<br><br>			
-		<a style="color:grey" href="{{ url_for('Pages_tos') }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy') }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies') }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical') }}">Medical Disclaimer</a></p>
-		<br>
-		Our Sponsors: 
+			<br><br>			
+			<a style="color:grey" href="{{ url_for('Pages_tos') }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy') }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies') }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical') }}">Medical Disclaimer</a></p>
+			<p style="font-weight: 600; margin-bottom: 0.1em;">Our Sponsors</p>
 			<a href="https://smhs.gwu.edu/" target="_blank">
-			<img src="../../static/images/SMHS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+				<img src="../../static/images/SMHS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
 			</a>			
-			   ·   
 			<a href="https://www.seas.gwu.edu/" target="_blank">
-			<img src="../../static/images/SEAS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+				<img src="../../static/images/SEAS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
 			</a>
-			   ·   
 			<a href= "https://aws.amazon.com/" target="_blank">
-			<img src="../../static/images/aws.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+				<img src="../../static/images/aws.png" class="img-fluid" style="width: 150px; object-fit: cover;">
 			</a> 
-	</center>
-	
-	{% block footer %}{% endblock %}
+		</center>
 
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.16.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-</footer>
+		{% block footer %}{% endblock %}
 
-</html>
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.16.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+	</footer>
+
+	</html>
