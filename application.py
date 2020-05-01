@@ -147,17 +147,17 @@ def cache_summary():
     
 if scheduler_enabled:
     session = Session()
-    us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
-    if us_graph is None:
-        cache_graph()
+    #us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
+    #if us_graph is None:
+    #    cache_graph()
 
     summary_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
     if summary_graph is None:
         cache_summary()
     session.close()
     sched = BackgroundScheduler(daemon=True)
-    sched.add_job(cache_graph,'interval',minutes=60)
-    sched.add_job(cache_summary,'interval',minutes=50)
+    #sched.add_job(cache_graph,'interval',minutes=60)
+    sched.add_job(cache_summary,'interval',minutes=10)
 
     sched.start()
 
