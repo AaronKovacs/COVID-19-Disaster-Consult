@@ -110,7 +110,8 @@ def cache_graph():
     if us_graph == None:
         us_graph = GraphCache(country='us', data_type='country')
         session.add(us_graph)
-    us_graph.json = final_js_str
+    if final_js_str != '' and final_js_str != None:
+        us_graph.json = final_js_str
     session.commit()
     session.close()
 
@@ -139,7 +140,8 @@ def cache_summary():
     if us_graph == None:
         us_graph = GraphCache(country='us', data_type='summary')
         session.add(us_graph)
-    us_graph.json = final_js_str
+    if final_js_str != '' and final_js_str != None:
+        us_graph.json = final_js_str
     session.commit()
     session.close()
     
