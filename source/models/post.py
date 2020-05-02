@@ -49,8 +49,16 @@ class Post(Base):
         'title': self.title,
         'content': self.content,
         'public': self.public,
-        'last_updated': str(self.last_updated)
+        'last_updated': self.last_updated_formatted()
         }
+
+    def last_updated_formatted(self):
+        try:
+            import timeago
+            return timeago.format(self.last_updated, datetime.datetime.now())
+        except:
+            print('here')
+            return "Missing package requirement: timeago"
 
     def blankJSON(self):
         return {
