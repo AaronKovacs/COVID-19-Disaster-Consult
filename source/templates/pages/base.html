@@ -62,8 +62,9 @@
 </head>
 
 <body>
+	<!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5eaddcaf236715f1"></script>
 	<div id="mybutton">
-		<button class="feedback" onclick="window.open('{{ url_for('Pages_contact') }}')">Feedback</button>
+		<button class="feedback" data-toggle="modal" data-target="#feedbackModal">Feedback</button>
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="d-flex flex-grow-1">
@@ -109,6 +110,62 @@
 		</div>
 	</nav>
 	{% block content %}{% endblock %}
+
+	<div class="modal" id="feedbackModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 style="padding-top: 0.25em;" class="modal-title">Submit Feedback</h5>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+				</div>
+				<form id="feedbackform" method="post" action="{{ url_for('Pages_submit_feedback', ftype='feedback') }}">
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Email - Where can we reach you?</label>
+							<input id="validationDefault01" name="email" type="text" placeholder="Email Address" class="form-control" required/>
+						</div>
+						<div class="form-group">
+							<label>Feedback</label>
+							<textarea id="validationDefault02" name="feedback" class="form-control" rows="10" placeholder="Your Feedback" required></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+
+						<div class="form-group">
+							<button class="btn btn-secondary"  type="submit">Send Feedback</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="suggestionModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 style="padding-top: 0.25em;" class="modal-title">Submit Content Suggestion</h5>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+				</div>
+				<form id="feedbackform" method="post" action="{{ url_for('Pages_submit_feedback', ftype='suggestion') }}">
+					<div class="modal-body">
+						<div class="form-group">
+							<label>What content should we add?</label>
+							<textarea id="validationDefault02" name="feedback" class="form-control" rows="10" placeholder="Your Suggestion" required></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+
+						<div class="form-group">
+							<button class="btn btn-secondary"  type="submit">Submit Suggestion</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 
 <footer style="margin-bottom: 2em;">

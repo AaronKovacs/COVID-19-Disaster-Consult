@@ -21,58 +21,62 @@
 			</div>
 
 			<div class="blueLine" style="margin-bottom: 1em; margin-top: 1em;"></div>
-			-->
-			<h1>{{ category.title }}: {{ section.title }}</h1>
-			<div class="row">
-				<div class="col-sm-9">
-					<h5>{{ section.description }}
-					</h5>
-				</div>
-				<div class="col-sm-3">
-					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 1em;">
-							Change Section
-						</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							{% for sec in sections %}
-							<a class="dropdown-item {% if sec.id==section.id %}active{% else %}{% endif %}" href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=category.id) }}">{{ sec.title }}</a>
-							{% endfor %}
-						</div>
-					</div>
-
-				</div>
-
-
+		-->
+		<h1>{{ category.title }}: {{ section.title }}</h1>
+		<div class="row">
+			<div class="col-sm-9">
+				<h5>{{ section.description }}
+				</h5>
 			</div>
-			<div class="blueLine"></div>
-
-			<div class="accordion" id="accordionExample">
-				<div class="card" style="border:2px solid #e8d29b; border-radius:7px">
-
-
-					{% for post in posts %}
-
-
-					
-					<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne" style="border-radius: 0;">
-						{{ post.title }}
+			<div class="col-sm-3">
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 1em;">
+						Change Section
 					</button>
-
-					<div id="{{ post.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-						<div class="card-body ck-content">
-							{{ post.content|safe }}
-						</div>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						{% for sec in sections %}
+						<a class="dropdown-item {% if sec.id==section.id %}active{% else %}{% endif %}" href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=category.id) }}">{{ sec.title }}</a>
+						{% endfor %}
 					</div>
-
-
-					{% endfor %}
-
-
 				</div>
 
 			</div>
+
+
 		</div>
+		<div class="blueLine"></div>
+
+		<div class="accordion" id="accordionExample">
+			<div class="card" style="border:2px solid #e8d29b; border-radius:7px">
+
+
+				{% for post in posts %}
+
+
+
+				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne" style="border-radius: 0;">
+					{{ post.title }}
+				</button>
+
+				<div id="{{ post.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+					<div class="card-body ck-content">
+						{{ post.content|safe }}
+						<i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
+					</div>
+				</div>
+
+
+				{% endfor %}
+
+
+			</div>
+
+		</div>
+		<center style="margin-top: 2em; font-size: 10pt;">
+			<i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
+		</center>
 	</div>
+</div>
 </div>
 
 {% endblock %}

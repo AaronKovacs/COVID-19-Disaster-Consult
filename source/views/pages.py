@@ -44,6 +44,7 @@ from ..models.post_image import PostImage
 from ..models.link import Link
 from ..models.literature import Literature
 from ..models.literature_link import LiteratureLink
+from ..models.feedback import Feedback
 from itsdangerous import URLSafeTimedSerializer
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
@@ -277,10 +278,31 @@ class Aboutus(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/about_us.html'), 200, headers)
-		
+
+
+@api.route('/feedback')
+class SubmitFeedback(Resource):
+    def post(self):
+        email = request.form.get('email', '')
+        feedback = request.form['feedback']
+        ftype = request.args.get('ftype')
+
+        session = Session()
+        session.add(Feedback(email=email, text=feedback, ftype=ftype))
+
+        session.commit()
+        session.close()
+
+        headers = {'Content-Type': 'text/html'}
+        return redirect(url_for('Pages_submit_feedback'))#make_response(render_template('pages/success_feedback.html'), 200, headers)
+
+    def get(self):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('pages/success_feedback.html'), 200, headers)       
+
+
 # Mark file expose
 @api.route('/loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
 class LoaderIO(Resource):
     def get(self):
         return send_from_directory('./source/static', filename='loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
-
