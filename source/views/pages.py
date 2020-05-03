@@ -205,7 +205,13 @@ class ViewSection(Resource):
 
             table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
 
+        move_index = None
+        for i in table_of_contents:
+            if i['id'] == categoryID:
+                move_index = table_of_contents.index(i)
 
+        if move_index is not None:
+            table_of_contents.insert(0, table_of_contents.pop(move_index))
 
 
         section = session.query(Section).filter_by(id=sectionID).first()
