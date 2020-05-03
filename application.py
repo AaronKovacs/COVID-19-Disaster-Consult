@@ -129,6 +129,8 @@ def cache_summary():
 
         country_dict = []
         for case in js["Countries"]:
+            if case['Slug'] == 'united-states' and case['TotalDeaths'] == 0:
+                return
             country_dict.append({"Country": case['Country'], "Slug": case['Slug'], "TotalConfirmed": case['TotalConfirmed'], "TotalDeaths": case['TotalDeaths'], "TotalRecovered": case['TotalRecovered']})
 
         final_dict['Countries'] = country_dict
