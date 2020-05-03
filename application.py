@@ -61,6 +61,7 @@ from source.models.literature import Literature
 from source.models.literature_link import LiteratureLink
 from source.models.graph_cache import GraphCache
 from source.models.activity_track import ActivityTrack
+from source.models.feedback import Feedback
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
