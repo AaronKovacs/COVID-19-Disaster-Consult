@@ -190,13 +190,23 @@ class ViewSection(Resource):
         if category is not None:
             categoryJS = category.publicJSON()
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
-        allsectionsJS = []
-        for link in category_sections:
-            section = session.query(Section).filter_by(id=link.section).first()
-            if section is not None:
-                if section.public:
-                    allsectionsJS.append(section.publicJSON())
+
+        table_of_contents = []
+        all_categories = session.query(Category).all()
+        for cat in all_categories:
+            use_sections = []
+
+            category_sections = session.query(CategorySection).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
+            for link in category_sections:
+                section = session.query(Section).filter_by(id=link.section).first()
+                if section is not None:
+                    if section.public:
+                        use_sections.append({ 'name': section.title, 'id': section.id })
+
+            table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
+
+
+
 
         section = session.query(Section).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
@@ -212,7 +222,7 @@ class ViewSection(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, sections=allsectionsJS), 200, headers)
+        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents), 200, headers)
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):

@@ -135,6 +135,7 @@ def cache_summary():
         final_js_str = json.dumps(final_dict)
     except:
         print('Failed Fetching Graph Summary Data')
+        return
 
     session = Session()
     us_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
