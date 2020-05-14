@@ -118,7 +118,7 @@ class Other(Resource):
         section = session.query(Section).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.order), SectionPost.id).all()
         postsJS = []
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
