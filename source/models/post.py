@@ -4,6 +4,8 @@ import string
 import random
 import json
 import calendar
+import re
+import urllib.parse as urlparse
 
 from flask import current_app as app
 from flask import Flask, g, jsonify
@@ -52,13 +54,10 @@ class Post(Base):
         'last_updated': self.last_updated_formatted()
         }
 
-    def last_updated_formatted(self):
-        try:
-            import timeago
-            return timeago.format(self.last_updated, datetime.datetime.now())
-        except:
-            print('here')
-            return "Missing package requirement: timeago"
+    def siteJSON(self):
+        js = self.publicJSON()
+        js['content'] = self.process_content()
+        return js
 
     def blankJSON(self):
         return {
@@ -67,3 +66,44 @@ class Post(Base):
         'public': False,
         'last_updated': ''
         }
+
+    def last_updated_formatted(self):
+        try:
+            import timeago
+            return timeago.format(self.last_updated, datetime.datetime.now())
+        except:
+            print('here')
+            return "Missing package requirement: timeago"
+
+
+
+    def process_content(self):
+        edited_content = self.content
+        try:
+            matches = re.findall(r'(?:<oembed[^>]*)(?:(?:\/>)|(?:>.*?<\/oembed>))', edited_content)
+            for match in matches:
+                src = re.findall(r'(?<=url=").*?(?=[\*"])', match)[0]
+                video = re.findall(r'((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)', src)[0][-1]
+                print(video)
+                '''
+
+                url_data = urlparse.urlparse(src)
+                query = urlparse.parse_qs(url_data.query)
+                video = ''
+                
+
+                if 'youtube' in src:
+                    video = query["v"][0]
+                if 'youtu.be' in src:
+                    comps = src.split('/')
+                    video = comps[-1]
+                    if '?' in video:
+                        video = video.split('?')[0]
+                '''
+                src = 'https://www.youtube.com/embed/%s' % video
+                iframe_start = """<iframe width="100%" height="315" src=\""""
+                iframe_end = """" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""
+                edited_content = edited_content.replace(match, iframe_start + src + iframe_end)
+            return edited_content
+        except:
+            return self.content

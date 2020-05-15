@@ -124,7 +124,7 @@ class Other(Resource):
             post = session.query(Post).filter_by(id=link.post).first()
             if post is not None:
                 if post.public:
-                    postsJS.append(post.publicJSON())
+                    postsJS.append(post.siteJSON())
 
         session.close()
 
@@ -223,7 +223,7 @@ class ViewSection(Resource):
             post = session.query(Post).filter_by(id=link.post).first()
             if post is not None:
                 if post.public:
-                    postsJS.append(post.publicJSON())
+                    postsJS.append(post.siteJSON())
 
         session.close()
 

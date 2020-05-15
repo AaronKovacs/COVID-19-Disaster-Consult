@@ -104,7 +104,7 @@ class View(Resource):
         for content in post_images:
             imagesJS.append(content.publicJSON())
 
-        postJS = post.publicJSON()
+        postJS = post.siteJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/posts/admin_panel_view_post.html', post=postJS, links=contentsJS, images=imagesJS), 200, headers)
