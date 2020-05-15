@@ -37,7 +37,7 @@ class Post(Base):
     __tablename__ = 'posts'
     id = Column(String(255), default=uniquePostID, primary_key=True)
     title = Column(String(1000))
-    content = Column(String(10000))
+    content = Column(Text())
     author = Column(String(255))
     public = Column(Boolean, default=False)
     locale = Column(String(7), default='US')
