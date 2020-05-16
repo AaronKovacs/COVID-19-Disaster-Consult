@@ -35,6 +35,7 @@ from flask_restplus import Resource, Api, abort, Namespace
 from flask import redirect, render_template, url_for
 from flask_mail import Mail, Message
 from flask_login import login_required, login_user, logout_user 
+from flask_paginate import Pagination, get_page_args
 
 from ..configuration.config import S3_BUCKET, S3_KEY, S3_SECRET, S3_LOCATION
 
@@ -71,7 +72,7 @@ class ListPosts(Resource):
         session = Session()
 
         postsJS = []
-        posts = session.query(Post).order_by(desc(Post.created), Post.id).all()
+        posts = session.query(Post).order_by(desc(Post.last_updated), Post.id).all()
         for post in posts:
             js = post.publicJSON()
             #js['last_updated'] = format(post.last_updated, datetime.datetime.now())
@@ -104,10 +105,23 @@ class View(Resource):
         for content in post_images:
             imagesJS.append(content.publicJSON())
 
-        postJS = post.publicJSON()
+        postJS = post.siteJSON()
+
+        page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+        
+
+        actsJS = []
+        acts = session.query(ActivityTrack).filter_by(object_type='post', object_id=postID).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
+        for act in acts:
+            actsJS.append(act.publicJSON())
+
+
+        pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).filter_by(object_type='post', object_id=postID).count(), css_framework='bootstrap4')
+
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_view_post.html', post=postJS, links=contentsJS, images=imagesJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_view_post.html', post=postJS, links=contentsJS, images=imagesJS, activities=actsJS, pagination=pagination, page=page,
+                           per_page=per_page), 200, headers)
 
 @api.route('/<postID>/delete')
 class DeletePost(Resource):
@@ -185,36 +199,45 @@ class CreatePost(Resource):
 
         title = request.form['title']
         content = request.form['content']
+        keywords = request.form['keywords']
         public = False
         if request.form.get('public') != None:
             public = True
 
         session = Session()
 
+        original_json = {}
+
         post = session.query(Post).filter_by(id=postID).first()
         if post is None:
             post = Post()
+
+        original_json = post.publicJSON()
          
 
         post.title = title
         post.content = content
         post.public = public
+        post.keywords = keywords
 
-        '''
-        matches = re.findall(r'(?:<oembed[^>]*)(?:(?:\/>)|(?:>.*?<\/oembed>))', post.content)
-        for match in matches:
-            src = re.findall(r'(?<=url=").*?(?=[\*"])', match)[0]
-            iframe_start = """<iframe width="100%" height="315" src=\""""
-            iframe_end = """" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""
-            content = content.replace(match, iframe_start + src + iframe_end)
-        post.content = content
-        '''
+
         session.add(post)
         session.commit()
         postID = post.id
+
+        draft_id = None
+        final_json = post.publicJSON()
+        if original_json != final_json:
+            draft_id = save_draft(original_json, final_json, postID, 'post')
+
         session.close()
 
-        track_activity('Saved updates to post', postID, 'post')
+        if original_json != final_json:
+            if original_json['title'] == '':
+                track_activity('Created post \'%s\'' % post.title, postID, 'post', draft=draft_id)
+            else:
+                track_activity('Saved post updates to \'%s\'' % post.title, postID, 'post', draft=draft_id)
+
         return redirect(url_for('Posts_view', id=postID))
 
     @login_required

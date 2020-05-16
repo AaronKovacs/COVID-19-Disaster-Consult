@@ -149,7 +149,7 @@ class ListSections(Resource):
         session = Session()
 
         sectionsJS = []
-        sections = session.query(Section).order_by(desc(Section.created), Section.id).all()
+        sections = session.query(Section).order_by(desc(Section.last_updated), Section.id).all()
         for section in sections:
             sectionsJS.append(section.publicJSON())
 
@@ -231,7 +231,7 @@ class CreateSection(Resource):
         sectionID = section.id
         session.close()
 
-        track_activity('Updated section', sectionID, 'section')
+        track_activity('Updated section \'%s\'' % (section.title), sectionID, 'section')
 
         return redirect(url_for('Sections_view_section', id=sectionID))
     @login_required

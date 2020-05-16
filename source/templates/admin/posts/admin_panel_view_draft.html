@@ -1,0 +1,112 @@
+{% extends "admin_panel.html" %}
+
+{% block head %}
+
+<script src="{{ url_for('static', filename = 'admin/htmldiff.js') }}"></script>
+
+{% endblock %}
+
+{% block postsButton %}active{% endblock %}
+
+{% block panel_title %}View Draft{% endblock %}
+
+
+{% block panel_buttons %}
+{% if draft.object_type == 'post' %}
+
+<div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+        <a href="{{ url_for('Posts_view', id=draft.object_id  ) }}" class="btn btn-sm btn-outline-primary">Open Post</a>
+    </div>
+</div>
+
+{% else %}
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<style type="text/css">
+    .container {
+      width: 100%;
+      margin: auto;
+      padding: 10px;
+  }
+
+  .one {
+    width: 50%;
+
+    float: left;
+}
+
+.two {
+  margin-left: 50%;
+}
+
+ins {
+    text-decoration: none;
+    background-color: #d4fcbc;
+}
+
+del {
+    text-decoration: line-through;
+    background-color: #fbb6c2;
+    color: #555;
+}
+
+.diffable {}
+
+</style>
+
+<div class="alert alert-secondary" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
+    <h4 class="alert-heading">Draft Differences</h4>
+    <p class="mb-0">Highlighted below are the <ins>additions (in green)</ins> and <del>removals (in red)</del> made in this update.</p>
+</div>
+
+<div class="alert alert-primary" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
+    <h4 class="alert-heading">Draft Details</h4>
+    <p class="mb-0">Editor: {{ activity.user.realname }}</p>
+    <br/>
+    <p class="mb-0">Object Type/ID: {{ activity.object_type }} - {{ activity.object_id }}</p>
+    <br/>
+    <p class="mb-0">Created Draft: {{ draft.created }}</p>
+</div>
+
+<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
+
+  <div class="card-body">
+    {% for key, value in draft.old_content.items() %}
+    <h4>{{ key }}</h4>
+    <hr/>
+
+    <div style="display: none;"><div class="diffable" id="old_{{ key }}">{{ draft.old_content[key]|safe }}</div></div>
+    <div class="ck-content"><div class="diffable" id="new_{{ key }}">{{ draft.new_content[key]|safe }}</div></div>
+    <hr/>
+
+    {% endfor %}
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+
+    var elements = document.getElementsByClassName("diffable");
+
+    for (element of elements) {
+        if (element.id.includes("old")) {
+            var obj_id = element.id.replace("old_", "");
+            originalHTML = document.getElementById("old_" + obj_id).innerHTML;
+            newHTML = document.getElementById("new_" + obj_id).innerHTML;
+
+            let output = htmldiff(originalHTML, newHTML);
+
+            document.getElementById("new_" + obj_id).innerHTML = output;
+        }
+    }
+
+</script>
+{% endblock %}

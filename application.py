@@ -10,6 +10,7 @@ from flask_restplus import Resource, Api, abort, fields
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS,cross_origin
+from flask_paginate import Pagination, get_page_args
 
 ssl_lify_en = True
 try:
@@ -42,6 +43,7 @@ from source.views.links import api as links
 from source.views.literatures import api as literatures
 from source.views.pages import api as pages
 from source.views.api import api as mobileapi
+from source.views.drafts import api as drafts
 
 from source.views.authentication import api as authentication
 
@@ -62,6 +64,7 @@ from source.models.literature_link import LiteratureLink
 from source.models.graph_cache import GraphCache
 from source.models.activity_track import ActivityTrack
 from source.models.feedback import Feedback
+from source.models.draft import Draft
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
@@ -180,6 +183,8 @@ api.add_namespace(sections, path='/sections')
 api.add_namespace(categories, path='/categories')
 api.add_namespace(links, path='/links')
 api.add_namespace(literatures, path='/literatures')
+api.add_namespace(drafts, path='/drafts')
+
 api.add_namespace(mobileapi, path='/api/v1')
 
 api.add_namespace(authentication, path='/auth')
@@ -220,17 +225,21 @@ def admin():
     summary_graphjs = summary_graph.last_updated
 
 
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+        
     actsJS = []
-    acts = session.query(ActivityTrack).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(20)
+    acts = session.query(ActivityTrack).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
     for act in acts:
         actsJS.append(act.publicJSON())
+
+
+    pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).count(), css_framework='bootstrap4')
 
     session.close()
 
 
-
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('admin/admin_panel_home.html', usgraph=us_graphjs, summary=summary_graphjs, activities=actsJS), 200, headers)
+    return make_response(render_template('admin/admin_panel_home.html', usgraph=us_graphjs, summary=summary_graphjs, activities=actsJS, pagination=pagination), 200, headers)
 
 # Error Pages
 @application.errorhandler(401)

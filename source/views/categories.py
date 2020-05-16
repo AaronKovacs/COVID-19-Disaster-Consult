@@ -143,7 +143,7 @@ class ListCategories(Resource):
         session = Session()
 
         categoriesJS = []
-        categories = session.query(Category).order_by(desc(Category.created), Category.id).all()
+        categories = session.query(Category).order_by(desc(Category.last_updated), Category.id).all()
         for category in categories:
             categoriesJS.append(category.publicJSON())
 
