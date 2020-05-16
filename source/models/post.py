@@ -41,16 +41,22 @@ class Post(Base):
     author = Column(String(255))
     public = Column(Boolean, default=False)
     locale = Column(String(7), default='US')
+    keywords = Column(String(255), default='US')
 
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
     def publicJSON(self):
+        keywords_txt = self.keywords
+        if self.keywords is None:
+            keywords_txt = ''
+
         return {
         'id': self.id,
         'title': self.title,
         'content': self.content,
         'public': self.public,
+        'keywords': keywords_txt,
         'last_updated': self.last_updated_formatted()
         }
 
@@ -63,6 +69,7 @@ class Post(Base):
         return {
         'title': '',
         'content': '',
+        'keywords': '',
         'public': False,
         'last_updated': ''
         }

@@ -231,7 +231,7 @@ class CreateSection(Resource):
         sectionID = section.id
         session.close()
 
-        track_activity('Updated section', sectionID, 'section')
+        track_activity('Updated section \'%s\'' % (section.title), sectionID, 'section')
 
         return redirect(url_for('Sections_view_section', id=sectionID))
     @login_required

@@ -199,6 +199,7 @@ class CreatePost(Resource):
 
         title = request.form['title']
         content = request.form['content']
+        keywords = request.form['keywords']
         public = False
         if request.form.get('public') != None:
             public = True
@@ -217,6 +218,7 @@ class CreatePost(Resource):
         post.title = title
         post.content = content
         post.public = public
+        post.keywords = keywords
 
 
         session.add(post)
