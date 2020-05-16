@@ -14,7 +14,7 @@ from flask_security import UserMixin, RoleMixin
 from sqlalchemy import desc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import relationship, backref, validates
-from sqlalchemy import Boolean, DateTime, Column, Integer, Float, String, ForeignKey
+from sqlalchemy import Boolean, DateTime, Column, Integer, Float, String, ForeignKey, Text
 
 from passlib.hash import pbkdf2_sha256
 from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, BadData
@@ -70,7 +70,7 @@ class Post(Base):
     def last_updated_formatted(self):
         try:
             import timeago
-            return timeago.format(self.last_updated, datetime.datetime.now())
+            return timeago.format(self.last_updated, datetime.datetime.utcnow())
         except:
             print('here')
             return "Missing package requirement: timeago"

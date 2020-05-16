@@ -149,7 +149,7 @@ class ListSections(Resource):
         session = Session()
 
         sectionsJS = []
-        sections = session.query(Section).order_by(desc(Section.created), Section.id).all()
+        sections = session.query(Section).order_by(desc(Section.last_updated), Section.id).all()
         for section in sections:
             sectionsJS.append(section.publicJSON())
 

@@ -85,7 +85,40 @@
 		</div>
 		{% endfor %}
 	</div>
+
+	<hr/>
+	<div class="card-body">
+		<h3 class="card-title">Changelog</h3>
+		<table id="container" class="table table-normal">
+			<thead>
+				<tr>
+					<th scope="col">Action</th>
+					<th scope="col">Time</th>
+				</tr>
+			</thead>
+			<tbody id="container">
+
+				{% for activity in activities %}
+				<tr>
+					<td>
+						{% if activity.draft %}
+						<a href="{{ url_for('Drafts_view_draft', draftID=activity.draft) }}">{{ activity.user.realname }}: {{ activity.text }}</a>
+						{% else %}
+						{{ activity.user.realname }}: {{ activity.text }}
+						{% endif %}
+
+					</td>
+					<td>{{ activity.created }}</td>
+				</tr>
+
+				{% endfor %}
+			</tbody>
+		</table>
+		{{ pagination.links }}
+	</div>
+
 </div>
+
 
 
 {% endblock %}

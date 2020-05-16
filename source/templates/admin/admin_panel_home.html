@@ -36,15 +36,24 @@
 
     {% for activity in activities %}
     <tr>
-      <td>{{ activity.user.realname }}: {{ activity.text }}</td>
+      <td>
+        {% if activity.draft %}
+        <a href="{{ url_for('Drafts_view_draft', draftID=activity.draft) }}">{{ activity.user.realname }}: {{ activity.text }}</a>
+        {% else %}
+        {{ activity.user.realname }}: {{ activity.text }}
+        {% endif %}
+      </td>
       <td>{{ activity.created }}</td>
-      <td>{{ activity.object_type }}</td>
+      <td>
+        <a href="{{ activity.url }}">{{ activity.object_type }}</a>
+      </td>
       <td>{{ activity.object_id }}</td>
     </tr>
 
     {% endfor %}
   </tbody>
 </table>
+{{ pagination.links }}
 {% endblock %}
 
 {% block footer %}

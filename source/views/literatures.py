@@ -73,7 +73,7 @@ class ListLiteratures(Resource):
         session = Session()
 
         litJS = []
-        lits = session.query(Literature).order_by(desc(Literature.created), Literature.id).all()
+        lits = session.query(Literature).order_by(desc(Literature.last_updated), Literature.id).all()
         for lit in lits:
             litJS.append(lit.publicJSON())
 

@@ -77,7 +77,7 @@ class ListLinks(Resource):
         session = Session()
 
         linksJS = []
-        links = session.query(Link).order_by(desc(Link.created), Link.id).all()
+        links = session.query(Link).order_by(desc(Link.last_updated), Link.id).all()
         for link in links:
             linksJS.append(link.publicJSON())
 
