@@ -66,7 +66,7 @@ class LinksGet(Resource):
         session = Session()
 
         linksJS = []
-        links = get_page(session.query(Link).order_by(desc(Link.created), Link.id), per_page=5, page=currentPage)
+        links = get_page(session.query(Link).filter_by(public=True).order_by(desc(Link.created), Link.id), per_page=5, page=currentPage)
         next_page = links.paging.bookmark_next
         if links.paging.has_next == False:
             next_page = ""
@@ -77,6 +77,32 @@ class LinksGet(Resource):
         session.close()
 
         return jsonify({'links': linksJS, 'page': next_page})
+
+
+        
+
+@api.route('/contents')
+class TableOfContents(Resource):
+    def get(self):
+        session = Session()
+
+        table_of_contents = []
+        all_categories = session.query(Category).all()
+        for cat in all_categories:
+            use_sections = []
+
+            category_sections = session.query(CategorySection).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
+            for link in category_sections:
+                section = session.query(Section).filter_by(id=link.section).first()
+                if section is not None:
+                    if section.public:
+                        use_sections.append({ 'name': section.title, 'id': section.id })
+
+            table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
+
+        session.close()
+
+        return jsonify({'table_of_contents': table_of_contents})
 
 @api.route('/literature')
 class LiteratureGet(Resource):
@@ -89,7 +115,7 @@ class LiteratureGet(Resource):
         session = Session()
 
         litJS = []
-        lits = get_page(session.query(Literature).order_by(desc(Literature.created), Literature.id), per_page=5, page=currentPage)
+        lits = get_page(session.query(Literature).filter_by(public=True).order_by(desc(Literature.created), Literature.id), per_page=5, page=currentPage)
         next_page = lits.paging.bookmark_next
         if lits.paging.has_next == False:
             next_page = ""
@@ -115,7 +141,7 @@ class Other(Resource):
         postsJS = []
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
-            if post is not None:
+            if post is not None and post.public == False:
                 postsJS.append(post.publicJSON())
 
         session.close()
@@ -132,7 +158,7 @@ class ProviderCategories(Resource):
 
         catJS = []
         for cat_id in fixed_categories:
-            cat = session.query(Category).filter_by(id=cat_id).first()
+            cat = session.query(Category).filter_by(public=True).filter_by(id=cat_id).first()
             if cat is not None:
                 catJS.append(cat.publicJSON())
 
@@ -150,7 +176,7 @@ class ViewCategory(Resource):
         sectionsJS = []
         for link in category_sections:
             section = session.query(Section).filter_by(id=link.section).first()
-            if section is not None:
+            if section is not None and section.public is True:
                 sectionsJS.append(section.publicJSON())
 
         session.close()
@@ -169,7 +195,7 @@ class ViewSection(Resource):
         postsJS = []
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
-            if post is not None:
+            if post is not None and post.public is True:
                 postsJS.append(post.publicJSON())
 
         session.close()
@@ -181,15 +207,21 @@ class ViewLiterature(Resource):
     def get(self, literatureID):
         session = Session()
 
-        lit = session.query(Literature).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(public=True).filter_by(id=literatureID).first()
         if lit is None:
             abort(404)
 
         litJS = lit.publicJSON()
 
+        litLinks = session.query(LiteratureLink).filter_by(literature=literatureID).all()
+        linksJS = []
+        for content in litLinks:
+            linksJS.append(content.publicJSON())
+
+
         session.close()
 
-        return jsonify({'literature': litJS})
+        return jsonify({'literature': litJS, 'links': linksJS})
 
 @api.route('/us/graph')
 class USGraphData(Resource):
