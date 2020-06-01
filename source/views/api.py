@@ -154,7 +154,7 @@ class ProviderCategories(Resource):
     def get(self):
         session = Session()
 
-        fixed_categories = ['srxnj8', 's7gmcl', 's9v3pn', 'szlxjv']
+        fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
 
         catJS = []
         for cat_id in fixed_categories:

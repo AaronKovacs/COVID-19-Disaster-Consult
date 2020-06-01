@@ -54,22 +54,27 @@ api = APINamespace('Pages')#Api(blueprint)
 @api.route('/home')
 class Home(Resource):
     def get(self):
+        # Create connection to database
         session = Session()
 
+        # Fetch latest news links from database and convert to JSON
         linksJS = []
         links = session.query(Link).order_by(desc(Link.created), Link.id).limit(2)
         for link in links:
             if link.public:
                 linksJS.append(link.publicJSON())
 
+        # Fetch latest literature from database and convert to JSON
         litJS = []
         lits = session.query(Literature).order_by(desc(Literature.created), Literature.id).limit(3)
         for lit in lits:
             if lit.public:
                 litJS.append(lit.publicJSON())
 
+        # Close database connection
         session.close()
 
+        # Render HTML template with Jinja
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS), 200, headers)
 
