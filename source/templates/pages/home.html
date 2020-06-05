@@ -10,7 +10,7 @@
 <div class="btnContainer">
 	<h3 id ="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i><br>Topic: COVID-19</h3>
 	<div class="btn-lg">
-		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
+		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories', site=site) }}';" style="white-space: normal;">
 			<h2 class="provider-btn-title">Go To Clinical and Operational Resources
 				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron"></h2>
 			</button>
@@ -57,7 +57,7 @@
 
 					<br>
 					<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-						<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
+						<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news', site=site) }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
 					</div>
 				</div><!--NewsContainerEnd-->
 
@@ -72,14 +72,14 @@
 							<div>
 								<h4 style="white-space: normal;">{{ lit.title }}</h4>
 								<p>{{ lit.excerpt }}</p>
-								<a href="{{ url_for('Pages_view_literature', literatureID=lit.id) }}" >View Literature</a>
+								<a href="{{ url_for('Pages_view_literature', literatureID=lit.id, site=site) }}" >View Literature</a>
 							</div>
 						</div>
 						{% endfor %}
 
 						<br>
 						<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-							<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+							<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature', site=site) }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
 						</div>
 						<!-- </div> -->
 					</div>

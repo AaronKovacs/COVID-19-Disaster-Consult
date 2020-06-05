@@ -53,7 +53,7 @@ api = APINamespace('Pages')#Api(blueprint)
 
 @api.route('/home')
 class Home(Resource):
-    def get(self):
+    def get(self, site):
         # Create connection to database
         session = Session()
 
@@ -76,12 +76,12 @@ class Home(Resource):
 
         # Render HTML template with Jinja
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS), 200, headers)
+        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, site=site), 200, headers)
 
 
 @api.route('/news')
 class ViewAllNews(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
 
         linksJS = []
@@ -93,11 +93,11 @@ class ViewAllNews(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/view_all_links.html', links=linksJS), 200, headers)
+        return make_response(render_template('pages/view_all_links.html', links=linksJS, site=site), 200, headers)
 
 @api.route('/literature')
 class ViewAllLiterature(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
 
         literatureJS = []
@@ -109,12 +109,12 @@ class ViewAllLiterature(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/view_all_literature.html', literatures=literatureJS), 200, headers)
+        return make_response(render_template('pages/view_all_literature.html', literatures=literatureJS, site=site), 200, headers)
 
 
 @api.route('/other')
 class Other(Resource):
-    def get(self):
+    def get(self, site):
         sectionID = 's1gemu'
 
 
@@ -134,12 +134,12 @@ class Other(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/other_information.html', section=sectionJS, posts=postsJS), 200, headers)
+        return make_response(render_template('pages/other_information.html', section=sectionJS, posts=postsJS, site=site), 200, headers)
 
 
 @api.route('/categories')
 class Categories(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
 
         fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
@@ -153,11 +153,11 @@ class Categories(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/provider_select.html', categories=catJS), 200, headers)
+        return make_response(render_template('pages/provider_select.html', categories=catJS, site=site), 200, headers)
 
 @api.route('/categories/<categoryID>')
 class ViewCategory(Resource):
-    def get(self, categoryID):
+    def get(self, categoryID, site):
         session = Session()
 
         category = session.query(Category).filter_by(id=categoryID).first()
@@ -181,11 +181,11 @@ class ViewCategory(Resource):
 
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/provider_select.html', categories=catJS, sections=sectionsJS, category=categoryJS), 200, headers)
+        return make_response(render_template('pages/provider_select.html', categories=catJS, sections=sectionsJS, category=categoryJS, site=site), 200, headers)
 
 @api.route('/section/<sectionID>')
 class ViewSection(Resource):
-    def get(self, sectionID):
+    def get(self, sectionID, site):
         categoryID = request.args.get('categoryID', None)
 
         session = Session()
@@ -233,11 +233,11 @@ class ViewSection(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents), 200, headers)
+        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, site=site), 200, headers)
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):
-    def get(self, literatureID):
+    def get(self, literatureID, site):
         session = Session()
 
         lit = session.query(Literature).filter_by(id=literatureID).first()
@@ -254,56 +254,56 @@ class ViewLiterature(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/view_literature.html', literature=litJS, links=linksJS), 200, headers)
+        return make_response(render_template('pages/view_literature.html', literature=litJS, links=linksJS, site=site), 200, headers)
 
 
 
 @api.route('/contact')
 class Contact(Resource):
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/contact.html'), 200, headers)
+        return make_response(render_template('pages/contact.html', site=site), 200, headers)
 
 @api.route('/privacy')
 class Privacy(Resource):
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/privacy.html'), 200, headers)
+        return make_response(render_template('pages/privacy.html', site=site), 200, headers)
 
 @api.route('/medical')
 class Medical(Resource):
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/medical.html'), 200, headers)
+        return make_response(render_template('pages/medical.html', site=site), 200, headers)
 
 @api.route('/tos')
 class TOS(Resource):
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/tos.html'), 200, headers)
+        return make_response(render_template('pages/tos.html', site=site), 200, headers)
 
 @api.route('/cookies')
 class Cookies(Resource):
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/cookies.html'), 200, headers)
+        return make_response(render_template('pages/cookies.html', site=site), 200, headers)
     
 @api.route('/sponsor')
 class Sponsor(Resource):
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/sponsor.html'), 200, headers)
+        return make_response(render_template('pages/sponsor.html', site=site), 200, headers)
 
 @api.route('/aboutus')
 class Aboutus(Resource):
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/about_us.html'), 200, headers)
+        return make_response(render_template('pages/about_us.html', site=site), 200, headers)
 
 
 @api.route('/feedback')
 class SubmitFeedback(Resource):
-    def post(self):
+    def post(self, site):
         email = request.form.get('email', '')
         feedback = request.form['feedback']
         ftype = request.args.get('ftype')
@@ -319,11 +319,11 @@ class SubmitFeedback(Resource):
 
     def get(self):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/success_feedback.html'), 200, headers)       
+        return make_response(render_template('pages/success_feedback.html', site=site), 200, headers)       
 
 
 # Mark file expose
 @api.route('/loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')
 class LoaderIO(Resource):
-    def get(self):
+    def get(self, site):
         return send_from_directory('./source/static', filename='loaderio-be2727d05bae7704d76a1b78f85fa5bb.txt')

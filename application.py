@@ -171,13 +171,13 @@ if scheduler_enabled:
 @application.route("/")
 def redirect_home():
     if ENV_NAME() == 'prod':
-        return redirect(url_for('Pages_home', _scheme='https', _external=True))
+        return redirect(url_for('Pages_home', _scheme='https', _external=True, site='covid-19'))
     else:
-        return redirect(url_for('Pages_home'))
+        return redirect(url_for('Pages_home', site='covid-19'))
 
 
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
-api.add_namespace(pages, path='')
+api.add_namespace(pages, path='/<site>')
 api.add_namespace(posts, path='/posts')
 api.add_namespace(sections, path='/sections')
 api.add_namespace(categories, path='/categories')
