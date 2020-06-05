@@ -49,7 +49,7 @@ api = APINamespace('Sections')
 @api.route('/<sectionID>/add/posts')
 class AddPostSectionViewPosts(Resource):
     @login_required
-    def get(self, sectionID):
+    def get(self, sectionID, site):
         session = Session()
 
         section = session.query(Section).filter_by(id=sectionID).first()
@@ -64,12 +64,12 @@ class AddPostSectionViewPosts(Resource):
 
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_section_add_posts.html', posts=postsJS, section=sectionJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_section_add_posts.html', posts=postsJS, section=sectionJS, site=site), 200, headers)
 
 @api.route('/<sectionID>/add/<postID>')
 class AddPostSection(Resource):
     @login_required
-    def get(self, sectionID, postID):
+    def get(self, sectionID, postID, site):
         session = Session()
 
         section = session.query(Section).filter_by(id=sectionID).first()
@@ -96,13 +96,13 @@ class AddPostSection(Resource):
         track_activity('Added post to section', sectionID, 'section')
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
 
 
 @api.route('/<sectionID>/delete')
 class DeleteSection(Resource):
     @login_required
-    def get(self, sectionID):
+    def get(self, sectionID, site):
         session = Session()
 
         section = session.query(Section).filter_by(id=sectionID).first()
@@ -121,12 +121,12 @@ class DeleteSection(Resource):
         track_activity('Deleted section', sectionID, 'section')
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Sections_list_sections'))
+        return redirect(url_for('Sections_list_sections', site=site))
 
 @api.route('/<sectionID>/<postID>/post/delete')
 class DeletePost(Resource):
     @login_required
-    def get(self, postID, sectionID):
+    def get(self, postID, sectionID, site):
         session = Session()
 
         link = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
@@ -139,13 +139,13 @@ class DeletePost(Resource):
         track_activity('Deleted post from section', sectionID, 'section')
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
 
 
 @api.route('/list')
 class ListSections(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         sectionsJS = []
@@ -156,12 +156,12 @@ class ListSections(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_sections.html', sections=sectionsJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_sections.html', sections=sectionsJS, site=site), 200, headers)
 
 @api.route('/view')
 class ViewSection(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         sectionID = request.args.get('id')
         session = Session()
 
@@ -181,12 +181,12 @@ class ViewSection(Resource):
         sectionJS = section.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_view_section.html', section=sectionJS, posts=postsJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_view_section.html', section=sectionJS, posts=postsJS, site=site), 200, headers)
 
 @api.route('/<sectionID>/<postID>/order')
 class UpdateSectionOrder(Resource):
     @login_required
-    def post(self, sectionID, postID):
+    def post(self, sectionID, postID, site):
         order = request.form['order']
        
         session = Session()
@@ -200,13 +200,13 @@ class UpdateSectionOrder(Resource):
 
         track_activity('Changed order of section', sectionID, 'section')
 
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
 
 
 @api.route('/create')
 class CreateSection(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         sectionID = request.args.get('id', None)
 
 
@@ -233,9 +233,9 @@ class CreateSection(Resource):
 
         track_activity('Updated section \'%s\'' % (section.title), sectionID, 'section')
 
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
     @login_required
-    def get(self):
+    def get(self, site):
         sectionID = request.args.get('id')
         session = Session()
 
@@ -244,10 +244,10 @@ class CreateSection(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/sections/admin_panel_create_section.html', section=Section().blankJSON()), 200, headers)
+            return make_response(render_template('admin/sections/admin_panel_create_section.html', section=Section().blankJSON(), site=site), 200, headers)
 
         sectionJS = section.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_create_section.html', section=sectionJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_create_section.html', section=sectionJS, site=site), 200, headers)
 

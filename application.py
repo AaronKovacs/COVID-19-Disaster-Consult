@@ -178,14 +178,14 @@ def redirect_home():
 
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
 api.add_namespace(pages, path='/<site>')
-api.add_namespace(posts, path='/posts')
-api.add_namespace(sections, path='/sections')
-api.add_namespace(categories, path='/categories')
-api.add_namespace(links, path='/links')
-api.add_namespace(literatures, path='/literatures')
-api.add_namespace(drafts, path='/drafts')
+api.add_namespace(posts, path='/<site>/posts')
+api.add_namespace(sections, path='/<site>/sections')
+api.add_namespace(categories, path='/<site>/categories')
+api.add_namespace(links, path='/<site>/links')
+api.add_namespace(literatures, path='/<site>/literatures')
+api.add_namespace(drafts, path='/<site>/drafts')
 
-api.add_namespace(mobileapi, path='/api/v1')
+api.add_namespace(mobileapi, path='/<site>/api/v1')
 
 api.add_namespace(authentication, path='/auth')
 
@@ -230,7 +230,7 @@ def admin():
     actsJS = []
     acts = session.query(ActivityTrack).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
     for act in acts:
-        actsJS.append(act.publicJSON())
+        actsJS.append(act.publicJSON('covid-19'))
 
 
     pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).count(), css_framework='bootstrap4')
@@ -239,7 +239,20 @@ def admin():
 
 
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('admin/admin_panel_home.html', usgraph=us_graphjs, summary=summary_graphjs, activities=actsJS, pagination=pagination), 200, headers)
+    return make_response(render_template('admin/admin_panel_home.html', usgraph=us_graphjs, summary=summary_graphjs, activities=actsJS, pagination=pagination, site='covid-19'), 200, headers)
+
+
+@application.route('/admin/select')
+@login_required
+def admin_select():
+    session = Session()
+ 
+    session.close()
+
+
+    headers = {'Content-Type': 'text/html'}
+    return make_response(render_template('admin/admin_panel_disaster_type.html', site='covid-19'), 200, headers)
+
 
 # Error Pages
 @application.errorhandler(401)

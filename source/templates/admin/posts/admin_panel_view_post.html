@@ -11,11 +11,11 @@
 {% block panel_buttons %}
 <div class="btn-toolbar mb-2 mb-md-0">
 	<div class="btn-group mr-2">
-		<a href="{{ url_for('Posts_create_post', id=post.id  ) }}" class="btn btn-sm btn-outline-primary">Edit Post</a>
+		<a href="{{ url_for('Posts_create_post', id=post.id, site=site) }}" class="btn btn-sm btn-outline-primary">Edit Post</a>
 	</div>
 	<div class="btn-group mr-2">
-		<a class="btn btn-sm btn-outline-primary" href="{{ url_for('Posts_upload_image', postID=post.id  ) }}">Add Image</a>
-		<a class="btn btn-sm btn-outline-primary" href="{{ url_for('Posts_add_url', postID=post.id  ) }}">Add URL</a>
+		<a class="btn btn-sm btn-outline-primary" href="{{ url_for('Posts_upload_image', postID=post.id, site=site) }}">Add Image</a>
+		<a class="btn btn-sm btn-outline-primary" href="{{ url_for('Posts_add_url', postID=post.id, site=site) }}">Add URL</a>
 	</div>
 	<div class="btn-group mr-2">
 		<button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#deleteModal">Delete Post</button>
@@ -37,7 +37,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<a class="btn btn-danger" href="{{ url_for('Posts_delete_post', postID=post.id  ) }}" role="button">Delete</a>
+				<a class="btn btn-danger" href="{{ url_for('Posts_delete_post', postID=post.id, site=site) }}" role="button">Delete</a>
 			</div>
 		</div>
 	</div>
@@ -72,7 +72,7 @@
 			<a href="{{ link.url }}" class="card-link">{{ link.text }} - {{ link.url }}</a>
 
 			<div class="btn-toolbar mb-2 mb-md-0">
-				<a style="margin-left: auto;" class="btn btn-sm btn-outline-secondary" href="{{ url_for('Posts_delete_url', urlID=link.id, postID=post.id ) }}">Delete URL</a>
+				<a style="margin-left: auto;" class="btn btn-sm btn-outline-secondary" href="{{ url_for('Posts_delete_url', urlID=link.id, postID=post.id, site=site) }}">Delete URL</a>
 			</div>
 		</div>
 		{% endfor %}
@@ -80,7 +80,7 @@
 		<img style="margin-top: 2em;" class="card-img-top" src="{{ image.large_url }}" alt="image.text">
 		<div class="card-footer text-muted " style="border: 1px solid rgba(0,0,0,.125); border-top: 0px solid rgba(0,0,0,.125); border-radius: 0px 0px 4px 4px;">
 			<div class="btn-toolbar mb-2 mb-md-0">
-				<a style="margin-left: auto;" class="btn btn-sm btn-outline-secondary" href="{{ url_for('Posts_delete_image', imageID=image.id, postID=post.id ) }}">Delete Image</a>
+				<a style="margin-left: auto;" class="btn btn-sm btn-outline-secondary" href="{{ url_for('Posts_delete_image', imageID=image.id, postID=post.id, site=site) }}">Delete Image</a>
 			</div>
 		</div>
 		{% endfor %}
@@ -102,7 +102,7 @@
 				<tr>
 					<td>
 						{% if activity.draft %}
-						<a href="{{ url_for('Drafts_view_draft', draftID=activity.draft) }}">{{ activity.user.realname }}: {{ activity.text }}</a>
+						<a href="{{ url_for('Drafts_view_draft', draftID=activity.draft, site=site) }}">{{ activity.user.realname }}: {{ activity.text }}</a>
 						{% else %}
 						{{ activity.user.realname }}: {{ activity.text }}
 						{% endif %}

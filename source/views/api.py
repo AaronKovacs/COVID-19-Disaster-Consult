@@ -56,7 +56,7 @@ api = APINamespace('API')
 
 @api.route('/links')
 class LinksGet(Resource):
-    def get(self):
+    def get(self, site):
         page = request.args.get('page')
         currentPage = ''
         if page is not None and page != '':
@@ -83,7 +83,7 @@ class LinksGet(Resource):
 
 @api.route('/contents')
 class TableOfContents(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
 
         table_of_contents = []
@@ -106,7 +106,7 @@ class TableOfContents(Resource):
 
 @api.route('/literature')
 class LiteratureGet(Resource):
-    def get(self):
+    def get(self, site):
         page = request.args.get('page')
         currentPage = ''
         if page is not None and page != '':
@@ -129,7 +129,7 @@ class LiteratureGet(Resource):
 
 @api.route('/other')
 class Other(Resource):
-    def get(self):
+    def get(self, site):
         sectionID = 's1gemu'
 
         session = Session()
@@ -151,7 +151,7 @@ class Other(Resource):
 
 @api.route('/provider/categories')
 class ProviderCategories(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
 
         fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
@@ -169,7 +169,7 @@ class ProviderCategories(Resource):
 
 @api.route('/categories/<categoryID>')
 class ViewCategory(Resource):
-    def get(self, categoryID):
+    def get(self, categoryID, site):
         session = Session()
 
         category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
@@ -184,7 +184,7 @@ class ViewCategory(Resource):
 
 @api.route('/section/<sectionID>')
 class ViewSection(Resource):
-    def get(self, sectionID):
+    def get(self, sectionID, site):
 
         session = Session()
 
@@ -204,7 +204,7 @@ class ViewSection(Resource):
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):
-    def get(self, literatureID):
+    def get(self, literatureID, site):
         session = Session()
 
         lit = session.query(Literature).filter_by(public=True).filter_by(id=literatureID).first()
@@ -225,7 +225,7 @@ class ViewLiterature(Resource):
 
 @api.route('/us/graph')
 class USGraphData(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
         us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
         if us_graph is None:
@@ -237,7 +237,7 @@ class USGraphData(Resource):
 
 @api.route('/graph/summary')
 class GraphSummaryData(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
         us_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
         if us_graph is None:

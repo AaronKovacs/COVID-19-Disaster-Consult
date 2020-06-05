@@ -23,7 +23,7 @@
             <tbody id="container">
                 {% for section in sections %}
 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Categories_add_section_category', categoryID=category.id, sectionID=section.id ) }}">
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Categories_add_section_category', categoryID=category.id, sectionID=section.id, site=site) }}">
                     <a>
                         <th scope="row">{{ section.title }}</th>
                         <td>{{ section.id }}</td>

@@ -69,7 +69,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg', 'image'])
 @api.route('/list')
 class ListLiteratures(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         litJS = []
@@ -80,12 +80,12 @@ class ListLiteratures(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_literatures.html', literatures=litJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_literatures.html', literatures=litJS, site=site), 200, headers)
 
 @api.route('/view')
 class View(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         literatureID = request.args.get('id')
         session = Session()
 
@@ -101,12 +101,12 @@ class View(Resource):
         litJS = lit.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_view_literature.html', literature=litJS, links=linksJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_view_literature.html', literature=litJS, links=linksJS, site=site), 200, headers)
 
 @api.route('/<literatureID>/delete')
 class DeleteLiterature(Resource):
     @login_required
-    def get(self, literatureID):
+    def get(self, literatureID, site):
         session = Session()
 
         lit = session.query(Literature).filter_by(id=literatureID).first()
@@ -123,13 +123,13 @@ class DeleteLiterature(Resource):
 
         track_activity('Deleted literature', literatureID, 'literature')
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Literatures_list_literatures'))
+        return redirect(url_for('Literatures_list_literatures', site=site))
 
 
 @api.route('/<literatureID>/<urlID>/url/delete')
 class DeleteURL(Resource):
     @login_required
-    def get(self, literatureID, urlID):
+    def get(self, literatureID, urlID, site):
         session = Session()
 
         content = session.query(LiteratureLink).filter_by(id=urlID).first()
@@ -142,12 +142,12 @@ class DeleteURL(Resource):
         track_activity('Deleted url from literature', literatureID, 'literature')
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Literatures_view', id=literatureID))
+        return redirect(url_for('Literatures_view', id=literatureID, site=site))
 
 @api.route('/<literatureID>/url/add')
 class AddURL(Resource):
     @login_required
-    def post(self, literatureID):
+    def post(self, literatureID, site):
         contentID = request.args.get('id')
 
         title = request.form['title']
@@ -174,10 +174,10 @@ class AddURL(Resource):
         session.close()
 
         track_activity('Added url to literature', literatureID, 'literature')
-        return redirect(url_for('Literatures_view', id=literatureID))
+        return redirect(url_for('Literatures_view', id=literatureID, site=site))
 
     @login_required
-    def get(self, literatureID):
+    def get(self, literatureID, site):
         contentID = request.args.get('id')
         session = Session()
 
@@ -191,12 +191,12 @@ class AddURL(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=LiteratureLink().blankJSON()), 200, headers)
+            return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=LiteratureLink().blankJSON(), site=site), 200, headers)
 
         contentJS = content.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=contentJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=contentJS, site=site), 200, headers)
 
 
 
@@ -204,7 +204,7 @@ class AddURL(Resource):
 @api.route('/create')
 class CreateLiterature(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         litID = request.args.get('id', None)
 
 
@@ -234,10 +234,10 @@ class CreateLiterature(Resource):
 
         track_activity('Updated literature', litID, 'literature')
 
-        return redirect(url_for('Literatures_view', id=litID))
+        return redirect(url_for('Literatures_view', id=litID, site=site))
 
     @login_required
-    def get(self):
+    def get(self, site):
         litID = request.args.get('id')
         session = Session()
 
@@ -246,12 +246,12 @@ class CreateLiterature(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=Literature().blankJSON()), 200, headers)
+            return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=Literature().blankJSON(), site=site), 200, headers)
 
         literatureJS = lit.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=literatureJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=literatureJS, site=site), 200, headers)
 
 
 # Image Upload Helpers

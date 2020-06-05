@@ -49,7 +49,7 @@ api = APINamespace('Categories')
 @api.route('/<categoryID>/add/sections')
 class AddSectionCategoryViewSections(Resource):
     @login_required
-    def get(self, categoryID):
+    def get(self, categoryID, site):
         session = Session()
 
         category = session.query(Category).filter_by(id=categoryID).first()
@@ -64,12 +64,12 @@ class AddSectionCategoryViewSections(Resource):
 
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/categories/admin_panel_category_add_sections.html', sections=sectionsJS, category=categoryJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_category_add_sections.html', sections=sectionsJS, category=categoryJS, site=site), 200, headers)
 
 @api.route('/<categoryID>/add/<sectionID>')
 class AddSectionCategory(Resource):
     @login_required
-    def get(self, categoryID, sectionID):
+    def get(self, categoryID, sectionID, site):
         session = Session()
 
         category = session.query(Category).filter_by(id=categoryID).first()
@@ -95,12 +95,12 @@ class AddSectionCategory(Resource):
 
         track_activity('Added section to category', categoryID, 'category')
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Categories_view_category', id=categoryID))
+        return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
 @api.route('/<categoryID>/delete')
 class DeleteCategory(Resource):
     @login_required
-    def get(self, categoryID):
+    def get(self, categoryID, site):
         session = Session()
 
         section = session.query(Category).filter_by(id=categoryID).first()
@@ -117,12 +117,12 @@ class DeleteCategory(Resource):
 
         track_activity('Deleted category', categoryID, 'category')
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Categories_list_categories'))
+        return redirect(url_for('Categories_list_categories', site=site))
 
 @api.route('/<categoryID>/<sectionID>/section/delete')
 class DeleteSection(Resource):
     @login_required
-    def get(self, categoryID, sectionID):
+    def get(self, categoryID, sectionID, site):
         session = Session()
 
         link = session.query(CategorySection).filter_by(category=categoryID, section=sectionID).first()
@@ -134,12 +134,12 @@ class DeleteSection(Resource):
 
         track_activity('Deleted section from category', categoryID, 'category')
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Categories_view_category', id=categoryID))
+        return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
 @api.route('/list')
 class ListCategories(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         categoriesJS = []
@@ -150,12 +150,12 @@ class ListCategories(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/categories/admin_panel_categories.html', categories=categoriesJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_categories.html', categories=categoriesJS, site=site), 200, headers)
 
 @api.route('/view')
 class ViewCategory(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         categoryID = request.args.get('id')
         session = Session()
 
@@ -175,12 +175,12 @@ class ViewCategory(Resource):
         categoryJS = category.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/categories/admin_panel_view_category.html', category=categoryJS, sections=sectionsJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_view_category.html', category=categoryJS, sections=sectionsJS, site=site), 200, headers)
 
 @api.route('/<categoryID>/<sectionID>/order')
 class UpdateCategoryOrder(Resource):
     @login_required
-    def post(self, categoryID, sectionID):
+    def post(self, categoryID, sectionID, site):
         order = request.form['order']
        
         session = Session()
@@ -193,14 +193,14 @@ class UpdateCategoryOrder(Resource):
         session.close()
 
         track_activity('Updated order of sections in category', categoryID, 'category')
-        return redirect(url_for('Categories_view_category', id=categoryID))
+        return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
 
 
 @api.route('/create')
 class CreateCategory(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         categoryID = request.args.get('id', None)
 
 
@@ -227,10 +227,10 @@ class CreateCategory(Resource):
 
         track_activity('Updated category', categoryID, 'category')
 
-        return redirect(url_for('Categories_view_category', id=categoryID))
+        return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
     @login_required
-    def get(self):
+    def get(self, site):
         categoryID = request.args.get('id')
         session = Session()
 
@@ -239,10 +239,10 @@ class CreateCategory(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/categories/admin_panel_create_category.html', category=Section().blankJSON()), 200, headers)
+            return make_response(render_template('admin/categories/admin_panel_create_category.html', category=Section().blankJSON(), site=site), 200, headers)
 
         categoryJS = category.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/categories/admin_panel_create_category.html', category=categoryJS), 200, headers)
+        return make_response(render_template('admin/categories/admin_panel_create_category.html', category=categoryJS, site=site), 200, headers)
 

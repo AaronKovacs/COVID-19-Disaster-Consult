@@ -73,7 +73,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg', 'image'])
 @api.route('/list')
 class ListLinks(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         linksJS = []
@@ -84,12 +84,12 @@ class ListLinks(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/links/admin_panel_links.html', links=linksJS), 200, headers)
+        return make_response(render_template('admin/links/admin_panel_links.html', links=linksJS, site=site), 200, headers)
 
 @api.route('/view')
 class View(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         linkID = request.args.get('id')
         session = Session()
 
@@ -100,12 +100,12 @@ class View(Resource):
         linksJS = link.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/links/admin_panel_view_link.html', link=linksJS), 200, headers)
+        return make_response(render_template('admin/links/admin_panel_view_link.html', link=linksJS, site=site), 200, headers)
 
 @api.route('/<linkID>/delete')
 class DeleteLink(Resource):
     @login_required
-    def get(self, linkID):
+    def get(self, linkID, site):
         session = Session()
 
         link = session.query(Link).filter_by(id=linkID).first()
@@ -118,13 +118,13 @@ class DeleteLink(Resource):
 
         track_activity('Deleted news link', linkID, 'link')
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Links_list_links'))
+        return redirect(url_for('Links_list_links', site=site))
 
 
 @api.route('/create')
 class CreateLink(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         linkID = request.args.get('id', None)
 
         title = ''
@@ -204,10 +204,10 @@ class CreateLink(Resource):
 
         track_activity('Updated news link', linkID, 'link')
 
-        return redirect(url_for('Links_view', id=linkID))
+        return redirect(url_for('Links_view', id=linkID, site=site))
 
     @login_required
-    def get(self):
+    def get(self, site):
         linkID = request.args.get('id')
         session = Session()
 
@@ -216,12 +216,12 @@ class CreateLink(Resource):
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/links/admin_panel_create_link.html', link=Link().blankJSON()), 200, headers)
+            return make_response(render_template('admin/links/admin_panel_create_link.html', link=Link().blankJSON(), site=site), 200, headers)
 
         linkJS = link.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/links/admin_panel_create_link.html', link=linkJS), 200, headers)
+        return make_response(render_template('admin/links/admin_panel_create_link.html', link=linkJS, site=site), 200, headers)
 
 
 # Image Upload Helpers

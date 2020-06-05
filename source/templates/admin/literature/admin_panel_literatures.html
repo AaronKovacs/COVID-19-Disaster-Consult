@@ -11,7 +11,7 @@
 
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Literatures_create_literature') }}" class="btn btn-sm btn-outline-primary">Create Literature</a>
+        <a href="{{ url_for('Literatures_create_literature', site=site) }}" class="btn btn-sm btn-outline-primary">Create Literature</a>
     </div>
 </div>
 
@@ -33,7 +33,7 @@
             <tbody id="container">
                 {% for literature in literatures %}
                 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Literatures_view', id=literature.id  ) }}">
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Literatures_view', id=literature.id, site=site) }}">
                     <a>
                         <td style="max-width: 4em;">
                             {% if literature.public %}

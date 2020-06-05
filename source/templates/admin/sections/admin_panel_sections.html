@@ -11,7 +11,7 @@
 
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Sections_create_section') }}" class="btn btn-sm btn-outline-primary">Create Section</a>
+        <a href="{{ url_for('Sections_create_section', site=site) }}" class="btn btn-sm btn-outline-primary">Create Section</a>
     </div>
 </div>
 
@@ -33,8 +33,8 @@
             <tbody id="container">
                 {% for section in sections %}
                 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Sections_view_section', id=section.id  ) }}">
-                    <a href="{{ url_for('Sections_create_section', id=section.id  ) }}">
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">
+                    <a href="{{ url_for('Sections_create_section', id=section.id, site=site) }}">
                         <td style="max-width: 4em;">
                             {% if section.public %}
                             <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">

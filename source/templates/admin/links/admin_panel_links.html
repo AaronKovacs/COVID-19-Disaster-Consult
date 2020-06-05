@@ -11,7 +11,7 @@
 
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Links_create_link') }}" class="btn btn-sm btn-outline-primary">Create Link</a>
+        <a href="{{ url_for('Links_create_link', site=site) }}" class="btn btn-sm btn-outline-primary">Create Link</a>
     </div>
 </div>
 
@@ -34,8 +34,8 @@
             <tbody id="container">
                 {% for link in links %}
                 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Links_view', id=link.id  ) }}">
-                    <a href="{{ url_for('Links_view', id=link.id  ) }}">
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Links_view', id=link.id, site=site) }}">
+                    <a href="{{ url_for('Links_view', id=link.id, site=site) }}">
                         <td style="max-width: 4em; min-width: 4em;">
                             {% if link.public %}
                             <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">

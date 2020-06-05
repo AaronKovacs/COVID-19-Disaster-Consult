@@ -11,7 +11,7 @@
 
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Categories_create_category') }}" class="btn btn-sm btn-outline-primary">Add Category</a>
+        <a href="{{ url_for('Categories_create_category', site=site) }}" class="btn btn-sm btn-outline-primary">Add Category</a>
     </div>
 </div>
 {% endblock %}
@@ -32,8 +32,8 @@
             <tbody id="container">
                 {% for category in categories %}
 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Categories_view_category', id=category.id  ) }}">
-                    <a href="{{ url_for('Categories_create_category', id=category.id  ) }}">
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Categories_view_category', id=category.id, site=site) }}">
+                    <a href="{{ url_for('Categories_create_category', id=category.id, site=site) }}">
                         <td style="max-width: 4em; min-width: 4em;">
                             {% if category.public %}
                             <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">

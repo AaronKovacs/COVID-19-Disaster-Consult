@@ -38,7 +38,7 @@
     <tr>
       <td>
         {% if activity.draft %}
-        <a href="{{ url_for('Drafts_view_draft', draftID=activity.draft) }}">{{ activity.user.realname }}: {{ activity.text }}</a>
+        <a href="{{ url_for('Drafts_view_draft', draftID=activity.draft, site=site) }}">{{ activity.user.realname }}: {{ activity.text }}</a>
         {% else %}
         {{ activity.user.realname }}: {{ activity.text }}
         {% endif %}
