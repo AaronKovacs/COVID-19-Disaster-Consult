@@ -43,6 +43,7 @@ class Link(Base):
     author = Column(String(255))
     public = Column(Boolean, default=False)
     locale = Column(String(7), default='US')
+    site = Column(String(255))
 
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)

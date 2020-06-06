@@ -27,6 +27,7 @@ class PostContent(Base):
     text = Column(String(255))
     url = Column(String(1000))
     content_type = Column(String(255))
+    site = Column(String(255))
     
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)

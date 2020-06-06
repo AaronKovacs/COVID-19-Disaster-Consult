@@ -27,7 +27,7 @@
 	<meta property="og:description" content="Your Consultant for Just-in-Time Information When Disasters Strike">
 	<meta property="og:image" content="https://www.disasterconsult.org/static/images/logoWide.png" >
 
-	<title>Disaster Consult | COVID-19 </title>
+	<title>Disaster Consult | {{ site|upper }} </title>
 
 	<!-- Bootstrap core CSS and JS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -71,7 +71,7 @@
 			<!--span class="w-100 d-lg-none d-block"><hidden spacer to center brand on mobile></span-->
 				<a class="navbar-brand" href="{{ url_for('select_screen', site=site) }}" id="navtitle">
 					<img src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
-					<span style="font-weight: 700">Disaster Consult</span> | COVID- 19
+					<span style="font-weight: 700">Disaster Consult</span> | {{ site|upper }}
 				</a>
 				<div class="w-100 text-right">
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">

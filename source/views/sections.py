@@ -52,11 +52,11 @@ class AddPostSectionViewPosts(Resource):
     def get(self, sectionID, site):
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
         postsJS = []
-        posts = session.query(Post).order_by(desc(Post.created), Post.id).all()
+        posts = session.query(Post).filter_by(site=site).order_by(desc(Post.created), Post.id).all()
         for post in posts:
             postsJS.append(post.publicJSON())
 
@@ -72,19 +72,19 @@ class AddPostSection(Resource):
     def get(self, sectionID, postID, site):
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
 
         if section == None:
             abort(404)
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
 
         if post == None:
             abort(404)
 
-        sectionpost = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
+        sectionpost = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID, post=postID).first()
         if sectionpost is None:
-            sectionpost = SectionPost()
+            sectionpost = SectionPost(site=site)
 
         sectionpost.post = postID
         sectionpost.section = sectionID
@@ -93,7 +93,7 @@ class AddPostSection(Resource):
         session.commit()
         session.close()
 
-        track_activity('Added post to section', sectionID, 'section')
+        track_activity('Added post to section', sectionID, 'section', site)
 
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Sections_view_section', id=sectionID, site=site))
@@ -105,12 +105,12 @@ class DeleteSection(Resource):
     def get(self, sectionID, site):
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
             abort(404)
         session.delete(section)
 
-        post_links = session.query(SectionPost).filter_by(section=sectionID).all()
+        post_links = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).all()
         for content in post_links:
             session.delete(content)
 
@@ -118,7 +118,7 @@ class DeleteSection(Resource):
         session.commit()
         session.close()
 
-        track_activity('Deleted section', sectionID, 'section')
+        track_activity('Deleted section', sectionID, 'section', site)
 
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Sections_list_sections', site=site))
@@ -129,14 +129,14 @@ class DeletePost(Resource):
     def get(self, postID, sectionID, site):
         session = Session()
 
-        link = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
+        link = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID, post=postID).first()
         if link is not None:
             session.delete(link)
 
         session.commit()
         session.close()
 
-        track_activity('Deleted post from section', sectionID, 'section')
+        track_activity('Deleted post from section', sectionID, 'section', site)
 
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Sections_view_section', id=sectionID, site=site))
@@ -149,7 +149,7 @@ class ListSections(Resource):
         session = Session()
 
         sectionsJS = []
-        sections = session.query(Section).order_by(desc(Section.last_updated), Section.id).all()
+        sections = session.query(Section).filter_by(site=site).order_by(desc(Section.last_updated), Section.id).all()
         for section in sections:
             sectionsJS.append(section.publicJSON())
 
@@ -165,14 +165,14 @@ class ViewSection(Resource):
         sectionID = request.args.get('id')
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
             abort(404)
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
         postsJS = []
         for link in section_posts:
-            post = session.query(Post).filter_by(id=link.post).first()
+            post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None:
                 js = post.publicJSON()
                 js['order'] = link.order
@@ -191,14 +191,14 @@ class UpdateSectionOrder(Resource):
        
         session = Session()
 
-        category_section = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
+        category_section = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID, post=postID).first()
         if category_section is None:
             return redirect(url_for('Sections_view_section', id=sectionID))
         category_section.order = order
         session.commit()
         session.close()
 
-        track_activity('Changed order of section', sectionID, 'section')
+        track_activity('Changed order of section', sectionID, 'section', site)
 
         return redirect(url_for('Sections_view_section', id=sectionID, site=site))
 
@@ -218,9 +218,9 @@ class CreateSection(Resource):
 
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
-            section = Section()
+            section = Section(site=site)
 
         section.title = title
         section.description = content
@@ -231,7 +231,7 @@ class CreateSection(Resource):
         sectionID = section.id
         session.close()
 
-        track_activity('Updated section \'%s\'' % (section.title), sectionID, 'section')
+        track_activity('Updated section \'%s\'' % (section.title), sectionID, 'section', site)
 
         return redirect(url_for('Sections_view_section', id=sectionID, site=site))
     @login_required
@@ -239,7 +239,7 @@ class CreateSection(Resource):
         sectionID = request.args.get('id')
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
             session.close()
 

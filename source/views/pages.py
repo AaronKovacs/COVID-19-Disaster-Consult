@@ -59,14 +59,14 @@ class Home(Resource):
 
         # Fetch latest news links from database and convert to JSON
         linksJS = []
-        links = session.query(Link).order_by(desc(Link.created), Link.id).limit(2)
+        links = session.query(Link).filter_by(site=site).order_by(desc(Link.created), Link.id).limit(2)
         for link in links:
             if link.public:
                 linksJS.append(link.publicJSON())
 
         # Fetch latest literature from database and convert to JSON
         litJS = []
-        lits = session.query(Literature).order_by(desc(Literature.created), Literature.id).limit(3)
+        lits = session.query(Literature).filter_by(site=site).order_by(desc(Literature.created), Literature.id).limit(3)
         for lit in lits:
             if lit.public:
                 litJS.append(lit.publicJSON())
@@ -85,7 +85,7 @@ class ViewAllNews(Resource):
         session = Session()
 
         linksJS = []
-        links = session.query(Link).order_by(desc(Link.created), Link.id).all()
+        links = session.query(Link).filter_by(site=site).order_by(desc(Link.created), Link.id).all()
         for link in links:
             if link.public:
                 linksJS.append(link.publicJSON())
@@ -101,7 +101,7 @@ class ViewAllLiterature(Resource):
         session = Session()
 
         literatureJS = []
-        literatures = session.query(Literature).order_by(desc(Literature.created), Literature.id).all()
+        literatures = session.query(Literature).filter_by(site=site).order_by(desc(Literature.created), Literature.id).all()
         for link in literatures:
             if link.public:
                 literatureJS.append(link.publicJSON())
@@ -120,10 +120,10 @@ class Other(Resource):
 
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.order), SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(site=site).filter_by(section=sectionID).order_by(desc(SectionPost.order), SectionPost.id).all()
         postsJS = []
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
@@ -146,7 +146,7 @@ class Categories(Resource):
 
         catJS = []
         for cat_id in fixed_categories:
-            cat = session.query(Category).filter_by(id=cat_id).first()
+            cat = session.query(Category).filter_by(site=site).filter_by(id=cat_id).first()
             if cat is not None:
                 catJS.append(cat.publicJSON())
 
@@ -160,21 +160,21 @@ class ViewCategory(Resource):
     def get(self, categoryID, site):
         session = Session()
 
-        category = session.query(Category).filter_by(id=categoryID).first()
+        category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = category.publicJSON()
 
         fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
 
         catJS = []
         for cat_id in fixed_categories:
-            cat = session.query(Category).filter_by(id=cat_id).first()
+            cat = session.query(Category).filter_by(site=site).filter_by(id=cat_id).first()
             if cat is not None:
                 catJS.append(cat.publicJSON())
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
+        category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         sectionsJS = []
         for link in category_sections:
-            section = session.query(Section).filter_by(id=link.section).first()
+            section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
             if section is not None:
                 if section.public:
                     sectionsJS.append(section.publicJSON())
@@ -190,7 +190,7 @@ class ViewSection(Resource):
 
         session = Session()
 
-        category = session.query(Category).filter_by(id=categoryID).first()
+        category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = None
         if category is not None:
             categoryJS = category.publicJSON()
@@ -201,9 +201,9 @@ class ViewSection(Resource):
         for cat in all_categories:
             use_sections = []
 
-            category_sections = session.query(CategorySection).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
+            category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
             for link in category_sections:
-                section = session.query(Section).filter_by(id=link.section).first()
+                section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
                 if section is not None:
                     if section.public:
                         use_sections.append({ 'name': section.title, 'id': section.id })
@@ -219,13 +219,13 @@ class ViewSection(Resource):
             table_of_contents.insert(0, table_of_contents.pop(move_index))
 
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
         postsJS = []
         for link in section_posts:
-            post = session.query(Post).filter_by(id=link.post).first()
+            post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None:
                 if post.public:
                     postsJS.append(post.siteJSON())
@@ -240,11 +240,11 @@ class ViewLiterature(Resource):
     def get(self, literatureID, site):
         session = Session()
 
-        lit = session.query(Literature).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(id=literatureID).first()
         if lit is None:
             abort(404)
 
-        litLinks = session.query(LiteratureLink).filter_by(literature=literatureID).all()
+        litLinks = session.query(LiteratureLink).filter_by(site=site).filter_by(literature=literatureID).all()
         linksJS = []
         for content in litLinks:
             linksJS.append(content.publicJSON())

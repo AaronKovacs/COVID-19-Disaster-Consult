@@ -52,11 +52,11 @@ class AddSectionCategoryViewSections(Resource):
     def get(self, categoryID, site):
         session = Session()
 
-        category = session.query(Category).filter_by(id=categoryID).first()
+        category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = category.publicJSON()
 
         sectionsJS = []
-        sections = session.query(Section).order_by(desc(Section.created), Section.id).all()
+        sections = session.query(Section).filter_by(site=site).order_by(desc(Section.created), Section.id).all()
         for section in sections:
             sectionsJS.append(section.publicJSON())
 
@@ -72,19 +72,19 @@ class AddSectionCategory(Resource):
     def get(self, categoryID, sectionID, site):
         session = Session()
 
-        category = session.query(Category).filter_by(id=categoryID).first()
+        category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
 
         if category == None:
             abort(404)
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
 
         if section == None:
             abort(404)
 
-        sectioncategory = session.query(CategorySection).filter_by(category=categoryID, section=sectionID).first()
+        sectioncategory = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID, section=sectionID).first()
         if sectioncategory is None:
-            sectioncategory = CategorySection()
+            sectioncategory = CategorySection(site=site)
 
         sectioncategory.category = categoryID
         sectioncategory.section = sectionID
@@ -93,7 +93,7 @@ class AddSectionCategory(Resource):
         session.commit()
         session.close()
 
-        track_activity('Added section to category', categoryID, 'category')
+        track_activity('Added section to category', categoryID, 'category', site)
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
@@ -103,19 +103,19 @@ class DeleteCategory(Resource):
     def get(self, categoryID, site):
         session = Session()
 
-        section = session.query(Category).filter_by(id=categoryID).first()
+        section = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         if section is None:
             abort(404)
         session.delete(section)
 
-        post_links = session.query(CategorySection).filter_by(category=categoryID).all()
+        post_links = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID).all()
         for content in post_links:
             session.delete(content)
 
         session.commit()
         session.close()
 
-        track_activity('Deleted category', categoryID, 'category')
+        track_activity('Deleted category', categoryID, 'category', site)
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Categories_list_categories', site=site))
 
@@ -125,14 +125,14 @@ class DeleteSection(Resource):
     def get(self, categoryID, sectionID, site):
         session = Session()
 
-        link = session.query(CategorySection).filter_by(category=categoryID, section=sectionID).first()
+        link = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID, section=sectionID).first()
         if link is not None:
             session.delete(link)
 
         session.commit()
         session.close()
 
-        track_activity('Deleted section from category', categoryID, 'category')
+        track_activity('Deleted section from category', categoryID, 'category', site)
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
@@ -143,7 +143,7 @@ class ListCategories(Resource):
         session = Session()
 
         categoriesJS = []
-        categories = session.query(Category).order_by(desc(Category.last_updated), Category.id).all()
+        categories = session.query(Category).filter_by(site=site).order_by(desc(Category.last_updated), Category.id).all()
         for category in categories:
             categoriesJS.append(category.publicJSON())
 
@@ -159,14 +159,14 @@ class ViewCategory(Resource):
         categoryID = request.args.get('id')
         session = Session()
 
-        category = session.query(Category).filter_by(id=categoryID).first()
+        category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         if category is None:
             abort(404)
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
+        category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         sectionsJS = []
         for link in category_sections:
-            section = session.query(Section).filter_by(id=link.section).first()
+            section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
             if section is not None:
                 js = section.publicJSON()
                 js['order'] = link.order
@@ -185,14 +185,14 @@ class UpdateCategoryOrder(Resource):
        
         session = Session()
 
-        category_section = session.query(CategorySection).filter_by(section=sectionID, category=categoryID).first()
+        category_section = session.query(CategorySection).filter_by(site=site).filter_by(section=sectionID, category=categoryID).first()
         if category_section is None:
             return redirect(url_for('Categories_view_category', id=categoryID))
         category_section.order = order
         session.commit()
         session.close()
 
-        track_activity('Updated order of sections in category', categoryID, 'category')
+        track_activity('Updated order of sections in category', categoryID, 'category', site)
         return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
 
@@ -212,9 +212,9 @@ class CreateCategory(Resource):
 
         session = Session()
 
-        category = session.query(Category).filter_by(id=categoryID).first()
+        category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         if category is None:
-            category = Category()
+            category = Category(site=site)
 
         category.title = title
         category.description = content
@@ -225,7 +225,7 @@ class CreateCategory(Resource):
         categoryID = category.id
         session.close()
 
-        track_activity('Updated category', categoryID, 'category')
+        track_activity('Updated category', categoryID, 'category', site)
 
         return redirect(url_for('Categories_view_category', id=categoryID, site=site))
 
@@ -234,7 +234,7 @@ class CreateCategory(Resource):
         categoryID = request.args.get('id')
         session = Session()
 
-        category = session.query(Category).filter_by(id=categoryID).first()
+        category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         if category is None:
             session.close()
 

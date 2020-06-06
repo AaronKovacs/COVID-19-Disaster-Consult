@@ -77,7 +77,7 @@ class ListLinks(Resource):
         session = Session()
 
         linksJS = []
-        links = session.query(Link).order_by(desc(Link.last_updated), Link.id).all()
+        links = session.query(Link).filter_by(site=site).order_by(desc(Link.last_updated), Link.id).all()
         for link in links:
             linksJS.append(link.publicJSON())
 
@@ -93,7 +93,7 @@ class View(Resource):
         linkID = request.args.get('id')
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
             abort(404)
 
@@ -108,7 +108,7 @@ class DeleteLink(Resource):
     def get(self, linkID, site):
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
             abort(404)
         session.delete(link)
@@ -116,7 +116,7 @@ class DeleteLink(Resource):
         session.commit()
         session.close()
 
-        track_activity('Deleted news link', linkID, 'link')
+        track_activity('Deleted news link', linkID, 'link', site)
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Links_list_links', site=site))
 
@@ -142,9 +142,9 @@ class CreateLink(Resource):
 
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
-            link = Link()
+            link = Link(site=site)
         else:
             link.title = title
             link.description = description
@@ -202,7 +202,7 @@ class CreateLink(Resource):
         linkID = link.id
         session.close()
 
-        track_activity('Updated news link', linkID, 'link')
+        track_activity('Updated news link', linkID, 'link', site)
 
         return redirect(url_for('Links_view', id=linkID, site=site))
 
@@ -211,7 +211,7 @@ class CreateLink(Resource):
         linkID = request.args.get('id')
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
             session.close()
 

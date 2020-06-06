@@ -188,7 +188,13 @@ def redirect_homoe():
 def select_screen():
     session = Session()
 
-    sites = session.query(Site).order_by(Site.order, Site.id).all()
+    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.id).all()
+
+    if len(sites) == 1:
+        if ENV_NAME() == 'prod':
+            return redirect(url_for('Pages_home', _scheme='https', _external=True, site='covid-19'))
+        else:
+            return redirect(url_for('Pages_home', site='covid-19'))
         
     sitesJS = []
     for site in sites:
@@ -259,12 +265,12 @@ def admin(site):
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
         
     actsJS = []
-    acts = session.query(ActivityTrack).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
+    acts = session.query(ActivityTrack).filter_by(site=site).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
     for act in acts:
         actsJS.append(act.publicJSON(site))
 
 
-    pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).count(), css_framework='bootstrap4')
+    pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).filter_by(site=site).count(), css_framework='bootstrap4')
 
     session.close()
 
