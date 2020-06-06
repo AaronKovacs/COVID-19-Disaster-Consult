@@ -65,6 +65,7 @@ from source.models.graph_cache import GraphCache
 from source.models.activity_track import ActivityTrack
 from source.models.feedback import Feedback
 from source.models.draft import Draft
+from source.models.site import Site
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
@@ -169,11 +170,41 @@ if scheduler_enabled:
     sched.start()
 
 @application.route("/")
-def redirect_home():
+def redirect_homoe():
+    session = Session()
+
+    sites = session.query(Site).filter_by(public=True).count()
+    session.close()
+    page = 'Pages_home'
+    if sites > 1:
+        page = 'select_screen'
+
+    if ENV_NAME() == 'prod':
+        return redirect(url_for(page, _scheme='https', _external=True, site='covid-19'))
+    else:
+        return redirect(url_for(page, site='covid-19'))
+
+@application.route("/select")
+def select_screen():
+    session = Session()
+
+    sites = session.query(Site).order_by(Site.order, Site.id).all()
+        
+    sitesJS = []
+    for site in sites:
+        sitesJS.append(site.publicJSON())
+
+ 
+    session.close()
+    headers = {'Content-Type': 'text/html'}
+    return make_response(render_template('pages/select-disaster.html', sites=sites, site='covid-19'), 200, headers)
+
+    '''
     if ENV_NAME() == 'prod':
         return redirect(url_for('Pages_home', _scheme='https', _external=True, site='covid-19'))
     else:
         return redirect(url_for('Pages_home', site='covid-19'))
+    '''
 
 
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
@@ -215,9 +246,9 @@ def registerSuccess():
     return make_response(render_template('successful_register.html'), 200, headers)
 
 
-@application.route('/admin')
+@application.route('/<site>/admin')
 @login_required
-def admin():
+def admin(site):
     session = Session()
     us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
     us_graphjs = us_graph.last_updated
@@ -230,7 +261,7 @@ def admin():
     actsJS = []
     acts = session.query(ActivityTrack).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
     for act in acts:
-        actsJS.append(act.publicJSON('covid-19'))
+        actsJS.append(act.publicJSON(site))
 
 
     pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).count(), css_framework='bootstrap4')
@@ -239,19 +270,26 @@ def admin():
 
 
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('admin/admin_panel_home.html', usgraph=us_graphjs, summary=summary_graphjs, activities=actsJS, pagination=pagination, site='covid-19'), 200, headers)
+    return make_response(render_template('admin/admin_panel_home.html', usgraph=us_graphjs, summary=summary_graphjs, activities=actsJS, pagination=pagination, site=site), 200, headers)
 
 
 @application.route('/admin/select')
 @login_required
 def admin_select():
     session = Session()
+
+    sites = session.query(Site).order_by(Site.order, Site.id).all()
+        
+    sitesJS = []
+    for site in sites:
+        sitesJS.append(site.publicJSON())
+
  
     session.close()
 
 
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('admin/admin_panel_disaster_type.html', site='covid-19'), 200, headers)
+    return make_response(render_template('admin/admin_panel_disaster_type.html', sites=sitesJS), 200, headers)
 
 
 # Error Pages

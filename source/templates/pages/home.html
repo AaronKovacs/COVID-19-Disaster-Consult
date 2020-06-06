@@ -224,7 +224,7 @@
 	// and recovered.
 	//****************************************************************************************
 	function getData() {
-		fetch("{{ url_for('API_graph_summary_data') }}", requestOptions)
+		fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
 		.then(res => {
 			return res.json();
 		}).then(obj => {
@@ -314,7 +314,7 @@
 		chartMap.clear();
 		let requestURL = "https://api.covid19api.com/country/" + country.slug +"/status/confirmed"
 		if (country.slug == "united-states") {
-			requestURL = "{{ url_for('API_us_graph_data') }}";
+			requestURL = "{{ url_for('API_us_graph_data', site=site) }}";
 		}
 		
 		fetch(requestURL, requestOptions)

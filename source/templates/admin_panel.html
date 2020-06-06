@@ -28,7 +28,8 @@
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
 		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Disaster Consult Admin</a>
-		<div style="width: 100%;"></div>
+		<div style="width: 100%;">
+		</div>
 		<ul class="navbar-nav px-3">
 			
 			<li class="nav-item text-nowrap">
@@ -49,11 +50,10 @@
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
-						<li class="nav-item">
-							
-							<a class="nav-link {% block selectButton %}{% endblock %}" href="{{ url_for('admin_select', site=site) }}">
-								<span data-feather="home"></span>
-								Select Disaster Type
+						<li class="nav-item" style="margin-bottom: -1em;">
+
+							<a href="{{ url_for('admin_select', site=site) }}">
+								<button style="margin-left: 1em; width: 87%;" type="button" class="btn btn-dark"><span style="font-weight: 800;">{{ site }}</span><br/><span style="font-size: 10pt;">Click to change</span></button>
 							</a>
 						</li>
 						<li class="nav-item">
