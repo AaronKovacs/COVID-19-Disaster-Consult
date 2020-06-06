@@ -251,6 +251,13 @@ def registerSuccess():
     headers = {'Content-Type': 'text/html'}
     return make_response(render_template('successful_register.html'), 200, headers)
 
+@application.route('/admin')
+@login_required
+def admin_redirect(site):
+    if ENV_NAME() == 'prod':
+        return redirect(url_for('admin_select', _scheme='https', _external=True, site='covid-19'))
+    else:
+        return redirect(url_for('admin_select', site='covid-19'))
 
 @application.route('/<site>/admin')
 @login_required
