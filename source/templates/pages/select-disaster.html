@@ -73,7 +73,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark">
 		<div class="d-flex flex-grow-1">
 			<!--span class="w-100 d-lg-none d-block"><hidden spacer to center brand on mobile></span-->
-				<a class="navbar-brand " href="Pages_home" id="navtitle">
+				<a class="navbar-brand " href="{{ url_for('Pages_home', site=site) }}" id="navtitle">
 					<img id="logo" alt="Logo" src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
 					<span style="font-weight: 700">
 						Disaster Consult	<br>

@@ -12,7 +12,7 @@
 	<meta name="robots" content="index, follow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="language" content="English">
-	
+
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@disasterconslt" />
 	<meta name="twitter:creator" content="@disasterconslt" />
@@ -41,14 +41,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,800,900&display=swap" rel="stylesheet">
 
 	<!-- Stylesheets -->
-	<link href="{{ url_for('static', filename = 'main.css') }}?v=1.0.0" rel="stylesheet">
-	
+	<link href="{{ url_for('static', filename = 'main.css') }}" rel="stylesheet">
+
 
 	<link rel='icon' href='../../static/images/favicon.png' type='image/png' >
 	<style>
 
 	</style>
-	
+
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163879908-1"></script>
 	<script>
@@ -71,8 +71,11 @@
 			<!--span class="w-100 d-lg-none d-block"><hidden spacer to center brand on mobile></span-->
 				<a class="navbar-brand" href="{{ url_for('select_screen', site=site) }}" id="navtitle">
 					<img src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
-					<span style="font-weight: 700">Disaster Consult</span> | {{ site|upper }}
-				</a>
+					<span style="font-weight: 700">
+						Disaster Consult	<br>
+						<b style="font-weight: 500">{{ site|upper }}</b>
+					</span>
+					</a>
 				<div class="w-100 text-right">
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
 						<span class="navbar-toggler-icon"></span>
@@ -87,9 +90,11 @@
 					<li class="nav-item">
 						<a href="{{ url_for('Pages_categories', site=site) }}" class="nav-link">Clinical and Operational Resources</a>
 					</li>
+					{% if site=='covid-19' %}
 					<li class="nav-item">
 						<a href="{{ url_for('Pages_other', site=site) }}" class="nav-link">Other Tools</a>
 					</li>
+					{% endif %}
 					<li class="nav-item">
 						<a href="{{ url_for('Pages_aboutus', site=site) }}" class="nav-link">About Us</a>
 					</li>
@@ -99,7 +104,7 @@
 					<li class="nav-item">
 						<a href="{{ url_for('Pages_sponsor', site=site) }}" class="nav-link">Sponsors</a>
 					</li>
-					
+
 					{% if current_user.is_authenticated %}
 					<li class="nav-item">
 						<a href="{{ url_for('admin_select') }}" class="nav-link">Admin</a>
@@ -171,13 +176,13 @@
 	<footer style="margin-bottom: 2em;">
 		<hr>
 		<center>
-			<p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home', site=site) }}">Home</a> · <a href="{{ url_for('Pages_categories', site=site) }}">Clinical and Operational Resources</a> · <a href="{{ url_for('Pages_other', site=site) }}">Other Tools</a> · <a href="{{ url_for('Pages_aboutus', site=site) }}">About Us</a> · <a href="{{ url_for('Pages_contact', site=site) }}">Contact</a> · <a href="{{ url_for('Pages_sponsor', site=site) }}">Sponsors</a> 
-				<br><br>			
+			<p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home', site=site) }}">Home</a> · <a href="{{ url_for('Pages_categories', site=site) }}">Clinical and Operational Resources</a> {% if site=='covid-19' %}· <a href="{{ url_for('Pages_other', site=site) }}">Other Tools</a> {% endif %}· <a href="{{ url_for('Pages_aboutus', site=site) }}">About Us</a> · <a href="{{ url_for('Pages_contact', site=site) }}">Contact</a> · <a href="{{ url_for('Pages_sponsor', site=site) }}">Sponsors</a>
+				<br><br>
 				<a style="color:grey" href="{{ url_for('Pages_tos', site=site) }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy', site=site) }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies', site=site) }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical', site=site) }}">Medical Disclaimer</a></p>
 				<p style="font-weight: 600; margin-bottom: 0.1em;">Our Sponsors</p>
 				<a href="https://smhs.gwu.edu/" target="_blank">
 					<img src="../../static/images/SMHS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-				</a>			
+				</a>
 				<a href="https://www.seas.gwu.edu/" target="_blank">
 					<img src="../../static/images/SEAS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
 				</a>
@@ -186,7 +191,7 @@
 				</a>
 				<a href= "https://www.trello.com/" target="_blank">
 					<img src="../../static/images/trello.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-				</a> 
+				</a>
 			</center>
 
 			{% block footer %}{% endblock %}
