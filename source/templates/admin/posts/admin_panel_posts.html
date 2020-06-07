@@ -10,7 +10,7 @@
 {% block panel_buttons %}
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Posts_create_post') }}" class="btn btn-sm btn-outline-primary">Create Post</a>
+        <a href="{{ url_for('Posts_create_post', site=site) }}" class="btn btn-sm btn-outline-primary">Create Post</a>
     </div>
 </div>
 
@@ -32,8 +32,8 @@
             <tbody id="container">
                 {% for post in posts %}
 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id  ) }}">
-                    <a href="{{ url_for('Posts_create_post', id=post.id  ) }}">
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
+                    <a href="{{ url_for('Posts_create_post', id=post.id, site=site) }}">
                         <td style="max-width: 4em;">
                             {% if post.public %}
                             <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">

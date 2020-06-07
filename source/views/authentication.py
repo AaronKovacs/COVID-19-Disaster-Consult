@@ -94,7 +94,7 @@ class Login(Resource):
             session.expunge(user)
             login_user(user)
             session.close()
-            return redirect(url_for('admin'))
+            return redirect(url_for('admin_select'))
         
     def get(self):
         alert = request.args.get('alert', None)

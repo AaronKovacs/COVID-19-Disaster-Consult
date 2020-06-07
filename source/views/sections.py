@@ -49,14 +49,14 @@ api = APINamespace('Sections')
 @api.route('/<sectionID>/add/posts')
 class AddPostSectionViewPosts(Resource):
     @login_required
-    def get(self, sectionID):
+    def get(self, sectionID, site):
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
         postsJS = []
-        posts = session.query(Post).order_by(desc(Post.created), Post.id).all()
+        posts = session.query(Post).filter_by(site=site).order_by(desc(Post.created), Post.id).all()
         for post in posts:
             postsJS.append(post.publicJSON())
 
@@ -64,27 +64,27 @@ class AddPostSectionViewPosts(Resource):
 
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_section_add_posts.html', posts=postsJS, section=sectionJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_section_add_posts.html', posts=postsJS, section=sectionJS, site=site), 200, headers)
 
 @api.route('/<sectionID>/add/<postID>')
 class AddPostSection(Resource):
     @login_required
-    def get(self, sectionID, postID):
+    def get(self, sectionID, postID, site):
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
 
         if section == None:
             abort(404)
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
 
         if post == None:
             abort(404)
 
-        sectionpost = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
+        sectionpost = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID, post=postID).first()
         if sectionpost is None:
-            sectionpost = SectionPost()
+            sectionpost = SectionPost(site=site)
 
         sectionpost.post = postID
         sectionpost.section = sectionID
@@ -93,24 +93,24 @@ class AddPostSection(Resource):
         session.commit()
         session.close()
 
-        track_activity('Added post to section', sectionID, 'section')
+        track_activity('Added post to section', sectionID, 'section', site)
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
 
 
 @api.route('/<sectionID>/delete')
 class DeleteSection(Resource):
     @login_required
-    def get(self, sectionID):
+    def get(self, sectionID, site):
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
             abort(404)
         session.delete(section)
 
-        post_links = session.query(SectionPost).filter_by(section=sectionID).all()
+        post_links = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).all()
         for content in post_links:
             session.delete(content)
 
@@ -118,61 +118,61 @@ class DeleteSection(Resource):
         session.commit()
         session.close()
 
-        track_activity('Deleted section', sectionID, 'section')
+        track_activity('Deleted section', sectionID, 'section', site)
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Sections_list_sections'))
+        return redirect(url_for('Sections_list_sections', site=site))
 
 @api.route('/<sectionID>/<postID>/post/delete')
 class DeletePost(Resource):
     @login_required
-    def get(self, postID, sectionID):
+    def get(self, postID, sectionID, site):
         session = Session()
 
-        link = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
+        link = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID, post=postID).first()
         if link is not None:
             session.delete(link)
 
         session.commit()
         session.close()
 
-        track_activity('Deleted post from section', sectionID, 'section')
+        track_activity('Deleted post from section', sectionID, 'section', site)
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
 
 
 @api.route('/list')
 class ListSections(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         sectionsJS = []
-        sections = session.query(Section).order_by(desc(Section.last_updated), Section.id).all()
+        sections = session.query(Section).filter_by(site=site).order_by(desc(Section.last_updated), Section.id).all()
         for section in sections:
             sectionsJS.append(section.publicJSON())
 
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_sections.html', sections=sectionsJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_sections.html', sections=sectionsJS, site=site), 200, headers)
 
 @api.route('/view')
 class ViewSection(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         sectionID = request.args.get('id')
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
             abort(404)
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
         postsJS = []
         for link in section_posts:
-            post = session.query(Post).filter_by(id=link.post).first()
+            post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None:
                 js = post.publicJSON()
                 js['order'] = link.order
@@ -181,32 +181,32 @@ class ViewSection(Resource):
         sectionJS = section.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_view_section.html', section=sectionJS, posts=postsJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_view_section.html', section=sectionJS, posts=postsJS, site=site), 200, headers)
 
 @api.route('/<sectionID>/<postID>/order')
 class UpdateSectionOrder(Resource):
     @login_required
-    def post(self, sectionID, postID):
+    def post(self, sectionID, postID, site):
         order = request.form['order']
        
         session = Session()
 
-        category_section = session.query(SectionPost).filter_by(section=sectionID, post=postID).first()
+        category_section = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID, post=postID).first()
         if category_section is None:
             return redirect(url_for('Sections_view_section', id=sectionID))
         category_section.order = order
         session.commit()
         session.close()
 
-        track_activity('Changed order of section', sectionID, 'section')
+        track_activity('Changed order of section', sectionID, 'section', site)
 
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
 
 
 @api.route('/create')
 class CreateSection(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         sectionID = request.args.get('id', None)
 
 
@@ -218,9 +218,9 @@ class CreateSection(Resource):
 
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
-            section = Section()
+            section = Section(site=site)
 
         section.title = title
         section.description = content
@@ -231,23 +231,23 @@ class CreateSection(Resource):
         sectionID = section.id
         session.close()
 
-        track_activity('Updated section \'%s\'' % (section.title), sectionID, 'section')
+        track_activity('Updated section \'%s\'' % (section.title), sectionID, 'section', site)
 
-        return redirect(url_for('Sections_view_section', id=sectionID))
+        return redirect(url_for('Sections_view_section', id=sectionID, site=site))
     @login_required
-    def get(self):
+    def get(self, site):
         sectionID = request.args.get('id')
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         if section is None:
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/sections/admin_panel_create_section.html', section=Section().blankJSON()), 200, headers)
+            return make_response(render_template('admin/sections/admin_panel_create_section.html', section=Section().blankJSON(), site=site), 200, headers)
 
         sectionJS = section.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/sections/admin_panel_create_section.html', section=sectionJS), 200, headers)
+        return make_response(render_template('admin/sections/admin_panel_create_section.html', section=sectionJS, site=site), 200, headers)
 

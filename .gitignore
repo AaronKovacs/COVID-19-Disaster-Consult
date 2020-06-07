@@ -12,3 +12,8 @@ baja.sublime-workspace
 *.sublime-workspace
 /secrets
 /source/secrets
+#adams files
+/venv2
+req2.txt
+requiremnts1.txt
+requirements1.txt

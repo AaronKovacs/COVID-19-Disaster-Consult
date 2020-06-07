@@ -27,6 +27,7 @@ class PostImage(Base):
     text = Column(String(255))
     source_url = Column(String(1000))
     large_url = Column(String(1000))
+    site = Column(String(255))
     
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)

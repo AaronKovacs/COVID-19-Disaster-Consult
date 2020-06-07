@@ -20,30 +20,27 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base
 from ..database.database import Session
 
-def uniqueLinkID():
+def uniqueSiteID():
     possibleID = alphaNumericID()
     session = Session()
-    while session.query(Link).filter(id == possibleID).limit(1).first() is not None:
+    while session.query(Site).filter(id == possibleID).limit(1).first() is not None:
         possibleID = alphaNumericID()
     session.close()
     return possibleID
 
 def alphaNumericID():
-    return 'p' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+    return 's' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
 
-class Link(Base):
-    __tablename__ = 'news_links'
-    id = Column(String(255), default=uniqueLinkID, primary_key=True)
-    title = Column(String(1000))
+class Site(Base):
+    __tablename__ = 'site'
+    id = Column(String(255), default=uniqueSiteID, primary_key=True)
+    slug = Column(String(30))
+    title = Column(String(255))
     description = Column(String(1000))
-    url = Column(String(1000))
-    source_url = Column(String(1000))
-    large_url = Column(String(1000))
-
-    author = Column(String(255))
+    primary_color = Column(String(6))
+    secondary_color = Column(String(6))
     public = Column(Boolean, default=False)
-    locale = Column(String(7), default='US')
-    site = Column(String(255))
+    order = Column(Integer(), default=100)
 
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
@@ -52,24 +49,11 @@ class Link(Base):
         return {
         'id': self.id,
         'title': self.title,
+        'slug': self.slug,
         'description': self.description,
-        'url': self.url,
-        'source_url': self.source_url,
-        'large_url': self.large_url,
-        'author': self.author,
         'public': self.public,
+        'primary_color': self.primary_color,
+        'secondary_color': self.secondary_color,
+        'order': self.order,
         'last_updated': str(self.last_updated)
-        }
-
-    def blankJSON(self):
-        return {
-        'id': '',
-        'title': '',
-        'description': '',
-        'source_url': self.source_url,
-        'large_url': self.large_url,
-        'url': '',
-        'author': '',
-        'public': False,
-        'last_updated': ''
         }

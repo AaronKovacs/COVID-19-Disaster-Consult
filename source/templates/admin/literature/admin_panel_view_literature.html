@@ -12,10 +12,10 @@
 
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Literatures_create_literature', id=literature.id  ) }}" class="btn btn-sm btn-outline-primary">Edit Literature</a>
+        <a href="{{ url_for('Literatures_create_literature', id=literature.id, site=site) }}" class="btn btn-sm btn-outline-primary">Edit Literature</a>
     </div>
     <div class="btn-group mr-2">
-        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('Literatures_add_url', literatureID=literature.id  ) }}">Add URL</a>
+        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('Literatures_add_url', literatureID=literature.id, site=site) }}">Add URL</a>
     </div>
     <div class="btn-group mr-2">
         <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#deleteModal">Delete Literature</button>
@@ -36,7 +36,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a class="btn btn-danger" href="{{ url_for('Literatures_delete_literature', literatureID=literature.id  ) }}" role="button">Delete</a>
+                <a class="btn btn-danger" href="{{ url_for('Literatures_delete_literature', literatureID=literature.id, site=site) }}" role="button">Delete</a>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
             <a href="{{ link.url }}" class="card-link">{{ link.text }} - {{ link.url }}</a>
 
             <div class="btn-toolbar mb-2 mb-md-0">
-                <a style="margin-left: auto;" class="btn btn-sm btn-outline-secondary" href="{{ url_for('Literatures_delete_url', urlID=link.id, literatureID=literature.id ) }}">Delete URL</a>
+                <a style="margin-left: auto;" class="btn btn-sm btn-outline-secondary" href="{{ url_for('Literatures_delete_url', urlID=link.id, literatureID=literature.id, site=site) }}">Delete URL</a>
             </div>
         </div>
         {% endfor %}

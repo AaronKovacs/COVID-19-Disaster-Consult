@@ -8,18 +8,17 @@
 </script>
 
 <div class="btnContainer">
-	<h3 id ="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i><br>Topic: COVID-19</h3>
+	<h3 id ="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i></h3>
 	<div class="btn-lg">
-		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories') }}';" style="white-space: normal;">
+		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories', site=site) }}';" style="white-space: normal;">
 			<h2 class="provider-btn-title">Go To Clinical and Operational Resources
 				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron"></h2>
 			</button>
 		</div>
 		<br>
-		<p style="padding-left: 1em; padding-right: 1em;">This clinical resource is under constant development due to our rapidly evolving understanding of COVID-19,<br> 
-		please check back frequently for updates and help us improve by providing feedback.</p>	
+		<p style="padding-left: 1em; padding-right: 1em;">This clinical resource is under constant development, please check back frequently for updates and help us improve by providing feedback.</p>
 	</div>
-
+{% if site=='covid-19' %}
 	<div class="container-fluid" style="text-align: center; ">
 		<div class="row">
 			<div class="col-sm-4">
@@ -57,7 +56,7 @@
 
 					<br>
 					<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-						<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news') }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
+						<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news', site=site) }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
 					</div>
 				</div><!--NewsContainerEnd-->
 
@@ -72,14 +71,14 @@
 							<div>
 								<h4 style="white-space: normal;">{{ lit.title }}</h4>
 								<p>{{ lit.excerpt }}</p>
-								<a href="{{ url_for('Pages_view_literature', literatureID=lit.id) }}" >View Literature</a>
+								<a href="{{ url_for('Pages_view_literature', literatureID=lit.id, site=site) }}" >View Literature</a>
 							</div>
 						</div>
 						{% endfor %}
 
 						<br>
 						<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-							<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature') }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
+							<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature', site=site) }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
 						</div>
 						<!-- </div> -->
 					</div>
@@ -199,7 +198,7 @@
 							<h4>Recovered</h4>
 						</div><!--col end-->
 					</div><!--row end-->
-				</div><!--global end-->	  
+				</div><!--global end-->
 
 				<br>
 
@@ -220,11 +219,11 @@
 	getData();
 
 	//****************************************************************************************
-	// Fetches and parses data from API and accumulates global aggregates for cases, deaths, 
+	// Fetches and parses data from API and accumulates global aggregates for cases, deaths,
 	// and recovered.
 	//****************************************************************************************
 	function getData() {
-		fetch("{{ url_for('API_graph_summary_data') }}", requestOptions)
+		fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
 		.then(res => {
 			return res.json();
 		}).then(obj => {
@@ -245,21 +244,21 @@
 					globalTotals[0] += newEntry.totalconfirmed;
 					globalTotals[1] += newEntry.totaldeaths;
 					globalTotals[2] += newEntry.totalrecovered;
-				}  
+				}
 				dataArray.sort((a, b) => a.country.localeCompare(b.country));
 			}
 		})
 		.then(() => {
 			document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
 			document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
-			document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]); 
+			document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]);
 	        populateGlobal(); // calls next function after this one is finished
 	    })
-		.catch(error => console.log('error', error));    
-	}  
+		.catch(error => console.log('error', error));
+	}
 
 	//****************************************************************************************
-	// Fires when each time a new country is selected from the dropdown. Displays data in the 
+	// Fires when each time a new country is selected from the dropdown. Displays data in the
 	// bottom box relevant to the country selected.
 	//****************************************************************************************
 	function getDataForCountry(selectedIndex) {
@@ -314,19 +313,19 @@
 		chartMap.clear();
 		let requestURL = "https://api.covid19api.com/country/" + country.slug +"/status/confirmed"
 		if (country.slug == "united-states") {
-			requestURL = "{{ url_for('API_us_graph_data') }}";
+			requestURL = "{{ url_for('API_us_graph_data', site=site) }}";
 		}
-		
+
 		fetch(requestURL, requestOptions)
 		.then(response => response.json())
 		.then(result => allThisData = result)
 		.then(_=> {
 			let date;
-			
+
 			for(let o of allThisData) {
 				if(o.Status == "confirmed") {
 					date = new Date(o.Date).getTime();
-					chartMap.set(date, (chartMap.get(date) || 0) + o.Cases); 
+					chartMap.set(date, (chartMap.get(date) || 0) + o.Cases);
 				}
 			}
 
@@ -365,9 +364,9 @@
 					label: 'COVID-19 Cases',
 					data: ylabels,
 					pointRadius: 2,
-					backgroundColor: 
+					backgroundColor:
 					'rgba(233, 223, 196, 0.15)',
-					borderColor: 
+					borderColor:
 					'rgba(40, 53, 62, 1)',
 					borderWidth: 1
 				}]
@@ -396,5 +395,40 @@
 		});
 	}
 </script>
+
+{% else %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class = "greyLine"></div><br><br>
+		<div class="col-sm-2">
+		</div>
+			<div class="col-sm-8">
+			<!--newsContainerStart-->
+			<div class="col-sm" id="newsContainer"  style="white-space: normal; max-width: 100%; padding-left: 0;" id="newsHere">
+				<h2  id="newsHere">Latest News</h2>
+
+
+				{% for link in links %}
+				<div class="row newsRow">
+					<div class="image-container" style="background-image: url('{{ link.large_url }}');">
+					</div>
+					<div>
+						<h4 style="white-space: normal;">{{ link.title }}</h4>
+						<p>{{ link.description }}</p>
+						<a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
+					</div>
+				</div>
+				{% endfor %}
+
+				<br>
+				<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news', site=site) }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
+				</div>
+
+				<div class="col-sm-2">
+				</div>
+			</div><!--NewsContainerEnd-->
+{% endif %}
 
 {% endblock %}

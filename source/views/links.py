@@ -73,42 +73,42 @@ ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg', 'image'])
 @api.route('/list')
 class ListLinks(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         linksJS = []
-        links = session.query(Link).order_by(desc(Link.last_updated), Link.id).all()
+        links = session.query(Link).filter_by(site=site).order_by(desc(Link.last_updated), Link.id).all()
         for link in links:
             linksJS.append(link.publicJSON())
 
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/links/admin_panel_links.html', links=linksJS), 200, headers)
+        return make_response(render_template('admin/links/admin_panel_links.html', links=linksJS, site=site), 200, headers)
 
 @api.route('/view')
 class View(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         linkID = request.args.get('id')
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
             abort(404)
 
         linksJS = link.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/links/admin_panel_view_link.html', link=linksJS), 200, headers)
+        return make_response(render_template('admin/links/admin_panel_view_link.html', link=linksJS, site=site), 200, headers)
 
 @api.route('/<linkID>/delete')
 class DeleteLink(Resource):
     @login_required
-    def get(self, linkID):
+    def get(self, linkID, site):
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
             abort(404)
         session.delete(link)
@@ -116,15 +116,15 @@ class DeleteLink(Resource):
         session.commit()
         session.close()
 
-        track_activity('Deleted news link', linkID, 'link')
+        track_activity('Deleted news link', linkID, 'link', site)
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Links_list_links'))
+        return redirect(url_for('Links_list_links', site=site))
 
 
 @api.route('/create')
 class CreateLink(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         linkID = request.args.get('id', None)
 
         title = ''
@@ -142,9 +142,9 @@ class CreateLink(Resource):
 
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
-            link = Link()
+            link = Link(site=site)
         else:
             link.title = title
             link.description = description
@@ -202,26 +202,26 @@ class CreateLink(Resource):
         linkID = link.id
         session.close()
 
-        track_activity('Updated news link', linkID, 'link')
+        track_activity('Updated news link', linkID, 'link', site)
 
-        return redirect(url_for('Links_view', id=linkID))
+        return redirect(url_for('Links_view', id=linkID, site=site))
 
     @login_required
-    def get(self):
+    def get(self, site):
         linkID = request.args.get('id')
         session = Session()
 
-        link = session.query(Link).filter_by(id=linkID).first()
+        link = session.query(Link).filter_by(site=site).filter_by(id=linkID).first()
         if link is None:
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/links/admin_panel_create_link.html', link=Link().blankJSON()), 200, headers)
+            return make_response(render_template('admin/links/admin_panel_create_link.html', link=Link().blankJSON(), site=site), 200, headers)
 
         linkJS = link.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/links/admin_panel_create_link.html', link=linkJS), 200, headers)
+        return make_response(render_template('admin/links/admin_panel_create_link.html', link=linkJS, site=site), 200, headers)
 
 
 # Image Upload Helpers

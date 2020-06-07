@@ -28,11 +28,12 @@
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
 		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Disaster Consult Admin</a>
-		<div style="width: 100%;"></div>
+		<div style="width: 100%;">
+		</div>
 		<ul class="navbar-nav px-3">
 			
 			<li class="nav-item text-nowrap">
-				<a class="nav-link" href="{{ url_for('Pages_home') }}">Website Page</a>
+				<a class="nav-link" href="{{ url_for('Pages_home', site=site) }}">Website Page</a>
 			</li>
 		</ul>
 
@@ -49,9 +50,15 @@
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
+						<li class="nav-item" style="margin-bottom: -1em;">
+
+							<a href="{{ url_for('admin_select', site=site) }}">
+								<button style="margin-left: 1em; width: 87%;" type="button" class="btn btn-dark"><span style="font-weight: 800;">{{ site }}</span><br/><span style="font-size: 10pt;">Click to change</span></button>
+							</a>
+						</li>
 						<li class="nav-item">
 							
-							<a class="nav-link {% block homeButton %}{% endblock %}" href="{{ url_for('admin') }}">
+							<a class="nav-link {% block homeButton %}{% endblock %}" href="{{ url_for('admin', site=site) }}">
 								<span data-feather="home"></span>
 								Home
 							</a>
@@ -62,19 +69,19 @@
 							<span>Content</span>
 						</h6>
 						<li class="nav-item">
-							<a class="nav-link {% block postsButton %}{% endblock %}" href="{{ url_for('Posts_list_posts') }}">
+							<a class="nav-link {% block postsButton %}{% endblock %}" href="{{ url_for('Posts_list_posts', site=site) }}">
 								<span data-feather="file"></span>
 								Posts
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% block sectionsButton %}{% endblock %}" href="{{ url_for('Sections_list_sections') }}">
+							<a class="nav-link {% block sectionsButton %}{% endblock %}" href="{{ url_for('Sections_list_sections', site=site) }}">
 								<span data-feather="bookmark"></span>
 								Sections
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% block categoriesButton %}{% endblock %}" href="{{ url_for('Categories_list_categories') }}">
+							<a class="nav-link {% block categoriesButton %}{% endblock %}" href="{{ url_for('Categories_list_categories', site=site) }}">
 								<span data-feather="layers"></span>
 								Categories
 							</a>
@@ -87,13 +94,13 @@
 
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="nav-link {% block newsButton %}{% endblock %}" href="{{ url_for('Links_list_links') }}">
+							<a class="nav-link {% block newsButton %}{% endblock %}" href="{{ url_for('Links_list_links', site=site) }}">
 								<span data-feather="link"></span>
 								Links
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% block literaturesButton %}{% endblock %}" href="{{ url_for('Literatures_list_literatures') }}">
+							<a class="nav-link {% block literaturesButton %}{% endblock %}" href="{{ url_for('Literatures_list_literatures', site=site) }}">
 								<span data-feather="book"></span>
 								Literature
 							</a>

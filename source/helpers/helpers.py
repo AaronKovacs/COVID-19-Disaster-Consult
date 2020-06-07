@@ -28,9 +28,9 @@ from ..models.activity_track import ActivityTrack
 from ..models.draft import Draft
 
 
-def track_activity(text, object_id, object_type, draft=None):
+def track_activity(text, object_id, object_type, draft=None, site='covid-19'):
     session = Session()
-    session.add(ActivityTrack(text=text, object_id=object_id, object_type=object_type, user_id=current_user.id, draft=draft))
+    session.add(ActivityTrack(text=text, object_id=object_id, object_type=object_type, user_id=current_user.id, draft=draft, site=site))
     session.commit()
     session.close()
 

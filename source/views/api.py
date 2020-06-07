@@ -47,6 +47,7 @@ from ..models.link import Link
 from ..models.literature import Literature
 from ..models.literature_link import LiteratureLink
 from ..models.graph_cache import GraphCache
+from ..models.site import Site
 
 from itsdangerous import URLSafeTimedSerializer
 
@@ -56,7 +57,7 @@ api = APINamespace('API')
 
 @api.route('/links')
 class LinksGet(Resource):
-    def get(self):
+    def get(self, site):
         page = request.args.get('page')
         currentPage = ''
         if page is not None and page != '':
@@ -66,7 +67,7 @@ class LinksGet(Resource):
         session = Session()
 
         linksJS = []
-        links = get_page(session.query(Link).filter_by(public=True).order_by(desc(Link.created), Link.id), per_page=5, page=currentPage)
+        links = get_page(session.query(Link).filter_by(site=site).filter_by(public=True).order_by(desc(Link.created), Link.id), per_page=5, page=currentPage)
         next_page = links.paging.bookmark_next
         if links.paging.has_next == False:
             next_page = ""
@@ -83,17 +84,17 @@ class LinksGet(Resource):
 
 @api.route('/contents')
 class TableOfContents(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
 
         table_of_contents = []
-        all_categories = session.query(Category).all()
+        all_categories = session.query(Category).filter_by(site=site).all()
         for cat in all_categories:
             use_sections = []
 
-            category_sections = session.query(CategorySection).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
+            category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
             for link in category_sections:
-                section = session.query(Section).filter_by(id=link.section).first()
+                section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
                 if section is not None:
                     if section.public:
                         use_sections.append({ 'name': section.title, 'id': section.id })
@@ -106,7 +107,7 @@ class TableOfContents(Resource):
 
 @api.route('/literature')
 class LiteratureGet(Resource):
-    def get(self):
+    def get(self, site):
         page = request.args.get('page')
         currentPage = ''
         if page is not None and page != '':
@@ -115,7 +116,7 @@ class LiteratureGet(Resource):
         session = Session()
 
         litJS = []
-        lits = get_page(session.query(Literature).filter_by(public=True).order_by(desc(Literature.created), Literature.id), per_page=5, page=currentPage)
+        lits = get_page(session.query(Literature).filter_by(site=site).filter_by(public=True).order_by(desc(Literature.created), Literature.id), per_page=5, page=currentPage)
         next_page = lits.paging.bookmark_next
         if lits.paging.has_next == False:
             next_page = ""
@@ -129,18 +130,18 @@ class LiteratureGet(Resource):
 
 @api.route('/other')
 class Other(Resource):
-    def get(self):
+    def get(self, site):
         sectionID = 's1gemu'
 
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
         postsJS = []
         for link in section_posts:
-            post = session.query(Post).filter_by(id=link.post).first()
+            post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None and post.public == False:
                 postsJS.append(post.publicJSON())
 
@@ -151,16 +152,12 @@ class Other(Resource):
 
 @api.route('/provider/categories')
 class ProviderCategories(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
 
-        fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
-
         catJS = []
-        for cat_id in fixed_categories:
-            cat = session.query(Category).filter_by(public=True).filter_by(id=cat_id).first()
-            if cat is not None:
-                catJS.append(cat.publicJSON())
+        for cat in session.query(Category).filter_by(special_type='resource').filter_by(site=site).order_by(Category.order, Category.id).all():
+            catJS.append(cat.publicJSON())
 
         session.close()
 
@@ -169,13 +166,13 @@ class ProviderCategories(Resource):
 
 @api.route('/categories/<categoryID>')
 class ViewCategory(Resource):
-    def get(self, categoryID):
+    def get(self, categoryID, site):
         session = Session()
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
+        category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         sectionsJS = []
         for link in category_sections:
-            section = session.query(Section).filter_by(id=link.section).first()
+            section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
             if section is not None and section.public is True:
                 sectionsJS.append(section.publicJSON())
 
@@ -184,17 +181,17 @@ class ViewCategory(Resource):
 
 @api.route('/section/<sectionID>')
 class ViewSection(Resource):
-    def get(self, sectionID):
+    def get(self, sectionID, site):
 
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
         postsJS = []
         for link in section_posts:
-            post = session.query(Post).filter_by(id=link.post).first()
+            post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None and post.public is True:
                 postsJS.append(post.publicJSON())
 
@@ -204,16 +201,16 @@ class ViewSection(Resource):
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):
-    def get(self, literatureID):
+    def get(self, literatureID, site):
         session = Session()
 
-        lit = session.query(Literature).filter_by(public=True).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(public=True).filter_by(id=literatureID).first()
         if lit is None:
             abort(404)
 
         litJS = lit.publicJSON()
 
-        litLinks = session.query(LiteratureLink).filter_by(literature=literatureID).all()
+        litLinks = session.query(LiteratureLink).filter_by(site=site).filter_by(literature=literatureID).all()
         linksJS = []
         for content in litLinks:
             linksJS.append(content.publicJSON())
@@ -225,7 +222,7 @@ class ViewLiterature(Resource):
 
 @api.route('/us/graph')
 class USGraphData(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
         us_graph = session.query(GraphCache).filter_by(country='us', data_type='country').first()
         if us_graph is None:
@@ -237,7 +234,7 @@ class USGraphData(Resource):
 
 @api.route('/graph/summary')
 class GraphSummaryData(Resource):
-    def get(self):
+    def get(self, site):
         session = Session()
         us_graph = session.query(GraphCache).filter_by(country='us', data_type='summary').first()
         if us_graph is None:

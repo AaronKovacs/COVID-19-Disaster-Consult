@@ -35,10 +35,10 @@ class ActivityTrack(Base):
 
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    site = Column(String(255))
 
 
-
-    def publicJSON(self):
+    def publicJSON(self, site):
         return {
         'id': self.id,
         'text': self.text,
@@ -47,7 +47,7 @@ class ActivityTrack(Base):
         'object_type': self.object_type,
         'draft': self.draft,
         'user': self.getUser(),
-        'url': self.getURL()
+        'url': self.getURL(site)
         }
 
     def last_updated_formatted(self):
@@ -68,17 +68,17 @@ class ActivityTrack(Base):
         session.close()
         return js
 
-    def getURL(self):
+    def getURL(self, site):
         if self.object_type == 'post':
-            return url_for('Posts_view', id=self.object_id)
+            return url_for('Posts_view', id=self.object_id, site=site)
         if self.object_type == 'section':
-            return url_for('Sections_view_section', id=self.object_id)
+            return url_for('Sections_view_section', id=self.object_id, site=site)
         if self.object_type == 'category':
-            return url_for('Categories_view_category', id=self.object_id)
+            return url_for('Categories_view_category', id=self.object_id, site=site)
         if self.object_type == 'literature':
-            return url_for('Literatures_view', id=self.object_id)
+            return url_for('Literatures_view', id=self.object_id, site=site)
         if self.object_type == 'link':
-            return url_for('Links_view', id=self.object_id)
+            return url_for('Links_view', id=self.object_id, site=site)
 
         return ''
 

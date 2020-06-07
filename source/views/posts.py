@@ -68,11 +68,11 @@ ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg', 'image'])
 @api.route('/list')
 class ListPosts(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         postsJS = []
-        posts = session.query(Post).order_by(desc(Post.last_updated), Post.id).all()
+        posts = session.query(Post).filter_by(site=site).order_by(desc(Post.last_updated), Post.id).all()
         for post in posts:
             js = post.publicJSON()
             #js['last_updated'] = format(post.last_updated, datetime.datetime.now())
@@ -82,25 +82,25 @@ class ListPosts(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_posts.html', posts=postsJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_posts.html', posts=postsJS, site=site), 200, headers)
 
 @api.route('/view')
 class View(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         postID = request.args.get('id')
         session = Session()
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
         if post is None:
             abort(404)
 
-        post_contents = session.query(PostContent).filter_by(post=postID).all()
+        post_contents = session.query(PostContent).filter_by(site=site).filter_by(post=postID).all()
         contentsJS = []
         for content in post_contents:
             contentsJS.append(content.publicJSON())
 
-        post_images = session.query(PostImage).filter_by(post=postID).all()
+        post_images = session.query(PostImage).filter_by(site=site).filter_by(post=postID).all()
         imagesJS = []
         for content in post_images:
             imagesJS.append(content.publicJSON())
@@ -111,38 +111,38 @@ class View(Resource):
         
 
         actsJS = []
-        acts = session.query(ActivityTrack).filter_by(object_type='post', object_id=postID).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
+        acts = session.query(ActivityTrack).filter_by(site=site).filter_by(object_type='post', object_id=postID).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(per_page).offset(offset)
         for act in acts:
-            actsJS.append(act.publicJSON())
+            actsJS.append(act.publicJSON(site))
 
 
-        pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).filter_by(object_type='post', object_id=postID).count(), css_framework='bootstrap4')
+        pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).filter_by(site=site).filter_by(object_type='post', object_id=postID).count(), css_framework='bootstrap4')
 
         session.close()
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/posts/admin_panel_view_post.html', post=postJS, links=contentsJS, images=imagesJS, activities=actsJS, pagination=pagination, page=page,
-                           per_page=per_page), 200, headers)
+                           per_page=per_page, site=site), 200, headers)
 
 @api.route('/<postID>/delete')
 class DeletePost(Resource):
     @login_required
-    def get(self, postID):
+    def get(self, postID, site):
         session = Session()
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
         if post is None:
             abort(404)
         session.delete(post)
 
-        post_contents = session.query(PostContent).filter_by(post=postID).all()
+        post_contents = session.query(PostContent).filter_by(site=site).filter_by(post=postID).all()
         for content in post_contents:
             session.delete(content)
 
-        post_images = session.query(PostImage).filter_by(post=postID).all()
+        post_images = session.query(PostImage).filter_by(site=site).filter_by(post=postID).all()
         for content in post_images:
             session.delete(content)
 
-        post_links = session.query(SectionPost).filter_by(post=postID).all()
+        post_links = session.query(SectionPost).filter_by(site=site).filter_by(post=postID).all()
         for content in post_links:
             session.delete(content)
 
@@ -150,51 +150,51 @@ class DeletePost(Resource):
         session.commit()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        track_activity('Deleted post', postID, 'post')
+        track_activity('Deleted post', postID, 'post', site)
 
-        return redirect(url_for('Posts_list_posts'))
+        return redirect(url_for('Posts_list_posts', site=site))
 
 
 @api.route('/<postID>/<imageID>/image/delete')
 class DeleteImage(Resource):
     @login_required
-    def get(self, postID, imageID):
+    def get(self, postID, imageID, site):
         session = Session()
 
-        post_image = session.query(PostImage).filter_by(id=imageID).first()
+        post_image = session.query(PostImage).filter_by(site=site).filter_by(id=imageID).first()
         if post_image is not None:
             session.delete(post_image)
 
         session.commit()
         session.close()
 
-        track_activity('Added image from post', postID, 'post')
+        track_activity('Added image from post', postID, 'post', site)
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Posts_view', id=postID))
+        return redirect(url_for('Posts_view', id=postID, site=site))
 
 @api.route('/<postID>/<urlID>/url/delete')
 class DeleteURL(Resource):
     @login_required
-    def get(self, postID, urlID):
+    def get(self, postID, urlID, site):
         session = Session()
 
-        content = session.query(PostContent).filter_by(id=urlID).first()
+        content = session.query(PostContent).filter_by(site=site).filter_by(id=urlID).first()
         if content is not None:
             session.delete(content)
 
         session.commit()
         session.close()
 
-        track_activity('Deleted url from post', postID, 'post')
+        track_activity('Deleted url from post', postID, 'post', site)
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Posts_view', id=postID))
+        return redirect(url_for('Posts_view', id=postID, site=site))
 
 @api.route('/create')
 class CreatePost(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         postID = request.args.get('id', None)
 
         title = request.form['title']
@@ -208,9 +208,9 @@ class CreatePost(Resource):
 
         original_json = {}
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
         if post is None:
-            post = Post()
+            post = Post(site=site)
 
         original_json = post.publicJSON()
          
@@ -234,34 +234,34 @@ class CreatePost(Resource):
 
         if original_json != final_json:
             if original_json['title'] == '':
-                track_activity('Created post \'%s\'' % post.title, postID, 'post', draft=draft_id)
+                track_activity('Created post \'%s\'' % post.title, postID, 'post', draft_id, site)
             else:
-                track_activity('Saved post updates to \'%s\'' % post.title, postID, 'post', draft=draft_id)
+                track_activity('Saved post updates to \'%s\'' % post.title, postID, 'post', draft_id, site)
 
-        return redirect(url_for('Posts_view', id=postID))
+        return redirect(url_for('Posts_view', id=postID, site=site))
 
     @login_required
-    def get(self):
+    def get(self, site):
         postID = request.args.get('id')
         session = Session()
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
         if post is None:
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/posts/admin_panel_create_post.html', post=Post().blankJSON()), 200, headers)
+            return make_response(render_template('admin/posts/admin_panel_create_post.html', post=Post().blankJSON(), site=site), 200, headers)
 
         postJS = post.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_create_post.html', post=postJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_create_post.html', post=postJS, site=site), 200, headers)
 
 
 @api.route('/<postID>/url/add')
 class AddURL(Resource):
     @login_required
-    def post(self, postID):
+    def post(self, postID, site):
         contentID = request.args.get('id')
 
         title = request.form['title']
@@ -269,14 +269,14 @@ class AddURL(Resource):
 
         session = Session()
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
         if post is None:
             session.close()
             abort(404)
 
-        content = session.query(PostContent).filter_by(id=contentID).first()
+        content = session.query(PostContent).filter_by(site=site).filter_by(id=contentID).first()
         if content is None:
-            content = PostContent()
+            content = PostContent(site=site)
         
 
         content.post = postID
@@ -288,30 +288,30 @@ class AddURL(Resource):
         session.commit()
         session.close()
 
-        track_activity('Added url to post', postID, 'post')
-        return redirect(url_for('Posts_view', id=postID))
+        track_activity('Added url to post', postID, 'post', site)
+        return redirect(url_for('Posts_view', id=postID, site=site))
 
     @login_required
-    def get(self, postID):
+    def get(self, postID, site):
         contentID = request.args.get('id')
         session = Session()
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
         if post is None:
             session.close()
             abort(404)
 
-        content = session.query(PostContent).filter_by(id=contentID).first()
+        content = session.query(PostContent).filter_by(site=site).filter_by(id=contentID).first()
         if content is None:
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/posts/admin_panel_post_add_content.html', content=PostContent().blankJSON()), 200, headers)
+            return make_response(render_template('admin/posts/admin_panel_post_add_content.html', content=PostContent().blankJSON(), site=site), 200, headers)
 
         contentJS = content.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_post_add_content.html', content=contentJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_post_add_content.html', content=contentJS, site=site), 200, headers)
 
 @api.route('/upload/image')
 class UploadJustImage(Resource):
@@ -355,7 +355,7 @@ class UploadJustImage(Resource):
 @api.route('/<postID>/upload/image')
 class UploadImage(Resource):
     @login_required
-    def post(self, postID):
+    def post(self, postID, site):
         title = request.form['title'] or ''
 
         file = ''
@@ -386,25 +386,25 @@ class UploadImage(Resource):
 
             session = Session()
 
-            postImage = PostImage(post=postID, text=title, source_url=original_url, large_url=url)
+            postImage = PostImage(post=postID, text=title, source_url=original_url, large_url=url, site=site)
             session.add(postImage)
             session.commit()
 
             session.close()
-            track_activity('Added image to post', postID, 'post')
-            return redirect(url_for('Posts_view', id=postID))
+            track_activity('Added image to post', postID, 'post', site)
+            return redirect(url_for('Posts_view', id=postID, site=site))
 
     @login_required
-    def get(self, postID):
+    def get(self, postID, site):
         session = Session()
 
-        post = session.query(Post).filter_by(id=postID).first()
+        post = session.query(Post).filter_by(site=site).filter_by(id=postID).first()
         if post is None:
             abort(404)
 
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_post_upload_image.html', id=postID), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_post_upload_image.html', id=postID, site=site), 200, headers)
 
 # Image Upload Helpers
 

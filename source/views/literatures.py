@@ -69,31 +69,31 @@ ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg', 'image'])
 @api.route('/list')
 class ListLiteratures(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         session = Session()
 
         litJS = []
-        lits = session.query(Literature).order_by(desc(Literature.last_updated), Literature.id).all()
+        lits = session.query(Literature).filter_by(site=site).order_by(desc(Literature.last_updated), Literature.id).all()
         for lit in lits:
             litJS.append(lit.publicJSON())
 
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_literatures.html', literatures=litJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_literatures.html', literatures=litJS, site=site), 200, headers)
 
 @api.route('/view')
 class View(Resource):
     @login_required
-    def get(self):
+    def get(self, site):
         literatureID = request.args.get('id')
         session = Session()
 
-        lit = session.query(Literature).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(id=literatureID).first()
         if lit is None:
             abort(404)
 
-        litLinks = session.query(LiteratureLink).filter_by(literature=literatureID).all()
+        litLinks = session.query(LiteratureLink).filter_by(site=site).filter_by(literature=literatureID).all()
         linksJS = []
         for content in litLinks:
             linksJS.append(content.publicJSON())
@@ -101,53 +101,53 @@ class View(Resource):
         litJS = lit.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_view_literature.html', literature=litJS, links=linksJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_view_literature.html', literature=litJS, links=linksJS, site=site), 200, headers)
 
 @api.route('/<literatureID>/delete')
 class DeleteLiterature(Resource):
     @login_required
-    def get(self, literatureID):
+    def get(self, literatureID, site):
         session = Session()
 
-        lit = session.query(Literature).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(id=literatureID).first()
         if lit is None:
             abort(404)
         session.delete(lit)
 
-        litLinks = session.query(LiteratureLink).filter_by(literature=literatureID).all()
+        litLinks = session.query(LiteratureLink).filter_by(site=site).filter_by(literature=literatureID).all()
         for content in litLinks:
             session.delete(content)
 
         session.commit()
         session.close()
 
-        track_activity('Deleted literature', literatureID, 'literature')
+        track_activity('Deleted literature', literatureID, 'literature', site)
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Literatures_list_literatures'))
+        return redirect(url_for('Literatures_list_literatures', site=site))
 
 
 @api.route('/<literatureID>/<urlID>/url/delete')
 class DeleteURL(Resource):
     @login_required
-    def get(self, literatureID, urlID):
+    def get(self, literatureID, urlID, site):
         session = Session()
 
-        content = session.query(LiteratureLink).filter_by(id=urlID).first()
+        content = session.query(LiteratureLink).filter_by(site=site).filter_by(id=urlID).first()
         if content is not None:
             session.delete(content)
 
         session.commit()
         session.close()
 
-        track_activity('Deleted url from literature', literatureID, 'literature')
+        track_activity('Deleted url from literature', literatureID, 'literature', site)
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Literatures_view', id=literatureID))
+        return redirect(url_for('Literatures_view', id=literatureID, site=site))
 
 @api.route('/<literatureID>/url/add')
 class AddURL(Resource):
     @login_required
-    def post(self, literatureID):
+    def post(self, literatureID, site):
         contentID = request.args.get('id')
 
         title = request.form['title']
@@ -155,14 +155,14 @@ class AddURL(Resource):
 
         session = Session()
 
-        lit = session.query(Literature).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(id=literatureID).first()
         if lit is None:
             session.close()
             abort(404)
 
-        content = session.query(LiteratureLink).filter_by(id=contentID).first()
+        content = session.query(LiteratureLink).filter_by(site=site).filter_by(id=contentID).first()
         if content is None:
-            content = LiteratureLink()
+            content = LiteratureLink(site=site)
         
 
         content.literature = literatureID
@@ -173,30 +173,30 @@ class AddURL(Resource):
         session.commit()
         session.close()
 
-        track_activity('Added url to literature', literatureID, 'literature')
-        return redirect(url_for('Literatures_view', id=literatureID))
+        track_activity('Added url to literature', literatureID, 'literature', site)
+        return redirect(url_for('Literatures_view', id=literatureID, site=site))
 
     @login_required
-    def get(self, literatureID):
+    def get(self, literatureID, site):
         contentID = request.args.get('id')
         session = Session()
 
-        lit = session.query(Literature).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(id=literatureID).first()
         if lit is None:
             session.close()
             abort(404)
 
-        content = session.query(LiteratureLink).filter_by(id=contentID).first()
+        content = session.query(LiteratureLink).filter_by(site=site).filter_by(id=contentID).first()
         if content is None:
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=LiteratureLink().blankJSON()), 200, headers)
+            return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=LiteratureLink().blankJSON(), site=site), 200, headers)
 
         contentJS = content.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=contentJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_literature_add_link.html', content=contentJS, site=site), 200, headers)
 
 
 
@@ -204,7 +204,7 @@ class AddURL(Resource):
 @api.route('/create')
 class CreateLiterature(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         litID = request.args.get('id', None)
 
 
@@ -218,9 +218,9 @@ class CreateLiterature(Resource):
 
         session = Session()
 
-        literature = session.query(Literature).filter_by(id=litID).first()
+        literature = session.query(Literature).filter_by(site=site).filter_by(id=litID).first()
         if literature is None:
-            literature = Literature()
+            literature = Literature(site=site)
 
         literature.title = title
         literature.description = description
@@ -232,26 +232,26 @@ class CreateLiterature(Resource):
         litID = literature.id
         session.close()
 
-        track_activity('Updated literature', litID, 'literature')
+        track_activity('Updated literature', litID, 'literature', site)
 
-        return redirect(url_for('Literatures_view', id=litID))
+        return redirect(url_for('Literatures_view', id=litID, site=site))
 
     @login_required
-    def get(self):
+    def get(self, site):
         litID = request.args.get('id')
         session = Session()
 
-        lit = session.query(Literature).filter_by(id=litID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(id=litID).first()
         if lit is None:
             session.close()
 
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=Literature().blankJSON()), 200, headers)
+            return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=Literature().blankJSON(), site=site), 200, headers)
 
         literatureJS = lit.publicJSON()
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=literatureJS), 200, headers)
+        return make_response(render_template('admin/literature/admin_panel_create_literature.html', literature=literatureJS, site=site), 200, headers)
 
 
 # Image Upload Helpers

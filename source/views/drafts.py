@@ -57,7 +57,7 @@ api = APINamespace('Drafts')#Api(blueprint)
 @api.route('/draft/<draftID>')
 class ViewDraft(Resource):
     @login_required
-    def get(self, draftID):
+    def get(self, draftID, site):
         session = Session()
 
         draftJS = None
@@ -74,9 +74,9 @@ class ViewDraft(Resource):
         if activity is None:
             abort(404)
 
-        activityJS = activity.publicJSON()
+        activityJS = activity.publicJSON(site)
 
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_view_draft.html', draft=draftJS, activity=activityJS), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_view_draft.html', draft=draftJS, activity=activityJS, site=site), 200, headers)
