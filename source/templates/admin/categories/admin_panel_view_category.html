@@ -11,7 +11,7 @@
 {% block panel_buttons %}
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Categories_create_category', id=category.id  ) }}" class="btn btn-sm btn-outline-primary">Edit Category</a>
+        <a href="{{ url_for('Categories_create_category', id=category.id, site=site) }}" class="btn btn-sm btn-outline-primary">Edit Category</a>
     </div>
     <div class="btn-group mr-2">
         <a class="btn btn-sm btn-outline-primary" href="{{ url_for('Categories_add_section_category_view_sections', categoryID=category.id, site=site) }}">Add Section</a>
