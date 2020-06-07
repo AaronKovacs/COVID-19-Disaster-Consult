@@ -22,7 +22,7 @@ from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth, HTTPAuth
 from flask_restplus import Resource, Api, abort, Namespace
 from flask import redirect, render_template, url_for
 from flask_mail import Mail, Message
-from flask_login import login_required, login_user, logout_user 
+from flask_login import login_required, login_user, logout_user
 
 from sqlalchemy import or_
 from sqlalchemy import DateTime
@@ -142,7 +142,10 @@ class Categories(Resource):
     def get(self, site):
         session = Session()
 
-        fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
+        if site == "covid-19":
+            fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
+        elif site == "civil-unrest":
+            fixed_categories = ['s3h4zg', 'sqk15u']
 
         catJS = []
         for cat_id in fixed_categories:
@@ -163,8 +166,10 @@ class ViewCategory(Resource):
         category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = category.publicJSON()
 
-        fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
-
+        if site == "covid-19":
+            fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
+        elif site == "civil-unrest":
+            fixed_categories = ['s3h4zg', 'sqk15u']
         catJS = []
         for cat_id in fixed_categories:
             cat = session.query(Category).filter_by(site=site).filter_by(id=cat_id).first()
@@ -287,7 +292,7 @@ class Cookies(Resource):
     def get(self, site):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/cookies.html', site=site), 200, headers)
-    
+
 @api.route('/sponsor')
 class Sponsor(Resource):
     def get(self, site):
@@ -319,7 +324,7 @@ class SubmitFeedback(Resource):
 
     def get(self):
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/success_feedback.html', site=site), 200, headers)       
+        return make_response(render_template('pages/success_feedback.html', site=site), 200, headers)
 
 
 # Mark file expose
