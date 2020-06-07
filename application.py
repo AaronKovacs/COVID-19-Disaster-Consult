@@ -305,6 +305,22 @@ def admin_select():
     return make_response(render_template('admin/admin_panel_disaster_type.html', sites=sitesJS), 200, headers)
 
 
+@api.route('/api/v1/sites')
+class SitesGet(Resource):
+    def get(self):
+    
+        session = Session()
+
+        sitesJS = []
+        sites = session.query(Site).all()
+
+        for site in sites:
+            sitesJS.append(site.publicJSON())
+
+        session.close()
+
+        return jsonify({'sites': sitesJS})
+
 # Error Pages
 @application.errorhandler(401)
 def login_failed(e):

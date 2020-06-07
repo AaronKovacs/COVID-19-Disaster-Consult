@@ -47,6 +47,7 @@ from ..models.link import Link
 from ..models.literature import Literature
 from ..models.literature_link import LiteratureLink
 from ..models.graph_cache import GraphCache
+from ..models.site import Site
 
 from itsdangerous import URLSafeTimedSerializer
 
@@ -66,7 +67,7 @@ class LinksGet(Resource):
         session = Session()
 
         linksJS = []
-        links = get_page(session.query(Link).filter_by(public=True).order_by(desc(Link.created), Link.id), per_page=5, page=currentPage)
+        links = get_page(session.query(Link).filter_by(site=site).filter_by(public=True).order_by(desc(Link.created), Link.id), per_page=5, page=currentPage)
         next_page = links.paging.bookmark_next
         if links.paging.has_next == False:
             next_page = ""
@@ -87,13 +88,13 @@ class TableOfContents(Resource):
         session = Session()
 
         table_of_contents = []
-        all_categories = session.query(Category).all()
+        all_categories = session.query(Category).filter_by(site=site).all()
         for cat in all_categories:
             use_sections = []
 
-            category_sections = session.query(CategorySection).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
+            category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
             for link in category_sections:
-                section = session.query(Section).filter_by(id=link.section).first()
+                section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
                 if section is not None:
                     if section.public:
                         use_sections.append({ 'name': section.title, 'id': section.id })
@@ -115,7 +116,7 @@ class LiteratureGet(Resource):
         session = Session()
 
         litJS = []
-        lits = get_page(session.query(Literature).filter_by(public=True).order_by(desc(Literature.created), Literature.id), per_page=5, page=currentPage)
+        lits = get_page(session.query(Literature).filter_by(site=site).filter_by(public=True).order_by(desc(Literature.created), Literature.id), per_page=5, page=currentPage)
         next_page = lits.paging.bookmark_next
         if lits.paging.has_next == False:
             next_page = ""
@@ -134,13 +135,13 @@ class Other(Resource):
 
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).order_by(desc(SectionPost.created), SectionPost.id).all()
         postsJS = []
         for link in section_posts:
-            post = session.query(Post).filter_by(id=link.post).first()
+            post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None and post.public == False:
                 postsJS.append(post.publicJSON())
 
@@ -158,7 +159,7 @@ class ProviderCategories(Resource):
 
         catJS = []
         for cat_id in fixed_categories:
-            cat = session.query(Category).filter_by(public=True).filter_by(id=cat_id).first()
+            cat = session.query(Category).filter_by(site=site).filter_by(public=True).filter_by(id=cat_id).first()
             if cat is not None:
                 catJS.append(cat.publicJSON())
 
@@ -172,10 +173,10 @@ class ViewCategory(Resource):
     def get(self, categoryID, site):
         session = Session()
 
-        category_sections = session.query(CategorySection).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
+        category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         sectionsJS = []
         for link in category_sections:
-            section = session.query(Section).filter_by(id=link.section).first()
+            section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
             if section is not None and section.public is True:
                 sectionsJS.append(section.publicJSON())
 
@@ -188,13 +189,13 @@ class ViewSection(Resource):
 
         session = Session()
 
-        section = session.query(Section).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=sectionID).order_by(SectionPost.order, SectionPost.id).all()
         postsJS = []
         for link in section_posts:
-            post = session.query(Post).filter_by(id=link.post).first()
+            post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None and post.public is True:
                 postsJS.append(post.publicJSON())
 
@@ -207,13 +208,13 @@ class ViewLiterature(Resource):
     def get(self, literatureID, site):
         session = Session()
 
-        lit = session.query(Literature).filter_by(public=True).filter_by(id=literatureID).first()
+        lit = session.query(Literature).filter_by(site=site).filter_by(public=True).filter_by(id=literatureID).first()
         if lit is None:
             abort(404)
 
         litJS = lit.publicJSON()
 
-        litLinks = session.query(LiteratureLink).filter_by(literature=literatureID).all()
+        litLinks = session.query(LiteratureLink).filter_by(site=site).filter_by(literature=literatureID).all()
         linksJS = []
         for content in litLinks:
             linksJS.append(content.publicJSON())
