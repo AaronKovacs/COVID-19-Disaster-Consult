@@ -253,7 +253,7 @@ def registerSuccess():
 
 @application.route('/admin')
 @login_required
-def admin_redirect(site):
+def admin_redirect():
     if ENV_NAME() == 'prod':
         return redirect(url_for('admin_select', _scheme='https', _external=True, site='covid-19'))
     else:
