@@ -115,15 +115,13 @@ class ViewAllLiterature(Resource):
 @api.route('/other')
 class Other(Resource):
     def get(self, site):
-        sectionID = 's1gemu'
-
 
         session = Session()
 
-        section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
+        section = session.query(Section).filter_by(site=site).filter_by(special_type='other').first()
         sectionJS = section.publicJSON()
 
-        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(site=site).filter_by(section=sectionID).order_by(desc(SectionPost.order), SectionPost.id).all()
+        section_posts = session.query(SectionPost).filter_by(site=site).filter_by(site=site).filter_by(section=section.id).order_by(desc(SectionPost.order), SectionPost.id).all()
         postsJS = []
         for link in section_posts:
             post = session.query(Post).filter_by(id=link.post).first()
