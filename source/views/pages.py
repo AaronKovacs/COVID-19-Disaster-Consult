@@ -197,7 +197,7 @@ class ViewSection(Resource):
 
 
         table_of_contents = []
-        all_categories = session.query(Category).all()
+        all_categories = session.query(Category).filter_by(site=site).all()
         for cat in all_categories:
             use_sections = []
 
