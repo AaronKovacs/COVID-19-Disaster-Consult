@@ -142,13 +142,9 @@ class Categories(Resource):
     def get(self, site):
         session = Session()
 
-        fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
-
         catJS = []
-        for cat_id in fixed_categories:
-            cat = session.query(Category).filter_by(site=site).filter_by(id=cat_id).first()
-            if cat is not None:
-                catJS.append(cat.publicJSON())
+        for cat in session.query(Category).filter_by(special_type='resource').filter_by(site=site).order_by(Category.order, Category.id).all():
+            catJS.append(cat.publicJSON())
 
         session.close()
 
@@ -163,13 +159,9 @@ class ViewCategory(Resource):
         category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = category.publicJSON()
 
-        fixed_categories = ['srxnj8', 's7gmcl', 's7qekp', 's9v3pn', 'szlxjv']
-
         catJS = []
-        for cat_id in fixed_categories:
-            cat = session.query(Category).filter_by(site=site).filter_by(id=cat_id).first()
-            if cat is not None:
-                catJS.append(cat.publicJSON())
+        for cat in session.query(Category).filter_by(special_type='resource').filter_by(site=site).order_by(Category.order, Category.id).all():
+            catJS.append(cat.publicJSON())
 
         category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=categoryID).order_by(CategorySection.order, CategorySection.id).all()
         sectionsJS = []

@@ -41,6 +41,7 @@ class Category(Base):
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
     site = Column(String(255))
+    special_type = Column(String(255))
 
     def publicJSON(self):
         return {
