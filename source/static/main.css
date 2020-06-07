@@ -1,5 +1,5 @@
 body{
-  font-family: "Montserrat", sans-serif;  
+  font-family: "Montserrat", sans-serif;
   min-height: 2em;
   color: black;
   width: 100%
@@ -209,7 +209,7 @@ img {
 
 #anyContainer{
   padding-top: 1.5em;
-} 
+}
 
 .literature{
   padding-bottom: 1em;
@@ -227,11 +227,11 @@ img {
 }
 
 .providerTypeButton {
-  background: #C0E1EA; 
-  border-radius: 10px; 
+  background: #C0E1EA;
+  border-radius: 10px;
   border: none;
-  width: 100%; 
-  padding: 10px; 
+  width: 100%;
+  padding: 10px;
   margin: 2px 0;
   text-align: center;
 }
@@ -240,12 +240,12 @@ img {
 }
 
 .providerTypeButtonClicked {
-  background: #25353F; 
+  background: #25353F;
   color: white;
   border: 3px solid #C0E1EA;
-  border-radius: 10px; 
-  width: 100%; 
-  padding: 10px; 
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
   margin: 2px 0;
   text-align: center;
 }
@@ -253,8 +253,8 @@ img {
 .infoSectionButton {
   border: 2px solid #D7D7D7;
   border-radius: 8px;
-  width: 100%; 
-  padding: 10px; 
+  width: 100%;
+  padding: 10px;
   margin: 4px 0;
   text-align: left;
   cursor: pointer;
@@ -265,8 +265,8 @@ img {
   background:#ACBBE6;
   border: none;
   border-radius: .8em .8em 0em 0em / .8em .8em;
-  width: 100%; 
-  padding: 14px; 
+  width: 100%;
+  padding: 14px;
   text-align: left;
 }
 
@@ -286,8 +286,8 @@ img {
 .useful-links-box {
   border: 2px solid #D7D7D7;
   border-radius: 10px;
-  width: 95%; 
-  padding: 1em; 
+  width: 95%;
+  padding: 1em;
   padding-top: 1em;
   padding-bottom: 0.5em;
   text-align: left;
@@ -335,7 +335,7 @@ img {
 
 .btn-link{
   border: 2px solid #e8d29b;
-  padding: 16px; 
+  padding: 16px;
 }
 
 .api-data {
@@ -421,7 +421,7 @@ img {
     width: 100%;
     margin: 0;
   }
-} 
+}
 
 .text-tiny {
   font-size: 0.7em;
@@ -757,7 +757,7 @@ blockquote p {
   border-color: #1d2930;
 }
 .feedback:hover {
-	
+
 	background-color:#304350;
 }
 
@@ -938,4 +938,43 @@ blockquote p {
     transform: translate3d(0px, 50px, 0px);
     max-height: 200px;
   }
+}
+#logo {
+	vertical-align:middle;
+}
+.navbar-brand span {
+	font-size:2rem;
+	line-height:1.2;
+
+	display:inline-block;
+	vertical-align:middle;
+	padding:0 0 0 15px;
+}
+.navbar-brand b {
+	display:block;
+	font-size:50%;
+	line-height:1;
+}
+.navbar-nav {
+	margin-left:auto;
+}
+.jumbotron-home {
+    background-color: #103a5d;
+    margin-bottom: 0px !important;
+}
+.jumbotron-mission {
+    background-color: #acbae6;
+    margin-bottom: 0px !important;
+}
+
+.h2viewresources {
+  color: #FFFFFF;
+}
+
+.mission {
+  color: #0f0f0f;
+}
+
+.gobutton {
+  background-color: #c0f1b4;
 }

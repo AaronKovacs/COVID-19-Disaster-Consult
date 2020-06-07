@@ -12,7 +12,7 @@
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
-    
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@disasterconslt" />
     <meta name="twitter:creator" content="@disasterconslt" />
@@ -41,14 +41,14 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link href="{{ url_for('static', filename = 'main.css') }}?v=1.0.0" rel="stylesheet">
-    
+    <link href="{{ url_for('static', filename = 'main.css') }}" rel="stylesheet">
+
 
     <link rel='icon' href='../../static/images/favicon.png' type='image/png' >
     <style>
 
     </style>
-    
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163879908-1"></script>
     <script>
@@ -58,119 +58,160 @@
 
         gtag('config', 'UA-163879908-1');
     </script>
+    <script>
+    function WinOpen() {
+      var url=document.redirect.selection.value
+      document.location.href=url
+
+    }
+    </script>
     {% block head %}{% endblock %}
 </head>
 
 <body>
-    <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5eaddcaf236715f1"></script>
-    <div id="mybutton">
-        <button class="feedback" data-toggle="modal" data-target="#feedbackModal">Feedback</button>
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="d-flex flex-grow-1">
-            <!--span class="w-100 d-lg-none d-block"><hidden spacer to center brand on mobile></span-->
-                <a class="navbar-brand" href="{{ url_for('Pages_home', site=site) }}" id="navtitle">
-                    <img src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
-                    <span style="font-weight: 700">Disaster Consult</span>
-                </a>
-                <div class="w-100 text-right">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-            </div>
-        </nav>
-        <main role="main"  style="margin-top: 2em; margin-left: auto; margin-right: auto; max-width: 40em; width: 100%;">
-          <h2>Select Disaster Type</h2>
-          <hr>
-          {% for site in sites %}
-          <a href="{{ url_for('Pages_home', site=site.slug) }}" style="text-decoration: none;">
-            <div style="display: flex; justify-content: center; align-content: center; flex-direction: column;text-align: center; background-color: #28353E; width: 100%; height: 200px; margin-bottom: 2em; border-radius: 8px 8px 8px 8px;">
-                <span style=" color: white; font-weight: bolder; font-size: 20pt;">{{ site.title }}</span><br/>
-                <span style=" color: white; font-weight: normal; font-size: 14pt;">{{ site.description }}</span>
-            </div>
-        </a>
-        {% endfor %}
-    </main>
+
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<div class="d-flex flex-grow-1">
+			<!--span class="w-100 d-lg-none d-block"><hidden spacer to center brand on mobile></span-->
+				<a class="navbar-brand " href="Pages_home" id="navtitle">
+					<img id="logo" alt="Logo" src="../../static/images/logo.png" class="img-fluid" style="width: 46px; height: 46px;">
+					<span style="font-weight: 700">
+						Disaster Consult	<br>
+						<b style="font-weight: 500"><!--Title of Disaster type here--></b>
+					</span>
+
+				</a>
+				<div class="w-100 text-right">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+				</div>
+			</div>
+			<div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+				<ul class="navbar-nav ml-auto flex-nowrap">
+          <li class="nav-item">
+						<a href="{{ url_for('Pages_home', site=site) }}" class="nav-link">Home</a>
+					</li>
+          <li class="nav-item">
+            <a href="{{ url_for('Pages_aboutus', site=site) }}" class="nav-link">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('Pages_contact', site=site) }}" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('Pages_sponsor', site=site) }}" class="nav-link">Sponsors</a>
+          </li>
+
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{{ url_for('admin_select') }}" class="nav-link">Admin</a>
+          </li>
+          {% endif %}
+
+			</ul>
+
+		</div>
+	</nav>
 
 
-    <div class="modal" id="feedbackModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 style="padding-top: 0.25em;" class="modal-title">Submit Feedback</h5>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <center>
+	  <br>
+  	<h3 id ="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i></h3>
+  	<!--<div class="btn-lg">
+  		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = 'Pages_categories';" style="white-space: normal;">
+  			<h2 class="provider-btn-title">Go To Clinical and Operational Resources
+  				<img src="../../static/images/chevron-right.png" align="right" class="provider-btn-chevron"></h2>
+  			</button>
+  		</div>-->
+  		<br>
 
-                </div>
-                <form id="feedbackform" method="post" action="{{ url_for('Pages_submit_feedback', ftype='feedback', site=site) }}">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Email - Where can we reach you?</label>
-                            <input id="validationDefault01" name="email" type="text" placeholder="Email Address" class="form-control" required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Feedback</label>
-                            <textarea id="validationDefault02" name="feedback" class="form-control" rows="10" placeholder="Your Feedback" required></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
+  		<p style="padding-left: 1em; padding-right: 1em;" class="text-center">This clinical resource is under constant development, please check back frequently for updates and help us improve by providing feedback.</p>
+	</center>
+		<div class="row">
+		    <div class="col">
+		</div>
+				    <div class="col-5">
 
-                        <div class="form-group">
-                            <button class="btn btn-secondary"  type="submit">Send Feedback</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<img src="../../static/images/ambulance.jpg" class="img-fluid" alt="Responsive image">
+</div>
 
-    <div class="modal" id="suggestionModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 style="padding-top: 0.25em;" class="modal-title">Submit Content Suggestion</h5>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<div class="col">
 
-                </div>
-                <form id="feedbackform" method="post" action="{{ url_for('Pages_submit_feedback', ftype='suggestion', site=site) }}">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>What content should we add?</label>
-                            <textarea id="validationDefault02" name="feedback" class="form-control" rows="10" placeholder="Your Suggestion" required></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
+</div>
+</div>
+	<br>
 
-                        <div class="form-group">
-                            <button class="btn btn-secondary"  type="submit">Submit Suggestion</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
+
+<div class="jumbotron jumbotron-home jumbotron-fluid">
+
+  	<div class="container" style="text-align: center; ">
+<h2 class="h2viewresources"> View Disaster-Specific Resources Here</h2>
+<br>
+<form name="redirect">
+<div class="row">
+    <div class="col">
+			</div>
+		    <div class="col-6">
+						<div class="input-group">
+
+
+              <select name="selection" class="custom-select" id="dropdown" >
+						    <option selected>Choose Disaster Type</option>
+{% for site in sites %}
+                <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</option>
+{% endfor %}
+
+						  </select>
+
+						  <div class="input-group-append">
+						    <input value="Go" class="btn btn-outline-secondary gobutton font-weight-bold" type="button" onclick="WinOpen();">
+						  </div>
+
+						</div>
+
+					</div>
+	 <div class="col">
+
+	 </div>
+ </div>
+  </div>
+</form>
+</div><!--end container-->
+<div class="jumbotron jumbotron-mission jumbotron-fluid">
+	<div class="container">
+<center>
+	<h2 class="mission">
+	Our Mission
+</h2>
+<h5 class="mission">
+Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front line healthcare workers when faced with the overwhelming challenge of responding to disasters.
+</h5>
+</center>
+</div>
+</div>
 </body>
 
 <footer style="margin-bottom: 2em;">
     <hr>
     <center>
-        <p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home', site=site) }}">Home</a> · <a href="{{ url_for('Pages_categories', site=site) }}">Clinical and Operational Resources</a> · <a href="{{ url_for('Pages_other', site=site) }}">Other Tools</a> · <a href="{{ url_for('Pages_aboutus', site=site) }}">About Us</a> · <a href="{{ url_for('Pages_contact', site=site) }}">Contact</a> · <a href="{{ url_for('Pages_sponsor', site=site) }}">Sponsors</a> 
-            <br><br>            
-            <a style="color:grey" href="{{ url_for('Pages_tos', site=site) }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy', site=site) }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies', site=site) }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical', site=site) }}">Medical Disclaimer</a></p>
-            <p style="font-weight: 600; margin-bottom: 0.1em;">Our Sponsors</p>
-            <a href="https://smhs.gwu.edu/" target="_blank">
-                <img src="../../static/images/SMHS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-            </a>            
-            <a href="https://www.seas.gwu.edu/" target="_blank">
-                <img src="../../static/images/SEAS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-            </a>
-            <a href= "https://aws.amazon.com/" target="_blank">
-                <img src="../../static/images/aws.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-            </a>
-            <a href= "https://www.trello.com/" target="_blank">
-                <img src="../../static/images/trello.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-            </a> 
-        </center>
+			<p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home', site=site) }}">Home</a> · <a href="{{ url_for('Pages_aboutus', site=site) }}">About Us</a> · <a href="{{ url_for('Pages_contact', site=site) }}">Contact</a> · <a href="{{ url_for('Pages_sponsor', site=site) }}">Sponsors</a>
+				<br><br>
+				<a style="color:grey" href="{{ url_for('Pages_tos', site=site) }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy', site=site) }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies', site=site) }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical', site=site) }}">Medical Disclaimer</a></p>
+				<p style="font-weight: 600; margin-bottom: 0.1em;">Our Sponsors</p>
+				<a href="https://smhs.gwu.edu/" target="_blank">
+					<img src="../../static/images/SMHS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+				</a>
+				<a href="https://www.seas.gwu.edu/" target="_blank">
+					<img src="../../static/images/SEAS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+				</a>
+				<a href= "https://aws.amazon.com/" target="_blank">
+					<img src="../../static/images/aws.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+				</a>
+				<a href= "https://www.trello.com/" target="_blank">
+					<img src="../../static/images/trello.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+				</a>
+			</center>
 
         {% block footer %}{% endblock %}
 
