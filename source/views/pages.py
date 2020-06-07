@@ -315,9 +315,9 @@ class SubmitFeedback(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('Pages_submit_feedback'))#make_response(render_template('pages/success_feedback.html'), 200, headers)
+        return redirect(url_for('Pages_submit_feedback', site=site))#make_response(render_template('pages/success_feedback.html'), 200, headers)
 
-    def get(self):
+    def get(self, site):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('pages/success_feedback.html', site=site), 200, headers)       
 
