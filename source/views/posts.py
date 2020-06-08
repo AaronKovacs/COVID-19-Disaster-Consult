@@ -316,7 +316,7 @@ class AddURL(Resource):
 @api.route('/upload/image')
 class UploadJustImage(Resource):
     @login_required
-    def post(self):
+    def post(self, site):
         callback = request.args.get("CKEditorFuncNum")
         error = ''
         file = ''
