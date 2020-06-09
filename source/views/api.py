@@ -55,6 +55,21 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 api = APINamespace('API')
 
+@api.route('/')
+class SiteGet(Resource):
+    def get(self, site):
+        session = Session()
+
+        site = session.query(Site).filter_by(slug=site).first()
+        siteJS = site.publicJSON()
+
+        session.close()
+
+        return jsonify({'site': siteJS})
+
+
+        
+
 @api.route('/links')
 class LinksGet(Resource):
     def get(self, site):
