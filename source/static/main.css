@@ -978,3 +978,10 @@ blockquote p {
 .gobutton {
   background-color: #c0f1b4;
 }
+
+
+.btn.dropdown-toggle.btn-light{
+  background-color: white!important;
+  border-bottom-right-radius: 0!important;
+  border-top-right-radius: 0!important;
+}

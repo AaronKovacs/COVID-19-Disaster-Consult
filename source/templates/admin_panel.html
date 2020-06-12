@@ -30,15 +30,14 @@
 		<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Disaster Consult Admin</a>
 		<div style="width: 100%;">
 		</div>
+
 		<ul class="navbar-nav px-3">
-			
 			<li class="nav-item text-nowrap">
-				<a class="nav-link" href="{{ url_for('Pages_home', site=site) }}">Website Page</a>
+				<a class="nav-link" href="{{ url_for('select_screen') }}">Website Page</a>
 			</li>
 		</ul>
 
 		<ul class="navbar-nav px-3">
-			
 			<li class="nav-item text-nowrap">
 				<a class="nav-link" href="{{ url_for('logout') }}">Sign out</a>
 			</li>
@@ -57,7 +56,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							
+
 							<a class="nav-link {% block homeButton %}{% endblock %}" href="{{ url_for('admin', site=site) }}">
 								<span data-feather="home"></span>
 								Home
