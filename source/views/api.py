@@ -235,6 +235,33 @@ class ViewLiterature(Resource):
 
         return jsonify({'literature': litJS, 'links': linksJS})
 
+@api.route('/download')
+class Download(Resource):
+    def get(self, site):
+        session = Session()
+
+        js = {}
+
+        js['site'] = session.query(Site).filter_by(public=True).first().publicJSON()
+
+        js['categories'] = []
+        for obj in session.query(Category).filter_by(site=site, public=True).all():
+            js['categories'].append(obj.publicJSON())
+
+        js['sections'] = []
+        for obj in session.query(Section).filter_by(site=site, public=True).all():
+            js['sections'].append(obj.publicJSON())
+
+        js['posts'] = []
+        for obj in session.query(Post).filter_by(site=site, public=True).all():
+            js['posts'].append(obj.publicJSON())
+
+
+        session.close()
+        return jsonify(js)
+
+
+
 @api.route('/us/graph')
 class USGraphData(Resource):
     def get(self, site):
