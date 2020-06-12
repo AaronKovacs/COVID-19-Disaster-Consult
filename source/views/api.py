@@ -242,7 +242,7 @@ class Download(Resource):
 
         js = {}
 
-        js['site'] = session.query(Site).filter_by(site=site, public=True).first().publicJSON()
+        js['site'] = session.query(Site).filter_by(public=True).first().publicJSON()
 
         js['categories'] = []
         for obj in session.query(Category).filter_by(site=site, public=True).all():
