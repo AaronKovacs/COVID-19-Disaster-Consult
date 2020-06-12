@@ -83,6 +83,8 @@ login_manager.init_app(application)
 application.config['DEBUG'] = True
 application.config['SECRET_KEY'] = PASSWORD_SECRET_KEY
 application.config['TEMPLATES_AUTO_RELOAD'] = True
+application.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+
 
 def cache_graph():
     print('Fetching Fresh US Graph Data')
@@ -350,4 +352,5 @@ if __name__ == '__main__':
     application.jinja_env.auto_reload = True
     application.config['TEMPLATES_AUTO_RELOAD'] = True
     application.run(debug=False, host='0.0.0.0')
+    application.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
