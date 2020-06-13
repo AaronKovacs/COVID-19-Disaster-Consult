@@ -88,6 +88,7 @@ class Post(Base):
     def process_content(self):
         edited_content = self.content
         try:
+            # Editing Videos
             matches = re.findall(r'(?:<oembed[^>]*)(?:(?:\/>)|(?:>.*?<\/oembed>))', edited_content)
             for match in matches:
                 src = re.findall(r'(?<=url=").*?(?=[\*"])', match)[0]
@@ -98,7 +99,7 @@ class Post(Base):
                 url_data = urlparse.urlparse(src)
                 query = urlparse.parse_qs(url_data.query)
                 video = ''
-                
+
 
                 if 'youtube' in src:
                     video = query["v"][0]
@@ -112,6 +113,16 @@ class Post(Base):
                 iframe_start = """<iframe width="100%" height="315" src=\""""
                 iframe_end = """" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""
                 edited_content = edited_content.replace(match, iframe_start + src + iframe_end)
+
+            # Editing Images to Add Lightbox
+            matches = re.findall(r'(?:<figure class="image[^>]*)(?:(?:\/>)|(?:>.*?<\/figure>))', edited_content)
+            for match in matches:
+                figure_class = src = re.findall(r'(?:class=")(image[^"]*)', match)[0]
+                src = re.findall(r'(?<=src=").*?(?=[\*"])', match)[0]
+                lightbox_img = '<figure class="{0}"><a href="{1}" data-toggle="lightbox"><img src="{1}" class="img-fluid"></a></figure>'
+                lightbox_img = lightbox_img.format(figure_class, src)
+                edited_content = edited_content.replace(match, lightbox_img)
+
             return edited_content
         except:
             return self.content

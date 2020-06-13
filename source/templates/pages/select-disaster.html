@@ -155,25 +155,28 @@
     <br>
     <form name="redirect">
       <div class="row">
-        <div class="col">
+        <div class="col-3">
         </div>
-        <div class="col-6">
-          <div class="input-group">
+        <div class="col-sm-12 col-md-6">
+          <div class="row justify-content-center">
 
-            <select name="selection" class="selectpicker col-10 pr-0" style="background-color: #EBDFC1;"data-live-search="true">
-              <option selected="">Choose Disaster Type</option>
-              {% for site in sites %}
-              <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</option>
-              {% endfor %}
-            </select>
+            <div class="col-8 pr-0 mr-0 text-right">
+              <select name="selection" class="selectpicker col-sm-12 pr-0" style="background-color: #EBDFC1;"data-live-search="true">
+                <option selected="">Choose Disaster Type</option>
+                {% for site in sites %}
+                <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
 
-            <div class="input-group-append">
+            <div class="col-2 pl-0 ml-0 text-left">
               <input value="Go" class="btn btn-outline-secondary gobutton font-weight-bold" type="button" onclick="WinOpen();">
             </div>
+          </div>
 
           </div>
         </div>
-        <div class="col">
+        <div class="col-3">
         </div>
       </div>
     </div>
