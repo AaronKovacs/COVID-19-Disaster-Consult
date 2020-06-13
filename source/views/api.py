@@ -244,18 +244,28 @@ class Download(Resource):
 
         js['site'] = session.query(Site).filter_by(slug=site, public=True).first().publicJSON()
 
-        js['categories'] = []
+        js['categories'] = {}
         for obj in session.query(Category).filter_by(site=site, public=True).all():
-            js['categories'].append(obj.publicJSON())
+            categoryJS = obj.publicJSON()
 
-        js['sections'] = []
-        for obj in session.query(Section).filter_by(site=site, public=True).all():
-            js['sections'].append(obj.publicJSON())
+            categoryJS['sections'] = {}
+            category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=obj.id).order_by(CategorySection.order, CategorySection.id).all()
+            for link in category_sections:
+                section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
+                if section is not None and section.public is True:
+                    sectionJS = section.publicJSON()
 
-        js['posts'] = []
-        for obj in session.query(Post).filter_by(site=site, public=True).all():
-            js['posts'].append(obj.publicJSON())
+                    sectionJS['posts'] = {}
+                    section_posts = session.query(SectionPost).filter_by(site=site).filter_by(section=section.id).order_by(SectionPost.order, SectionPost.id).all()
+                    for link in section_posts:
+                        post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
+                        if post is not None and post.public is True:
+                            sectionJS['posts'][post.id] = post.publicJSON()
 
+
+                    categoryJS['sections'][section.id] = sectionJS
+
+            js['categories'][obj.id] = categoryJS
 
         session.close()
         return jsonify(js)
