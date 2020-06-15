@@ -62,12 +62,12 @@
 
 		gtag('config', 'UA-163879908-1');
 	</script>
-	 <script src="https://www.google.com/recaptcha/api.js"></script>
+<!--	 <script src="https://www.google.com/recaptcha/api.js"></script>
 	<script>
 	function onSubmit(token) {
 		document.getElementById("demo-form").submit();
 	}
-</script>
+</script>-->
 	{% block head %}{% endblock %}
 </head>
 
@@ -148,7 +148,8 @@
 						<div class="modal-footer">
 
 							<div class="form-group">
-								<button class="btn btn-secondary g-recaptcha" data-sitekey="6LfVIaUZAAAAAPxdHfBq0kgwOBPo0RBg5DL42BBh" data-callback='onSubmit' type="submit">Send Feedback</button>
+								<!-- g-recaptcha" data-sitekey="6LfVIaUZAAAAAPxdHfBq0kgwOBPo0RBg5DL42BBh" data-callback='onSubmit'-->
+								<button class="btn btn-secondary" type="submit">Send Feedback</button>
 							</div>
 						</div>
 					</form>
@@ -174,7 +175,8 @@
 						<div class="modal-footer">
 
 							<div class="form-group">
-								<button class="btn btn-secondary g-recaptcha" data-sitekey="6LfVIaUZAAAAAPxdHfBq0kgwOBPo0RBg5DL42BBh" data-callback='onSubmit' type="submit">Submit Suggestion</button>
+								<!-- g-recaptcha" data-sitekey="6LfVIaUZAAAAAPxdHfBq0kgwOBPo0RBg5DL42BBh" data-callback='onSubmit'-->
+								<button class="btn btn-secondary" type="submit">Submit Suggestion</button>
 							</div>
 						</div>
 					</form>
