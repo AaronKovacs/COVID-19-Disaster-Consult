@@ -62,6 +62,8 @@ class SiteGet(Resource):
 
         site = session.query(Site).filter_by(slug=site).first()
         siteJS = site.publicJSON()
+        siteJS['has_literature'] = site.hasLiterature(session)
+
 
         session.close()
 

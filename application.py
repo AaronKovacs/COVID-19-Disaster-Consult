@@ -317,7 +317,9 @@ class SitesGet(Resource):
         sites = session.query(Site).filter_by(public=True).all()
 
         for site in sites:
-            sitesJS.append(site.publicJSON())
+            js = site.publicJSON()
+            js['has_literature'] = site.hasLiterature(session)
+            sitesJS.append(js)
 
         session.close()
 

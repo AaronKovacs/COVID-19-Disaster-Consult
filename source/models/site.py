@@ -20,6 +20,8 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base
 from ..database.database import Session
 
+from .literature import Literature
+
 def uniqueSiteID():
     possibleID = alphaNumericID()
     session = Session()
@@ -57,3 +59,6 @@ class Site(Base):
         'order': self.order,
         'last_updated': str(self.last_updated)
         }
+
+    def hasLiterature(self, session):
+        return session.query(Literature).filter_by(site=self.slug).first() != None
