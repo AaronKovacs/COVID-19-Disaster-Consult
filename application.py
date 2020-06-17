@@ -314,7 +314,7 @@ class SitesGet(Resource):
         session = Session()
 
         sitesJS = []
-        sites = session.query(Site).all()
+        sites = session.query(Site).filter_by(public=True).all()
 
         for site in sites:
             sitesJS.append(site.publicJSON())
