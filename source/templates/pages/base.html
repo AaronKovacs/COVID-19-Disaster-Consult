@@ -41,6 +41,9 @@
 	<!-- Bootstrap (Ekko) Lightbox -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
 
+	<!-- Read More Collapse -->
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/readmore.min.css') }}">
+
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,800,900&display=swap" rel="stylesheet">
 
@@ -222,6 +225,11 @@
                 $(this).ekkoLightbox();
             });
 			</script>
+
+			<!-- Read More Collapse -->
+			<script src="{{ url_for('static', filename = 'js/readmore.min.js') }}"></script>
 		</footer>
+
+		{% block js %}{% endblock %}
 
 		</html>
