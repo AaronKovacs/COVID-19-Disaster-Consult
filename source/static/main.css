@@ -996,3 +996,17 @@ blockquote p {
 .blackfont-force {
   color: #000000 !important;
 }
+
+.about-us-avatar {
+  margin-left: 23%;
+  margin-right: 23%;
+}
+
+.text-small-force {
+  font-size: .9rem;
+  font-weight: 400;
+}
+
+.rounded-corner-square{
+  border-radius: 4px;
+}
