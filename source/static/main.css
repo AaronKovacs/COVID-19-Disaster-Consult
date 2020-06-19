@@ -1025,7 +1025,7 @@ blockquote p {
   word-break: break-word;
   color: hsl(0, 0%, 20%);
   background-color: hsl(0, 0%, 97%);
-  padding: .3em;
+  padding: .3em !important;
   font-size: .75em;
   outline-offset: -1px;
 }
