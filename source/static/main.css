@@ -1016,6 +1016,16 @@ blockquote p {
   font-weight: 400;
 }
 
-.rounded-corner-square{
+.rounded-corner-square {
   border-radius: 4px;
+}
+
+.img-caption {
+  caption-side: bottom;
+  word-break: break-word;
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(0, 0%, 97%);
+  padding: .3em;
+  font-size: .75em;
+  outline-offset: -1px;
 }
