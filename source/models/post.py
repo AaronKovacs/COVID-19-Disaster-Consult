@@ -93,9 +93,7 @@ class Post(Base):
             for match in matches:
                 src = re.findall(r'(?<=url=").*?(?=[\*"])', match)[0]
                 video = re.findall(r'((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)', src)[0][-1]
-                print(video)
                 '''
-
                 url_data = urlparse.urlparse(src)
                 query = urlparse.parse_qs(url_data.query)
                 video = ''
@@ -128,6 +126,21 @@ class Post(Base):
                 lightbox_img = '<figure class="{0}"><a href="{1}" data-toggle="lightbox"><img src="{1}" class="img-fluid"></a>{2}</figure>'
                 lightbox_img = lightbox_img.format(figure_class, src, caption_str)
                 edited_content = edited_content.replace(match, lightbox_img)
+
+            # Editing hyperlink target to _blank
+            matches = re.findall(r'<a (.*?)>', edited_content)
+            for match in matches:
+
+                # Prevent changing internal links
+                if 'http' not in match:
+                    continue
+
+                # Prevent changing data toggles
+                if 'data-toggle=' in match:
+                    continue
+
+                new_link = '{} target = "_blank"'.format(match)
+                edited_content = edited_content.replace(match, new_link)
 
             return edited_content
         except:
