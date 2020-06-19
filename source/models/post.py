@@ -119,8 +119,14 @@ class Post(Base):
             for match in matches:
                 figure_class = src = re.findall(r'(?:class=")(image[^"]*)', match)[0]
                 src = re.findall(r'(?<=src=").*?(?=[\*"])', match)[0]
-                lightbox_img = '<figure class="{0}"><a href="{1}" data-toggle="lightbox"><img src="{1}" class="img-fluid"></a></figure>'
-                lightbox_img = lightbox_img.format(figure_class, src)
+                caption_match = re.findall(r'<figcaption>(.*?)<\/figcaption>', match)
+
+                caption_str = ""
+                if caption_match:
+                    caption_str = '<figcaption class="img-caption">{}</figcaption>'.format(caption_match[0])
+
+                lightbox_img = '<figure class="{0}"><a href="{1}" data-toggle="lightbox"><img src="{1}" class="img-fluid">{2}</a></figure>'
+                lightbox_img = lightbox_img.format(figure_class, src, caption_str)
                 edited_content = edited_content.replace(match, lightbox_img)
 
             return edited_content
