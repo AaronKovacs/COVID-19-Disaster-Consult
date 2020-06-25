@@ -1,3 +1,12 @@
+html {
+	scroll-behavior: smooth;
+}
+@media screen and (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
 body{
   font-family: "Montserrat", sans-serif;
   min-height: 2em;
@@ -945,11 +954,27 @@ blockquote p {
 .navbar-brand span {
 	font-size:2rem;
 	line-height:1.2;
-
 	display:inline-block;
 	vertical-align:middle;
 	padding:0 0 0 15px;
 }
+
+@media (max-width: 760px) {
+	.navbar-brand span {
+		font-size:1.4rem;
+		line-height:1.2;
+		display:inline-block;
+		vertical-align:middle;
+		padding:0 0 0 15px;
+	}
+
+	.navbar-brand b {
+		display:block;
+		font-size:75%;
+		line-height:1;
+	}
+}
+
 .navbar-brand b {
 	display:block;
 	font-size:50%;
@@ -1007,6 +1032,16 @@ blockquote p {
   font-weight: 400;
 }
 
-.rounded-corner-square{
+.rounded-corner-square {
   border-radius: 4px;
+}
+
+.img-caption {
+  caption-side: bottom;
+  word-break: break-word;
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(0, 0%, 97%);
+  padding: .3em !important;
+  font-size: .75em;
+  outline-offset: -1px;
 }

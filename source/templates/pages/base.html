@@ -30,16 +30,16 @@
 	<title>Disaster Consult | {{ site|upper }} </title>
 
 	<!-- Bootstrap core CSS and JS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/popper.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/chart.min.js') }}"></script>
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
 
 
 	<!-- Bootstrap (Ekko) Lightbox -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/ekko-lightbox.css') }}">
 
 	<!-- Read More Collapse -->
 	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/readmore.min.css') }}">
@@ -89,7 +89,7 @@
 						<b style="font-weight: 500">{{ site|upper }}</b>
 					</span>
 					</a>
-				<div class="w-100 text-right">
+				<div class="w-100 text-right pt-2">
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -211,14 +211,18 @@
 
 			{% block footer %}{% endblock %}
 
-			<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+			<!-- <script src="{{ url_for('static', filename = 'js/jquery-3.4.1.slim.min.js') }}"></script> -->
+			
 			<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.16.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+			<script src="{{ url_for('static', filename = 'js/tether.min.js') }}"></script>
+			<script src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+
+			<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 			<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
 			<!-- Bootstrap (Ekko) Lightbox -->
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+			<script src="{{ url_for('static', filename = 'js/ekko-lightbox.min.js') }}"></script>
 			<script>
 			$(document).on('click', '[data-toggle="lightbox"]', function(event) {
                 event.preventDefault();
