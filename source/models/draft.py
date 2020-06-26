@@ -22,6 +22,9 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base
 from ..database.database import Session
 
+from .activity_track import ActivityTrack
+from .user import User
+
 class Draft(Base):
     __tablename__ = 'drafts'
     id = Column(Integer(), primary_key=True)
@@ -33,6 +36,11 @@ class Draft(Base):
 
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    
+    approved = Column(Boolean(), default=False)
+    rejected = Column(Boolean(), default=False)
+
+    comment = Column(Text())
 
     def publicJSON(self):
         return {
@@ -41,8 +49,19 @@ class Draft(Base):
         'new_content': json.loads(self.new_content),
         'object_type': self.object_type,
         'object_id': self.object_id,
-        'created': self.last_updated_formatted()
+        'created': self.last_updated_formatted(),
+        'approved': self.approved,
+        'rejected': self.rejected,
+        'comment': self.comment
         }
+
+    def user(self, session):
+        track = session.query(ActivityTrack).filter_by(draft=self.id).first()
+        if track is None:
+            return None
+
+        user = session.query(User).filter_by(id=track.user_id).first()
+        return user
 
     def last_updated_formatted(self):
         try:

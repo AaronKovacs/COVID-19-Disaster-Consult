@@ -13,6 +13,8 @@ from random import randrange
 from requests_oauthlib import OAuth1Session
 from requests_oauthlib import OAuth1
 
+from flask_login import current_user
+
 from urllib.request import Request, urlopen
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -54,6 +56,28 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 api = APINamespace('Drafts')#Api(blueprint)
 
+@api.route('/list')
+class ListDrafts(Resource):
+    @login_required
+    def get(self, site):
+        session = Session()
+
+        draftsJS = []
+        drafts = session.query(Draft).filter_by(approved=False, rejected=False).order_by(desc(Draft.created), Draft.id).all()
+
+        post_ids = []
+        for draft in drafts:
+            if draft.object_id in post_ids:
+                continue
+            post_ids.append(draft.object_id)
+            draftsJS.append(draft.publicJSON())
+
+        session.close()
+
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('admin/posts/admin_panel_drafts.html', drafts=draftsJS, site=site), 200, headers)
+
+
 @api.route('/draft/<draftID>')
 class ViewDraft(Resource):
     @login_required
@@ -80,3 +104,42 @@ class ViewDraft(Resource):
 
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/posts/admin_panel_view_draft.html', draft=draftJS, activity=activityJS, site=site), 200, headers)
+
+@api.route('/draft/<draftID>/approve')
+class ApproveDraft(Resource):
+    @login_required
+    def post(self, draftID, site):
+        session = Session()
+
+        comment = request.form['content']
+
+        decision = ''
+        if 'approvebutton' in request.form:
+            decision = 'approve'
+        if 'rejectbutton' in request.form:
+            decision = 'reject'
+
+        draft = session.query(Draft).filter_by(id=draftID).first()
+
+        if draft is None:
+            abort(404)
+
+        if decision == 'approve':
+            draft.approved = True
+            draft.rejected = False
+
+            older_drafts = session.query(Draft).filter_by(object_id=draft.object_id).filter(Draft.created < draft.created).all()
+            for d in older_drafts:
+                d.approved = True
+                print('jere')
+        else:
+            draft.rejected = True
+            draft.approved = False
+
+        draft.comment = '%s \nReviewed by %s' % (comment, current_user.realname)
+
+        session.commit()
+
+        session.close()
+
+        return redirect(url_for('Drafts_view_draft', draftID=draftID, site=site))

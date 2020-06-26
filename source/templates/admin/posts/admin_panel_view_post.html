@@ -50,17 +50,27 @@
 
 
 <div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
-	{% if post.public %}
-	<div class="alert alert-success" role="alert" style="margin: 1em;">
-		<b>Public Post</b>
+	{% if draft %}
+	<div class="alert alert-warning" role="alert" style="margin: 1em;">
+		<b>Unapproved Draft</b>
 		<br/>
-		This post is public and visible on the main website.
+		This post version by <a href="{{ url_for('Users_view', id=draft.user.id, site=site) }}">{{ draft.user.realname }}</a> is currently unapproved and not publicly visible. <a href="{{ url_for('Drafts_view_draft', draftID=draft.id, site=site) }}">If you a reviewer, this post draft can be reviewed here.</a>
+	</div>
+	{% endif %}
+
+
+
+	{% if current_draft %}
+	<div class="alert alert-success" role="alert" style="margin: 1em;">
+		<b>Public Post Version</b>
+		<br/>
+		A version of this post is public and visible on the main website. <a href="{{ url_for('Drafts_view_draft', draftID=current_draft, site=site) }}">View that version here.</a>
 	</div>
 	{% else %}
 	<div class="alert alert-danger" role="alert" style="margin: 1em;">
 		<b>Private Post</b>
 		<br/>
-		This post is not visible on the main website.
+		No version of this post is visible on the main website.
 	</div>
 	{% endif %}
 	<div class="card-body">

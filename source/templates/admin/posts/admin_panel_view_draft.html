@@ -59,6 +59,48 @@ del {
 
 </style>
 
+
+
+{% if draft.approved %}
+<div class="alert alert-success" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
+    <h5 class="alert-heading">Draft Approved</h5>
+    <p class="mb-0">This draft has been approved.</p>
+</div>
+{% endif %}
+
+{% if draft.rejected %}
+<div class="alert alert-danger" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
+    <h5 class="alert-heading">Draft Rejected</h5>
+    <p class="mb-0">This draft has been rejected. The reviewer may have left a comment for you to read. Please submit a new draft for review.</p>
+</div>
+{% endif %}
+
+{% if draft.approved == False and draft.rejected == False %}
+<div class="alert alert-warning" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
+    <h5 class="alert-heading">Draft Approval</h5>
+    <p class="mb-0">This post draft is waiting approval. Once reviewed you can approve this draft. Approved drafts appear publicly on the website.</p>
+
+    <form method="post" action="{{ url_for('Drafts_approve_draft', draftID=draft.id, site=site) }}" style="margin-top: 1em;">
+        <div class="form-group">
+            <textarea name="content" class="form-control" placeholder="Comments or other notes on draft" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <button name="rejectbutton" value="reject" type="submit" class="btn btn-danger" style="width: 45%; margin-top: 1em;">Reject Draft</button>
+            <button name="approvebutton" value="approve" type="submit" class="btn btn-success" style="width: 45%; margin-top: 1em; float: right;">Approve Draft</button>
+        </div>
+    </form>
+
+
+</div>
+{% endif %}
+
+{% if draft.comment %}
+<div class="alert alert-info" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
+  <h4 class="alert-heading">Comment</h4>
+  <p class="mb-0">{{ draft.comment }}</p>
+</div>
+{% endif %}
+
 <div class="alert alert-secondary" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
     <h4 class="alert-heading">Draft Differences</h4>
     <p class="mb-0">Highlighted below are the <ins>additions (in green)</ins> and <del>removals (in red)</del> made in this update.</p>

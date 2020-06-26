@@ -52,6 +52,15 @@ class User(Base, UserMixin):
     privilege = Column(Integer(), default=0)
     active = Column(Boolean())
 
+    def is_active(self):
+        return self.active
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
     def publicJSON(self):
         return {
         'id': self.id,

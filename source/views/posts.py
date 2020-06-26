@@ -105,7 +105,7 @@ class View(Resource):
         for content in post_images:
             imagesJS.append(content.publicJSON())
 
-        postJS = post.siteJSON()
+        postJS = post.latestJSON(session)
 
         page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
         
@@ -118,10 +118,20 @@ class View(Resource):
 
         pagination = Pagination(page=page, per_page=per_page, total=session.query(ActivityTrack).filter_by(site=site).filter_by(object_type='post', object_id=postID).count(), css_framework='bootstrap4')
 
+        # Check for unapproved draft
+        draft = post.hasDraft(session)
+        draftJS = None
+        if draft is not None:
+            draftJS = draft.publicJSON()
+            draftJS['user'] = draft.user(session)
+
+
+        current_version = post.siteDraftID(session)
+
         session.close()
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/posts/admin_panel_view_post.html', post=postJS, links=contentsJS, images=imagesJS, activities=actsJS, pagination=pagination, page=page,
-                           per_page=per_page, site=site), 200, headers)
+                           per_page=per_page, draft=draftJS, current_draft=current_version, site=site), 200, headers)
 
 @api.route('/<postID>/delete')
 class DeletePost(Resource):

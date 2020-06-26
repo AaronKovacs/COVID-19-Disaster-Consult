@@ -22,6 +22,8 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base
 from ..database.database import Session
 
+from .draft import Draft
+
 def uniquePostID():
     possibleID = alphaNumericID()
     session = Session()
@@ -61,10 +63,37 @@ class Post(Base):
         'last_updated': self.last_updated_formatted()
         }
 
-    def siteJSON(self):
+    def hasDraft(self, session):
+        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id, approved=False).order_by(desc(Draft.created), Draft.id).first()
+        if draft is None:
+            return None
+        if json.loads(draft.new_content) != self.publicJSON():
+            return draft
+        return None
+
+    def latestJSON(self, session):
         js = self.publicJSON()
-        js['content'] = self.process_content()
+        js['content'] = self.process_content(self.content)
         return js
+
+    def siteJSON(self, session):
+        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(Draft.created), Draft.id).first()
+        if draft is None:
+            return {}
+        js = json.loads(draft.new_content)
+        js['content'] = self.process_content(js['content'])
+        return js
+
+    def siteDraftID(self, session):
+        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(Draft.created), Draft.id).first()
+        if draft is None:
+            return None
+
+        js = json.loads(draft.new_content)
+        if js['public'] == True:
+            return draft.id
+
+        return None
 
     def blankJSON(self):
         return {
@@ -85,8 +114,8 @@ class Post(Base):
 
 
 
-    def process_content(self):
-        edited_content = self.content
+    def process_content(self, text):
+        edited_content = text
         try:
             # Editing Videos
             matches = re.findall(r'(?:<oembed[^>]*)(?:(?:\/>)|(?:>.*?<\/oembed>))', edited_content)

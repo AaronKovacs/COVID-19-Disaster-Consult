@@ -112,6 +112,12 @@
 
 					<ul class="nav flex-column">
 						<li class="nav-item">
+							<a class="nav-link {% block draftsButton %}{% endblock %}" href="{{ url_for('Drafts_list_drafts', site=site) }}">
+								<span data-feather="clipboard"></span>
+								Pending Drafts
+							</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link {% block usersButton %}{% endblock %}" href="{{ url_for('Users_list_users', site=site) }}">
 								<span data-feather="user"></span>
 								Users
