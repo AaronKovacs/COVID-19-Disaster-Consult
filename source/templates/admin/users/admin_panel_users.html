@@ -1,0 +1,52 @@
+{% extends "admin_panel.html" %}
+
+{% block panel_title %}Users{% endblock %}
+
+{% block header %}
+
+
+{% endblock %}
+
+{% block panel_buttons %}{% endblock %}
+
+{% block usersButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
+    <div class="card-body">
+        <table id="container" class="table table-hover table-normal">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">ID</th>
+                </tr>
+            </thead>
+            <tbody id="container">
+                {% for user in users %}
+
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Users_view', id=user.id, site=site) }}">
+                    <a>
+                        <td style="max-width: 4em;">{{ user.realname }}</td>
+                        <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ user.username }}</th>
+                        <td>{{ user.id }}</td>
+                    </a>
+                </tr>
+
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+{% endblock %}

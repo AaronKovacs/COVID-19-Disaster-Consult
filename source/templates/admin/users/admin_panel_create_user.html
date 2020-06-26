@@ -1,0 +1,96 @@
+{% extends "admin_panel.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block panel_title %}Edit User{% endblock %}
+
+{% block panel_buttons %}
+{% endblock %}
+
+{% block usersButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 60rem; margin-left: auto; margin-right: auto;">
+    <div class="card-body">
+        <form method="post">
+            <h4>User Information</h4>
+            <div class="form-group">
+                <label>Real Name</label>
+                <input name="realname" type="text" placeholder="Real Name" class="form-control" value="{{ user.realname }}" required/>
+                <label style="margin-top: 0.5em;">Username</label>
+                <input name="username" type="text" placeholder="Username" class="form-control" value="{{ user.username }}" required/>
+                <label style="margin-top: 0.5em;">Email Address</label>
+                <input name="email" type="text" placeholder="Email Address" class="form-control" value="{{ user.email }}" required/>
+                <label style="margin-top: 0.5em;">Privilege</label>
+                <input name="privilege" style="width: 150px;" class="form-control" type="number" value="{{ user.privilege }}" id="example-number-input">
+            </div>
+
+            <h4>User Profile</h4>
+            <div class="form-group">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input name="title" type="text" placeholder="Title" class="form-control" value="{{ profile.title }}" required/>
+                    <label style="margin-top: 0.5em;">Website</label>
+                    <input name="website" type="text" placeholder="Website" class="form-control" value="{{ profile.website }}" required/>
+                    <label style="margin-top: 0.5em;">Section</label>
+                    <input name="section" type="text" placeholder="Section" class="form-control" value="{{ profile.section }}" required/>
+                    <label style="margin-top: 0.5em;">Order</label>
+                    <input name="order" style="width: 150px;" class="form-control" type="number" value="{{ profile.order }}" id="example-number-input">
+
+                    <label style="margin-top: 0.5em;">Profile Description</label>
+                    <div class="document-editor" >
+                        <div class="document-editor__toolbar" id="toolbar-container"></div>
+                        <div class="ckeditor" id="editor" rows="10">
+                            {{ profile.content|safe }}
+                        </div>
+                        <textarea style='display:none;' name='content' id='editor1'></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Save User</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var theEditor;
+
+    DecoupledEditor
+    .create( document.querySelector( '#editor' ), {
+        allowedContent: true,
+        fontSize: {
+            options: [
+            'tiny',
+            'default',
+            'big'
+            ]
+        },
+        ckfinder: {
+            uploadUrl: '{{ url_for('Posts_upload_just_image', site=site) }}'
+        }} )
+    .then( editor => {
+        theEditor = editor;
+        const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+        toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    function getDataFromTheEditor() {
+        return theEditor.getData();
+    }
+
+    $(document).on("submit", "form", function (e) {
+        console.log('here');
+        html = getDataFromTheEditor();
+        $("#editor1").val(html);
+        console.log(html);
+        return true;
+    })
+</script>
+{% endblock %}

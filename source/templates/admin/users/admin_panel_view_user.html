@@ -1,0 +1,60 @@
+{% extends "admin_panel.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block usersButton %}active{% endblock %}
+
+{% block panel_title %}View User{% endblock %}
+
+{% block panel_buttons %}
+<div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+        <a href="{{ url_for('Users_create_user', id=user.id, site=site) }}" class="btn btn-sm btn-outline-primary">Edit User</a>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
+    <div class="alert alert-success" role="alert" style="margin: 1em;">
+        <b>User Privilege Level</b>
+        <br/>
+        User Privilege: {{ user.privilege }}
+    </div>
+    <div class="card-body">
+        <h3 class="card-title">{{ user.realname }}</h3>
+        <hr/>
+        <h6>Username</h6>
+        <p class="card-title">{{ user.username }}</p>
+        <h6>Email</h6>
+        <p class="card-title"><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+        <hr/>
+        <h5>Profile</h5>
+        <h6>Section</h6>
+        <p class="card-title">{{ profile.section }}</p>
+        <h6>Order</h6>
+        <p class="card-title">{{ profile.order }}</p>
+        <div>
+            <img class="card-body" style="float: left; margin-top: 2em; background-color: grey; width: 225px; height: 350px; border-radius: 4px; margin-bottom: 0; padding-bottom: 0; object-fit: cover; padding:0;" class="card-img-top" src="{{ profile.profile_image }}">
+            <div style="margin-left: 16em; padding-top: 0.5em;">
+                <h4 class="card-body" style="margin-bottom: 0; padding-bottom: 0;"><a href="{{ profile.website }}">{{ profile.title }}</a></h4>     
+                <div class="card-body ck-content">{{ profile.content|safe }}</div>  
+            </div>
+        </div>
+        
+
+
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
