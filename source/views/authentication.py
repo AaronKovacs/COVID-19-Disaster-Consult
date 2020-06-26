@@ -43,7 +43,7 @@ from itsdangerous import URLSafeTimedSerializer
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
-api = APINamespace('Authentication', description='Registering and authenticating.')#Api(blueprint)
+api = APINamespace('Authentication', description='Registering and authenticating.')
 
 @api.route('/register')
 class Register(Resource):
@@ -64,7 +64,7 @@ class Register(Resource):
             session.close()
             return redirect(url_for('Authentication_register', alert='Error: User with that email already exists.'))
 
-        user = User(username=username.lower(), realname=realname, email=email)
+        user = User(username=cleanUsername(username), realname=realname, email=email)
         user.hash_password(password)
         session.add(user)
         session.commit()
@@ -75,6 +75,16 @@ class Register(Resource):
         alert = request.args.get('alert', None)
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('register.html', alert=alert), 200, headers)
+
+def cleanUsername(username):
+    cleaned_string = ''
+    available_chars = 'abcdefghijklmnopqrstuvwxyz1234567890_'
+
+    for character in username.lower():
+        if character in available_chars:
+            cleaned_string += character
+
+    return cleaned_string[0:20]
 
 @api.route('/login')
 class Login(Resource):
