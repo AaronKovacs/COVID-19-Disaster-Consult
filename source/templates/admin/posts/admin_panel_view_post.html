@@ -76,6 +76,7 @@
 	<div class="card-body">
 		<h5 class="card-title">{{ post.title }}</h5>
 		<hr/>
+
 		<div class="card-body ck-content">{{ post.content|safe }}</div>		
 		{% for link in links %}
 		<div class="card-footer text-muted " style="border: 1px solid rgba(0,0,0,.125); border-radius: 4px 4px 4px 4px;">
@@ -95,6 +96,16 @@
 		</div>
 		{% endfor %}
 	</div>
+
+	<hr/>
+	<div class="card-body">
+		<h3 class="card-title">Post's Sections</h3>
+		{% for section in post.sections %}
+		<a href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">{{section.title}}</a>
+		<br/>
+		{% endfor %}
+	</div>
+	
 
 	<hr/>
 	<div class="card-body">

@@ -23,6 +23,8 @@ from ..database.base import Base
 from ..database.database import Session
 
 from .draft import Draft
+from .section_post import SectionPost
+from .section import Section
 
 def uniquePostID():
     possibleID = alphaNumericID()
@@ -62,6 +64,30 @@ class Post(Base):
         'keywords': keywords_txt,
         'last_updated': self.last_updated_formatted()
         }
+
+    def sections(self, session):
+        links = session.query(SectionPost).filter_by(post=self.id).all()
+        sections = []
+        for link in links:
+            sec = session.query(Section).filter_by(id=link.section).first()
+            if sec is not None:
+                sections.append(sec.publicJSON())
+        return sections
+
+    def status(self, session):
+        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id).order_by(desc(Draft.created), Draft.id).first()
+        if draft is None:
+            return 'Unknown'
+        if draft.rejected == False and draft.approved == False:
+            return 'Pending Review'
+        if draft.rejected:
+            return 'Draft Rejected'
+        if draft.approved and self.public:
+            return 'Public & Approved'
+        if draft.approved and self.public == False:
+            return 'Private & Approved'
+
+        return 'Unknown'
 
     def hasDraft(self, session):
         draft = session.query(Draft).filter_by(object_type='post', object_id=self.id, approved=False).order_by(desc(Draft.created), Draft.id).first()

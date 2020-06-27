@@ -74,8 +74,7 @@ del {
     <p class="mb-0">This draft has been rejected. The reviewer may have left a comment for you to read. Please submit a new draft for review.</p>
 </div>
 {% endif %}
-
-{% if draft.approved == False and draft.rejected == False %}
+{% if draft.approved == False and draft.rejected == False and current_user.privilege >= 200 %}
 <div class="alert alert-warning" role="alert" style="margin-bottom: 2em;width: 50rem; margin-left: auto; margin-right: auto;">
     <h5 class="alert-heading">Draft Approval</h5>
     <p class="mb-0">This post draft is waiting approval. Once reviewed you can approve this draft. Approved drafts appear publicly on the website.</p>

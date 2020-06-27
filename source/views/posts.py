@@ -14,6 +14,8 @@ import re
 from urllib.parse import urlparse
 import urllib.parse
 
+from flask_login import current_user
+
 from PIL import Image
 from io import BytesIO
 from werkzeug.utils import secure_filename
@@ -71,18 +73,35 @@ class ListPosts(Resource):
     def get(self, site):
         session = Session()
 
+        page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+
         postsJS = []
-        posts = session.query(Post).filter_by(site=site).order_by(desc(Post.last_updated), Post.id).all()
+        posts = session.query(Post).filter_by(site=site).order_by(desc(Post.last_updated), Post.id).limit(per_page).offset(offset)
         for post in posts:
             js = post.publicJSON()
-            #js['last_updated'] = format(post.last_updated, datetime.datetime.now())
-            
+            js['sections'] = post.sections(session)
+            js['status'] = post.status(session)            
             postsJS.append(js)
+
+        track_ids = []
+        tracks = session.query(ActivityTrack).filter_by(user_id=current_user.id, object_type='post').distinct(ActivityTrack.object_id).order_by(desc(ActivityTrack.created), ActivityTrack.id).limit(5).all()
+        recent_posts = []
+        for track in tracks:
+            if track.object_id in track_ids:
+                continue
+            track_ids.append(track.object_id)
+            post = session.query(Post).filter_by(id=track.object_id).first()
+            if post is not None:
+                js = post.publicJSON()
+                js['status'] = post.status(session)
+                recent_posts.append(js)
+
+        pagination = Pagination(page=page, per_page=per_page, total=session.query(Post).filter_by(site=site).count(), css_framework='bootstrap4')
 
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_posts.html', posts=postsJS, site=site), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_posts.html', posts=postsJS, recents=recent_posts, site=site, pagination=pagination), 200, headers)
 
 @api.route('/view')
 class View(Resource):
@@ -106,6 +125,7 @@ class View(Resource):
             imagesJS.append(content.publicJSON())
 
         postJS = post.latestJSON(session)
+        postJS['sections'] = post.sections(session)
 
         page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
         
