@@ -218,7 +218,9 @@ class ViewSection(Resource):
             post = session.query(Post).filter_by(site=site).filter_by(id=link.post).first()
             if post is not None:
                 if post.public:
-                    postsJS.append(post.siteJSON(session))
+                    js = post.siteJSON(session)
+                    if js != {}:
+                        postsJS.append(js)
 
         session.close()
 
