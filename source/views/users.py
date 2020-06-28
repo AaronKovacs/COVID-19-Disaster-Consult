@@ -52,6 +52,8 @@ from ..helpers.namespace import APINamespace
 from ..database.database import Session
 from ..configuration.config import PASSWORD_SECRET_KEY
 
+from .posts import uploadImage, resizeIOImage, allowed_file, alphaNumericID, ALLOWED_EXTENSIONS
+
 from ..models.user import User
 from ..models.post import Post
 from ..models.section import Section
@@ -167,3 +169,53 @@ def cleanUsername(username):
             cleaned_string += character
 
     return cleaned_string[0:20]
+
+@api.route('/<userID>/upload/image')
+class UploadImage(Resource):
+    @login_required
+    def post(self, userID, site):
+        file = ''
+        if 'image' in request.files:
+            file = request.files['image']
+        if file.filename == '':
+            abort(400, 'Filename required.')
+        if file and allowed_file(file.filename):
+            filename = secure_filename(alphaNumericID())
+
+
+            imgSize = (1000, 1000)
+            img_data = file.read()
+
+            og_img = Image.open(io.BytesIO(img_data)).convert('RGB')
+            width, height = og_img.size
+
+            #Resize image
+            originalImage = resizeIOImage(img_data, (width, height))
+
+            #Upload image to S3 bucket
+            uploadImage(originalImage, "%soriginal" % filename)
+
+            original_url = "{}{}original.jpeg".format(S3_LOCATION, filename)
+
+            session = Session()
+
+            user = session.query(User).filter_by(id=userID).first()
+            profile = user.profile(session)
+            profile.profile_image = original_url
+            session.commit()
+            session.close()
+
+            return redirect(url_for('Users_view', id=userID, site=site))
+
+    @login_required
+    def get(self, userID, site):
+        session = Session()
+
+        user = session.query(User).filter_by(id=userID).first()
+        if user is None:
+            abort(404)
+
+        session.close()
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('admin/users/admin_panel_users_add_image.html', id=userID, site=site), 200, headers)
+
