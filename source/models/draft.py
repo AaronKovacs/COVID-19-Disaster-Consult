@@ -24,6 +24,11 @@ from ..database.database import Session
 
 from .activity_track import ActivityTrack
 from .user import User
+from .section_post import SectionPost
+from .section import Section
+from .category_section import CategorySection
+from .category import Category
+from . import post as post_c
 
 class Draft(Base):
     __tablename__ = 'drafts'
@@ -56,6 +61,12 @@ class Draft(Base):
         'last_updated': self.last_updated_formatted()
         }
 
+    def site(self, session):
+        post = session.query(post_c.Post).filter_by(id=self.object_id).first()
+        if post is None:
+            return ''
+        return post.site
+
     def last_updated_formatted(self):
         try:
             import timeago
@@ -79,3 +90,27 @@ class Draft(Base):
         except:
             print('here')
             return "Missing package requirement: timeago"
+
+    def routeText(self, session):
+        links = session.query(SectionPost).filter_by(post=self.object_id).all()
+        sections = []
+
+        routes = []
+
+        for link in links:
+            sec = session.query(Section).filter_by(id=link.section).first()
+            if sec is not None:
+                categories = session.query(CategorySection).filter_by(section=sec.id).all()
+                if categories is not None:
+                    for cat in categories:
+                        category = session.query(Category).filter_by(id=cat.category).first()
+                        if category is not None:
+                            routes.append('[%s] %s -> %s' % (category.site, category.title, sec.title))
+                        else:
+                            routes.append('[%s] %s' % (sec.site, sec.title))
+                else:
+                    routes.append('[%s] %s' % (sec.site, sec.title))
+        
+
+
+        return sorted(set(routes))

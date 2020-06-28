@@ -25,6 +25,7 @@ from flask_restplus import Resource, Api, abort, Namespace
 from flask import redirect, render_template, url_for
 from flask_mail import Mail, Message
 from flask_login import login_required, login_user, logout_user 
+from flask_paginate import Pagination, get_page_args
 
 from sqlalchemy import or_
 from sqlalchemy import DateTime
@@ -62,20 +63,28 @@ class ListDrafts(Resource):
     def get(self, site):
         session = Session()
 
+        page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+
         draftsJS = []
-        drafts = session.query(Draft).filter_by(approved=False, rejected=False).order_by(desc(Draft.created), Draft.id).all()
+        drafts = session.query(Draft).filter_by(approved=False, rejected=False).order_by(desc(Draft.created), Draft.id).limit(per_page).offset(offset)
 
         post_ids = []
         for draft in drafts:
             if draft.object_id in post_ids:
                 continue
             post_ids.append(draft.object_id)
-            draftsJS.append(draft.publicJSON())
+            js = draft.publicJSON()
+            js['user'] = draft.user(session)
+            js['routes'] = draft.routeText(session)
+            js['site'] = draft.site(session)
+            draftsJS.append(js)
 
         session.close()
 
+        pagination = Pagination(page=page, per_page=per_page, total=session.query(Draft).filter_by(approved=False, rejected=False).count(), css_framework='bootstrap4')
+
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/posts/admin_panel_drafts.html', drafts=draftsJS, site=site), 200, headers)
+        return make_response(render_template('admin/posts/admin_panel_drafts.html', drafts=draftsJS, site=site, pagination=pagination), 200, headers)
 
 
 @api.route('/draft/<draftID>')

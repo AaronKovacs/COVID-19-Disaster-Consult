@@ -22,7 +22,7 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base
 from ..database.database import Session
 
-from .draft import Draft
+from . import draft as draft_c
 from .section_post import SectionPost
 from .section import Section
 
@@ -75,7 +75,7 @@ class Post(Base):
         return sections
 
     def status(self, session):
-        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id).order_by(desc(Draft.created), Draft.id).first()
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
         if draft is None:
             return 'Unknown'
         if draft.rejected == False and draft.approved == False:
@@ -90,7 +90,7 @@ class Post(Base):
         return 'Unknown'
 
     def hasDraft(self, session):
-        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id, approved=False).order_by(desc(Draft.created), Draft.id).first()
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=False).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
         if draft is None:
             return None
         if json.loads(draft.new_content) != self.publicJSON():
@@ -104,7 +104,7 @@ class Post(Base):
         return js
 
     def siteJSON(self, session):
-        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(Draft.created), Draft.id).first()
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
         if draft is None:
             return {}
         js = json.loads(draft.new_content)
@@ -113,7 +113,7 @@ class Post(Base):
         return js
 
     def siteDraftID(self, session):
-        draft = session.query(Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(Draft.created), Draft.id).first()
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
         if draft is None:
             return None
 

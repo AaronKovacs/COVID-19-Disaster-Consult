@@ -17,16 +17,29 @@
             <thead>
                 <tr>
                     <th scope="col">Post Title</th>
-                    <th scope="col">Updated</th>
+                    <th scope="col">Submitted</th>
+                    <th scope="col">Locations</th>
                 </tr>
             </thead>
             <tbody id="container">
                 {% for draft in drafts %}
 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Drafts_view_draft', draftID=draft.id, site=site) }}">
-                    <a href="{{ url_for('Drafts_view_draft', draftID=draft.id, site=site) }}">
-                        <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ draft.new_content.title }}</th>
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Drafts_view_draft', draftID=draft.id, site=draft.site) }}">
+                    <a href="{{ url_for('Drafts_view_draft', draftID=draft.id, site=draft.site) }}">
+                        <th scope="row" style="max-width: 300px;" style="color: #007bff;">
+                            <div>
+                                {{ draft.new_content.title }}
+                            </div>
+                            <div style="line-clamp: 1; font-weight: 300; font-size: 9pt;">
+                                Submitted by <a href="{{ url_for('Users_view', id=draft.user.id, site=site) }}">{{ draft.user.realname }}</a>
+                            </div>
+                        </th>
                         <td>{{ draft.last_updated }}</td>
+                        <td>
+                            {% for route in draft.routes %}
+                            {{ route }}<br/>
+                            {% endfor %}
+                        </td>
                     </a>
                 </tr>
 
@@ -34,6 +47,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        {{ pagination.links }}
     </div>
 </div>
 {% endblock %}
