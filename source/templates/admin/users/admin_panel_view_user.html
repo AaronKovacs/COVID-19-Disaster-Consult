@@ -9,12 +9,13 @@
 {% block panel_title %}View User{% endblock %}
 
 {% block panel_buttons %}
+{% if current_user.privilege >= 300 %} 
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
         <a href="{{ url_for('Users_create_user', id=user.id, site=site) }}" class="btn btn-sm btn-outline-primary">Edit User</a>
     </div>
 </div>
-
+{% endif %}
 {% endblock %}
 
 

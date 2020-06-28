@@ -25,7 +25,7 @@
             <tbody id="container">
                 {% for user in users %}
 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{% if current_user.privilege >= 300 %} {{ url_for('Users_view', id=user.id, site=site) }} {% endif %}">
+                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Users_view', id=user.id, site=site) }}">
                     <a>
                         <td style="max-width: 4em;">{{ user.realname }}</td>
                         <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ user.username }}</th>
