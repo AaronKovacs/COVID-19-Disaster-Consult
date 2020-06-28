@@ -100,6 +100,7 @@ class Post(Base):
     def latestJSON(self, session):
         js = self.publicJSON()
         js['content'] = self.process_content(self.content)
+        js['last_updated'] = self.last_updated_formatted()
         return js
 
     def siteJSON(self, session):
@@ -108,6 +109,7 @@ class Post(Base):
             return {}
         js = json.loads(draft.new_content)
         js['content'] = self.process_content(js['content'])
+        js['last_updated'] = self.last_updated_formatted()
         return js
 
     def siteDraftID(self, session):
@@ -148,20 +150,7 @@ class Post(Base):
             for match in matches:
                 src = re.findall(r'(?<=url=").*?(?=[\*"])', match)[0]
                 video = re.findall(r'((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)', src)[0][-1]
-                '''
-                url_data = urlparse.urlparse(src)
-                query = urlparse.parse_qs(url_data.query)
-                video = ''
 
-
-                if 'youtube' in src:
-                    video = query["v"][0]
-                if 'youtu.be' in src:
-                    comps = src.split('/')
-                    video = comps[-1]
-                    if '?' in video:
-                        video = video.split('?')[0]
-                '''
                 src = 'https://www.youtube.com/embed/%s' % video
                 iframe_start = """<iframe width="100%" height="315" src=\""""
                 iframe_end = """" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""

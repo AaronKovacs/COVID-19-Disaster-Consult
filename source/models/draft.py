@@ -52,8 +52,17 @@ class Draft(Base):
         'created': self.last_updated_formatted(),
         'approved': self.approved,
         'rejected': self.rejected,
-        'comment': self.comment
+        'comment': self.comment,
+        'last_updated': self.last_updated_formatted()
         }
+
+    def last_updated_formatted(self):
+        try:
+            import timeago
+            return timeago.format(self.last_updated, datetime.datetime.utcnow())
+        except:
+            print('here')
+            return "Missing package requirement: timeago"
 
     def user(self, session):
         track = session.query(ActivityTrack).filter_by(draft=self.id).first()
