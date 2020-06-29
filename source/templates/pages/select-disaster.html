@@ -15,7 +15,7 @@
               <div class="card-body">
                 <h5 class="card-title text-center ">Disaster-Specific Resources</h5>
                 <div class="row justify-content-center">
-                  <div class="col-5">
+                  <div class="col-12 col-md-6">
                     <select id="site-select" class="mdb-select md-form" searchable="Search here..">
                       <option value="" disabled selected>Choose Disaster Type</option>
                       {% for site in sites %}
@@ -25,7 +25,7 @@
                   </div>
                 </div>
                 <div class="row justify-content-center">
-                  <div class="col-3">
+                  <div class="col-8 col-md-3">
                     <a class="btn btn-outline-primary waves-effect btn-sm" role="button" aria-pressed="true" href="javascript:WinOpen();">Go</a>
                   </div>
                 </div>
@@ -41,7 +41,7 @@
     <div class="row text-center justify-content-center" style="margin-top: -75px;">
       <div class="col-12">
         <div class="card">
-          <div class="py-2 my-2">
+          <div class="py-2 mt-4 mb-2">
             <h2>Our Mission</h2>
             <h5>Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front line healthcare workers when faced with the overwhelming challenge of responding to disasters.</h5>
           </div>
@@ -66,62 +66,62 @@
             </div>
           </div>
 
-        <div class="row">
-          <div class="container-fluid pt-0">
-            <div class="country-specific-data">
-              <h3 id="currentcountry"></h3>
-              <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
-              
-              <div class="row" id="stats">
-                <div class="col-md-4">
-                  <h1 id="currentcases"></h1>
-                  <h4>Cases</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="currentdeaths"></h1>
-                  <h4>Deaths</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="currentrecovered"></h1>
-                  <h4>Recovered</h4>
-                </div>
-
-              </div><!--row end-->
-            </div><!--country end-->
-          </div><!-- select country end-->
-          <br>
-          <div class = "greyLine" style="width: 50%;"></div>
-          <br>
-        </div>
+          <div class="row mt-2">
+            <div class="container-fluid pt-0">
+              <div class="country-specific-data">
+                <h3 id="currentcountry"></h3>
+                <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
                 
-        <div class="row mb-2 pb-2">
-          <div class="container-fluid pt-0">
-            <div class="global-data">
-              <h3>Global Data</h3>
-              <span style="color: #5a5a5a"><i>Updated Daily</i></span>
-              <div class="row" id="stats">
-                
-                <div class="col-md-4">
-                  <h1 id="globalcases"></h1>
-                  <h4>Cases</h4>
-                </div>
-                
-                <div class="col-md-4">
-                  <h1 id="globaldeaths"></h1>
-                  <h4>Deaths</h4>
-                </div>
-                
-                <div class="col-md-4">
-                  <h1 id="globalrecovered"></h1>
-                  <h4>Recovered</h4>
-                </div>
+                <div class="row" id="stats">
+                  <div class="col-md-4">
+                    <h1 id="currentcases"></h1>
+                    <h4>Cases</h4>
+                  </div>
 
-              </div><!--row end-->
-            </div><!--global end-->
+                  <div class="col-md-4">
+                    <h1 id="currentdeaths"></h1>
+                    <h4>Deaths</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h1 id="currentrecovered"></h1>
+                    <h4>Recovered</h4>
+                  </div>
+
+                </div><!--row end-->
+              </div><!--country end-->
+            </div><!-- select country end-->
+            <br>
+            <div class = "greyLine" style="width: 50%;"></div>
+            <br>
           </div>
-        </div>
+                  
+          <div class="row mb-2 pb-2">
+            <div class="container-fluid pt-0">
+              <div class="global-data">
+                <h3>Global Data</h3>
+                <span style="color: #5a5a5a"><i>Updated Daily</i></span>
+                <div class="row" id="stats">
+                  
+                  <div class="col-md-4">
+                    <h1 id="globalcases"></h1>
+                    <h4>Cases</h4>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <h1 id="globaldeaths"></h1>
+                    <h4>Deaths</h4>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <h1 id="globalrecovered"></h1>
+                    <h4>Recovered</h4>
+                  </div>
+
+                </div><!--row end-->
+              </div><!--global end-->
+            </div>
+          </div>
 {% endblock %}
 
 
