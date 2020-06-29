@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="norton-safeweb-site-verification" content="kud1lss1bncw3-m1q4mjk8g-7rwrmgf0xktbhr0hwdzz6fwd3boq3foifvnxjzdffvpptqzj07f7wf573hjuipsjbbs7gqx7jmkt94xevohvgygm4t1clp-4gu289gst" />
+	<meta name="wot-verification" content="e04658b7c06577e52c32"/>
+	<meta name="title" content="Disaster Consult">
+	<meta name="description" content="Your Consultant for Just-in-Time Information When Disasters Strike">
+	<meta name="keywords" content="disaster, consult, disaster consult, disaster consult covid, covid-19, covid 19, covid 19 resources, provider covid, provider covid-19">
+	<meta name="robots" content="index, follow">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="language" content="English">
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@disasterconslt" />
+	<meta name="twitter:creator" content="@disasterconslt" />
+	<meta name="twitter:title" content="Disaster Consult" />
+	<meta name="twitter:description" content="Your Consultant for Just-in-Time Information When Disasters Strike" />
+	<meta name="twitter:image" content="https://www.disasterconsult.org/static/images/logoWide.png" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://www.disasterconsult.org/home">
+	<meta property="og:title" content="Disaster Consult | COVID-19">
+	<meta property="og:description" content="Your Consultant for Just-in-Time Information When Disasters Strike">
+	<meta property="og:image" content="https://www.disasterconsult.org/static/images/logoWide.png" >
+
+	<title>Disaster Consult | {{ site|upper }} </title>
+
+	<!-- FavIcon -->
+	<link rel='icon' href='../../static/images/favicon.png' type='image/png' >
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,800,900&display=swap" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+	<!-- Material Design Bootstrap -->
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/mdb.min.css') }}">
+	<!-- Bootstrap (Ekko) Lightbox -->
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/ekko-lightbox.css') }}">
+	<!-- Read More Collapse -->
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/readmore.min.css') }}">
+	<!-- Your custom styles (optional) -->
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css') }}">
+
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163879908-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-163879908-1');
+	</script>
+
+	{% block head %}{% endblock %}
+</head>
+
+<body>
+	{% block body %}{% endblock %}
+
+
+	<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/popper.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+  	<script src="{{ url_for('static', filename = 'js/mdb.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/chart.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'js/tether.min.js') }}"></script>
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- Bootstrap (Ekko) Lightbox -->
+	<script src="{{ url_for('static', filename = 'js/ekko-lightbox.min.js') }}"></script>
+	<script>
+		$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+	        event.preventDefault();
+	        $(this).ekkoLightbox();
+	    });
+
+			$(document).ready(function() {
+	      // Modal Initialization
+	      $('#onload').modal('show');
+
+	      // Select
+	      $('.mdb-select').materialSelect();
+	    });
+	</script>
+
+	<!-- Read More Collapse -->
+	<script src="{{ url_for('static', filename = 'js/readmore.min.js') }}"></script>
+
+	{% block scripts %}{% endblock %}
+
+</body>
+</html>
