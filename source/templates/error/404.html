@@ -1,0 +1,60 @@
+{% extends "base-pages/base-general.html" %}
+
+{% block main_content %}
+    <div class="container" style="height:90vh">
+
+      <!-- Grid row -->
+      <div class="row d-flex align-items-center" style="height:90vh">
+
+        <!-- Grid column -->
+        <div class="col-12">
+
+          <!--Section: Block Content-->
+          <section class="mt-70 mb-5 text-center">
+
+            <h1 class="display-1">404</h1>
+
+            <h4 class="mb-4">Page not found</h4>
+
+            
+            <p class="mb-0">The Page you are looking for doesn't exist.</p>
+            <p>Go to <a href="/">disasterconsult.org</a> to start over!</p>
+            <div class="my-4"></div>
+
+            <div class="row text-center justify-content-center">
+              <div class="col-6">
+                <div class="card z-depth-5">
+                  <div class="card-body">
+                    <h5 class="card-title text-center ">Disaster-Specific Resources</h5>
+                    <div class="row justify-content-center">
+                      <div class="col-12 col-md-6">
+                        <select id="site-select" class="mdb-select md-form" searchable="Search here..">
+                          <option value="" disabled selected>Choose Disaster Type</option>
+                          {% for site in sites %}
+                            <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-8 col-md-3">
+                        <a class="btn btn-outline-primary waves-effect btn-sm" role="button" aria-pressed="true" href="javascript:WinOpen();">Go</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!--Section: Block Content-->
+        </div>
+        <!-- Grid column -->
+
+     
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+
+  {% endblock %}

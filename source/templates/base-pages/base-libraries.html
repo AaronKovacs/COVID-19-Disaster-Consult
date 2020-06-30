@@ -78,10 +78,10 @@
 	<!-- Bootstrap (Ekko) Lightbox -->
 	<script src="{{ url_for('static', filename = 'js/ekko-lightbox.min.js') }}"></script>
 	<script>
-		// $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-	 //        event.preventDefault();
-	 //        $(this).ekkoLightbox();
-	 //    });
+		$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+	        event.preventDefault();
+	        $(this).ekkoLightbox();
+	    });
 
 		$(document).ready(function() {
 	      // Modal Initialization

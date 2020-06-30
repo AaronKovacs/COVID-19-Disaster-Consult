@@ -217,6 +217,12 @@ def select_screen():
     '''
 
 
+@application.errorhandler(404) 
+def not_found(e): 
+    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.id).all()
+    return render_template("error/404.html", sites=sites) 
+
+
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
 api.add_namespace(pages, path='/<site>')
 api.add_namespace(posts, path='/<site>/posts')
