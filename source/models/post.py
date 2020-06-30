@@ -106,7 +106,7 @@ class Post(Base):
     def siteJSON(self, session):
         draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
         if draft is None:
-            return {}
+            return self.latestJSON(session)
         js = json.loads(draft.new_content)
         js['content'] = self.process_content(js['content'])
         js['last_updated'] = self.last_updated_formatted()
