@@ -125,7 +125,7 @@
 
           <div class="row justify-content-center mt-4 mb-2">
             <div class="col-10 col-md-5">
-              <a class="btn btn-outline-primary waves-effect btn-sm" role="button" aria-pressed="true" data-toggle="modal" data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use Disaster Consult</a>
+              <a class="btn btn-outline-primary waves-effect btn-lg" role="button" aria-pressed="true" data-toggle="modal" data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use Disaster Consult</a>
             </div>
           </div>
 
@@ -159,64 +159,69 @@
 
 {% block scripts_content %}
   <script>
-  function WinOpen() {
-  document.location.href = $("#site-select :selected").val();
-  }
-  // object-fit polyfill run
-  objectFitImages();
-  /* init Jarallax */
-  jarallax(document.querySelectorAll('.jarallax'));
-  jarallax(document.querySelectorAll('.jarallax-keep-img'), {keepImg: true});
+    function WinOpen() {
+      url = $("#site-select :selected").val();
+      if (!url){
+        toastr.error('Please select a disaster to continue');
+        return false;
+      }
+      document.location.href = $("#site-select :selected").val();
+    }
+    // object-fit polyfill run
+    objectFitImages();
+    /* init Jarallax */
+    jarallax(document.querySelectorAll('.jarallax'));
+    jarallax(document.querySelectorAll('.jarallax-keep-img'), {keepImg: true});
   </script>
   <script>
-  let requestOptions = {
-  method: 'GET',
-  redirect: 'follow'
-  };
-  let dataArray = [];            //holds parsed data for each country
-  let globalTotals = [0, 0, 0]; // holds the global number of cases, deaths, and recovered
-  let allThisData = [];
-  let chartMap = new Map();
-  let myChart;
-  getData();
+    let requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    let dataArray = [];            //holds parsed data for each country
+    let globalTotals = [0, 0, 0]; // holds the global number of cases, deaths, and recovered
+    let allThisData = [];
+    let chartMap = new Map();
+    let myChart;
+    getData();
   //****************************************************************************************
   // Fetches and parses data from API and accumulates global aggregates for cases, deaths,
   // and recovered.
   //****************************************************************************************
-  function getData() {
-  fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
-  .then(res => {
-  return res.json();
-  }).then(obj => {
-  globalTotals = [0, 0, 0];
-  idx = 0;
-  for (let [key, value] of Object.entries(obj.Countries)) {
-  if(!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
-  let newEntry = {
-  id: idx = 0,
-  country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
-  slug: value.Slug,
-  totalconfirmed: value.TotalConfirmed,
-  totaldeaths: value.TotalDeaths,
-  totalrecovered: value.TotalRecovered
-  }
-  idx++;
-  dataArray.push(newEntry);
-  globalTotals[0] += newEntry.totalconfirmed;
-  globalTotals[1] += newEntry.totaldeaths;
-  globalTotals[2] += newEntry.totalrecovered;
-  }
-  dataArray.sort((a, b) => a.country.localeCompare(b.country));
-  }
-  })
-  .then(() => {
-  document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
-  document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
-  document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]);
-  populateGlobal(); // calls next function after this one is finished
-  })
-  .catch(error => console.log('error', error));
-  }
+    function getData() {
+      fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
+      .then(res => {
+      return res.json();
+      }).then(obj => {
+      globalTotals = [0, 0, 0];
+      idx = 0;
+      for (let [key, value] of Object.entries(obj.Countries)) {
+      if(!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
+      let newEntry = {
+      id: idx = 0,
+      country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
+      slug: value.Slug,
+      totalconfirmed: value.TotalConfirmed,
+      totaldeaths: value.TotalDeaths,
+      totalrecovered: value.TotalRecovered
+      }
+      idx++;
+      dataArray.push(newEntry);
+      globalTotals[0] += newEntry.totalconfirmed;
+      globalTotals[1] += newEntry.totaldeaths;
+      globalTotals[2] += newEntry.totalrecovered;
+      }
+      dataArray.sort((a, b) => a.country.localeCompare(b.country));
+      }
+      })
+      .then(() => {
+      document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
+      document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
+      document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]);
+      populateGlobal(); // calls next function after this one is finished
+      })
+      .catch(error => console.log('error', error));
+    }
   //****************************************************************************************
   // Fires when each time a new country is selected from the dropdown. Displays data in the
   // bottom box relevant to the country selected.
