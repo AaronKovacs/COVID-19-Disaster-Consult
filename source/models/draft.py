@@ -22,6 +22,14 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base
 from ..database.database import Session
 
+from .activity_track import ActivityTrack
+from .user import User
+from .section_post import SectionPost
+from .section import Section
+from .category_section import CategorySection
+from .category import Category
+from . import post as post_c
+
 class Draft(Base):
     __tablename__ = 'drafts'
     id = Column(Integer(), primary_key=True)
@@ -33,6 +41,11 @@ class Draft(Base):
 
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    
+    approved = Column(Boolean(), default=False)
+    rejected = Column(Boolean(), default=False)
+
+    comment = Column(Text())
 
     def publicJSON(self):
         return {
@@ -41,8 +54,34 @@ class Draft(Base):
         'new_content': json.loads(self.new_content),
         'object_type': self.object_type,
         'object_id': self.object_id,
-        'created': self.last_updated_formatted()
+        'created': self.last_updated_formatted(),
+        'approved': self.approved,
+        'rejected': self.rejected,
+        'comment': self.comment,
+        'last_updated': self.last_updated_formatted()
         }
+
+    def site(self, session):
+        post = session.query(post_c.Post).filter_by(id=self.object_id).first()
+        if post is None:
+            return ''
+        return post.site
+
+    def last_updated_formatted(self):
+        try:
+            import timeago
+            return timeago.format(self.last_updated, datetime.datetime.utcnow())
+        except:
+            print('here')
+            return "Missing package requirement: timeago"
+
+    def user(self, session):
+        track = session.query(ActivityTrack).filter_by(draft=self.id).first()
+        if track is None:
+            return None
+
+        user = session.query(User).filter_by(id=track.user_id).first()
+        return user
 
     def last_updated_formatted(self):
         try:
@@ -51,3 +90,27 @@ class Draft(Base):
         except:
             print('here')
             return "Missing package requirement: timeago"
+
+    def routeText(self, session):
+        links = session.query(SectionPost).filter_by(post=self.object_id).all()
+        sections = []
+
+        routes = []
+
+        for link in links:
+            sec = session.query(Section).filter_by(id=link.section).first()
+            if sec is not None:
+                categories = session.query(CategorySection).filter_by(section=sec.id).all()
+                if categories is not None:
+                    for cat in categories:
+                        category = session.query(Category).filter_by(id=cat.category).first()
+                        if category is not None:
+                            routes.append('[%s] %s -> %s' % (category.site, category.title, sec.title))
+                        else:
+                            routes.append('[%s] %s' % (sec.site, sec.title))
+                else:
+                    routes.append('[%s] %s' % (sec.site, sec.title))
+        
+
+
+        return sorted(set(routes))

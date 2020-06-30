@@ -44,6 +44,7 @@ from source.views.literatures import api as literatures
 from source.views.pages import api as pages
 from source.views.api import api as mobileapi
 from source.views.drafts import api as drafts
+from source.views.users import api as users
 
 from source.views.authentication import api as authentication
 
@@ -66,6 +67,7 @@ from source.models.activity_track import ActivityTrack
 from source.models.feedback import Feedback
 from source.models.draft import Draft
 from source.models.site import Site
+from source.models.user_profile import UserProfile
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
@@ -215,6 +217,12 @@ def select_screen():
     '''
 
 
+@application.errorhandler(404) 
+def not_found(e): 
+    sites = session.query(Site).filter_by(public=True)
+    return render_template("error/404.html", sites=sites) 
+
+
 api = Api(application, title='COVID-19 Disaster Consult', version='1.0', doc=False)
 api.add_namespace(pages, path='/<site>')
 api.add_namespace(posts, path='/<site>/posts')
@@ -223,6 +231,7 @@ api.add_namespace(categories, path='/<site>/categories')
 api.add_namespace(links, path='/<site>/links')
 api.add_namespace(literatures, path='/<site>/literatures')
 api.add_namespace(drafts, path='/<site>/drafts')
+api.add_namespace(users, path='/<site>/users')
 
 api.add_namespace(mobileapi, path='/<site>/api/v1')
 

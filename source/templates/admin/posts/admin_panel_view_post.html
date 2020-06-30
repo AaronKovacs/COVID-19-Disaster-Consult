@@ -50,22 +50,33 @@
 
 
 <div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
-	{% if post.public %}
-	<div class="alert alert-success" role="alert" style="margin: 1em;">
-		<b>Public Post</b>
+	{% if draft %}
+	<div class="alert alert-warning" role="alert" style="margin: 1em;">
+		<b>Unapproved Draft</b>
 		<br/>
-		This post is public and visible on the main website.
+		This post version by <a href="{{ url_for('Users_view', id=draft.user.id, site=site) }}">{{ draft.user.realname }}</a> is currently unapproved and not publicly visible. <a href="{{ url_for('Drafts_view_draft', draftID=draft.id, site=site) }}">If you a reviewer, this post draft can be reviewed here.</a>
+	</div>
+	{% endif %}
+
+
+
+	{% if current_draft %}
+	<div class="alert alert-success" role="alert" style="margin: 1em;">
+		<b>Public Post Version</b>
+		<br/>
+		A version of this post is public and visible on the main website. <a href="{{ url_for('Drafts_view_draft', draftID=current_draft, site=site) }}">View that version here.</a>
 	</div>
 	{% else %}
 	<div class="alert alert-danger" role="alert" style="margin: 1em;">
 		<b>Private Post</b>
 		<br/>
-		This post is not visible on the main website.
+		No version of this post is visible on the main website.
 	</div>
 	{% endif %}
 	<div class="card-body">
 		<h5 class="card-title">{{ post.title }}</h5>
 		<hr/>
+
 		<div class="card-body ck-content">{{ post.content|safe }}</div>		
 		{% for link in links %}
 		<div class="card-footer text-muted " style="border: 1px solid rgba(0,0,0,.125); border-radius: 4px 4px 4px 4px;">
@@ -85,6 +96,16 @@
 		</div>
 		{% endfor %}
 	</div>
+
+	<hr/>
+	<div class="card-body">
+		<h3 class="card-title">Post's Sections</h3>
+		{% for section in post.sections %}
+		<a href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">{{section.title}}</a>
+		<br/>
+		{% endfor %}
+	</div>
+	
 
 	<hr/>
 	<div class="card-body">

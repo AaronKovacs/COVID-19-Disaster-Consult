@@ -55,6 +55,15 @@
 								<button style="margin-left: 1em; width: 87%;" type="button" class="btn btn-dark"><span style="font-weight: 800;">{{ site }}</span><br/><span style="font-size: 10pt;">Click to change</span></button>
 							</a>
 						</li>
+
+						<li class="nav-item" style="background-color: #e2e3e5; border-radius: 6px; margin: 0.6em;">
+
+							<a class="nav-link {% block helpButton %}{% endblock %}" href="https://www.notion.so/Administration-Console-5c6a0e262ecf4cc3bc2f3098a0d7a2dc" target="_blank">
+								<span data-feather="help-circle"></span>
+								Help
+							</a>
+						</li>
+						
 						<li class="nav-item">
 
 							<a class="nav-link {% block homeButton %}{% endblock %}" href="{{ url_for('admin', site=site) }}">
@@ -62,6 +71,8 @@
 								Home
 							</a>
 						</li>
+
+						
 					</ul>
 					<ul class="nav flex-column">
 						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -105,6 +116,27 @@
 							</a>
 						</li>
 					</ul>
+
+					{% if current_user.privilege > 100 %}
+					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<span>Admin</span>
+					</h6>
+
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link {% block draftsButton %}{% endblock %}" href="{{ url_for('Drafts_list_drafts', site=site) }}">
+								<span data-feather="clipboard"></span>
+								Pending Drafts
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {% block usersButton %}{% endblock %}" href="{{ url_for('Users_list_users', site=site) }}">
+								<span data-feather="user"></span>
+								Users
+							</a>
+						</li>
+					</ul>
+					{% endif %}
 				</div>
 			</nav>
 

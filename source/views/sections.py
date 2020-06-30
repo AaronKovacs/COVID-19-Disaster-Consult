@@ -176,6 +176,7 @@ class ViewSection(Resource):
             if post is not None:
                 js = post.publicJSON()
                 js['order'] = link.order
+                js['status'] = post.status(session)
                 postsJS.append(js)
 
         sectionJS = section.publicJSON()

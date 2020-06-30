@@ -22,6 +22,10 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base
 from ..database.database import Session
 
+from . import draft as draft_c
+from .section_post import SectionPost
+from .section import Section
+
 def uniquePostID():
     possibleID = alphaNumericID()
     session = Session()
@@ -61,10 +65,63 @@ class Post(Base):
         'last_updated': self.last_updated_formatted()
         }
 
-    def siteJSON(self):
+    def sections(self, session):
+        links = session.query(SectionPost).filter_by(post=self.id).all()
+        sections = []
+        for link in links:
+            sec = session.query(Section).filter_by(id=link.section).first()
+            if sec is not None:
+                sections.append(sec.publicJSON())
+        return sections
+
+    def status(self, session):
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
+        if draft is None:
+            return 'Unknown'
+        if draft.rejected == False and draft.approved == False:
+            return 'Pending Review'
+        if draft.rejected:
+            return 'Draft Rejected'
+        if draft.approved and self.public:
+            return 'Public & Approved'
+        if draft.approved and self.public == False:
+            return 'Private & Approved'
+
+        return 'Unknown'
+
+    def hasDraft(self, session):
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=False).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
+        if draft is None:
+            return None
+        if json.loads(draft.new_content) != self.publicJSON():
+            return draft
+        return None
+
+    def latestJSON(self, session):
         js = self.publicJSON()
-        js['content'] = self.process_content()
+        js['content'] = self.process_content(self.content)
+        js['last_updated'] = self.last_updated_formatted()
         return js
+
+    def siteJSON(self, session):
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
+        if draft is None:
+            return {}
+        js = json.loads(draft.new_content)
+        js['content'] = self.process_content(js['content'])
+        js['last_updated'] = self.last_updated_formatted()
+        return js
+
+    def siteDraftID(self, session):
+        draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
+        if draft is None:
+            return None
+
+        js = json.loads(draft.new_content)
+        if js['public'] == True:
+            return draft.id
+
+        return None
 
     def blankJSON(self):
         return {
@@ -85,28 +142,15 @@ class Post(Base):
 
 
 
-    def process_content(self):
-        edited_content = self.content
+    def process_content(self, text):
+        edited_content = text
         try:
             # Editing Videos
             matches = re.findall(r'(?:<oembed[^>]*)(?:(?:\/>)|(?:>.*?<\/oembed>))', edited_content)
             for match in matches:
                 src = re.findall(r'(?<=url=").*?(?=[\*"])', match)[0]
                 video = re.findall(r'((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)', src)[0][-1]
-                '''
-                url_data = urlparse.urlparse(src)
-                query = urlparse.parse_qs(url_data.query)
-                video = ''
 
-
-                if 'youtube' in src:
-                    video = query["v"][0]
-                if 'youtu.be' in src:
-                    comps = src.split('/')
-                    video = comps[-1]
-                    if '?' in video:
-                        video = video.split('?')[0]
-                '''
                 src = 'https://www.youtube.com/embed/%s' % video
                 iframe_start = """<iframe width="100%" height="315" src=\""""
                 iframe_end = """" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""

@@ -19,35 +19,127 @@
 {% block postsButton %}active{% endblock %}
 
 {% block content %}
-<div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
-    <div class="card-body">
-        <table id="container" class="table table-hover table-normal">
-            <thead>
-                <tr>
-                    <th scope="col">Public</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Updated</th>
-                </tr>
-            </thead>
-            <tbody id="container">
-                {% for post in posts %}
 
-                <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
-                    <a href="{{ url_for('Posts_create_post', id=post.id, site=site) }}">
-                        <td style="max-width: 4em;">
-                            {% if post.public %}
-                            <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
-                                Public
-                            </div>
-                            {% else %}
-                            <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
-                                Private
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-9">
+      <div class="card" >
+        <div class="card-body">
+            <table id="container" class="table table-hover table-normal">
+                <thead>
+                    <tr>
+                        <th scope="col">Status</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Sections</th>
+                        <th scope="col">Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="container">
+                    {% for post in posts %}
+
+                    <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
+                        <a href="{{ url_for('Posts_create_post', id=post.id, site=site) }}">
+                            <td style="max-width: 4em;">
+
+                                {% if post.status == 'Pending Review' %}
+                                <div class="alert alert-info" style="padding: 0.25rem; text-align: center;" role="alert">
+                                    {{ post.status }}
+                                </div>
+                                {% endif %}
+
+                                {% if post.status == 'Public & Approved' %}
+                                <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+                                    {{ post.status }}
+                                </div>
+                                {% endif %}
+
+                                {% if post.status == 'Private & Approved' %}
+                                <div class="alert alert-secondary" style="padding: 0.25rem; text-align: center;" role="alert">
+                                    {{ post.status }}
+                                </div>
+                                {% endif %}
+
+                                {% if post.status == 'Draft Rejected' %}
+                                <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+                                    {{ post.status }}
+                                </div>
+                                {% endif %}
+
+                                {% if post.status == 'Unknown' %}
+                                <div class="alert alert-dark" style="padding: 0.25rem; text-align: center;" role="alert">
+                                    {{ post.status }}
+                                </div>
+                                {% endif %}
+                            </td>
+                            <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
+                            <th scope="row" style="max-width: 100px;" style="color: #007bff;">
+
+                                {% for section in post.sections %}
+                                <a href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">{{section.title}}</a>
+                                <br/>
+                                {% endfor %}
+                            </th>
+                            <td>{{ post.last_updated }}</td>
+                        </a>
+                    </tr>
+
+
+                    {% endfor %}
+                </tbody>
+            </table>
+            {{ pagination.links }}
+        </div>
+    </div>
+
+</div>
+<div class="col">
+    <div class="card" >
+
+        <div class="card-body">
+            <h4>Recently Edited</h4>
+            <table id="container" class="table table-hover table-normal">
+                <tbody id="container">
+                    {% for post in recents %}
+
+                    <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
+                        <td style="max-width: 12em;">
+
+                            {% if post.status == 'Pending Review' %}
+                            <div class="alert alert-info" style="padding: 0.25rem; text-align: center;" role="alert">
+                                Pending
                             </div>
                             {% endif %}
-                        </td>
-                        <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
-                        <td>{{ post.last_updated }}</td>
-                    </a>
+
+                            {% if post.status == 'Public & Approved' %}
+                            <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+                               Public
+                           </div>
+                           {% endif %}
+
+                           {% if post.status == 'Private & Approved' %}
+                           <div class="alert alert-secondary" style="padding: 0.25rem; text-align: center;" role="alert">
+                            Private
+                        </div>
+                        {% endif %}
+
+                        {% if post.status == 'Draft Rejected' %}
+                        <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+                            Rejected
+                        </div>
+                        {% endif %}
+
+                        {% if post.status == 'Unknown' %}
+                        <div class="alert alert-dark" style="padding: 0.25rem; text-align: center;" role="alert">
+                            Unknown
+                        </div>
+                        {% endif %}
+                    </td>
+                    <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
                 </tr>
 
 
@@ -56,6 +148,13 @@
         </table>
     </div>
 </div>
+</div>
+</div>
+</div>
+
+
+
+
 {% endblock %}
 
 {% block footer %}

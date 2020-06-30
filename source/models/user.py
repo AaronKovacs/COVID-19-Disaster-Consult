@@ -26,6 +26,8 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 from ..database.base import Base 
 from ..database.database import Session
 
+from .user_profile import UserProfile
+
 def uniqueUserID():
     possibleID = alphaNumericID()
     session = Session()
@@ -50,17 +52,7 @@ class User(Base, UserMixin):
     privilege = Column(Integer(), default=0)
     active = Column(Boolean())
 
-    def publicJSON(self):
-        return {
-        'id': self.id,
-        'email': self.email,
-        'username': self.username,
-        'realname': self.realname
-        }
-
     def is_active(self):
-        # Here you should write whatever the code is
-        # that checks the database if your user is active
         return self.active
 
     def is_anonymous(self):
@@ -68,6 +60,24 @@ class User(Base, UserMixin):
 
     def is_authenticated(self):
         return True
+
+    def publicJSON(self):
+        return {
+        'id': self.id,
+        'email': self.email,
+        'username': self.username,
+        'realname': self.realname,
+        'privilege': self.privilege
+        }
+
+    # Fetch affiliated user profile, if it doesn't exist create one
+    def profile(self, session):
+        profile = session.query(UserProfile).filter_by(user=self.id).first()
+        if profile is None:
+            session.add(UserProfile(user=self.id))
+            session.commit()
+            return self.profile(session)
+        return profile
 
     def hash_password(self, unhashedPassword):
         self.password = pbkdf2_sha256.hash(unhashedPassword)

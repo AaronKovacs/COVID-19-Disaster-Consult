@@ -12,6 +12,9 @@
 
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
+        <a href="{{ url_for('Pages_view_section', sectionID=section.id, site=site) }}" class="btn btn-sm btn-outline-primary">Open Website</a>
+    </div>
+    <div class="btn-group mr-2">
         <a href="{{ url_for('Sections_create_section', id=section.id, site=site) }}" class="btn btn-sm btn-outline-primary">Edit Section</a>
     </div>
     <div class="btn-group mr-2">
@@ -66,6 +69,35 @@
         <p class="card-text">{{ section.description|safe }}</p>  
         {% for post in posts %}
         <div class="card-footer text-muted " style="border: 1px solid rgba(0,0,0,.125); border-radius: 4px 4px 4px 4px; margin-top: 1em;">
+            {% if post.status == 'Pending Review' %}
+            <div class="alert alert-info" style="padding: 0.25rem; text-align: center;" role="alert">
+                {{ post.status }}
+            </div>
+            {% endif %}
+
+            {% if post.status == 'Public & Approved' %}
+            <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+                {{ post.status }}
+            </div>
+            {% endif %}
+
+            {% if post.status == 'Private & Approved' %}
+            <div class="alert alert-secondary" style="padding: 0.25rem; text-align: center;" role="alert">
+                {{ post.status }}
+            </div>
+            {% endif %}
+
+            {% if post.status == 'Draft Rejected' %}
+            <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+                {{ post.status }}
+            </div>
+            {% endif %}
+
+            {% if post.status == 'Unknown' %}
+            <div class="alert alert-dark" style="padding: 0.25rem; text-align: center;" role="alert">
+                {{ post.status }}
+            </div>
+            {% endif %}
             <a href="{{ url_for('Posts_view', id=post.id, site=site) }}" class="card-link">{{ post.title }}</a>
 
             <div class="btn-toolbar mb-2 mb-md-0" style="float: right;">
