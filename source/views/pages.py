@@ -45,6 +45,7 @@ from ..models.link import Link
 from ..models.literature import Literature
 from ..models.literature_link import LiteratureLink
 from ..models.feedback import Feedback
+from ..models.site import Site
 from itsdangerous import URLSafeTimedSerializer
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
@@ -56,7 +57,7 @@ class Home(Resource):
     def get(self, site):
         # Create connection to database
         session = Session()
-
+        sites = session.query(Site).filter_by(public=True)
         # Fetch latest news links from database and convert to JSON
         linksJS = []
         links = session.query(Link).filter_by(site=site).order_by(desc(Link.created), Link.id).limit(2)
@@ -71,12 +72,27 @@ class Home(Resource):
             if lit.public:
                 litJS.append(lit.publicJSON())
 
+
+        table_of_contents = []
+        all_categories = session.query(Category).filter_by(site=site).all()
+        for cat in all_categories:
+            use_sections = []
+
+            category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
+            for link in category_sections:
+                section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
+                if section is not None:
+                    if section.public:
+                        use_sections.append({ 'name': section.title, 'id': section.id })
+
+            table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
+
         # Close database connection
         session.close()
 
         # Render HTML template with Jinja
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, site=site), 200, headers)
+        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, sites=sites, site=site), 200, headers)
 
 
 @api.route('/news')
@@ -180,6 +196,7 @@ class ViewSection(Resource):
 
         session = Session()
 
+        sites = session.query(Site).filter_by(public=True)
         category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = None
         if category is not None:
@@ -225,7 +242,7 @@ class ViewSection(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, site=site), 200, headers)
+        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, sites=sites, site=site), 200, headers)
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):
