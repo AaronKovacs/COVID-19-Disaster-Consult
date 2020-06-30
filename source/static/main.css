@@ -958,14 +958,27 @@ blockquote p {
 #logo {
 	vertical-align:middle;
 }
+
 .navbar-brand span {
-	font-size:2rem;
+	font-size:1.7rem;
 	line-height:1.2;
 
 	display:inline-block;
 	vertical-align:middle;
 	padding:0 0 0 15px;
 }
+
+@media only screen and (max-width: 450px) {
+  .navbar-brand span {
+    font-size:1.2rem;
+    line-height:1.2;
+
+    display:inline-block;
+    vertical-align:middle;
+    padding:0 0 0 15px;
+  }
+}
+
 .navbar-brand b {
 	display:block;
 	font-size:50%;
