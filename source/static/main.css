@@ -1275,3 +1275,7 @@ footer.page-footer a {
     height: auto !important;
     height: 100%;
 }
+
+.btn-secondary{
+  background-color: #EBDFC1 !important;
+}
