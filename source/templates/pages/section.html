@@ -1,70 +1,18 @@
-{% extends "pages/base.html" %}
+{% extends "base-pages/base-site-specific.html" %}
 
-{% block content %}
+{% block main_content %}
 
-<div class="container" style="max-width: 900px;" id="infoContainer">
-	<div style="padding-bottom: 1.5em">
+<div class="row">
+	<div class="col-12" id="newsContainer">
+		<h2 class="mb-0">{{ section.title }}</h2>
+		<h5 class="mb-2">{{ section.description }}</h5>
 
-		<a class="btn btn-secondary" href="{{ url_for('Pages_view_category', categoryID=category.id, site=site) }}" role="button" style="font-weight: 700">Provider Information &ensp; <img src="{{ url_for('static', filename = 'images/chevron-left.png') }}" style="width: 18px; height: 18px;" align="right" height="18" width="18">
-		</a>
-
-		
-
-	</div>
-
-
-	<div class="row">
-
-
-		<div class="col-12" id="newsContainer">
-			<!--
-			<div class="row">
-				<div class="col-sm-9">
-					<div>Provider Type</div>
-					<h4>{{ category.title }}</h4>
-				</div>
-			</div>
-
-			<div class="blueLine" style="margin-bottom: 1em; margin-top: 1em;"></div>
-		-->
-		<div class="dropdown" style="margin-top: 1em;">
-			<button class="table-contents-button" type="button" id="tableContents" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 1em;">
-				Table of Contents
-			</button>
-			<div class="dropdown-menu table-contents-container" aria-labelledby="tableContents">
-				<ul class="table-list">
-					<li class="table-contents-item">
-						<a target="" href="{{ url_for('Pages_view_category', categoryID=category.id, site=site) }}" class="table-contents-link">Provider Select</a>
-					</li>
-					{% for cat in table_contents %}
-					<li class="table-contents-section">{{ cat.name }}</li>
-					{% for sec in cat.sections %}
-					<li class="table-contents-item {% if sec.id==section.id and cat.id==category.id %}active{% else %}{% endif %}">
-						<a target="" href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}" class="table-contents-link {% if sec.id==section.id  and cat.id==category.id %}active{% else %}{% endif %}">{{ sec.name }}</a>
-					</li>
-					{% endfor %}
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-		<h1>{{ category.title }}: {{ section.title }}</h1>
-		<div class="row" style="margin-bottom: 1em;">
-			<div class="col-sm-9">
-				<h5>{{ section.description }}
-				</h5>
-			</div>
-
-
-		</div>
-
-		<div class="blueLine" style="margin-bottom: 1em;"></div>
+		<div class="blueLine mb-2"></div>
 
 		<div class="accordion" id="accordionExample">
 			<div class="card" style="border:2px solid #e8d29b; border-radius:7px">
 
-
 				{% for post in posts %}
-
 
 				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne" style="border-radius: 0;">
 					{{ post.title }}
@@ -79,16 +27,17 @@
 
 
 				{% endfor %}
-
-
 			</div>
-
 		</div>
 		<center style="margin-top: 2em; font-size: 10pt;">
 			<i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
 		</center>
 	</div>
 </div>
-</div>
+
+
+{% endblock %}
+
+{% block scripts_content %}
 
 {% endblock %}

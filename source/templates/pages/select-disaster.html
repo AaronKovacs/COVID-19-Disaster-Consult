@@ -9,12 +9,12 @@
   <div class="mask rgba-blue-slight">
     <div class="container flex-center">
       <div class="row mt-5 w-100 text-center justify-content-center">
-        <div class="col-12 col-md-6 wow fadeIn mb-3 ">
+        <div class="col-12 col-md-8 col-lg-6 wow fadeIn mb-3">
           <div class="card z-depth-5">
             <div class="card-body">
               <h5 class="card-title text-center ">Disaster-Specific Resources</h5>
               <div class="row justify-content-center">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-7 col-lg-6">
                   <select id="site-select" class="mdb-select md-form" searchable="Search here..">
                     <option value="" disabled selected>Choose Disaster Type</option>
                     {% for site in sites %}
@@ -44,10 +44,18 @@
       <div class="card">
         <div class="py-2 mt-4 mb-2">
           <h2>Our Mission</h2>
-          <h5>Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front
+          <h5 class="h5-responsive mx-2">Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front
             line healthcare workers when faced with the overwhelming challenge of responding to disasters.
           </h5>
         </div>
+
+        <!-- <div class="row justify-content-center mb-2">
+          <div class="col-10 col-md-5">
+            <a class="btn btn-outline-primary waves-effect btn-lg" role="button" aria-pressed="true" data-toggle="modal"
+              data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use
+              Disaster Consult</a>
+          </div>
+        </div> -->
 
         <div class="row">
           <div class="col-11 greyLine"></div>
@@ -134,13 +142,6 @@
         </div>
 
         <div class="mb-4"></div>
-        <!-- <div class="row justify-content-center mt-4 mb-2">
-          <div class="col-10 col-md-5">
-            <a class="btn btn-outline-primary waves-effect btn-lg" role="button" aria-pressed="true" data-toggle="modal"
-              data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use
-              Disaster Consult</a>
-          </div>
-        </div> -->
 
       </div>
     </div>
@@ -166,7 +167,7 @@
     </div>
   </div>
 </div>
-<!-- Central Modal Small -->
+
 {% endblock %} {% block scripts_content %}
 <script>
   function WinOpen() {
