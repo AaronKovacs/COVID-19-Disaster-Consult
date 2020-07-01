@@ -1260,3 +1260,8 @@ blockquote p {
     line-height: 36px;
     background-color: #ffff;
 }
+
+
+footer.page-footer a {
+    color: black;
+}
