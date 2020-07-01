@@ -1,103 +1,106 @@
 {% extends "base-pages/base-libraries.html" %}
 
 {% block head %}
-	{% block head_content %}{% endblock %}
+{% block head_content %}{% endblock %}
 {% endblock %}
 
 
 {% block body %}
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  		<div class="d-flex flex-grow-1">
-  				<a class="navbar-brand " href="{{ url_for('select_screen', site=site) }}" id="navtitle">
-  					<img id="logo" alt="Logo" src="../../static/images/logo.png" class="img-fluid" style="width: 90px; height: 50px;">
-  					<span style="font-weight: 700">
-  						Disaster Consult	<br>
-  						<b style="font-weight: 500">{{ site|upper }}</b>
-  					</span>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="d-flex flex-grow-1">
+      <a class="navbar-brand " href="{{ url_for('select_screen', site=site) }}" id="navtitle">
+        <img id="logo" alt="Logo" src="../../static/images/logo.png" class="img-fluid"
+          style="width: 90px; height: 50px;">
+        <span style="font-weight: 700">
+          Disaster Consult <br>
+          <b style="font-weight: 500">{{ site|upper }}</b>
+        </span>
 
-  				</a>
-  				<div class="w-100 text-right pt-2">
-  					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-  						<span class="navbar-toggler-icon"></span>
-  					</button>
-  				</div>
-  			</div>
-  			<div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-  				<ul class="navbar-nav ml-auto flex-nowrap">
-            
-            {% if sites %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Disaster</a>
-                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                      {% for site in sites %}
-                        <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
-                      {% endfor %}
-                    </div>
-              </li>
-            {% endif %}
+      </a>
+      <div class="w-100 text-right pt-2">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+    <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+      <ul class="navbar-nav ml-auto flex-nowrap">
+
+        {% if sites %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">Select Disaster</a>
+          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+            {% for site in sites %}
+            <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
+            {% endfor %}
+          </div>
+        </li>
+        {% endif %}
 
 
 
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a href="{{ url_for('admin_select') }}" class="nav-link">Admin</a>
-            </li>
-            {% endif %}
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{{ url_for('admin_select') }}" class="nav-link">Admin</a>
+        </li>
+        {% endif %}
 
-          </ul>
+      </ul>
 
-        </div>
-      </nav>
+    </div>
+  </nav>
 </header>
 
 <main style="padding-top:5.5rem;">
   {% if site %}
-    <div class="text-center">
-          <h1>{{ site|upper }}</h1>
-    </div>
-    <hr>
+  <div class="text-center">
+    <h1>{{ site|upper }}</h1>
+  </div>
+  <hr>
   {% endif %}
 
   <div class="container-fluid">
-    <div class = "row">
+    <div class="row">
       {% if table_contents %}
-        <div class = "col-lg-3 d-none d-lg-block">
-          <div class="sticky-top" style="top: 90px; z-index: 2;">
-            <div id="tocDiv" class="useful-links-box">
-              <h4>{% if table_contents %}Table of Contents{% endif %}</h4>
-              <div class="blueLine"></div>
-            
-              <div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
-                  <ul class="custom-scrollbar">
-                    <!-- Side navigation links -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <div class="sticky-top" style="top: 90px; z-index: 2;">
+          <div id="tocDiv" class="useful-links-box">
+            <h4>{% if table_contents %}Table of Contents{% endif %}</h4>
+            <div class="blueLine"></div>
+
+            <div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
+              <ul class="custom-scrollbar">
+                <!-- Side navigation links -->
+                <li>
+                  <ul class="collapsible collapsible-accordion">
+
+                    {% for cat in table_contents %}
                     <li>
-                      <ul class="collapsible collapsible-accordion">
-                        
-                        {% for cat in table_contents %}
-                          <li>
-                            <a class="collapsible-header waves-effect arrow-r">{{ cat.name }}
-                              <i class="fas fa-angle-down rotate-icon"></i>
-                            </a>
-                            <div class="collapsible-body">
-                              <ul>
-                                {% for sec in cat.sections %}
-                                  <li><a href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}" class="waves-effect">{{ sec.name }}</a>
-                                  </li>
-                                {% endfor %}
-                              </ul>
-                            </div>
+                      <a class="collapsible-header waves-effect arrow-r">{{ cat.name }}
+                        <i class="fas fa-angle-down rotate-icon"></i>
+                      </a>
+                      <div class="collapsible-body">
+                        <ul>
+                          {% for sec in cat.sections %}
+                          <li><a
+                              href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}"
+                              class="waves-effect">{{ sec.name }}</a>
                           </li>
-                        {% endfor %}                    
-                      </ul>
+                          {% endfor %}
+                        </ul>
+                      </div>
                     </li>
-                    <!--/. Side navigation links -->
+                    {% endfor %}
                   </ul>
-                </div>
+                </li>
+                <!--/. Side navigation links -->
+              </ul>
             </div>
           </div>
         </div>
+      </div>
       {% endif %}
 
       <div class="{% if table_contents %}col-12 col-lg-9{% else %}col-12{% endif %}">
@@ -105,77 +108,12 @@
       </div>
     </div>
   </div>
-	{% block secondary_content %}{% endblock %}
-
-  <div>
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5eaddcaf236715f1"></script>
-    <div id="mybutton">
-      <button class="feedback" data-toggle="modal" data-target="#feedbackModal">Feedback</button>
-    </div>
-    
-        <div class="modal" id="feedbackModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 style="padding-top: 0.25em;" class="modal-title">Submit Feedback</h5>
-            <button type="button" class="btn " data-dismiss="modal">Close</button>
-
-          </div>
-          <form id="feedbackform" method="post" action="{{ url_for('Pages_submit_feedback', ftype='feedback', site=site) }}">
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Email - Where can we reach you?</label>
-                <input id="validationDefault01" name="email" type="text" placeholder="Email Address" class="form-control" required/>
-              </div>
-              <div class="form-group">
-                <label>Feedback</label>
-                <textarea id="validationDefault02" name="feedback" class="form-control" rows="10" placeholder="Your Feedback" required></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-
-              <div class="form-group">
-                <!-- g-recaptcha" data-sitekey="6LfVIaUZAAAAAPxdHfBq0kgwOBPo0RBg5DL42BBh" data-callback='onSubmit'-->
-                <button class="btn " type="submit">Send Feedback</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="suggestionModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 style="padding-top: 0.25em;" class="modal-title">Submit Content Suggestion</h5>
-            <button type="button" class="btn " data-dismiss="modal">Close</button>
-
-          </div>
-          <form id="feedbackform" method="post" action="{{ url_for('Pages_submit_feedback', ftype='suggestion', site=site) }}">
-            <div class="modal-body">
-              <div class="form-group">
-                <label>What content should we add?</label>
-                <textarea id="validationDefault02" name="feedback" class="form-control" rows="10" placeholder="Your Suggestion" required></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-
-              <div class="form-group">
-                <!-- g-recaptcha" data-sitekey="6LfVIaUZAAAAAPxdHfBq0kgwOBPo0RBg5DL42BBh" data-callback='onSubmit'-->
-                <button class="btn " type="submit">Submit Suggestion</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% block secondary_content %}{% endblock %}
 
   <!--Floating Catalog Button -->
   <div class="fixed-action-btn d-lg-none" style="bottom: 15px; left: 15px;">
-    <a data-target="#leftContentModal" data-toggle="modal" class="button-collapse btn-sm btn-primary" id="tocButton" href="#leftContentModal">Table of Contents</a>
+    <a data-target="#leftContentModal" data-toggle="modal" class="button-collapse btn-sm btn-primary" id="tocButton"
+      href="#leftContentModal">Table of Contents</a>
   </div>
 
   <!-- Table of Content Modal - Full Height Modal Left -->
@@ -192,70 +130,75 @@
         </div>
         <div id="tocModal" class="modal-body">
           <div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
-                  <ul class="custom-scrollbar">
-                    <!-- Side navigation links -->
-                    <li>
-                      <ul class="collapsible collapsible-accordion">
-                        
-                        {% for cat in table_contents %}
-                          <li>
-                            <a class="collapsible-header waves-effect arrow-r">{{ cat.name }}
-                              <i class="fas fa-angle-down rotate-icon"></i>
-                            </a>
-                            <div class="collapsible-body">
-                              <ul>
-                                {% for sec in cat.sections %}
-                                  <li><a href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}" class="waves-effect">{{ sec.name }}</a>
-                                  </li>
-                                {% endfor %}
-                              </ul>
-                            </div>
-                          </li>
-                        {% endfor %}                    
+            <ul class="custom-scrollbar">
+              <!-- Side navigation links -->
+              <li>
+                <ul class="collapsible collapsible-accordion">
+
+                  {% for cat in table_contents %}
+                  <li>
+                    <a class="collapsible-header waves-effect arrow-r">{{ cat.name }}
+                      <i class="fas fa-angle-down rotate-icon"></i>
+                    </a>
+                    <div class="collapsible-body">
+                      <ul>
+                        {% for sec in cat.sections %}
+                        <li><a
+                            href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}"
+                            class="waves-effect">{{ sec.name }}</a>
+                        </li>
+                        {% endfor %}
                       </ul>
-                    </li>
-                    <!--/. Side navigation links -->
-                  </ul>
-                </div>
-            </div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <!--/. Side navigation links -->
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Full Height Modal Right -->
-
-
 </main>
 
 <footer style="margin-bottom: 2em;">
   <hr>
   <center>
-   <p style = "padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020        <a style="padding-left: 1em;" href="{{ url_for('Pages_home', site=site) }}">Home</a> · <a href="{{ url_for('Pages_aboutus', site=site) }}">About Us</a> · <a href="{{ url_for('Pages_contact', site=site) }}">Contact</a> · <a href="{{ url_for('Pages_sponsor', site=site) }}">Sponsors</a>
-    <br><br>
-    <a style="color:grey" href="{{ url_for('Pages_tos', site=site) }}">Terms of Service</a> · <a style="color:grey" href="{{ url_for('Pages_privacy', site=site) }}">Privacy Policy</a> · <a style="color:grey" href="{{ url_for('Pages_cookies', site=site) }}">Cookie Policy</a> · <a style="color:grey" href="{{ url_for('Pages_medical', site=site) }}">Medical Disclaimer</a></p>
+    <p style="padding:16px">&copy; Disaster Consult LLC. All Rights Reserved 2020 <a style="padding-left: 1em;"
+        href="{{ url_for('Pages_home', site=site) }}">Home</a> · <a
+        href="{{ url_for('Pages_aboutus', site=site) }}">About Us</a> · <a
+        href="{{ url_for('Pages_contact', site=site) }}">Contact</a> · <a
+        href="{{ url_for('Pages_sponsor', site=site) }}">Sponsors</a>
+      <br><br>
+      <a style="color:grey" href="{{ url_for('Pages_tos', site=site) }}">Terms of Service</a> · <a style="color:grey"
+        href="{{ url_for('Pages_privacy', site=site) }}">Privacy Policy</a> · <a style="color:grey"
+        href="{{ url_for('Pages_cookies', site=site) }}">Cookie Policy</a> · <a style="color:grey"
+        href="{{ url_for('Pages_medical', site=site) }}">Medical Disclaimer</a></p>
     <p style="font-weight: 600; margin-bottom: 0.1em;">Our Sponsors</p>
     <a href="https://smhs.gwu.edu/" target="_blank">
-     <img src="../../static/images/SMHS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-   </a>
-   <a href="https://www.seas.gwu.edu/" target="_blank">
-     <img src="../../static/images/SEAS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-   </a>
-   <a href= "https://aws.amazon.com/" target="_blank">
-     <img src="../../static/images/aws.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-   </a>
-   <a href= "https://www.trello.com/" target="_blank">
-     <img src="../../static/images/trello.png" class="img-fluid" style="width: 150px; object-fit: cover;">
-   </a>
- </center>
+      <img src="../../static/images/SMHS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+    </a>
+    <a href="https://www.seas.gwu.edu/" target="_blank">
+      <img src="../../static/images/SEAS.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+    </a>
+    <a href="https://aws.amazon.com/" target="_blank">
+      <img src="../../static/images/aws.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+    </a>
+    <a href="https://www.trello.com/" target="_blank">
+      <img src="../../static/images/trello.png" class="img-fluid" style="width: 150px; object-fit: cover;">
+    </a>
+  </center>
 </footer>
 {% endblock %}
 
 
 {% block scripts %}
-  <script>
-    $(document).ready(function() {
+<script>
+  $(document).ready(function () {
 
-    });
-  </script>
-  {% block scripts_content %}{% endblock %}
+  });
+</script>
+{% block scripts_content %}{% endblock %}
 {% endblock %}
