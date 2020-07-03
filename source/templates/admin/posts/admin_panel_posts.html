@@ -1,4 +1,5 @@
 {% extends "admin_panel.html" %}
+{% from "/admin/components/admin_panel_post_status.html" import post_status, compact_post_status %}
 
 {% block panel_title %}Posts{% endblock %}
 
@@ -45,36 +46,7 @@
                     <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
                         <a href="{{ url_for('Posts_create_post', id=post.id, site=site) }}">
                             <td style="max-width: 4em;">
-
-                                {% if post.status == 'Pending Review' %}
-                                <div class="alert alert-info" style="padding: 0.25rem; text-align: center;" role="alert">
-                                    {{ post.status }}
-                                </div>
-                                {% endif %}
-
-                                {% if post.status == 'Public & Approved' %}
-                                <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
-                                    {{ post.status }}
-                                </div>
-                                {% endif %}
-
-                                {% if post.status == 'Private & Approved' %}
-                                <div class="alert alert-secondary" style="padding: 0.25rem; text-align: center;" role="alert">
-                                    {{ post.status }}
-                                </div>
-                                {% endif %}
-
-                                {% if post.status == 'Draft Rejected' %}
-                                <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
-                                    {{ post.status }}
-                                </div>
-                                {% endif %}
-
-                                {% if post.status == 'Unknown' %}
-                                <div class="alert alert-dark" style="padding: 0.25rem; text-align: center;" role="alert">
-                                    {{ post.status }}
-                                </div>
-                                {% endif %}
+                                {{ post_status(post.status) }}
                             </td>
                             <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
                             <th scope="row" style="max-width: 100px;" style="color: #007bff;">
@@ -108,46 +80,17 @@
 
                     <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
                         <td style="max-width: 12em;">
-
-                            {% if post.status == 'Pending Review' %}
-                            <div class="alert alert-info" style="padding: 0.25rem; text-align: center;" role="alert">
-                                Pending
-                            </div>
-                            {% endif %}
-
-                            {% if post.status == 'Public & Approved' %}
-                            <div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
-                               Public
-                           </div>
-                           {% endif %}
-
-                           {% if post.status == 'Private & Approved' %}
-                           <div class="alert alert-secondary" style="padding: 0.25rem; text-align: center;" role="alert">
-                            Private
-                        </div>
-                        {% endif %}
-
-                        {% if post.status == 'Draft Rejected' %}
-                        <div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
-                            Rejected
-                        </div>
-                        {% endif %}
-
-                        {% if post.status == 'Unknown' %}
-                        <div class="alert alert-dark" style="padding: 0.25rem; text-align: center;" role="alert">
-                            Unknown
-                        </div>
-                        {% endif %}
-                    </td>
-                    <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
-                </tr>
+                            {{ compact_post_status(post.status) }}
+                        </td>
+                        <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
+                    </tr>
 
 
-                {% endfor %}
-            </tbody>
-        </table>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 </div>
 </div>
