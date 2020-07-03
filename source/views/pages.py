@@ -47,6 +47,7 @@ from ..models.literature_link import LiteratureLink
 from ..models.feedback import Feedback
 from ..models.site import Site
 from ..models.site_url import SiteURL
+from ..models.site_info import SiteInfo
 
 from itsdangerous import URLSafeTimedSerializer
 

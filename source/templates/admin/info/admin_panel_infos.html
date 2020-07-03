@@ -1,0 +1,75 @@
+{% extends "admin_panel.html" %}
+
+{% block panel_title %}Site Info{% endblock %}
+
+{% block header %}
+
+
+{% endblock %}
+
+{% block panel_buttons %}
+<div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+        <a href="{{ url_for('Info_create_info', data_type='raw', site=site) }}" class="btn btn-sm btn-outline-primary">Create Raw Info</a>
+    </div>
+    <div class="btn-group mr-2">
+        <a href="{{ url_for('Info_create_info', data_type='text', site=site) }}" class="btn btn-sm btn-outline-primary">Create Text Info</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block infoButton %}active{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-9">
+      <div class="card" >
+        <div class="card-body">
+            <table id="container" class="table table-hover table-normal">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Content Type</th>
+                        <th scope="col">Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="container">
+                    {% for info in infos %}
+
+                    <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Info_view', id=info.id, site=site) }}">
+                        <a>
+                            <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ info.title }}</th>
+                            <th scope="row" style="max-width: 100px;" style="color: #007bff;">{{ info.content_type }}</th>
+                            <td>{{ info.last_updated }}</td>
+                        </a>
+                    </tr>
+
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+{% endblock %}

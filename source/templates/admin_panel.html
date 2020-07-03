@@ -135,12 +135,20 @@
 								Users
 							</a>
 						</li>
+						{% if current_user.privilege > 300 %}
 						<li class="nav-item">
 							<a class="nav-link {% block usefulLinksButton %}{% endblock %}" href="{{ url_for('URLs_list_urls', site=site) }}">
 								<span data-feather="external-link"></span>
 								Useful Links
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link {% block infoButton %}{% endblock %}" href="{{ url_for('Info_list_info', site=site) }}">
+								<span data-feather="info"></span>
+								Site Info
+							</a>
+						</li>
+						{% endif %}
 					</ul>
 					{% endif %}
 				</div>

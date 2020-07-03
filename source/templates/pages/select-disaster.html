@@ -5,29 +5,28 @@
 
 
 {% block main_content %}
-  <div class="view jarallax" style="height: 65vh;">
-    <img class="jarallax-img" src="{{ url_for('static', filename = 'images/ambulance.jpg') }}" alt="">
-    <div class="mask rgba-blue-slight">
-      <div class="container flex-center">
-        <div class="row mt-5 w-100 text-center justify-content-center">
-          <div class="col-12 col-md-6 wow fadeIn mb-3 ">
-            <div class="card z-depth-5">
-              <div class="card-body">
-                <h5 class="card-title text-center ">Disaster-Specific Resources</h5>
-                <div class="row justify-content-center">
-                  <div class="col-12 col-md-6">
-                    <select id="site-select" class="mdb-select md-form" searchable="Search here..">
-                      <option value="" disabled selected>Choose Disaster Type</option>
-                      {% for site in sites %}
-                        <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
+<div class="view jarallax" style="height: 65vh;">
+  <img class="jarallax-img" src="{{ url_for('static', filename = 'images/ambulance.jpg') }}" alt="">
+  <div class="mask rgba-blue-slight">
+    <div class="container flex-center">
+      <div class="row mt-5 w-100 text-center justify-content-center">
+        <div class="col-12 col-md-6 wow fadeIn mb-3 ">
+          <div class="card z-depth-5">
+            <div class="card-body">
+              <h5 class="card-title text-center ">Disaster-Specific Resources</h5>
+              <div class="row justify-content-center">
+                <div class="col-12 col-md-6">
+                  <select id="site-select" class="mdb-select md-form" searchable="Search here..">
+                    <option value="" disabled selected>Choose Disaster Type</option>
+                    {% for site in sites %}
+                    <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</option>
+                    {% endfor %}
+                  </select>
                 </div>
-                <div class="row justify-content-center">
-                  <div class="col-8 col-md-3">
-                    <a class="btn btn-outline-primary waves-effect btn-sm" role="button" aria-pressed="true" href="javascript:WinOpen();">Go</a>
-                  </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-8 col-md-3">
+                  <a class="btn btn-outline-primary waves-effect btn-sm" role="button" aria-pressed="true" href="javascript:WinOpen();">Go</a>
                 </div>
               </div>
             </div>
@@ -36,137 +35,138 @@
       </div>
     </div>
   </div>
-  
-  <div class="container">
-    <div class="row text-center justify-content-center" style="margin-top: -75px;">
-      <div class="col-12">
-        <div class="card">
-          <div class="py-2 mt-4 mb-2">
-            <h2>Our Mission</h2>
-            <h5>Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front line healthcare workers when faced with the overwhelming challenge of responding to disasters.</h5>
-          </div>
-          
-          <div class="row">
-            <div class="col-11 greyLine"></div>
-          </div>
+</div>
 
-          <div class="row">
-            <div class="container-fluid pt-0">
-              <h2 id="numbersHere">Latest COVID-19 Numbers</h2>
-              <span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
-            </div>
-          </div>
+<div class="container">
+  <div class="row text-center justify-content-center" style="margin-top: -75px;">
+    <div class="col-12">
+      <div class="card">
+        <div class="py-2 mt-4 mb-2">
+          <h2>Our Mission</h2>
+          <h5>Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front line healthcare workers when faced with the overwhelming challenge of responding to disasters.</h5>
+        </div>
 
-          <div class="row">
-            <div class="container-fluid pt-0">
-              <select id="select" class="custom-select" style="margin-top: 0.5em; display: none;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
-              <center>
+        <div class="row">
+          <div class="col-11 greyLine"></div>
+        </div>
+
+        <div class="row">
+          <div class="container-fluid pt-0">
+            <h2 id="numbersHere">Latest COVID-19 Numbers</h2>
+            <span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="container-fluid pt-0">
+            <select id="select" class="custom-select" style="margin-top: 0.5em; display: none;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
+            <center>
               <iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA" style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
-              </center>
-            </div>
+            </center>
           </div>
-
-          <div class="row mt-2">
-            <div class="container-fluid pt-0">
-              <div class="country-specific-data">
-                <h3 id="currentcountry"></h3>
-                <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
-                
-                <div class="row" id="stats">
-                  <div class="col-md-4">
-                    <h1 id="currentcases"></h1>
-                    <h4>Cases</h4>
-                  </div>
-
-                  <div class="col-md-4">
-                    <h1 id="currentdeaths"></h1>
-                    <h4>Deaths</h4>
-                  </div>
-
-                  <div class="col-md-4">
-                    <h1 id="currentrecovered"></h1>
-                    <h4>Recovered</h4>
-                  </div>
-
-                </div><!--row end-->
-              </div><!--country end-->
-            </div><!-- select country end-->
-            <br>
-            <div class = "greyLine" style="width: 50%;"></div>
-            <br>
-          </div>
-                  
-          <div class="row">
-            <div class="container-fluid pt-0">
-              <div class="global-data">
-                <h3>Global Data</h3>
-                <span style="color: #5a5a5a"><i>Updated Daily</i></span>
-                <div class="row" id="stats">
-                  
-                  <div class="col-md-4">
-                    <h1 id="globalcases"></h1>
-                    <h4>Cases</h4>
-                  </div>
-                  
-                  <div class="col-md-4">
-                    <h1 id="globaldeaths"></h1>
-                    <h4>Deaths</h4>
-                  </div>
-                  
-                  <div class="col-md-4">
-                    <h1 id="globalrecovered"></h1>
-                    <h4>Recovered</h4>
-                  </div>
-
-                </div><!--row end-->
-              </div><!--global end-->
-            </div>
-          </div>
-
-          <div class="row justify-content-center mt-4 mb-2">
-            <div class="col-10 col-md-5">
-              <a class="btn btn-outline-primary waves-effect btn-lg" role="button" aria-pressed="true" data-toggle="modal" data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use Disaster Consult</a>
-            </div>
-          </div>
-
         </div>
+
+        <div class="row mt-2">
+          <div class="container-fluid pt-0">
+            <div class="country-specific-data">
+              <h3 id="currentcountry"></h3>
+              <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
+
+              <div class="row" id="stats">
+                <div class="col-md-4">
+                  <h1 id="currentcases"></h1>
+                  <h4>Cases</h4>
+                </div>
+
+                <div class="col-md-4">
+                  <h1 id="currentdeaths"></h1>
+                  <h4>Deaths</h4>
+                </div>
+
+                <div class="col-md-4">
+                  <h1 id="currentrecovered"></h1>
+                  <h4>Recovered</h4>
+                </div>
+
+              </div><!--row end-->
+            </div><!--country end-->
+          </div><!-- select country end-->
+          <br>
+          <div class = "greyLine" style="width: 50%;"></div>
+          <br>
+        </div>
+
+        <div class="row">
+          <div class="container-fluid pt-0">
+            <div class="global-data">
+              <h3>Global Data</h3>
+              <span style="color: #5a5a5a"><i>Updated Daily</i></span>
+              <div class="row" id="stats">
+
+                <div class="col-md-4">
+                  <h1 id="globalcases"></h1>
+                  <h4>Cases</h4>
+                </div>
+
+                <div class="col-md-4">
+                  <h1 id="globaldeaths"></h1>
+                  <h4>Deaths</h4>
+                </div>
+
+                <div class="col-md-4">
+                  <h1 id="globalrecovered"></h1>
+                  <h4>Recovered</h4>
+                </div>
+
+              </div><!--row end-->
+            </div><!--global end-->
+          </div>
+        </div>
+
+        <div class="row justify-content-center mt-4 mb-2">
+          <div class="col-10 col-md-5">
+            <a class="btn btn-outline-primary waves-effect btn-lg" role="button" aria-pressed="true" data-toggle="modal" data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use Disaster Consult</a>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
+</div>
 
 
 
-  <!-- Central Modal Large -->
-  <div class="modal fade" id="howToUseSiteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title w-100" id="myModalLabel">How to Use Disaster Consult</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-      </div>
+<!-- Central Modal Large -->
+<div class="modal fade" id="howToUseSiteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title w-100" id="myModalLabel">How to Use Disaster Consult</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      {{ info.how_to_disaster_consult|safe }}
     </div>
   </div>
-  <!-- Central Modal Small -->
+</div>
+</div>
+<!-- Central Modal Small -->
 {% endblock %}
 
 
 {% block scripts_content %}
-  <script>
-    function WinOpen() {
-      url = $("#site-select :selected").val();
-      if (!url){
-        toastr.error('Please select a disaster to continue');
-        return false;
-      }
-      document.location.href = $("#site-select :selected").val();
+<script>
+  function WinOpen() {
+    url = $("#site-select :selected").val();
+    if (!url){
+      toastr.error('Please select a disaster to continue');
+      return false;
     }
+    document.location.href = $("#site-select :selected").val();
+  }
     // object-fit polyfill run
     objectFitImages();
     /* init Jarallax */
@@ -188,161 +188,161 @@
   // Fetches and parses data from API and accumulates global aggregates for cases, deaths,
   // and recovered.
   //****************************************************************************************
-    function getData() {
-      fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
-      .then(res => {
+  function getData() {
+    fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
+    .then(res => {
       return res.json();
-      }).then(obj => {
+    }).then(obj => {
       globalTotals = [0, 0, 0];
       idx = 0;
       for (let [key, value] of Object.entries(obj.Countries)) {
-      if(!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
-      let newEntry = {
-      id: idx = 0,
-      country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
-      slug: value.Slug,
-      totalconfirmed: value.TotalConfirmed,
-      totaldeaths: value.TotalDeaths,
-      totalrecovered: value.TotalRecovered
+        if(!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
+          let newEntry = {
+            id: idx = 0,
+            country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
+            slug: value.Slug,
+            totalconfirmed: value.TotalConfirmed,
+            totaldeaths: value.TotalDeaths,
+            totalrecovered: value.TotalRecovered
+          }
+          idx++;
+          dataArray.push(newEntry);
+          globalTotals[0] += newEntry.totalconfirmed;
+          globalTotals[1] += newEntry.totaldeaths;
+          globalTotals[2] += newEntry.totalrecovered;
+        }
+        dataArray.sort((a, b) => a.country.localeCompare(b.country));
       }
-      idx++;
-      dataArray.push(newEntry);
-      globalTotals[0] += newEntry.totalconfirmed;
-      globalTotals[1] += newEntry.totaldeaths;
-      globalTotals[2] += newEntry.totalrecovered;
-      }
-      dataArray.sort((a, b) => a.country.localeCompare(b.country));
-      }
-      })
-      .then(() => {
+    })
+    .then(() => {
       document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
       document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
       document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]);
       populateGlobal(); // calls next function after this one is finished
-      })
-      .catch(error => console.log('error', error));
-    }
+    })
+    .catch(error => console.log('error', error));
+  }
   //****************************************************************************************
   // Fires when each time a new country is selected from the dropdown. Displays data in the
   // bottom box relevant to the country selected.
   //****************************************************************************************
   function getDataForCountry(selectedIndex) {
-  document.getElementById('currentcountry').innerText = dataArray[selectedIndex].country;
-  document.getElementById('currentcases').innerText = numFormat(dataArray[selectedIndex].totalconfirmed);
-  document.getElementById('currentdeaths').innerText = numFormat(dataArray[selectedIndex].totaldeaths);
-  document.getElementById('currentrecovered').innerText = numFormat(dataArray[selectedIndex].totalrecovered);
-  getDailyByCountry(dataArray[selectedIndex]);
+    document.getElementById('currentcountry').innerText = dataArray[selectedIndex].country;
+    document.getElementById('currentcases').innerText = numFormat(dataArray[selectedIndex].totalconfirmed);
+    document.getElementById('currentdeaths').innerText = numFormat(dataArray[selectedIndex].totaldeaths);
+    document.getElementById('currentrecovered').innerText = numFormat(dataArray[selectedIndex].totalrecovered);
+    getDailyByCountry(dataArray[selectedIndex]);
   }
   //****************************************************************************************
   // Populates the dropdown menu drawing from the contents of dataArray.
   //****************************************************************************************
   function populateGlobal() {
-  document.getElementById('select').innerHTML = dataArray
-  .map(
-  d => d.country == 'United States of America' ? `<option selected>${d.country}</option>` :  `<option>${d.country}</option>`
-  );
+    document.getElementById('select').innerHTML = dataArray
+    .map(
+      d => d.country == 'United States of America' ? `<option selected>${d.country}</option>` :  `<option>${d.country}</option>`
+      );
   getDataForCountry(document.getElementById('select').selectedIndex); // calls next function after this one is finished
-  }
+}
   //****************************************************************************************
   // Formats numbers for display in the Global Data and Country Specific boxes
   //****************************************************************************************
   function numFormat(num) {
-  let s = '';
-  let x = 0;
-  while(num > 0) {
-  if(x % 3 == 0 && x != 0) {
-  s+= ',';
-  }
-  s += num % 10;
-  num = Math.floor(num / 10);
-  x++;
-  }
-  return s.split("").reverse().join("") || "0";
+    let s = '';
+    let x = 0;
+    while(num > 0) {
+      if(x % 3 == 0 && x != 0) {
+        s+= ',';
+      }
+      s += num % 10;
+      num = Math.floor(num / 10);
+      x++;
+    }
+    return s.split("").reverse().join("") || "0";
   }
   //****************************************************************************************
   // Gets and parses data for each country by number of cases and date
   //****************************************************************************************
   function getDailyByCountry(country) {
-  document.getElementById('graph').style.display = "none";
-  document.getElementById('loading').style.display = "block";
-  document.getElementById('loading').className = "d-flex justify-content-center";
-  let count = 0
-  chartMap.clear();
-  let requestURL = "https://api.covid19api.com/country/" + country.slug +"/status/confirmed"
-  if (country.slug == "united-states") {
-  requestURL = "{{ url_for('API_us_graph_data', site=site) }}";
-  }
-  fetch(requestURL, requestOptions)
-  .then(response => response.json())
-  .then(result => allThisData = result)
-  .then(_=> {
-  let date;
-  for(let o of allThisData) {
-  if(o.Status == "confirmed") {
-  date = new Date(o.Date).getTime();
-  chartMap.set(date, (chartMap.get(date) || 0) + o.Cases);
-  }
-  }
-  makeChart(chartMap);
-  })
-  .catch(error => console.log('error', error));
+    document.getElementById('graph').style.display = "none";
+    document.getElementById('loading').style.display = "block";
+    document.getElementById('loading').className = "d-flex justify-content-center";
+    let count = 0
+    chartMap.clear();
+    let requestURL = "https://api.covid19api.com/country/" + country.slug +"/status/confirmed"
+    if (country.slug == "united-states") {
+      requestURL = "{{ url_for('API_us_graph_data', site=site) }}";
+    }
+    fetch(requestURL, requestOptions)
+    .then(response => response.json())
+    .then(result => allThisData = result)
+    .then(_=> {
+      let date;
+      for(let o of allThisData) {
+        if(o.Status == "confirmed") {
+          date = new Date(o.Date).getTime();
+          chartMap.set(date, (chartMap.get(date) || 0) + o.Cases);
+        }
+      }
+      makeChart(chartMap);
+    })
+    .catch(error => console.log('error', error));
   }
   //****************************************************************************************
   // Draws chart using the data in chartMap
   //****************************************************************************************
   function makeChart(map) {
-  document.getElementById('graph').style.display = "block";
-  document.getElementById('loading').style.display = "none";
-  document.getElementById('loading').className = "";
-  const ctx = document.getElementById('graph').getContext('2d');
-  ctx.clearRect(0, 0, document.getElementById('graph').width, document.getElementById('graph').height);
-  let xlabels = [];
-  xlabels = Array.from(map.keys());
-  for(let i = 0; i < xlabels.length; i++) {
-  xlabels[i] = new Date(xlabels[i]).toString().substring(4, 10);
+    document.getElementById('graph').style.display = "block";
+    document.getElementById('loading').style.display = "none";
+    document.getElementById('loading').className = "";
+    const ctx = document.getElementById('graph').getContext('2d');
+    ctx.clearRect(0, 0, document.getElementById('graph').width, document.getElementById('graph').height);
+    let xlabels = [];
+    xlabels = Array.from(map.keys());
+    for(let i = 0; i < xlabels.length; i++) {
+      xlabels[i] = new Date(xlabels[i]).toString().substring(4, 10);
+    }
+    let ylabels = [];
+    ylabels = Array.from(map.values());
+    if(myChart) {
+      myChart.destroy();
+    }
+    myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: xlabels,
+        datasets: [{
+          label: 'COVID-19 Cases',
+          data: ylabels,
+          pointRadius: 2,
+          backgroundColor:
+          'rgba(233, 223, 196, 0.15)',
+          borderColor:
+          'rgba(40, 53, 62, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: false,
+        scales: {
+          xAxes :[{
+            ticks: {fontSize: 10}
+          }],
+          yAxes: [{
+            ticks: {
+              fontSize: 10,
+              beginAtZero: true,
+              callback: function(value, index, values) {
+                if(Math.floor(value / 1000) > 1) {
+                  return value/1000 + 'k';
+                } else {
+                  return value;
+                }
+              }
+            }
+          }]
+        }
+      }
+    });
   }
-  let ylabels = [];
-  ylabels = Array.from(map.values());
-  if(myChart) {
-  myChart.destroy();
-  }
-  myChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-  labels: xlabels,
-  datasets: [{
-  label: 'COVID-19 Cases',
-  data: ylabels,
-  pointRadius: 2,
-  backgroundColor:
-  'rgba(233, 223, 196, 0.15)',
-  borderColor:
-  'rgba(40, 53, 62, 1)',
-  borderWidth: 1
-  }]
-  },
-  options: {
-  responsive: false,
-  scales: {
-  xAxes :[{
-  ticks: {fontSize: 10}
-  }],
-  yAxes: [{
-  ticks: {
-  fontSize: 10,
-  beginAtZero: true,
-  callback: function(value, index, values) {
-  if(Math.floor(value / 1000) > 1) {
-  return value/1000 + 'k';
-  } else {
-  return value;
-  }
-  }
-  }
-  }]
-  }
-  }
-  });
-  }
-  </script>
+</script>
 {% endblock %}

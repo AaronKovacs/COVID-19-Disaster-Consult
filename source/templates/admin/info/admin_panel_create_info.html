@@ -1,0 +1,85 @@
+{% extends "admin_panel.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block panel_title %}Create Info{% endblock %}
+
+{% block panel_buttons %}
+{% endblock %}
+
+{% block infoButton %}active{% endblock %}
+
+{% block content %}
+<div class="card" style="width: 60rem; margin-left: auto; margin-right: auto;">
+    <div class="card-body">
+        <form method="post">
+            <div class="form-group">
+                <label>Title</label>
+                <input name="title" type="text" placeholder="Title" class="form-control" value="{{ info.title }}" required/>
+                <label style="margin-top: 0.5em;">Content Type</label>
+                <input name="content_type" type="text" placeholder="Content Type - ID used to place this on website" class="form-control" value="{{ info.content_type }}" required/>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    {% if data_type == 'raw' %}
+                    <label>Raw Content</label>
+                    <textarea class="form-control" name="data_raw" rows="10" required>{{ info.data|safe }}</textarea>
+                    {% else %}
+                    <label>Text Content</label>
+                    <div class="document-editor">
+                        <div class="document-editor__toolbar" id="toolbar-container"></div>
+                        <div class="ckeditor" id="editor" rows="10">
+                            {{ info.data|safe }}
+                        </div>
+                        <textarea style='display:none;' name='data_text' id='editor1'></textarea>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Save Info</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var theEditor;
+
+    DecoupledEditor
+    .create( document.querySelector( '#editor' ), {
+        allowedContent: true,
+        fontSize: {
+            options: [
+            'tiny',
+            'default',
+            'big'
+            ]
+        },
+        ckfinder: {
+            uploadUrl: '{{ url_for('Posts_upload_just_image', site=site) }}'
+        }} )
+    .then( editor => {
+        theEditor = editor;
+        const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+        toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    function getDataFromTheEditor() {
+        return theEditor.getData();
+    }
+
+    $(document).on("submit", "form", function (e) {
+        console.log('here');
+        html = getDataFromTheEditor();
+        $("#editor1").val(html);
+        console.log(html);
+        return true;
+    })
+</script>
+{% endblock %}

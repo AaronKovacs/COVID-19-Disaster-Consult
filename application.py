@@ -32,7 +32,7 @@ except:
 
 from flask_login import LoginManager, login_required, login_user, logout_user 
 
-from source.helpers.helpers import BError
+from source.helpers.helpers import BError, get_site_info
 
 from source.configuration.config import PASSWORD_SECRET_KEY, ENV_NAME
 
@@ -46,6 +46,7 @@ from source.views.api import api as mobileapi
 from source.views.drafts import api as drafts
 from source.views.users import api as users
 from source.views.urls import api as urls
+from source.views.info import api as info
 
 from source.views.authentication import api as authentication
 
@@ -207,10 +208,12 @@ def select_screen():
     for site in sites:
         sitesJS.append(site.publicJSON())
 
+
+    info = get_site_info(['how_to_disaster_consult'], 'covid-19', session)
  
     session.close()
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('pages/select-disaster.html', sites=sites, site='covid-19'), 200, headers)
+    return make_response(render_template('pages/select-disaster.html', sites=sites, info=info, site='covid-19'), 200, headers)
 
     '''
     if ENV_NAME() == 'prod':
@@ -236,6 +239,7 @@ api.add_namespace(literatures, path='/<site>/literatures')
 api.add_namespace(drafts, path='/<site>/drafts')
 api.add_namespace(users, path='/<site>/users')
 api.add_namespace(urls, path='/<site>/urls')
+api.add_namespace(info, path='/<site>/info')
 
 api.add_namespace(mobileapi, path='/<site>/api/v1')
 

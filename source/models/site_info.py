@@ -26,7 +26,16 @@ class SiteInfo(Base):
 
     site = Column(String(255))
 
-    content = Column(Text())
+    # Unused on mainsite, just for organization
+    title = Column(String(255))
+
+    # Either 'Raw HTML':raw or 'HTML Text':text
+    data_type = Column(String(255))
+
+    # Actual Content
+    data = Column(Text())
+
+    # ID of content for use on site
     content_type = Column(String(255))
 
     created = Column(DateTime(), default=datetime.datetime.utcnow)
@@ -35,7 +44,19 @@ class SiteInfo(Base):
     def publicJSON(self):
         return {
         'id': self.id,
+        'title': self.title,
         'site': self.site,
-        'content': self.content,
-        'content_type': self.content_type,
+        'data': self.data,
+        'data_type': self.data_type,
+        'content_type': self.content_type
+        }
+
+    def blankJSON(self):
+        return {
+        'id': '',
+        'title': '',
+        'site': '',
+        'data': '',
+        'data_type': '',
+        'content_type': ''
         }
