@@ -332,6 +332,7 @@ class SitesGet(Resource):
         for site in sites:
             js = site.publicJSON()
             js['has_literature'] = site.hasLiterature(session)
+            js['has_news'] = site.hasNews(session)
             sitesJS.append(js)
 
         session.close()
