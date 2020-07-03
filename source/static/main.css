@@ -1,3 +1,7 @@
+body,html {
+    height:100%;
+}
+
 body{
   font-family: "Roboto", "Montserrat", sans-serif;
   min-height: 2em;
@@ -1259,4 +1263,33 @@ blockquote p {
     padding-left: 47px;
     line-height: 36px;
     background-color: #ffff;
+}
+
+
+footer.page-footer a {
+    color: black;
+}
+
+.main-wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+
+.btn-secondary{
+  background-color: #EBDFC1 !important;
+}
+
+.about-us-avatar {
+  margin-left: 23%;
+  margin-right: 23%;
+}
+
+.text-small-force {
+  font-size: .9rem;
+  font-weight: 400;
+}
+
+.rounded-corner-square{
+  border-radius: 4px;
 }

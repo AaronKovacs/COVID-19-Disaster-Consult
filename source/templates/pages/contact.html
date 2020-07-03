@@ -1,6 +1,6 @@
-{% extends "pages/base.html" %}
+{% extends "base-pages/base-general.html" %}
 
-{% block content %}
+{% block main_content %}
 <br>
 <div class="container" style="max-width: 1200px;">
 	<div class="row">
@@ -8,25 +8,33 @@
 			<h1>Feedback & Suggestions</h1>
 			<div class="blueLine"></div>
 			<div style="margin-bottom: 2em; margin-top: 2em; width: 100%;">
-				<button data-toggle="modal" button data-target="#feedbackModal" style="margin-left: auto; margin-right: 2em;" type="button" class="btn btn-secondary btn-lg">Send Feedback</button>
-				<button data-toggle="modal"button data-target="#suggestionModal" style="margin-left: auto; margin-right: auto;" type="button" class="btn btn-secondary btn-lg">Suggest Content</button>
+				<button data-toggle="modal" button data-target="#feedbackModal"
+					style="margin-left: auto; margin-right: 2em;" type="button" class="btn btn-secondary btn-lg">Send
+					Feedback</button>
+				<button data-toggle="modal" button data-target="#suggestionModal"
+					style="margin-left: auto; margin-right: auto;" type="button"
+					class="btn btn-secondary btn-lg">Suggest Content</button>
 			</div>
 			<h1>Contact Us</h1>
 			<div class="blueLine"></div>
 			<br>
 			<h3>Email</h3>
-			<p>For general inquiries or other requests, please contact <a href="mailto:disasterconsultmd@gmail.com">disasterconsultmd@gmail.com</a></p>
+			<p>For general inquiries or other requests, please contact <a
+					href="mailto:disasterconsultmd@gmail.com">disasterconsultmd@gmail.com</a></p>
 			<div class="greyLine"></div>
 			<h3>Social</h3>
 			<p>Instagram: <a href="https://www.instagram.com/disasterconslt/">@DisasterConslt</a></p>
 			<p>Twitter: <a href="https://twitter.com/disasterconslt">@DisasterConslt</a></p>
 			<p>Facebook: <a href="https://www.facebook.com/disasterconslt">Disaster Consult</a></p>
 
-		</div><!--end col-->
+		</div>
+		<!--end col-->
 
 
-	</div><!--end row-->
-</div><!--end container-->
+	</div>
+	<!--end row-->
+</div>
+<!--end container-->
 
 
 {% endblock %}
