@@ -46,6 +46,9 @@ from ..models.literature import Literature
 from ..models.literature_link import LiteratureLink
 from ..models.feedback import Feedback
 from ..models.site import Site
+from ..models.site_url import SiteURL
+from ..models.site_info import SiteInfo
+
 from itsdangerous import URLSafeTimedSerializer
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
@@ -87,12 +90,20 @@ class Home(Resource):
 
             table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
 
+
+        dict_urls = {}
+        urls = session.query(SiteURL).order_by(desc(SiteURL.order), SiteURL.id).all()
+        for url in urls:
+            if url.section not in dict_urls:
+                dict_urls[url.section] = []
+            dict_urls[url.section].append(url.publicJSON())
+
         # Close database connection
         session.close()
 
         # Render HTML template with Jinja
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, sites=sites, site=site), 200, headers)
+        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, sites=sites, site=site), 200, headers)
 
 
 @api.route('/news')

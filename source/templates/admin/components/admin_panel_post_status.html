@@ -1,0 +1,70 @@
+{% macro post_status(status) %}
+
+{% if status == 'Pending Review' %}
+<div class="alert alert-info" style="padding: 0.25rem; text-align: center;" role="alert">
+    {{ status }}
+</div>
+{% endif %}
+
+{% if status == 'Public & Approved' %}
+<div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+    {{ status }}
+</div>
+{% endif %}
+
+{% if status == 'Private & Approved' %}
+<div class="alert alert-secondary" style="padding: 0.25rem; text-align: center;" role="alert">
+    {{ status }}
+</div>
+{% endif %}
+
+{% if status == 'Draft Rejected' %}
+<div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+    {{ status }}
+</div>
+{% endif %}
+
+{% if status == 'Unknown' %}
+<div class="alert alert-dark" style="padding: 0.25rem; text-align: center;" role="alert">
+    {{ status }}
+</div>
+{% endif %}
+
+{%- endmacro %}
+
+
+
+
+{% macro compact_post_status(status) %}
+
+{% if status == 'Pending Review' %}
+<div class="alert alert-info" style="padding: 0.25rem; text-align: center;" role="alert">
+    Pending
+</div>
+{% endif %}
+
+{% if status == 'Public & Approved' %}
+<div class="alert alert-success" style="padding: 0.25rem; text-align: center;" role="alert">
+   Public
+</div>
+{% endif %}
+
+{% if status == 'Private & Approved' %}
+<div class="alert alert-secondary" style="padding: 0.25rem; text-align: center;" role="alert">
+    Private
+</div>
+{% endif %}
+
+{% if status == 'Draft Rejected' %}
+<div class="alert alert-danger" style="padding: 0.25rem; text-align: center;" role="alert">
+    Rejected
+</div>
+{% endif %}
+
+{% if status == 'Unknown' %}
+<div class="alert alert-dark" style="padding: 0.25rem; text-align: center;" role="alert">
+    Unknown
+</div>
+{% endif %}
+
+{%- endmacro %}

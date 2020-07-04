@@ -26,6 +26,17 @@ from flask import render_template, make_response
 
 from ..models.activity_track import ActivityTrack
 from ..models.draft import Draft
+from ..models.site_info import SiteInfo
+
+def get_site_info(info_keys, site, session):
+    data = {}
+    for key in info_keys:
+        result = session.query(SiteInfo).filter_by(site=site, content_type=key).first()
+        if result is None:
+            data[key] = ''
+        else:
+            data[key] = result.data
+    return data
 
 
 def track_activity(text, object_id, object_type, draft=None, site='covid-19'):
