@@ -13,9 +13,21 @@
             <h2 class="mb-0">Background Information</h2>
           </div>
           <div class="blueLine" style="margin-bottom: 1em;"></div>
+          {% if main_content.home_page_content %}
             {{ main_content.home_page_content|safe }}
-            <!-- Row & Card -->
-            <!-- <div class="row w-100 mb-2">
+
+          {% else %}
+            <div class="row w-100 ">
+              <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading text-center">Hello!</h4>
+                <p>The background information for this disaster is still under construction.</p>
+                <p class="mb-0">Please use the Table of Contents to navigate to the category you would like</p>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Row & Card -->
+          <!-- <div class="row w-100 mb-2">
               <div class="col-12 card z-depth-1">
                 <div class="card-body">
                   <h5 class="card-title text-center ">Epidemiology</h5>
@@ -46,8 +58,8 @@
                 </div>
               </div>
             </div> -->
-            <!-- Row & Card -->
-            <!-- <div class="row w-100 mb-2">
+          <!-- Row & Card -->
+          <!-- <div class="row w-100 mb-2">
             <div class="col-12 card z-depth-1">
               <div class="card-body">
                 <h5 class="card-title text-center ">Treatment</h5>
