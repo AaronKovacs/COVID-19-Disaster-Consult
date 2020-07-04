@@ -1,0 +1,71 @@
+{% macro table_of_contents(table_contents, site) %}
+<div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
+  <ul class="custom-scrollbar">
+    <!-- Side navigation links -->
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        {% for cat in table_contents %}
+        <li>
+          <a class="collapsible-header waves-effect arrow-r">{{ cat.name }}
+            <i class="fas fa-angle-down rotate-icon"></i>
+          </a>
+          <div class="collapsible-body">
+            <ul>
+              {% for sec in cat.sections %}
+              <li><a href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}"
+                  class="waves-effect">{{ sec.name }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    <!--/. Side navigation links -->
+  </ul>
+</div>
+{%- endmacro %}
+
+{% macro table_of_contents_pane(table_contents, site) %}
+{% if table_contents %}
+<div class="col-lg-3 d-none d-lg-block">
+  <div class="sticky-top" style="top: 90px; z-index: 2;">
+    <div id="tocDiv" class="useful-links-box">
+      <h4>Table of Contents</h4>
+      <div class="blueLine"></div>
+      {{ table_of_contents(table_contents, site) }}
+    </div>
+  </div>
+</div>
+{% endif %}
+{%- endmacro %}
+
+{% macro table_of_contents_modal(table_contents, site) %}
+{% if table_contents %}
+<!--Floating Catalog Button -->
+<div class="fixed-action-btn d-lg-none" style="bottom: 15px; left: 15px;">
+  <a data-target="#leftContentModal" data-toggle="modal" class="button-collapse btn-sm btn-primary" id="tocButton"
+    href="#leftContentModal">Table of Contents</a>
+</div>
+{% endif %}
+
+<!-- Table of Content Modal - Full Height Modal Left -->
+<div class="modal fade left" id="leftContentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+  <div class="modal-dialog modal-full-height modal-left" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Table of Contents</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="tocModal" class="modal-body">
+      {{ table_of_contents(table_contents, site) }}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}

@@ -1,5 +1,5 @@
 {% macro site_select_dropdown(sites) %}
-<select id="site-select" class="mdb-select md-form mb-0" searchable="Search here..">
+<select id="site-select" class="mdb-select md-form mb-0" searchable="Search here...">
   <option value="" disabled selected>Choose Disaster Type</option>
   {% for site in sites %}
   <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}
