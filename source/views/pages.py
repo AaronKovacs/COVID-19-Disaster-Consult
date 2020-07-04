@@ -30,6 +30,7 @@ from sqlalchemy import desc
 
 from ..helpers.helpers import *
 from ..helpers.namespace import APINamespace
+from ..helpers.helpers import BError, get_site_info
 from ..database.database import Session
 from ..configuration.config import PASSWORD_SECRET_KEY
 
@@ -98,12 +99,14 @@ class Home(Resource):
                 dict_urls[url.section] = []
             dict_urls[url.section].append(url.publicJSON())
 
+        info = get_site_info(['home_page_content'], site, session)
+
         # Close database connection
         session.close()
 
         # Render HTML template with Jinja
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, sites=sites, site=site), 200, headers)
+        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, main_content=info, sites=sites, site=site), 200, headers)
 
 
 @api.route('/news')
