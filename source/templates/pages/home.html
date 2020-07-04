@@ -25,7 +25,7 @@
               <div class="blueLine"></div>
               {% for key, value in useful_links.items() %}
                 <h5 class="mb-0">{{key}}</h5>
-                <ul style="margin: 0; margin-top: 0em;">
+                <ul class="mb-1">
                   {% for link_item in value %}
                     <li class=""><a href="{{link_item.url}}" target="_blank">{{link_item.title}}</a></li>
                   {% endfor %}
