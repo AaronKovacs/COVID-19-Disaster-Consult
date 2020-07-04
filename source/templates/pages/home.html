@@ -1,398 +1,144 @@
-{% extends "pages/base.html" %}
+{% extends "base-pages/base-site-specific.html" %}
 
-{% block content %}
-<script>
-	$(window).load(function(){
-		$('#onload').modal('show');
-	});
-</script>
-
-<div class="btnContainer">
-	<h3 id ="subtitle"><i>Your Consultant for Just-in-Time Information When Disasters Strike</i></h3>
-	<div class="btn-lg">
-		<button type="button" class="hero-btn responsive-width" id="providerBtn" onclick="window.location.href = '{{ url_for('Pages_categories', site=site) }}';" style="white-space: normal;">
-			<h2 class="provider-btn-title">Go To Clinical and Operational Resources
-				<img src="{{ url_for('static', filename = 'images/chevron-right.png') }}" align="right" class="provider-btn-chevron"></h2>
-			</button>
-		</div>
-		<br>
-		<p style="padding-left: 1em; padding-right: 1em;">This clinical resource is under constant development. Please check back frequently for updates and help us improve by providing feedback.</p>
-	</div>
-	{% if site=='covid-19' %}
-	<div class="container-fluid" style="text-align: center; ">
-		<div class="row">
-			<div class="col-sm-4">
-				<h4><a href="#newsHere" style="color: #25353F;"><u>Latest News</u></a></h4>
-			</div>
-			<div class="col-sm-4">
-				<h4><a href="#literatureHere" style="color: #25353F;"><u>Latest Literature</u></a></h4>
-			</div>
-			<div class="col-sm-4">
-				<h4><a href="#numbersHere" style="color: #25353F;"><u>Latest Numbers</u></a></h4>
-			</div>
-		</div>
-	</div>
+{% block main_content %}
+<div class="row">
 
 	<div class="container-fluid">
+
 		<div class="row">
-			<div class = "greyLine"></div><br><br>
-			<div class="col-sm-9">
-				<!--newsContainerStart-->
-				<div class="col-sm-9" id="newsContainer"  style="white-space: normal; max-width: 100%; padding-left: 0;" id="newsHere">
-					<h2  id="newsHere">Latest News</h2>
 
-
-					{% for link in links %}
-					<div class="row newsRow">
-						<div class="image-container" style="background-image: url('{{ link.large_url }}');">
-						</div>
-						<div>
-							<h4 style="white-space: normal;">{{ link.title }}</h4>
-							<p>{{ link.description }}</p>
-							<a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
-						</div>
+			<div class="col-12 {% if useful_links %}col-lg-8{% endif %}">
+				<div class="row mt-3">
+					<div class="">
+						<h2 class="mb-0">Intel Report</h2>
 					</div>
-					{% endfor %}
+					<div class="blueLine" style="margin-bottom: 1em;"></div>
+					
 
-					<br>
-					<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-						<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news', site=site) }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
-					</div>
-				</div><!--NewsContainerEnd-->
 
-				<!--middleContainerStart-->
-				<div class = "greyLine"></div><br>
-				<div class="col-sm-9" id="literatureHere" style="white-space: normal; max-width: 100%; padding-left: 0;">
-					<!-- <div class="col-sm-9" id="newsContainer" style="white-space: normal;"> -->
-						<h2 >Latest Literature</h2>
 
-						{% for lit in literatures %}
-						<div class="row newsRow" style="width: 100%;">
-							<div>
-								<h4 style="white-space: normal;">{{ lit.title }}</h4>
-								<p>{{ lit.excerpt }}</p>
-								<a href="{{ url_for('Pages_view_literature', literatureID=lit.id, site=site) }}" >View Literature</a>
-							</div>
-						</div>
-						{% endfor %}
 
-						<br>
-						<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-							<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_literature', site=site) }}" role="button" style="font-weight: 700">See more literature &raquo;</a></p>
-						</div>
-						<!-- </div> -->
-					</div>
-					<!-- middleContainerEnd -->
-				</div><!--end col-->
-
-				<div class="col-sm-3">
-					<center>
-						<div class="useful-links-box">
-							<h4>Useful Links</h4>
-							<div class="blueLine"></div>
-							{% for key, value in useful_links.items() %}
-							<h5>{{ key }}</h5>
-							<ul style="margin: 0; margin-top: 0.5em;">
-								{% for url in value %}
-								<li class="useful-link"><a href="{{ url.url }}">{{ url.title }}</a></li>
-								{% endfor %}
-							</ul>
-							{% endfor %}
-						</div> <!--end link box style-->
-					</center>
-				</div><!--end col-->
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pretium iaculis purus, et lacinia
+						ligula dignissim sit amet. Quisque aliquam pellentesque sem, vitae cursus lectus porttitor at.
+						Proin dictum nunc a venenatis interdum. Fusce consequat pretium nunc, placerat scelerisque ex
+						cursus eu. Pellentesque ligula nibh, viverra eu leo at, dictum facilisis eros. Praesent quis
+						orci sed quam ullamcorper posuere sed sed lorem. In vitae lectus felis. In lobortis dolor sit
+						amet nisl vestibulum iaculis. Duis mattis velit ac imperdiet maximus. In eleifend purus rutrum
+						porta pulvinar. Maecenas semper molestie sem, eu scelerisque augue tincidunt quis. Phasellus
+						scelerisque efficitur ornare. Praesent dictum convallis placerat. Fusce sed vulputate tellus.
+						Pellentesque sed volutpat augue, vitae elementum velit. Etiam at sodales turpis. Mauris ut
+						suscipit leo, tempus aliquam sem. Quisque aliquet enim id lectus posuere, convallis tempus mi
+						consequat. Cras vehicula quam ut volutpat finibus. Duis rutrum faucibus eros vel aliquam.
+						Suspendisse ipsum erat, auctor sit amet rhoncus in, fermentum id sem. Curabitur euismod ante id
+						nunc mattis commodo. Vestibulum vel ante blandit, imperdiet nibh ac, fermentum quam. Nunc
+						dignissim suscipit vestibulum.
+						Cras eu risus tortor. Integer pulvinar, magna non interdum pretium, dui metus posuere tellus, eu
+						ultrices massa nibh vulputate nibh. Sed ac felis nec massa vehicula ullamcorper. Cras at odio
+						lacinia, euismod elit pulvinar, maximus urna. Donec dapibus fringilla maximus. Ut fringilla
+						pulvinar luctus. Curabitur tristique semper ex, in egestas massa euismod a. Nulla ut orci
+						viverra, bibendum enim a, dignissim nibh.
+						Nunc dapibus enim vitae neque lobortis, nec varius leo faucibus. Fusce mattis magna et ligula
+						feugiat, vitae volutpat justo volutpat. Nam sit amet mauris rutrum, maximus eros in, malesuada
+						ipsum. Maecenas eget diam nec nulla elementum porttitor vitae eget dui. Nulla laoreet posuere
+						tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur suscipit sed dui
+						vitae malesuada.
+						Nunc at orci tortor. Phasellus venenatis aliquam ante, a ornare lorem tristique ac. Praesent
+						ullamcorper mi sed malesuada interdum. Mauris ultricies posuere risus gravida convallis. Duis
+						accumsan fringilla dolor ac mattis. Proin ligula nisl, fermentum ac nisl sed, rutrum egestas
+						dui. Sed lorem ante, lobortis id lorem suscipit, facilisis ornare lorem. Cras laoreet at neque
+						non porttitor. Quisque imperdiet luctus justo, quis tincidunt elit consectetur eu. Etiam sodales
+						arcu vel nisi mattis, in vehicula odio iaculis. Vivamus nec ipsum tellus. Nulla congue faucibus
+						lobortis. Vestibulum tristique placerat vestibulum. Nulla laoreet ipsum ipsum, quis gravida
+						velit consectetur vitae. Morbi porttitor condimentum mattis.
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pretium iaculis purus, et lacinia
+						ligula dignissim sit amet. Quisque aliquam pellentesque sem, vitae cursus lectus porttitor at.
+						Proin dictum nunc a venenatis interdum. Fusce consequat pretium nunc, placerat scelerisque ex
+						cursus eu. Pellentesque ligula nibh, viverra eu leo at, dictum facilisis eros. Praesent quis
+						orci sed quam ullamcorper posuere sed sed lorem. In vitae lectus felis. In lobortis dolor sit
+						amet nisl vestibulum iaculis. Duis mattis velit ac imperdiet maximus. In eleifend purus rutrum
+						porta pulvinar. Maecenas semper molestie sem, eu scelerisque augue tincidunt quis. Phasellus
+						scelerisque efficitur ornare. Praesent dictum convallis placerat. Fusce sed vulputate tellus.
+						Pellentesque sed volutpat augue, vitae elementum velit. Etiam at sodales turpis. Mauris ut
+						suscipit leo, tempus aliquam sem. Quisque aliquet enim id lectus posuere, convallis tempus mi
+						consequat. Cras vehicula quam ut volutpat finibus. Duis rutrum faucibus eros vel aliquam.
+						Suspendisse ipsum erat, auctor sit amet rhoncus in, fermentum id sem. Curabitur euismod ante id
+						nunc mattis commodo. Vestibulum vel ante blandit, imperdiet nibh ac, fermentum quam. Nunc
+						dignissim suscipit vestibulum.
+						Cras eu risus tortor. Integer pulvinar, magna non interdum pretium, dui metus posuere tellus, eu
+						ultrices massa nibh vulputate nibh. Sed ac felis nec massa vehicula ullamcorper. Cras at odio
+						lacinia, euismod elit pulvinar, maximus urna. Donec dapibus fringilla maximus. Ut fringilla
+						pulvinar luctus. Curabitur tristique semper ex, in egestas massa euismod a. Nulla ut orci
+						viverra, bibendum enim a, dignissim nibh.
+						Nunc dapibus enim vitae neque lobortis, nec varius leo faucibus. Fusce mattis magna et ligula
+						feugiat, vitae volutpat justo volutpat. Nam sit amet mauris rutrum, maximus eros in, malesuada
+						ipsum. Maecenas eget diam nec nulla elementum porttitor vitae eget dui. Nulla laoreet posuere
+						tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur suscipit sed dui
+						vitae malesuada.
+						Nunc at orci tortor. Phasellus venenatis aliquam ante, a ornare lorem tristique ac. Praesent
+						ullamcorper mi sed malesuada interdum. Mauris ultricies posuere risus gravida convallis. Duis
+						accumsan fringilla dolor ac mattis. Proin ligula nisl, fermentum ac nisl sed, rutrum egestas
+						dui. Sed lorem ante, lobortis id lorem suscipit, facilisis ornare lorem. Cras laoreet at neque
+						non porttitor. Quisque imperdiet luctus justo, quis tincidunt elit consectetur eu. Etiam sodales
+						arcu vel nisi mattis, in vehicula odio iaculis. Vivamus nec ipsum tellus. Nulla congue faucibus
+						lobortis. Vestibulum tristique placerat vestibulum. Nulla laoreet ipsum ipsum, quis gravida
+						velit consectetur vitae. Morbi porttitor condimentum mattis.
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pretium iaculis purus, et lacinia
+						ligula dignissim sit amet. Quisque aliquam pellentesque sem, vitae cursus lectus porttitor at.
+						Proin dictum nunc a venenatis interdum. Fusce consequat pretium nunc, placerat scelerisque ex
+						cursus eu. Pellentesque ligula nibh, viverra eu leo at, dictum facilisis eros. Praesent quis
+						orci sed quam ullamcorper posuere sed sed lorem. In vitae lectus felis. In lobortis dolor sit
+						amet nisl vestibulum iaculis. Duis mattis velit ac imperdiet maximus. In eleifend purus rutrum
+						porta pulvinar. Maecenas semper molestie sem, eu scelerisque augue tincidunt quis. Phasellus
+						scelerisque efficitur ornare. Praesent dictum convallis placerat. Fusce sed vulputate tellus.
+						Pellentesque sed volutpat augue, vitae elementum velit. Etiam at sodales turpis. Mauris ut
+						suscipit leo, tempus aliquam sem. Quisque aliquet enim id lectus posuere, convallis tempus mi
+						consequat. Cras vehicula quam ut volutpat finibus. Duis rutrum faucibus eros vel aliquam.
+						Suspendisse ipsum erat, auctor sit amet rhoncus in, fermentum id sem. Curabitur euismod ante id
+						nunc mattis commodo. Vestibulum vel ante blandit, imperdiet nibh ac, fermentum quam. Nunc
+						dignissim suscipit vestibulum.
+						Cras eu risus tortor. Integer pulvinar, magna non interdum pretium, dui metus posuere tellus, eu
+						ultrices massa nibh vulputate nibh. Sed ac felis nec massa vehicula ullamcorper. Cras at odio
+						lacinia, euismod elit pulvinar, maximus urna. Donec dapibus fringilla maximus. Ut fringilla
+						pulvinar luctus. Curabitur tristique semper ex, in egestas massa euismod a. Nulla ut orci
+						viverra, bibendum enim a, dignissim nibh.
+						Nunc dapibus enim vitae neque lobortis, nec varius leo faucibus. Fusce mattis magna et ligula
+						feugiat, vitae volutpat justo volutpat. Nam sit amet mauris rutrum, maximus eros in, malesuada
+						ipsum. Maecenas eget diam nec nulla elementum porttitor vitae eget dui. Nulla laoreet posuere
+						tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur suscipit sed dui
+						vitae malesuada.
+						Nunc at orci tortor. Phasellus venenatis aliquam ante, a ornare lorem tristique ac. Praesent
+						ullamcorper mi sed malesuada interdum. Mauris ultricies posuere risus gravida convallis. Duis
+						accumsan fringilla dolor ac mattis. Proin ligula nisl, fermentum ac nisl sed, rutrum egestas
+						dui. Sed lorem ante, lobortis id lorem suscipit, facilisis ornare lorem. Cras laoreet at neque
+						non porttitor. Quisque imperdiet luctus justo, quis tincidunt elit consectetur eu. Etiam sodales
+						arcu vel nisi mattis, in vehicula odio iaculis. Vivamus nec ipsum tellus. Nulla congue faucibus
+						lobortis. Vestibulum tristique placerat vestibulum. Nulla laoreet ipsum ipsum, quis gravida
+						velit consectetur vitae. Morbi porttitor condimentum mattis.
+					</p>
+				</div>
 			</div>
-		</div><!--end container-->
 
-
-
-
-
-		<div class="container-fluid" id="anyContainer"><!--numbersContainerStart-->
-			<div class = "greyLine"></div><br>
-
-			<h2 id="numbersHere">Latest Numbers</h2>
-			<span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
-			<div class="api-data">
-
-				<div class="selectcountry">
-					<select id="select" class="custom-select" style="margin-top: 0.5em; display: none;" onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
-
-					<center>
-						<iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA" style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
-					</center>
-					<br><br>
-
-					<div class="country-specific-data">
-						<h3 id="currentcountry"></h3>
-						<span style="color: #5a5a5a"><i>Updated Hourly</i></span>
-						<div class="row" id="stats">
-							<div class="col-md-4">
-								<h1 id="currentcases"></h1>
-								<h4>Cases</h4>
-							</div>
-							<div class="col-md-4">
-								<h1 id="currentdeaths"></h1>
-								<h4>Deaths</h4>
-							</div>
-							<div class="col-md-4">
-								<h1 id="currentrecovered"></h1>
-								<h4>Recovered</h4>
-							</div><!--col end-->
-						</div><!--row end-->
-					</div><!--country end-->
-				</div><!-- select country end-->
-
-				<br><div class = "greyLine" style="width: 50%;"></div><br>
-
-				<div class="global-data">
-					<h3>Global Data</h3>
-					<span style="color: #5a5a5a"><i>Updated Daily</i></span>
-					<div class="row" id="stats">
-						<div class="col-md-4">
-							<h1 id="globalcases"></h1>
-							<h4>Cases</h4>
-						</div>
-						<div class="col-md-4">
-							<h1 id="globaldeaths"></h1>
-							<h4>Deaths</h4>
-						</div>
-						<div class="col-md-4">
-							<h1 id="globalrecovered"></h1>
-							<h4>Recovered</h4>
-						</div><!--col end-->
-					</div><!--row end-->
-				</div><!--global end-->
-
-				<br>
-
-			</div><!--api data end-->
-		</div><!--numbers container end-->
-
-		<script>
-			let requestOptions = {
-				method: 'GET',
-				redirect: 'follow'
-			};
-	let dataArray = [];            //holds parsed data for each country
-	let globalTotals = [0, 0, 0]; // holds the global number of cases, deaths, and recovered
-	let allThisData = [];
-	let chartMap = new Map();
-	let myChart;
-
-	getData();
-
-	//****************************************************************************************
-	// Fetches and parses data from API and accumulates global aggregates for cases, deaths,
-	// and recovered.
-	//****************************************************************************************
-	function getData() {
-		fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
-		.then(res => {
-			return res.json();
-		}).then(obj => {
-			globalTotals = [0, 0, 0];
-			idx = 0;
-			for (let [key, value] of Object.entries(obj.Countries)) {
-				if(!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
-					let newEntry = {
-						id: idx = 0,
-						country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
-						slug: value.Slug,
-						totalconfirmed: value.TotalConfirmed,
-						totaldeaths: value.TotalDeaths,
-						totalrecovered: value.TotalRecovered
-					}
-					idx++;
-					dataArray.push(newEntry);
-					globalTotals[0] += newEntry.totalconfirmed;
-					globalTotals[1] += newEntry.totaldeaths;
-					globalTotals[2] += newEntry.totalrecovered;
-				}
-				dataArray.sort((a, b) => a.country.localeCompare(b.country));
-			}
-		})
-		.then(() => {
-			document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
-			document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
-			document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]);
-	        populateGlobal(); // calls next function after this one is finished
-	    })
-		.catch(error => console.log('error', error));
-	}
-
-	//****************************************************************************************
-	// Fires when each time a new country is selected from the dropdown. Displays data in the
-	// bottom box relevant to the country selected.
-	//****************************************************************************************
-	function getDataForCountry(selectedIndex) {
-		document.getElementById('currentcountry').innerText = dataArray[selectedIndex].country;
-		document.getElementById('currentcases').innerText = numFormat(dataArray[selectedIndex].totalconfirmed);
-		document.getElementById('currentdeaths').innerText = numFormat(dataArray[selectedIndex].totaldeaths);
-		document.getElementById('currentrecovered').innerText = numFormat(dataArray[selectedIndex].totalrecovered);
-		getDailyByCountry(dataArray[selectedIndex]);
-	}
-
-	//****************************************************************************************
-	// Populates the dropdown menu drawing from the contents of dataArray.
-	//****************************************************************************************
-	function populateGlobal() {
-		document.getElementById('select').innerHTML = dataArray
-		.map(
-			d => d.country == 'United States of America' ? `<option selected>${d.country}</option>` :  `<option>${d.country}</option>`
-			);
-	    getDataForCountry(document.getElementById('select').selectedIndex); // calls next function after this one is finished
-	}
-
-
-	//****************************************************************************************
-	// Formats numbers for display in the Global Data and Country Specific boxes
-	//****************************************************************************************
-	function numFormat(num) {
-		let s = '';
-
-		let x = 0;
-		while(num > 0) {
-			if(x % 3 == 0 && x != 0) {
-				s+= ',';
-			}
-			s += num % 10;
-			num = Math.floor(num / 10);
-			x++;
-		}
-
-		return s.split("").reverse().join("") || "0";
-	}
-
-
-	//****************************************************************************************
-	// Gets and parses data for each country by number of cases and date
-	//****************************************************************************************
-	function getDailyByCountry(country) {
-		document.getElementById('graph').style.display = "none";
-		document.getElementById('loading').style.display = "block";
-		document.getElementById('loading').className = "d-flex justify-content-center";
-
-		let count = 0
-		chartMap.clear();
-		let requestURL = "https://api.covid19api.com/country/" + country.slug +"/status/confirmed"
-		if (country.slug == "united-states") {
-			requestURL = "{{ url_for('API_us_graph_data', site=site) }}";
-		}
-
-		fetch(requestURL, requestOptions)
-		.then(response => response.json())
-		.then(result => allThisData = result)
-		.then(_=> {
-			let date;
-
-			for(let o of allThisData) {
-				if(o.Status == "confirmed") {
-					date = new Date(o.Date).getTime();
-					chartMap.set(date, (chartMap.get(date) || 0) + o.Cases);
-				}
-			}
-
-			makeChart(chartMap);
-		})
-		.catch(error => console.log('error', error));
-	}
-
-
-	//****************************************************************************************
-	// Draws chart using the data in chartMap
-	//****************************************************************************************
-	function makeChart(map) {
-		document.getElementById('graph').style.display = "block";
-		document.getElementById('loading').style.display = "none";
-		document.getElementById('loading').className = "";
-
-		const ctx = document.getElementById('graph').getContext('2d');
-		ctx.clearRect(0, 0, document.getElementById('graph').width, document.getElementById('graph').height);
-		let xlabels = [];
-		xlabels = Array.from(map.keys());
-		for(let i = 0; i < xlabels.length; i++) {
-			xlabels[i] = new Date(xlabels[i]).toString().substring(4, 10);
-		}
-		let ylabels = [];
-		ylabels = Array.from(map.values());
-
-		if(myChart) {
-			myChart.destroy();
-		}
-		myChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: xlabels,
-				datasets: [{
-					label: 'COVID-19 Cases',
-					data: ylabels,
-					pointRadius: 2,
-					backgroundColor:
-					'rgba(233, 223, 196, 0.15)',
-					borderColor:
-					'rgba(40, 53, 62, 1)',
-					borderWidth: 1
-				}]
-			},
-			options: {
-				responsive: false,
-				scales: {
-					xAxes :[{
-						ticks: {fontSize: 10}
-					}],
-					yAxes: [{
-						ticks: {
-							fontSize: 10,
-							beginAtZero: true,
-							callback: function(value, index, values) {
-								if(Math.floor(value / 1000) > 1) {
-									return value/1000 + 'k';
-								} else {
-									return value;
-								}
-							}
-						}
-					}]
-				}
-			}
-		});
-	}
-</script>
-
-{% else %}
-
-<div class="container-fluid">
-	<div class="row">
-		<div class = "greyLine"></div><br><br>
-		<div class="col-sm-2">
+      {% if useful_links %}
+        <div class="col-12 col-lg-4">
+          <div class="sticky-top" style="top: 90px; z-index: 2;">
+            <div class="useful-links-box">
+              <h4>Useful Links</h4>
+              <div class="blueLine"></div>
+              {% for key, value in useful_links.items() %}
+                <h5 class="mb-0">{{key}}</h5>
+                <ul style="margin: 0; margin-top: 0em;">
+                  {% for link_item in value %}
+                    <li class=""><a href="{{link_item.url}}" target="_blank">{{link_item.title}}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
 		</div>
-		<div class="col-sm-8">
-			<!--newsContainerStart-->
-			<div class="col-sm" id="newsContainer"  style="white-space: normal; max-width: 100%; padding-left: 0;" id="newsHere">
-				<h2  id="newsHere">Latest News</h2>
+	</div>
+</div>
 
-
-				{% for link in links %}
-				<div class="row newsRow">
-					<div class="image-container" style="background-image: url('{{ link.large_url }}');">
-					</div>
-					<div>
-						<h4 style="white-space: normal;">{{ link.title }}</h4>
-						<p>{{ link.description }}</p>
-						<a href="{{ link.url }}" target="_blank">{{ link.url }}</a>
-					</div>
-				</div>
-				{% endfor %}
-
-				<br>
-				<div class="btnRow" style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-					<p><a class="btn btn-secondary" href="{{ url_for('Pages_view_all_news', site=site) }}" role="button" style="font-weight: 700">See more news &raquo;</a></p>
-				</div>
-
-				<div class="col-sm-2">
-				</div>
-			</div><!--NewsContainerEnd-->
-			{% endif %}
-
-			{% endblock %}
+{% endblock %}

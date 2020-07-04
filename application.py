@@ -225,7 +225,7 @@ def select_screen():
 
 @application.errorhandler(404) 
 def not_found(e): 
-    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.id).all()
+    sites = session.query(Site).filter_by(public=True).all()
     return render_template("error/404.html", sites=sites, site=sites[0]) 
 
 

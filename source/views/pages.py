@@ -92,7 +92,7 @@ class Home(Resource):
 
 
         dict_urls = {}
-        urls = session.query(SiteURL).order_by(desc(SiteURL.order), SiteURL.id).all()
+        urls = session.query(SiteURL).filter_by(site=site).order_by(desc(SiteURL.order), SiteURL.id).all()
         for url in urls:
             if url.section not in dict_urls:
                 dict_urls[url.section] = []
