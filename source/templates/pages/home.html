@@ -3,40 +3,107 @@
 {% block main_content %}
 <div class="row">
 
-	<div class="container-fluid">
+  <div class="container-fluid">
 
-		<div class="row">
+    <div class="row">
 
-			<div class="col-12 {% if useful_links %}col-lg-8{% endif %}">
-				<div class="row mt-3">
-					<div class="">
-						<h2 class="mb-0">Background Information</h2>
-					</div>
-					<div class="blueLine" style="margin-bottom: 1em;"></div>
-          {{ main_content.home_page_content|safe }}
-				</div>
-			</div>
+      <div class="col-12 {% if useful_links %}col-lg-8{% endif %}">
+        <div class="row mt-3">
+          <div class="">
+            <h2 class="mb-0">Background Information</h2>
+          </div>
+          <div class="blueLine" style="margin-bottom: 1em;"></div>
+            {{ main_content.home_page_content|safe }}
+            <!-- Row & Card -->
+            <!-- <div class="row w-100 mb-2">
+              <div class="col-12 card z-depth-1">
+                <div class="card-body">
+                  <h5 class="card-title text-center ">Epidemiology</h5>
+                  <div class="row justify-content-center">
+                    <ul>
+                      <li>
+                        Multiple states set single day records as case counts and positivity rates increase:
+                      </li>
+                      <ul>
+                        <li>
+                          Florida breaks single day record for third day in a row
+                        </li>
+                        <li>
+                          In Arizona, health officials also reported a record, with 2,577 current hospitalizations.
+                        </li>
+                        <li>
+                          Texas set arecord for coronavirus-related hospitalizations for the 16th day in a row on
+                          Saturday,
+                          with 5,523 patients being treated. Following a record single-day increase of COVID-19 cases in
+                          the
+                          state, TX Gov. Greg Abbott has paused further phases of the state&#39;s reopening plan and
+                          halted
+                          elective surgeries in four counties.
+                        </li>
+                      </ul>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <!-- Row & Card -->
+            <!-- <div class="row w-100 mb-2">
+            <div class="col-12 card z-depth-1">
+              <div class="card-body">
+                <h5 class="card-title text-center ">Treatment</h5>
+                <div class="row justify-content-center">
+                  <ul>
+                    <li>
+                      Tocilizumab
+                    </li>
+                    <ul>
+                      <li>
+                        A retrospective case-control study of patients with severe COVID-19 found a non-statistically
+                        significant lower mortality in the treatment group (52% versus 62.1% P = 0.09). When excluding
+                        intubated patients, there was statistically significant lower mortality in patients treated with
+                        tocilizumab (6% vs. 27% P = 0.024).
+                      </li>
+                      <li>
+                        A 21-day observational study published in CHEST found that in tocilizumab-treated patients,
+                        oxygenation and inflammatory biomarkers (hsCRP and IL-6) improved. However, sIL-2R and D-Dimer
+                        levels increased. Survival of severe patients treated with tocilizumab was similar to non-severe
+                        patients: (83% vs 91%; p=0.11).
+                      </li>
+                      <li>
+                        A retrospective, observational cohort study found that in patients with severe COVID-19
+                        pneumonia, treatment with tocilizumab, whether administered intravenously or subcutaneously,
+                        might reduce the risk of invasive mechanical ventilation or death
+                      </li>
+                    </ul>
+
+                    
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
 
       {% if useful_links %}
-        <div class="col-12 col-lg-4">
-          <div class="sticky-top" style="top: 90px; z-index: 2;">
-            <div class="useful-links-box">
-              <h4>Useful Links</h4>
-              <div class="blueLine"></div>
-              {% for key, value in useful_links.items() %}
-                <h5 class="mb-0">{{key}}</h5>
-                <ul class="mb-1">
-                  {% for link_item in value %}
-                    <li class=""><a href="{{link_item.url}}" target="_blank">{{link_item.title}}</a></li>
-                  {% endfor %}
-                </ul>
+      <div class="col-12 col-lg-4">
+        <div class="sticky-top" style="top: 90px; z-index: 2;">
+          <div class="useful-links-box">
+            <h4>Useful Links</h4>
+            <div class="blueLine"></div>
+            {% for key, value in useful_links.items() %}
+            <h5 class="mb-0">{{key}}</h5>
+            <ul class="mb-1">
+              {% for link_item in value %}
+              <li class=""><a href="{{link_item.url}}" target="_blank">{{link_item.title}}</a></li>
               {% endfor %}
-            </div>
+            </ul>
+            {% endfor %}
           </div>
         </div>
+      </div>
       {% endif %}
-		</div>
-	</div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
