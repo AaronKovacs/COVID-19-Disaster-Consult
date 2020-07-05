@@ -3,36 +3,51 @@
 {% block main_content %}
 
 <div class="row">
-	<div class="col-12" id="newsContainer">
-		<h2 class="mb-0">{{ section.title }}</h2>
-		<h5 class="mb-2">{{ section.description }}</h5>
+  <div class="col-12" id="newsContainer">
+    <h2 class="mb-0">{{ section.title }}</h2>
+    <h5 class="mb-2">{{ section.description }}</h5>
 
-		<div class="blueLine mb-2"></div>
+    <div class="blueLine mb-2"></div>
 
-		<div class="accordion" id="accordionExample">
-			<div class="card" style="border:2px solid #e8d29b; border-radius:7px">
+    <!--Accordion wrapper-->
+    <div class="accordion md-accordion accordion-blocks posts-box" id="postsAccordion" role="tablist"
+      aria-multiselectable="true">
 
-				{% for post in posts %}
+      {% for post in posts %}
+      <!-- Accordion card -->
+      <div class="card">
 
-				<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ post.id }}" aria-expanded="false" aria-controls="collapseOne" style="border-radius: 0;">
-					{{ post.title }}
-				</button>
+        <!-- Card header -->
+        <div class="card-header" role="tab" id="postHeading{{loop.index}}">
+          <!-- Heading -->
+          <a data-toggle="collapse" data-parent="#postsAccordion" href="#postCollapse{{loop.index}}"
+            aria-expanded="true" aria-controls="postCollapse{{loop.index}}">
+            <h5 class="mt-1 mb-0">
+              <span>{{ post.title }}</span>
+              <i class="fas fa-angle-down rotate-icon"></i>
+            </h5>
+          </a>
+        </div>
 
-				<div id="{{ post.id }}" class="collapse {% if posts|length == 1 %}show{% else %}{% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
-					<div class="card-body ck-content">
-						{{ post.content|safe }}
-						<i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
-					</div>
-				</div>
+        <!-- Card body -->
+        <div id="postCollapse{{loop.index}}" class="collapse" role="tabpanel"
+          aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion{{loop.index}}">
+          <div class="card-body">
+            {{ post.content|safe }}
+            <i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
+          </div>
+        </div>
+      </div>
+      <!-- Accordion card -->
+      {% endfor %}
 
+    </div>
+    <!--/.Accordion wrapper-->
 
-				{% endfor %}
-			</div>
-		</div>
-		<center style="margin-top: 2em; font-size: 10pt;">
-			<i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
-		</center>
-	</div>
+    <center style="margin-top: 2em; font-size: 10pt;">
+      <i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
+    </center>
+  </div>
 </div>
 
 
