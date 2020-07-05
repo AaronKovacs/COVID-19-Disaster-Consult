@@ -39,19 +39,25 @@
 </script>
 {%- endmacro %}
 
-{% macro site_select_navbar_dropdown(sites) %}
+{% macro site_select_navbar_dropdown(sites, current_site) %}
+{% if sites %}
 <div class="dropdown">
   <li class="nav-item dropdown">
     <!--Trigger-->
-    <a class="nav-link dropdown-toggle" type="button" id="navbarDisasterSelectDropDownBtn" data-toggle="dropdown">Select Disaster</a>
+    <a class="nav-link dropdown-toggle" id="navbarDisasterSelectDropDownBtn" data-toggle="dropdown">
+      Select Disaster
+    </a>
 
     <!--Menu-->
     <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
       <input class="form-control" type="text" placeholder="Search" aria-label="Search">
       {% for site in sites %}
+      {% if site.slug != current_site %}
       <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
+      {% endif %}
       {% endfor %}
     </div>
   </li>
 </div>
+{% endif %}
 {%- endmacro %}
