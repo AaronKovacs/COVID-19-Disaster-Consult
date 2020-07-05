@@ -31,7 +31,7 @@
 
         <!-- Card body -->
         <div id="postCollapse{{loop.index}}" class="collapse {% if posts|length == 1 %}show{% endif %}" role="tabpanel"
-          aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion{{loop.index}}">
+          aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion">
           <div class="card-body">
             {{ post.content|safe }}
             <i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
