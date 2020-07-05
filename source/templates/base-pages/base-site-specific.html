@@ -1,5 +1,7 @@
 {% extends "base-pages/base-libraries.html" %}
+{% from "components/site_select.html" import site_select_navbar_dropdown %}
 {% from "components/table_of_contents.html" import table_of_contents_pane, table_of_contents_modal %}
+
 
 {% block head %}
 {% block head_content %}{% endblock %}
@@ -29,18 +31,8 @@
       <ul class="navbar-nav ml-auto flex-nowrap">
 
         {% if sites %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">Select Disaster</a>
-          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-            {% for site in sites %}
-            <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
-            {% endfor %}
-          </div>
-        </li>
+        {{ site_select_navbar_dropdown(sites) }}
         {% endif %}
-
-
 
         {% if current_user.is_authenticated %}
         <li class="nav-item">
@@ -65,7 +57,7 @@
     <div class="row">
       {{ table_of_contents_pane(table_contents, site, category) }}
       {{ table_of_contents_modal(table_contents, site, category) }}
-      
+
       <div class="{% if table_contents %}col-12 col-lg-9{% else %}col-12{% endif %}">
         {% block main_content %}{% endblock %}
       </div>

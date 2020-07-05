@@ -38,3 +38,15 @@
   }
 </script>
 {%- endmacro %}
+
+{% macro site_select_navbar_dropdown(sites) %}
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+    aria-expanded="false">Select Disaster</a>
+  <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+    {% for site in sites %}
+    <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
+    {% endfor %}
+  </div>
+</li>
+{%- endmacro %}
