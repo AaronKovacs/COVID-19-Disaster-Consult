@@ -61,11 +61,10 @@
   </div>
   <hr>
   {% endif %}
-
   <div class="container-fluid">
     <div class="row">
-      {{ table_of_contents_pane(table_contents, site) }}
-      {{ table_of_contents_modal(table_contents, site) }}
+      {{ table_of_contents_pane(table_contents, site, category) }}
+      {{ table_of_contents_modal(table_contents, site, category) }}
       
       <div class="{% if table_contents %}col-12 col-lg-9{% else %}col-12{% endif %}">
         {% block main_content %}{% endblock %}
