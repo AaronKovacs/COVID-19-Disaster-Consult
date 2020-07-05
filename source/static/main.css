@@ -14,20 +14,20 @@ h1{
 }
 
 h2{
-  font-weight: 800;
+  /* font-weight: 800; */
 }
 
 h3{
-  font-weight: 700;
+  /* font-weight: 700; */
 }
 
 h4{
-  font-weight: 700;
+  /* font-weight: 700; */
   white-space: normal;
 }
 
 h5{
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 a{
@@ -1186,7 +1186,7 @@ blockquote p {
 
 .custom-side-nav .collapsible-body a {
     height: 36px;
-    padding-left: 47px;
+    padding-left: 35px;
     line-height: 36px;
     background-color: #ffff;
 }
@@ -1260,7 +1260,7 @@ blockquote p {
 
 .custom-side-nav .collapsible-body a {
     height: 36px;
-    padding-left: 47px;
+    padding-left: 35px;
     line-height: 36px;
     background-color: #ffff;
 }
