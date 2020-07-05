@@ -20,8 +20,8 @@
         <!-- Card header -->
         <div class="card-header" role="tab" id="postHeading{{loop.index}}">
           <!-- Heading -->
-          <a data-toggle="collapse" data-parent="#postsAccordion" href="#postCollapse{{loop.index}}"
-            aria-expanded="true" aria-controls="postCollapse{{loop.index}}">
+          <a class="{% if posts|length > 1 %}collapsed{% endif %}" data-toggle="collapse" data-parent="#postsAccordion" href="#postCollapse{{loop.index}}"
+            aria-expanded="false" aria-controls="postCollapse{{loop.index}}">
             <h5 class="mt-1 mb-0">
               <span>{{ post.title }}</span>
               <i class="fas fa-angle-down rotate-icon"></i>
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Card body -->
-        <div id="postCollapse{{loop.index}}" class="collapse" role="tabpanel"
+        <div id="postCollapse{{loop.index}}" class="collapse {% if posts|length == 1 %}show{% endif %}" role="tabpanel"
           aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion{{loop.index}}">
           <div class="card-body">
             {{ post.content|safe }}
