@@ -71,7 +71,8 @@
 {% block scripts %}
 <script>
   $(document).ready(function () {
-
+    // Needed for navbar disaster search to work
+    $('#disaster-select-dropdown').mdbDropSearch();
   });
 </script>
 {% block scripts_content %}{% endblock %}
