@@ -88,13 +88,14 @@ def list_json(rows):
             rowJS.append(row.publicJSON())
         return rowJS
 
-def post_to_slack(msg):
-    wekbook_url = 'https://hooks.slack.com/services/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'
+def post_to_slack(msg, channel='#website-bot'):
+    api_url = 'https://slack.com/api/chat.postMessage'
 
     data = {
+        'channel': channel,
         'text': msg,
         'username': 'Website Bot',
         'icon_emoji': ':robot_face:'
     }
 
-    response = requests.post(wekbook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+    response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': 'Bearer xoxb-1126097207233-1215701013111-nUdgLbrxry76RRO3sLjVXbOg'})
