@@ -36,16 +36,16 @@
   <div id="ourTeam" class="about-us-anchor"></div>
   <section>
     <div class="row text-center justify-content-center">
-      <h3 class="h3-responsive">Our Team</h3>
+      <h3 class="h3-responsive"><strong>Our Team</strong></h3>
     </div>
 
     <div class="row justify-content-center">
       <!-- Co-Creators -->
       <section>
-        <div class="row">
+        <div class="row text-center justify-content-center">
           <h4 class="h4-responsive">Co-Creators</h4>
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
           {% for profile in user_profiles if "Co-Creators" in profile.section %}
           {{profile_with_description(profile)}}
           {% endfor %}
@@ -56,10 +56,10 @@
 
       <!-- Special Advisors -->
       <section>
-        <div class="row">
+        <div class="row text-center justify-content-center">
           <h4 class="h4-responsive">Special Advisors</h4>
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
           {% for profile in user_profiles if "Special Advisors" in profile.section %}
           {{profile_with_description(profile)}}
           {% endfor %}
@@ -70,10 +70,10 @@
 
       <!-- Medical Review Panel -->
       <section>
-        <div class="row">
+        <div class="row text-center justify-content-center">
           <h4 class="h4-responsive">Medical Review Panel</h4>
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
           {% for profile in user_profiles if "Medical Review Panel" in profile.section %}
           {{profile_with_description(profile)}}
           {% endfor %}
@@ -88,7 +88,7 @@
           <!-- Medical Content Team -->
           <div class="col-12 col-sm-6 col-md-4">
             <h4 class="h4-responsive">Medical Content Team</h4>
-            <ul>
+            <ul class="list-unstyled ml-3">
               {% for profile in user_profiles if "Medical Content Team" in profile.section %}
               <li>{{profile_link(profile)}}</li>
               {% endfor %}
@@ -98,7 +98,7 @@
           <!-- Website Development Team -->
           <div class="col-12 col-sm-6 col-md-4">
             <h4 class="h4-responsive">Website Development Team</h4>
-            <ul>
+            <ul class="list-unstyled ml-3">
               {% for profile in user_profiles if "Website Development Team" in profile.section %}
               <li>{{profile_link(profile)}}</li>
               {% endfor %}
@@ -108,7 +108,7 @@
           <!-- Past Team Members -->
           <div class="col-12 col-sm-6 col-md-4">
             <h4 class="h4-responsive">Past Team Members</h4>
-            <ul>
+            <ul class="list-unstyled ml-3">
               {% for profile in user_profiles if "Past Team Members" in profile.section %}
               <li>{{profile_link(profile)}}</li>
               {% endfor %}

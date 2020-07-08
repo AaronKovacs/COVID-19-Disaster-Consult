@@ -12,9 +12,9 @@
 {%- endmacro %}
 
 {% macro profile_with_description(profile) %}
-<div class="col-12 col-sm-4">
+<div class="col-12 col-sm-6 col-md-6 col-lg-4">
   <div class="about-us-avatar mb-4">
-    <img src="{{profile.profile_image}}" class="rounded-corner-square img-fluid"><br>
+    <img src="{{profile.profile_image}}" class="rounded z-depth-1-half rounded-corner-square img-fluid"><br>
   </div>
   <h5 class="font-weight-bold text-center">
     {% if profile.website %}
