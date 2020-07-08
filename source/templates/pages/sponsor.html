@@ -1,101 +1,95 @@
 {% extends "base-pages/base-general.html" %}
 
 {% block main_content %}
-<br>
-<div class="container" style="max-width: 1200px;">
-	<div class="row">
-		<!--newsContainerStart-->
-		<div class="col-sm-2">
-		</div>
-		<!--end col-->
 
-		<div class="col-sm-7">
-			<h1>Sponsors & Contributors</h1>
-			<div class="blueLine"></div>
-			<br>
-			<h3>Sponsors</h3>
-			<div class="greyLine"></div>
-			<center>
-
-				<br>
-				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-						<table class="table">
-							<thead>
-								<tr>
-									<td>
-										<a href="https://smhs.gwu.edu/" target="_blank">
-											<img src="../../static/images/SMHS.png" class="img-fluid"
-												style="max-width: 355px; object-fit: cover;">
-										</a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="https://smhs.gwu.edu/" target="_blank">
-											<h5>GW School of Medicine &amp; Health Sciences</h5>
-										</a>
-									</td>
-								</tr>
-							</thead>
-						</table>
-					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-						<table class="table">
-							<thead>
-								<tr>
-									<td>
-										<a href="https://www.seas.gwu.edu/" target="_blank">
-											<img src="../../static/images/SEAS.png" class="img-fluid"
-												style="object-fit: cover;">
-										</a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="https://www.seas.gwu.edu/" target="_blank">
-											<h5>GW School of Engineering &amp; Applied Science</h5>
-										</a>
-									</td>
-								</tr>
-							</thead>
-						</table>
-					</div>
-				</div>
+<div class="container my-5" style="height: 80vh;">
+  <div class="flex-center">
 
 
-				<a href="https://aws.amazon.com/" target="_blank">
-					<img src="../../static/images/aws.png" class="img-fluid"
-						style="max-width: 355px; object-fit: cover;">
-					<br>
-					<h5>Amazon Web Services</h5>
-				</a>
-				<br>
-				<a href="https://trello.com/" target="_blank">
-					<img src="../../static/images/trello.png" class="img-fluid"
-						style="max-width: 355px; object-fit: cover;">
-					<br>
-					<h5>Trello</h5>
-				</a>
-			</center>
+    <div class="row justify-content-center">
+      <div class="col-12">
 
+        <div class="card z-depth-2 mb-3">
+          <div class="card-body">
+            
+            <!-- Header -->
+            <div class="text-center">
+              <h3 class="font-weight-bold dark-grey-text mt-4">Sponsors</h3>
+            </div>
+            
+            <div class="row h-100 w-100 justify-content-center">
+              <div class="col-12 col-md text-center">
+                <a href="https://smhs.gwu.edu/" target="_blank">
+                  <img src="../../static/images/SMHS.png" class="img-fluid" style="max-width:250px;">
+                </a>
+                <hr>
+                <a href="https://smhs.gwu.edu/" target="_blank">
+                  <h6 class="h6-responsive">GW School of Medicine &amp; Health Sciences</h6>
+                </a>
+              </div>
+              <div class="col-12 col-md text-center">
+                <a href="https://seas.gwu.edu/" target="_blank">
+                  <img src="../../static/images/SEAS.png" class="img-fluid" style="max-width:250px;">
+                </a>
+                <hr>
+                <a href="https://www.seas.gwu.edu/" target="_blank">
+                  <h6 class="h6-responsive">GW School of Engineering &amp; Applied Science</h6>
+                </a>
+              </div>
+            </div>
 
-			<h3>Contributors</h3>
-			<div class="greyLine"></div>
-			<center>
-				<br>
-				<a href="http://www.georgehacks.org/" target="_blank">
-					<img src="../../static/images/gh.png" class="img-fluid"
-						style="max-width: 175px; object-fit: cover;">
-					<br>
-					<h5>George Hacks</h5>
-				</a>
-				<br>
-			</center>
-		</div>
-		<!--end col-->
-	</div>
-	<!--end row-->
+            <div class="row text-center justify-content-center">
+              <hr class="col-10 clearfix rgba-white-light mx-1">
+            </div>
+            
+
+            <div class="row h-100 w-100 justify-content-center">
+              <div class="col-12 col-md text-center">
+                <a href="https://aws.amazon.com/" target="_blank">
+                  <img src="../../static/images/aws.png" class="img-fluid" style="max-width:250px;">
+                </a>
+                <hr>
+                <a href="https://aws.amazon.com/" target="_blank">
+                  <h6 class="h6-responsive">Amazon Web Services</h6>
+                </a>
+              </div>
+              <div class="col-12 col-md text-center">
+                <a href="https://trello.com/" target="_blank">
+                  <img src="../../static/images/trello.png" class="img-fluid" style="max-width:112px;">
+                </a>
+                <hr>
+                <a href="https://trello.com" target="_blank">
+                  <h6 class="h6-responsive">Trello</h6>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card z-depth-2 mb-3">
+          <div class="card-body">
+        
+            <!-- Header -->
+            <div class="text-center">
+              <h3 class="font-weight-bold dark-grey-text mt-4">Contributors</h3>
+            </div>
+        
+            <div class="row h-100 w-100 justify-content-center">
+              <div class="col-12 col-md-6 text-center">
+                <a href="http://www.georgehacks.org/" target="_blank">
+                  <img src="../../static/images/gh.png" class="img-fluid" style="max-width:100px;">
+                </a>
+                <hr>
+                <a href="http://www.georgehacks.org/" target="_blank">
+                  <h6 class="h6-responsive">George Hacks</h6>
+                </a>
+              </div>
+          </div>
+        </div>     
+      </div>
+    </div>
+  </div>
 </div>
-<!--end container-->
+
 {% endblock %}
