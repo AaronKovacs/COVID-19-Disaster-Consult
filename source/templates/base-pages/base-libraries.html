@@ -191,7 +191,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 style="padding-top: 0.25em;" class="modal-title">Submit Feedback</h5>
-          <button type="button" class="btn btn-outline-primary waves-effect btn-sm " data-dismiss="modal">Close</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
 
         <form id="feedbackform" method="post"
@@ -225,7 +227,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 style="padding-top: 0.25em;" class="modal-title">Submit Content Suggestion</h5>
-          <button type="button" class="btn btn-outline-primary waves-effect btn-sm" data-dismiss="modal">Close</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
 
         <form id="feedbackform" method="post"
@@ -256,12 +260,20 @@
   <script src="{{ url_for('static', filename = 'js/mdb.min.js') }}"></script>
   <script src="{{ url_for('static', filename = 'js/chart.min.js') }}"></script>
   <script src="{{ url_for('static', filename = 'js/tether.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'js/main.js') }}"></script>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
   <!-- Bootstrap (Ekko) Lightbox -->
   <script src="{{ url_for('static', filename = 'js/ekko-lightbox.min.js') }}"></script>
+  
+  <!-- Read More Collapse -->
+  <script src="{{ url_for('static', filename = 'js/readmore.min.js') }}"></script>
+
+  <!-- Go to www.addthis.com/dashboard to customize your tools -->
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5eaddcaf236715f1"></script>
+  
   <script>
     $(document).on('click', '[data-toggle="lightbox"]', function (event) {
       event.preventDefault();
@@ -269,19 +281,16 @@
     });
 
     $(document).ready(function () {
+      // Select
+      $('.mdb-select').materialSelect();
+      
       // Modal Initialization
       $('#onload').modal('show');
 
-      // Select
-      $('.mdb-select').materialSelect();
+      
     });
   </script>
 
-  <!-- Read More Collapse -->
-  <script src="{{ url_for('static', filename = 'js/readmore.min.js') }}"></script>
-
-  <!-- Go to www.addthis.com/dashboard to customize your tools -->
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5eaddcaf236715f1"></script>
   {% block scripts %}{% endblock %}
 
 </body>

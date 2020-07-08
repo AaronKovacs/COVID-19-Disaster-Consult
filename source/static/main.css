@@ -1300,6 +1300,16 @@ footer.page-footer a {
     padding: 1em;
     padding-top: 1em;
     padding-bottom: 0.5em;
-}.5em;
     text-align: left;
+}
+
+.flex-center ul li {
+    margin-bottom: 0rem;
+}
+
+.about-us-anchor{
+    display: block;
+    position: relative;
+    top: -100px;
+    visibility: hidden;
 }

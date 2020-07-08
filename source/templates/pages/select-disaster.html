@@ -20,14 +20,15 @@
   <div class="row text-center justify-content-center" style="margin-top: -75px;">
     <div class="col-12">
       <div class="card">
-        <div class="py-2 mt-4 mb-2">
+        <div class="py-2 mt-4">
           <h2>Our Mission</h2>
-          <h5 class="h5-responsive mx-2">Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front
+          <h5 class="h5-responsive mx-2">Disaster Consult seeks to put relevant, accurate, and timely information in the
+            hands of front
             line healthcare workers when faced with the overwhelming challenge of responding to disasters.
           </h5>
         </div>
 
-        <div class="row justify-content-center mb-2">
+        <div class="row justify-content-center">
           <div class="col-10 col-md-5">
             <a class="btn btn-outline-primary waves-effect btn-lg" role="button" aria-pressed="true" data-toggle="modal"
               data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use
@@ -35,89 +36,92 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-11 greyLine"></div>
-        </div>
-
-        <div class="row">
-          <div class="container-fluid pt-0">
-            <h2 id="numbersHere">Latest COVID-19 Numbers</h2>
-            <span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
+      
+        <section id="statsSection" class="pt-0">
+          <div class="row">
+            <div class="col-11 greyLine"></div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="container-fluid pt-0">
-            <select id="select" class="custom-select" style="margin-top: 0.5em; display: none;"
-            onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
-            <center>
-              <iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA"
-              style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
-            </center>
-          </div>
-        </div>
-
-        <div class="row mt-2">
-          <div class="container-fluid pt-0">
-            <div class="country-specific-data">
-              <h3 id="currentcountry"></h3>
-              <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
-
-              <div class="row" id="stats">
-                <div class="col-md-4">
-                  <h1 id="currentcases"></h1>
-                  <h4>Cases</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="currentdeaths"></h1>
-                  <h4>Deaths</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="currentrecovered"></h1>
-                  <h4>Recovered</h4>
-                </div>
-
-              </div>
-              <!--row end-->
+          <div class="row">
+            <div class="container-fluid pt-0">
+              <h2 id="numbersHere">Latest COVID-19 Numbers</h2>
+              <span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
             </div>
-            <!--country end-->
           </div>
-          <!-- select country end-->
-          <br>
-          <div class="greyLine" style="width: 50%;"></div>
-          <br>
-        </div>
 
-        <div class="row">
-          <div class="container-fluid pt-0">
-            <div class="global-data">
-              <h3>Global Data</h3>
-              <span style="color: #5a5a5a"><i>Updated Daily</i></span>
-              <div class="row" id="stats">
-
-                <div class="col-md-4">
-                  <h1 id="globalcases"></h1>
-                  <h4>Cases</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="globaldeaths"></h1>
-                  <h4>Deaths</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="globalrecovered"></h1>
-                  <h4>Recovered</h4>
-                </div>
-
-              </div>
-              <!--row end-->
+          <div class="row">
+            <div class="container-fluid pt-0">
+              <select id="select" class="custom-select" style="margin-top: 0.5em; display: none;"
+                onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
+              <center>
+                <iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA"
+                  style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
+              </center>
             </div>
-            <!--global end-->
           </div>
-        </div>
+
+          <div class="row mt-2">
+            <div class="container-fluid pt-0">
+              <div class="country-specific-data">
+                <h3 id="currentcountry"></h3>
+                <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
+
+                <div class="row" id="stats">
+                  <div class="col-md-4">
+                    <h1 id="currentcases"></h1>
+                    <h4>Cases</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h1 id="currentdeaths"></h1>
+                    <h4>Deaths</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h1 id="currentrecovered"></h1>
+                    <h4>Recovered</h4>
+                  </div>
+
+                </div>
+                <!--row end-->
+              </div>
+              <!--country end-->
+            </div>
+            <!-- select country end-->
+            <br>
+            <div class="greyLine" style="width: 50%;"></div>
+            <br>
+          </div>
+
+          <div class="row">
+            <div class="container-fluid pt-0">
+              <div class="global-data">
+                <h3>Global Data</h3>
+                <span style="color: #5a5a5a"><i>Updated Daily</i></span>
+                <div class="row" id="stats">
+
+                  <div class="col-md-4">
+                    <h1 id="globalcases"></h1>
+                    <h4>Cases</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h1 id="globaldeaths"></h1>
+                    <h4>Deaths</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h1 id="globalrecovered"></h1>
+                    <h4>Recovered</h4>
+                  </div>
+
+                </div>
+                <!--row end-->
+              </div>
+              <!--global end-->
+            </div>
+          </div>
+        </section>
 
         <div class="mb-4"></div>
 
@@ -127,26 +131,31 @@
 </div>
 
 
-
 <!-- Central Modal Large -->
 <div class="modal fade" id="howToUseSiteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title w-100" id="myModalLabel">How to Use Disaster Consult</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      {{ info.how_to_disaster_consult|safe }}
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">How to Use Disaster Consult</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ info.how_to_disaster_consult|safe }}
+      </div>
     </div>
   </div>
 </div>
-</div>
 
-{% endblock %} {% block scripts_content %}
+{% endblock %} 
+
+{% block scripts_content %}
+<script>
+  hideOnIE("statsSection");
+</script>
+
 <script>
   // object-fit polyfill run
   objectFitImages();
@@ -156,6 +165,7 @@ aria-hidden="true">
     keepImg: true
   });
 </script>
+
 <script>
   let requestOptions = {
     method: 'GET',
@@ -173,37 +183,37 @@ aria-hidden="true">
   //****************************************************************************************
   function getData() {
     fetch("{{ url_for('API_graph_summary_data', site=site) }}", requestOptions)
-    .then(res => {
-      return res.json();
-    }).then(obj => {
-      globalTotals = [0, 0, 0];
-      idx = 0;
-      for (let [key, value] of Object.entries(obj.Countries)) {
-        if (!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
-          let newEntry = {
-            id: idx = 0,
-            country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
-            slug: value.Slug,
-            totalconfirmed: value.TotalConfirmed,
-            totaldeaths: value.TotalDeaths,
-            totalrecovered: value.TotalRecovered
+      .then(res => {
+        return res.json();
+      }).then(obj => {
+        globalTotals = [0, 0, 0];
+        idx = 0;
+        for (let [key, value] of Object.entries(obj.Countries)) {
+          if (!value.Country == '' && !value.Country.includes('The') && !value.Country.includes('Republic ') && !value.Country.includes('(Islamic') && !value.Country.includes('*') && !value.Country.includes('Nam') && !value.Country.includes('SAR') && !value.Country.includes('Russian F') && !value.Country.includes('St.')) {
+            let newEntry = {
+              id: idx = 0,
+              country: value.Country == 'US' ? 'United States' : (value.Country == 'Korea, South' ? 'South Korea' : value.Country),
+              slug: value.Slug,
+              totalconfirmed: value.TotalConfirmed,
+              totaldeaths: value.TotalDeaths,
+              totalrecovered: value.TotalRecovered
+            }
+            idx++;
+            dataArray.push(newEntry);
+            globalTotals[0] += newEntry.totalconfirmed;
+            globalTotals[1] += newEntry.totaldeaths;
+            globalTotals[2] += newEntry.totalrecovered;
           }
-          idx++;
-          dataArray.push(newEntry);
-          globalTotals[0] += newEntry.totalconfirmed;
-          globalTotals[1] += newEntry.totaldeaths;
-          globalTotals[2] += newEntry.totalrecovered;
+          dataArray.sort((a, b) => a.country.localeCompare(b.country));
         }
-        dataArray.sort((a, b) => a.country.localeCompare(b.country));
-      }
-    })
-    .then(() => {
-      document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
-      document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
-      document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]);
+      })
+      .then(() => {
+        document.getElementById('globalcases').innerText = numFormat(globalTotals[0]);
+        document.getElementById('globaldeaths').innerText = numFormat(globalTotals[1]);
+        document.getElementById('globalrecovered').innerText = numFormat(globalTotals[2]);
         populateGlobal(); // calls next function after this one is finished
       })
-    .catch(error => console.log('error', error));
+      .catch(error => console.log('error', error));
   }
   //****************************************************************************************
   // Fires when each time a new country is selected from the dropdown. Displays data in the
@@ -221,8 +231,8 @@ aria-hidden="true">
   //****************************************************************************************
   function populateGlobal() {
     document.getElementById('select').innerHTML = dataArray
-    .map(
-      d => d.country == 'United States of America' ? `<option selected>${d.country}</option>` : `<option>${d.country}</option>`
+      .map(
+        d => d.country == 'United States of America' ? `<option selected>${d.country}</option>` : `<option>${d.country}</option>`
       );
     getDataForCountry(document.getElementById('select').selectedIndex); // calls next function after this one is finished
   }
@@ -256,19 +266,19 @@ aria-hidden="true">
       requestURL = "{{ url_for('API_us_graph_data', site=site) }}";
     }
     fetch(requestURL, requestOptions)
-    .then(response => response.json())
-    .then(result => allThisData = result)
-    .then(_ => {
-      let date;
-      for (let o of allThisData) {
-        if (o.Status == "confirmed") {
-          date = new Date(o.Date).getTime();
-          chartMap.set(date, (chartMap.get(date) || 0) + o.Cases);
+      .then(response => response.json())
+      .then(result => allThisData = result)
+      .then(_ => {
+        let date;
+        for (let o of allThisData) {
+          if (o.Status == "confirmed") {
+            date = new Date(o.Date).getTime();
+            chartMap.set(date, (chartMap.get(date) || 0) + o.Cases);
+          }
         }
-      }
-      makeChart(chartMap);
-    })
-    .catch(error => console.log('error', error));
+        makeChart(chartMap);
+      })
+      .catch(error => console.log('error', error));
   }
   //****************************************************************************************
   // Draws chart using the data in chartMap
