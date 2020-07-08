@@ -89,7 +89,7 @@ def list_json(rows):
         return rowJS
 
 def post_to_slack(msg):
-    wekbook_url = 'https://hooks.slack.com/services/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'
+    wekbook_url = 'https://hooks.slack.com/services/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'
 
     data = {
         'text': msg,
