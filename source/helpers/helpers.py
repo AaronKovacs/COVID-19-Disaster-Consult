@@ -89,11 +89,15 @@ def list_json(rows):
         return rowJS
 
 def post_to_slack(msg):
-    wekbook_url = 'https://hooks.slack.com/services/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'
+    wekbook_url = 'https://hooks.slack.com/services/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'
 
     data = {
         'text': msg,
-        'username': 'Website Bot'
+        'username': 'Website Bot',
+        'icon_emoji': ':robot_face:'
     }
 
     response = requests.post(wekbook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+    print(response)
+    print('Response: ' + str(response.text))
+    print('Response code: ' + str(response.status_code))
