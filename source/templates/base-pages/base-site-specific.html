@@ -30,6 +30,12 @@
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
 
+        {% if request.path != url_for('Pages_home', site=site) %}
+        <li class="nav-item">
+          <a href="{{ url_for('Pages_home', site=site) }}" class="nav-link">Home</a>
+        </li>
+        {% endif %}
+
         {{ site_select_navbar_dropdown(sites, site) }}
 
         {% if current_user.is_authenticated %}
