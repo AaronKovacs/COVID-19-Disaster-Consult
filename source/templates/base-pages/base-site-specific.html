@@ -51,12 +51,14 @@
 </header>
 
 <main style="padding-top:5.5rem;">
-  {% if site %}
-  <div class="text-center">
-    <h1>{{ site|upper }}</h1>
+  <div id="siteTitle">
+    {% if site %}
+    <div class="text-center">
+      <h1>{{ site|upper }}</h1>
+    </div>
+    <hr>
+    {% endif %}
   </div>
-  <hr>
-  {% endif %}
   <div class="container-fluid">
     <div class="row">
       {{ table_of_contents_pane(table_contents, site, category) }}
