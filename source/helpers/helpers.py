@@ -98,6 +98,3 @@ def post_to_slack(msg):
     }
 
     response = requests.post(wekbook_url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
-    print(response)
-    print('Response: ' + str(response.text))
-    print('Response code: ' + str(response.status_code))
