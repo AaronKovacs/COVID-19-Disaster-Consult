@@ -30,7 +30,7 @@ from sqlalchemy import desc
 
 from ..helpers.helpers import *
 from ..helpers.namespace import APINamespace
-from ..helpers.helpers import BError, get_site_info
+from ..helpers.helpers import BError, get_site_info, post_to_slack
 from ..database.database import Session
 from ..configuration.config import PASSWORD_SECRET_KEY
 
@@ -347,6 +347,9 @@ class SubmitFeedback(Resource):
 
         session.commit()
         session.close()
+
+        slack_msg = "*Email*: `{}`\n*Type*: `{}`\n*Content:* ```{}```".format(email, ftype, feedback)
+        post_to_slack(slack_msg)
 
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Pages_submit_feedback', site=site))#make_response(render_template('pages/success_feedback.html'), 200, headers)
