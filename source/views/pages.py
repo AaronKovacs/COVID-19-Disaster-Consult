@@ -323,6 +323,8 @@ class Aboutus(Resource):
     def get(self, site):
         session = Session()
 
+        sites = session.query(Site).filter_by(public=True)
+
         profilesJS = []
         for profile in session.query(UserProfile).order_by(UserProfile.order, UserProfile.id).all():
             profilesJS.append(profile.publicJSON())
@@ -330,7 +332,7 @@ class Aboutus(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/about_us.html', user_profiles=profilesJS, site=site), 200, headers)
+        return make_response(render_template('pages/about_us.html', user_profiles=profilesJS, sites=sites, site=site), 200, headers)
 
 
 @api.route('/feedback')
