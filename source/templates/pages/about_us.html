@@ -1,305 +1,153 @@
-{% extends "pages/base.html" %}
+{% extends "base-pages/base-site-specific.html" %}
+{% from "components/about_us_profiles.html" import profile_with_description, profile_link %}
 
-{% block content %}
+{% block main_content %}
 <br>
-<div class="container" style="max-width: 1200px;">
-	<div class="row justify-content-center">
 
-		<div class="col-12 col-sm-10">
-			<h1>About Us</h1>
-			<div class="blueLine"></div>
-			<br>
-			<p>We are a group of Physicians, Disaster Medicine, Computer Science/IT specialists, and students working to provide easy to use clinical resources for front line healthcare workers. We do our best to review current literature, best practices, and guidelines in order to give you the most relevant and important information. We welcome feedback and constructive criticism. </p>
-			<br>
-			<div class="container-fluid" style="text-align: center; ">
-				<div class="row">
-					<div class="col-sm">
-						<h4><a href="#teamHere" style="color: #25353F;"><u>Our Team</u></a></h4>
-					</div>
-					<div class="col-sm">
-						<h4><a href="#inthenewsHere" style="color: #25353F;"><u>In The News</u></a></h4>
-					</div>
-				</div>
-			</div>
-			<div id="teamHere" class="greyLine"></div>
-			<h3><center>Our Team</center></h3>
-			<h4 class="mb-2"><b>Co-Creators</b></h4>
-			<div class="row">
-				<div class="col-12 col-sm-4">
-					<div class="about-us-avatar mb-4">
-						<img src="../../static/images/Jordan.png" class="rounded-corner-square img-fluid"><br>
-					</div>
-					<h5 class="font-weight-bold text-center"><a href="https://www.linkedin.com/in/jordan-selzer-b6146b37" target="_blank">Jordan Selzer M.D.</a></h5>
-					<div class="read-more">
-						<p>Dr. Jordan Selzer is a disaster and operational medicine fellow and emergency medicine physician at GWU. His areas of focus include operationally focused disaster response work as well as healthcare cybersecurity.</p>
+<div class="container">
+  <!-- <div class="row justify-content-center">
+    <div class="col-12 col-md-10"> -->
 
-						<p> He has significant disaster response experience: having worked in the Bahamas and US Virgin Islands after Hurricanes Irma, Maria, and Dorian.</p>
 
-						<p>He is also a co-founder of an app-based medical tech startup <a href="https://mayjuun.com/" target="_blank">MayJuun</a>, focused on improving physician experience of healthcare delivery.</p>
 
-						<p>Dr. Selzer attended medical school at Loyola University Chicago and completed his residency in Emergency Medicine at Maricopa Medical Center in Phoenix, Arizona.</p>
-						<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-								<a class="button btn btn-primary" href="#">Read Less</a>
-						</p>
-						<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-                <a class="button btn btn-primary" href="#">Read More</a>
-            </p>
-					</div>
-			</div>
-			<div class="col-12 col-sm-4">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/Lance.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-				<h5 class="font-weight-bold text-center"><a href="https://www.cs.seas.gwu.edu/lance-j-hoffman" target="_blank">Lance Hoffman Ph.D.</a></h5>
-				<div class="read-more">
-					<p>
-						Professor Lance Hoffman developed the first regularly offered course on computer security in 1970.
-					</p>
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <h1>About Us</h1>
+      <div class="blueLine"></div>
+      <p>We are a group of Physicians, Disaster Medicine, Computer Science/IT specialists, and students working to
+        provide easy to use clinical resources for front line healthcare workers. We do our best to review
+        current literature, best practices, and guidelines in order to give you the most relevant and important
+        information. We welcome feedback and constructive criticism. </p>
+    </div>
+  </div>
 
-					<p>
-						A Fellow of the Association for Computing Machinery and a member of the Cyber Security Hall of Fame, Dr. Hoffman has written five books and numerous articles on the topic, overseen the development of hundreds of students in the field, served on a number of Advisory Committees including those of Federal Trade Commission and the Department of Homeland Security, and testified before Congress on the topic.
-					</p>
-					<p>
-						He earned his Ph. D. in Computer Science from Stanford University after a B.S. in Mathematics from Carnegie Mellon University.
-					</p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
-			<div class="col-12 col-sm-4">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/Adam.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-				<h5 class="font-weight-bold text-center"><a href="https://www.linkedin.com/in/adam-munday-358b836a/" target="_blank">Adam Munday</a></h5>
-				<div class="read-more">
-					<p>
-						Adam Munday is a third-year medical student at George Washington University. Before joining GWU, Adam graduated from the University of Maryland with a B.S. in Kinesiology and completed the Special Master’s program at Georgetown University.
-					</p>
-					<p>
-						Before pursuing medicine, he was a nationally competitive ice dancer. After retirement, he continued coaching for internationally and nationally competitive ice dance and synchronized skating teams.
-					</p>
-					<p>
-						Adam began his research career at NIH, studying and testing the effects of exercise on lupus patients. Adam is currently researching at Children’s National Medical Center under Dr. James Chamberlain and Dr. Kenneth McKinley.
-					</p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
-		</div>
-		<div class="greyLine"></div>
-		<h4 class="mb-2"><b>Special Advisors</b></h4>
-		<div class="row">
-			<div class="col-12 col-sm-4">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/James.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-				<h5 class="font-weight-bold text-center"><a href="https://www.gwumc.edu/smhs/facultydirectory/profile.cfm?empName=James%20Phillips&FacID=2076962495" target="_blank">James Phillips M.D.</a></h5>
-				<div class="read-more">
-					<p>
-						Dr. James Phillips, MD is a board-certified Emergency Medicine physician and an Assistant Professor at George Washington University Hospital in Washington, DC where he is Section Chief of Disaster and Operational Medicine in the Department of Emergency Medicine and Director of the Disaster Medicine Fellowship program. In addition to his academic and teaching roles, he was hired as a CNN Medical Analyst during the outbreak of COVID 19 in the US. He is the Chief Medical Officer for SOS International, LLC and is the Medical Director at the Camp Taji military base in Iraq. He is EMS Medical Director for the GWU collegiate EMS agency, EMeRG. He is also a Senior Fellow at the Center for Cyber and Homeland Security at Auburn University and was selected as an Emerging Leader in Biosecurity Fellow at the Center for Health Security at the Johns Hopkins School of Public Health.
-					</p>
-					<p>
-						Dr. Phillips’ areas of expertise and interest include disaster medicine, emergency management, medical counterterrorism, and tactical/operational medicine. He is a 2014 graduate of the Harvard Disaster Medicine and Emergency Management Fellowship and became an instructor at Harvard Medical School and an attending physician at Beth Israel Deaconess Medical Center in Boston. In 2016 he was named as the Director of Counterterrorism Medicine in the BIDMC Disaster Fellowship. He teaches Disaster Medicine to other physicians and medical students at the George Washington University School of Medicine and Health Sciences.
-					</p>
-					<p>
-						Dr. Phillips has authored numerous publications including book chapters and scientific journal articles including two articles in the New England Journal of Medicine. He is a recognized national expert on both the COVID 19 outbreak and response, as well as on the topic of healthcare workplace violence. He is a graduate of the Counter Narcotics and Terrorism Operational Medical Support (CONTOMS) program and is a nationally registered EMT-Tactical.
-					</p>
-					<p>
-						Prior to his disaster medicine training, he began his rather unorthodox training experience as a resident in Plastic and Reconstructive Surgery at the University of Michigan. After four years of surgical training Dr. Phillips changed specialties and completed an Emergency Medicine residency at the University of Illinois-Chicago (Mercy Hospital) where he received an award as the Outstanding Resident in Research. He graduated as a Top Ten Senior from Oklahoma State University with a dual bachelor’s degree in microbiology and molecular genetics before matriculating to the University of Oklahoma College of Medicine. A proud Oklahoman born and raised, his life was personally impacted and heavily influenced by the Oklahoma City Bombing.
-					</p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
-			<div class="col-12 col-sm-4">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/nataliesullivan.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-				<h5 class="font-weight-bold text-center">
-					<!-- <a href="https://www.gwumc.edu/smhs/facultydirectory/profile.cfm?empName=James%20Phillips&FacID=2076962495" target="_blank"> -->
-						Natalie Sullivan M.D.
-					<!-- </a> -->
-				</h5>
-				<div class="read-more">
-					<p>Dr. Natalie Sullivan is a Chief Resident in the Department of Emergency Medicine at GWU. Her academic focus is Disaster Medicine and Emergency Preparedness.</p>
-					<p>She is a former EMT-B and currently the Associate Medical Director of the GWU Emergency Medical Response Group. She is an intern for the Pan American Health Organization and the Regional EMG Secretariat.</p>
-					<p>She attended medical school at Tufts University School of Medicine in Boston, Massachusetts.</p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-						<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt"
-						style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-						<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
 
-		</div>
-		<div class="greyLine"></div>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-5 text-center smooth-scroll">
+      <h4><a href="#ourTeam" style="color: #25353F;"><u>Our Team</u></a></h4>
+    </div>
+    <div class="col-12 col-md-5 text-center smooth-scroll">
+      <h4><a href="#inthenews" style="color: #25353F;"><u>In The News</u></a></h4>
+    </div>
+  </div>
 
-		<h4 class="mb-2"><b>Medical Review Panel</b></h4>
-		<div class="row">
-			<div class="col-12 col-sm-4">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/Samantha.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-				<h5 class="font-weight-bold text-center"><!--<a href="" target="_blank">-->Samantha Noll M.D.<!--</a>--></h5>
-				<div class="read-more">
-					<p>
-						Dr. Samantha Noll, MD is an emergency medicine physician and research instructor at GWU. She has completed a dual emergency and internal medicine residency and is board certified in both specialties. She is a local subject matter expert in highly infectious diseases and medical countermeasures.
-					</p>
-					<p>
-						She has provided medical direction for various Washington, DC events including national special security events. She has provided medical triage and care during a mass casualty shooting incident in the emergency department. She has been involved with hospital emergency management including conducting hazard vulnerability analysis, examining surge capacity and resource utilization, and planning and executing full-scale exercises.
-					</p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
-			<div class="col-12 col-sm-4">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/Timur.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-				<h5 class="font-weight-bold text-center"><!--<a href="" target="_blank">-->Timur Alptunaer M.D.<!--</a>--></h5>
-				<div class="read-more">
-					<p>
-						Dr. Timur Alptunaer is an emergency medicine physician and is a current disaster and operational medicine fellow at GWU in Washington, DC. He completed his residency in emergency medicine at SUNY Stony Brook where he was resident director of medical student education.
-					</p>
-					<p>
-						He serves as a Captain in the US Army Reserves and also obtained his nursing degree prior to entering medical school. He recently deployed to Mozambique as a member of Team Rubicon to provide disaster relief following Cyclone Idai.
-					</p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
-			<div class="col-12 col-sm-4">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/Andrew.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-				<h5 class="font-weight-bold text-center"><!--<a href="" target="_blank">-->Andrew Bouland M.D.<!--</a>--></h5>
-				<div class="read-more">
-					<p>
-						Dr. Andrew Bouland is the current EMS fellow at Carolinas Medical Center and Mecklenburg EMS Agency in Charlotte, NC. He completed his residency in emergency medicine at the Virginia Tech Carilion in Roanoke, VA. He is a graduate of the University of Maryland School of Medicine and a native of Laurel, MD. Dr. Bouland has an extensive background in EMS including greater than 12 years as an EMS provider in both Maryland and Virginia.
-					</p>
-					<p>
-						He has particular interest in out of hospital cardiac arrest and resuscitation, specifically post-ROSC care, airway management, and bystander CPR.
-					</p>
-					<p>
-						He is a founding board member for the Compress and Shock Foundation, a national nonprofit that provides free CPR and AED education for laypersons.
-					</p>
-					<p>
-						Additionally, he is the current chairperson of the EMS Subcommittee of the Metrolina Advisory Council in North Carolina. As a volunteer with Team Rubicon, he recently deployed to the Bahamas after Hurricane Dorian.
-					</p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
+  <div class="greyLine"></div>
 
-			<div class="col-12 col-sm-4 pt-sm-3">
-				<div class="about-us-avatar mb-4">
-					<img src="../../static/images/Sam-Stratton.png" class="rounded-corner-square img-fluid"><br>
-				</div>
-			  <h5 class="font-weight-bold text-center"><!--<a href="" target="_blank">-->Samuel J. Stratton M.D. MPH<!--</a>--></h5>
-				<div class="read-more">
-				  <p>
-				    Sam Stratton is a Professor at the UCLA Fielding School of Public Health in the Community Health Sciences Department. He is also a Senior Programs Analyst at the Orange County California Health Care Agency.
-				  </p>
-				  <p>
-				    Dr. Stratton is Editor-in-Chief for the peer-reviewed journal, Prehospital and Disaster Medicine (Cambridge University Press), which publishes international scientific papers regarding emergency care and disaster health issues.
-				  </p>
-				  <p>
-				    He serves as the Medical Advisor for the Redondo Beach Fire Department and Huntington Beach Fire Department (both in California) and is American Board of Medical Specialties certified in Emergency Medicine, Internal Medicine, and the subspecialty Emergency Medical Services.
-				  </p>
-					<p class="collapser" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read Less</a>
-					</p>
-					<p class="prompt" style="padding-top: 60px; background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));">
-							<a class="button btn btn-primary" href="#">Read More</a>
-					</p>
-				</div>
-			</div>
-		</div>
+  <div id="ourTeam" class="about-us-anchor"></div>
+  <section>
+    <div class="row text-center justify-content-center">
+      <h3 class="h3-responsive">Our Team</h3>
+    </div>
 
-		<div class="greyLine"></div>
-		<div class="row">
-			<div class="col-sm">
-				<h4><b>Medical Content Team</b></h4>
-				<ul>
-					<li>Aida Roman, MS4</li>
-					<li>Chinelo Onyilofor, MS4</li>
-					<li>Frankie Baruffi, MS4</li>
-					<li>Nathan Hollister, MS4</li>
-					<li>Neel Duggal, MS4</li>
-					<li><a href="http://www.linkedin.com/in/taylor-wahrenbrock-4b17a6ab" target="_blank">Taylor Wahrenbrock, MS4</a></li>
-					<li><a href="http://www.linkedin.com/in/emily-emamzadeh-ba5a51155" target="_blank">Emily Emamzadeh, MS2</a></li>
-					<li><a href="http://www.linkedin.com/in/alyssa-anderson-b9b9151a6" target="_blank">Alyssa Anderson, MS2</a></li>
-					<li>Charmi Trivedi, MS2</li>
-					<li><a href="http://linkedin.com/in/chriswend" target="_blank">Christopher Wend, MS2</a></li>
-					<li><a href="https://www.linkedin.com/in/smetri" target="_blank">Samer Metri, MS2</a></li>
-					<li><a href="https://www.linkedin.com/in/matthew-tovar-7a2353150" target="_blank">Matthew Tovar, MS2</a></li>
-				</ul>
-			</div>
-			<div class="col-sm">
-				<h4><b>Web Development Team</b></h4>
-				<ul>
-					<li><a href="https://aaronkovacs.github.io" target="_blank">Aaron Kovacs</a></li>
-					<li>Ryan Rosica</li>
-					<li><a href="https://www.linkedin.com/in/smetri" target="_blank">Samer Metri, MS2</a></li>
-				</ul>
-			</div>
-			<div class="col-sm">
-				<h4><b>Past Team Members</b></h4>
-				<ul>
-					<li>Aarvi Thadeshwar - Web Development</li>
-					<li><a href="https://www.linkedin.com/in/brooke-claroni-7bb429184/" target="_blank">Brooke Claroni - Web Development</a></li>
-					<li>Dimitrije Mitic - Web Development</li>
-					<li>Dr. Caitlin Davis - Medical Content</li>
+    <div class="row justify-content-center">
+      <!-- Co-Creators -->
+      <section>
+        <div class="row">
+          <h4 class="h4-responsive">Co-Creators</h4>
+        </div>
+        <div class="row">
+          {% for profile in user_profiles if "Co-Creators" in profile.section %}
+          {{profile_with_description(profile)}}
+          {% endfor %}
+        </div>
+      </section>
 
-				</ul>
-			</div>
-		</div>
-		<div id="inthenewsHere" class="greyLine"></div>
-		<h3><center>Disaster Consult In The News</center></h3><br>
+      <div class="greyLine"></div>
 
-		<p><b>In the Lion’s Mouth: Site Equips Health Care Providers to Respond to COVID-19:</b></p>
-		<p>Disaster Consult, created by an interdisciplinary team from SEAS and SMHS, provides health care workers with up-to-date information about dealing with the pandemic. (May 1, 2020)</p>
-		<p><a href="https://gwtoday.gwu.edu/lion%E2%80%99s-mouth-site-equips-health-care-providers-respond-covid-19" target="_blank">Full Article Here</a></p>
-		</div><!--end col-->
+      <!-- Special Advisors -->
+      <section>
+        <div class="row">
+          <h4 class="h4-responsive">Special Advisors</h4>
+        </div>
+        <div class="row">
+          {% for profile in user_profiles if "Special Advisors" in profile.section %}
+          {{profile_with_description(profile)}}
+          {% endfor %}
+        </div>
+      </section>
 
-	</div> <!--end row-->
-</div> <!--end container-->
+      <div class="greyLine"></div>
+
+      <!-- Medical Review Panel -->
+      <section>
+        <div class="row">
+          <h4 class="h4-responsive">Medical Review Panel</h4>
+        </div>
+        <div class="row">
+          {% for profile in user_profiles if "Medical Review Panel" in profile.section %}
+          {{profile_with_description(profile)}}
+          {% endfor %}
+        </div>
+      </section>
+
+      <div class="greyLine"></div>
+
+      <!-- Linked Names -->
+      <section style="width:100%;">
+        <div class="row">
+          <!-- Medical Content Team -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <h4 class="h4-responsive">Medical Content Team</h4>
+            <ul>
+              {% for profile in user_profiles if "Medical Content Team" in profile.section %}
+              <li>{{profile_link(profile)}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Website Development Team -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <h4 class="h4-responsive">Website Development Team</h4>
+            <ul>
+              {% for profile in user_profiles if "Website Development Team" in profile.section %}
+              <li>{{profile_link(profile)}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Past Team Members -->
+          <div class="col-12 col-sm-6 col-md-4">
+            <h4 class="h4-responsive">Past Team Members</h4>
+            <ul>
+              {% for profile in user_profiles if "Past Team Members" in profile.section %}
+              <li>{{profile_link(profile)}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+      </section>
+    </div>
+
+  </section>
+
+  <div class="greyLine"></div>
+  
+  <div id="inthenews" class="about-us-anchor"></div>
+  <section >
+    <div class="row text-center justify-content-center">
+      <h3 class="h3-responsive">Disaster Consult In The News</h3>
+    </div>
+
+    <div class="row">
+      <p class="mb-0"><b>In the Lion’s Mouth: Site Equips Health Care Providers to Respond to COVID-19:</b></p>
+      <p class="mb-0">Disaster Consult, created by an interdisciplinary team from SEAS and SMHS, provides health care workers
+        with up-to-date information about dealing with the pandemic. (May 1, 2020)</p>
+      <p class="mb-0"><a href="https://gwtoday.gwu.edu/lion%E2%80%99s-mouth-site-equips-health-care-providers-respond-covid-19"
+          target="_blank">Full Article Here</a></p>
+    </div>
+  </section>
+
+  <!-- </div>
+  </div> -->
+</div>
+
 
 
 {% endblock %}
 
-{% block js %}
+{% block scripts_content %}
 <script>
-	$(document).ready(function() {
-		$(".read-more").readMore({ previewHeight:200 });
-	});
-
+  $(document).ready(function () {
+    $(".read-more").readMore({ previewHeight: 200 });
+  });
 </script>
 {% endblock %}

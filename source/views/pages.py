@@ -49,6 +49,7 @@ from ..models.feedback import Feedback
 from ..models.site import Site
 from ..models.site_url import SiteURL
 from ..models.site_info import SiteInfo
+from ..models.user_profile import UserProfile
 
 from itsdangerous import URLSafeTimedSerializer
 
@@ -320,8 +321,16 @@ class Sponsor(Resource):
 @api.route('/aboutus')
 class Aboutus(Resource):
     def get(self, site):
+        session = Session()
+
+        profilesJS = []
+        for profile in session.query(UserProfile).order_by(UserProfile.order, UserProfile.id).all():
+            profilesJS.append(profile.publicJSON())
+
+        session.close()
+
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/about_us.html', site=site), 200, headers)
+        return make_response(render_template('pages/about_us.html', user_profiles=profilesJS, site=site), 200, headers)
 
 
 @api.route('/feedback')

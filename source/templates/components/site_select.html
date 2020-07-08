@@ -1,8 +1,8 @@
 {% macro site_select_dropdown(sites) %}
-<select id="site-select" class="mdb-select md-form mb-0" searchable="Search here...">
-  <option value="" disabled selected>Choose Disaster Type</option>
+<select id="site-select" class="mdb-select md-form mb-0 mt-3" searchable="Search here...">
+  <option class="mb-0" value="" disabled selected>Choose Disaster Type</option>
   {% for site in sites %}
-  <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}
+  <option class="mb-0" value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}
   </option>
   {% endfor %}
 </select>
@@ -12,14 +12,14 @@
 <div class="col-12 col-md-8 col-lg-6 wow fadeIn mb-3">
   <div class="card z-depth-5">
     <div class="card-body">
-      <h5 class="card-title text-center ">Disaster-Specific Resources</h5>
+      <h5 class="card-title text-center mb-0">Disaster-Specific Resources</h5>
       <div class="row justify-content-center">
         <div class="col-12 col-md-7 col-lg-6">
           {{ site_select_dropdown(sites) }}
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-8 col-md-3 mb-4">
+        <div class="col-8 col-md-3 mb-3">
           <a class="btn btn-outline-primary waves-effect btn-sm" role="button" aria-pressed="true"
             href="javascript:WinOpen();">Go</a>
         </div>
