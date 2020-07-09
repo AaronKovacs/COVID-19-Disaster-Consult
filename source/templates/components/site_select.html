@@ -39,7 +39,7 @@
 </script>
 {%- endmacro %}
 
-{% macro site_select_navbar_dropdown(sites, current_site) %}
+{% macro site_select_navbar_dropdown(sites, current_site, filtered=true) %}
 {% if sites %}
 <div class="dropdown">
   <li class="nav-item dropdown">
@@ -52,8 +52,16 @@
     <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
       <input class="form-control" type="text" placeholder="Search" aria-label="Search">
       {% for site in sites %}
+      {% if filtered %}
       {% if site.slug != current_site %}
       <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
+
+      {% endif %}
+      {% else %}
+      <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
+      {% endif %}
+
+      {% if site.slug != current_site %}
       {% endif %}
       {% endfor %}
     </div>
