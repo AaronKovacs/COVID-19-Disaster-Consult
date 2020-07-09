@@ -1429,3 +1429,11 @@ footer.page-footer a {
       visibility: hidden;
    }
 }
+
+.dropdown-content li>span {
+    color: black;
+}
+
+.dropdown-content li:hover {
+    background-color: #D9D9D9;
+}
