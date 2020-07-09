@@ -1,9 +1,9 @@
 {% macro toc_category_class(cat, current_category) %}
-  {% if current_category %}
-    {% if current_category.id == cat.id %}
-      active
-    {% endif %}
-  {% endif %}
+{% if current_category %}
+{% if current_category.id == cat.id %}
+active
+{% endif %}
+{% endif %}
 {%- endmacro %}
 
 {% macro table_of_contents(table_contents, site, current_category) %}
@@ -37,11 +37,14 @@
 
 {% macro table_of_contents_pane(table_contents, site, current_category) %}
 {% if table_contents %}
-<div class="col-lg-3 d-none d-lg-block">
+<div class="col-lg-3 d-none d-lg-block" style="margin-top: .1em;">
   <div class="sticky-top" style="top: 90px; z-index: 2;">
-    <div id="tocDiv" class="useful-links-box">
-      <h4>Table of Contents</h4>
-      <div class="blueLine"></div>
+    <div id="tocDiv" class="side-navbar-box scrollbar-custom">
+      <div class="sticky-top box-title">
+        <h4>Table of Contents</h4>
+        <div class="blueLine"></div>
+      </div>
+
       {{ table_of_contents(table_contents, site, current_category) }}
     </div>
   </div>
@@ -70,7 +73,7 @@
         </button>
       </div>
       <div id="tocModal" class="modal-body">
-      {{ table_of_contents(table_contents, site, current_category) }}
+        {{ table_of_contents(table_contents, site, current_category) }}
       </div>
     </div>
   </div>

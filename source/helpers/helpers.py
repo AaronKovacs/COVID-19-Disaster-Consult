@@ -28,6 +28,8 @@ from ..models.activity_track import ActivityTrack
 from ..models.draft import Draft
 from ..models.site_info import SiteInfo
 
+from ..configuration.config import SLACK_OATH_KEY
+
 def get_site_info(info_keys, site, session):
     data = {}
     for key in info_keys:
@@ -98,4 +100,4 @@ def post_to_slack(msg, channel='#website-bot'):
         'icon_emoji': ':robot_face:'
     }
 
-    response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': 'Bearer xoxb-1126097207233-1215701013111-nUdgLbrxry76RRO3sLjVXbOg'})
+    response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': SLACK_OATH_KEY})

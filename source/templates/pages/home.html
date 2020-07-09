@@ -16,16 +16,16 @@
           </div>
           <div class="blueLine" style="margin-bottom: 1em;"></div>
           {% if main_content.home_page_content %}
-            {{ main_content.home_page_content|safe }}
+          {{ main_content.home_page_content|safe }}
 
           {% else %}
-            <div class="row w-100 ">
-              <div class="alert alert-warning" role="alert">
-                <h4 class="alert-heading text-center">Hello!</h4>
-                <p>The background information for this disaster is still under construction.</p>
-                <p class="mb-0">Please use the Table of Contents to navigate to the category you would like</p>
-              </div>
+          <div class="row w-100 ">
+            <div class="alert alert-warning" role="alert">
+              <h4 class="alert-heading text-center">Hello!</h4>
+              <p>The background information for this disaster is still under construction.</p>
+              <p class="mb-0">Please use the Table of Contents to navigate to the category you would like</p>
             </div>
+          </div>
           {% endif %}
 
           <!-- Row & Card -->
@@ -101,9 +101,11 @@
       {% if useful_links %}
       <div class="col-12 col-lg-4">
         <div class="sticky-top" style="top: 90px; z-index: 2;">
-          <div class="useful-links-box">
-            <h4>Useful Links</h4>
-            <div class="blueLine"></div>
+          <div class="useful-links-box scrollbar-custom">
+            <div class="sticky-top box-title">
+              <h4>Useful Links</h4>
+              <div class="blueLine"></div>
+            </div>
             {% for key, value in useful_links.items() %}
             <h5 class="mb-0">{{key}}</h5>
             <ul class="mb-1">
