@@ -152,7 +152,7 @@ class Post(Base):
                 video = re.findall(r'((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)', src)[0][-1]
 
                 src = 'https://www.youtube.com/embed/%s' % video
-                iframe_start = """<iframe width="100%" height="315" src=\""""
+                iframe_start = """<iframe class="noprint" width="100%" height="315" src=\""""
                 iframe_end = """" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""
                 edited_content = edited_content.replace(match, iframe_start + src + iframe_end)
 
