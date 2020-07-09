@@ -27,7 +27,7 @@
             <div class="dropdown-menu dropdown-info">
               <a class="dropdown-item" href="javascript:setupShareModal('{{post.id}}');">Share</a>
               <a class="dropdown-item"
-                href="javascript:printPostDiv('#postCollapse{{loop.index}}', '{{post.title}}')">Print</a>
+                href="javascript:printPostDivFromHeader('#postCollapse{{loop.index}}', '{{post.title}}')">Print</a>
             </div>
           </div>
 
@@ -144,13 +144,12 @@
     shareLinkInput.value = url;
     fbShareLink.href = "https://www.facebook.com/sharer/sharer.php?u=" + url;
     twitterShareLink.href = "https://twitter.com/intent/tweet?url=" + twitterText;
-    emailShareLink.href = "mailto: to=&body=" + emailBody + ",&subject=Shared from Disaster Consult"
+    emailShareLink.href = "mailto: to=&body=" + emailBody + ",&subject=Shared from Disaster Consult";
 
     $('#modalSocial').modal();
 
     
   }
-
 
 
   function printPostDiv(el, title) {
@@ -194,6 +193,11 @@
       header: htmlHeading,
       footer: htmlFooter
     });
+  }
+
+  function printPostDivFromHeader(el, title){
+    $(el).addClass("show");
+    printPostDiv(el, title);
   }
 </script>
 {% endblock %}
