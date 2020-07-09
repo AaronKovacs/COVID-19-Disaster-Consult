@@ -83,6 +83,11 @@
       <!--Body-->
       <div class="modal-body mb-0 text-center">
         <div class="container-fluid">
+
+          <div class="rowtext-center justify-content-center">
+            <div id="qrcodeShareModal" class=""></div>
+          </div>
+
           <div class="row text-center justify-content-center">
             <div class="col-10 pr-0">
               <input id="shareLinkInput" class="form-control disabled" type="text">
@@ -133,6 +138,9 @@
     var url = window.location.href.replace(/&?postID=([^&]$|[^&]*)/i, "");;
     url += "&postID=" + postID;
 
+    $("#qrcodeShareModal").empty();
+    $("#qrcodeShareModal").qrcode({ width: 100, height: 100, text: url });
+
     var shareLinkInput = document.getElementById("shareLinkInput");
     var fbShareLink = document.getElementById("fbShareLink");
     var twitterShareLink = document.getElementById("twitterShareLink");
@@ -148,7 +156,6 @@
 
     $('#modalSocial').modal();
 
-    
   }
 
 
