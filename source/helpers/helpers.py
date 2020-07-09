@@ -100,5 +100,6 @@ def post_to_slack(msg, channel='#website-bot'):
         'icon_emoji': ':robot_face:'
     }
 
+    print(SLACK_OATH_KEY)
     response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': SLACK_OATH_KEY})
     print(response.text)
