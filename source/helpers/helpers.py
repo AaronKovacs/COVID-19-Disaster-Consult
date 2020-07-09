@@ -101,3 +101,4 @@ def post_to_slack(msg, channel='#website-bot'):
     }
 
     response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': SLACK_OATH_KEY})
+    print(response.text)
