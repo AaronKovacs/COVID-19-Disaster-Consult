@@ -5,89 +5,104 @@
 <div class="container my-5" style="height: 80vh;">
   <div class="flex-center">
 
-    <!--Section: Content-->
-    <section class="contact-section dark-grey-text mb-5 ">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="contact-section dark-grey-text mb-3 ">
 
-      <!-- Contact us Card -->
-      <div class="card z-depth-2">
+          <!-- Contact us Card -->
+          <div class="card z-depth-2">
 
-        <!-- Grid row -->
-        <div class="row">
+            <!-- Grid row -->
+            <div class="row">
 
-          <!-- Grid column -->
-          <div class="col-lg-6">
+              <!-- Grid column -->
+              <div class="col-lg-6">
 
-            <div class="card-body form">
+                <div class="card-body form">
 
-              <!-- Header -->
-              <h3 class="font-weight-bold dark-grey-text mt-4">Feedback & Suggestions</h3>
+                  <!-- Header -->
+                  <h3 class="font-weight-bold dark-grey-text mt-4">Feedback & Suggestions</h3>
 
-              <div class="row h-100">
-                <div class="col-12 text-center justify-content-center">
-                  <button data-toggle="modal" button data-target="#feedbackModal" type="button"
-                    class="btn btn-outline-primary waves-effect w-100 text-center">Send
-                    Feedback</button>
+                  <div class="row h-100">
+                    <div class="col-12 text-center justify-content-center">
+                      <button data-toggle="modal" button data-target="#feedbackModal" type="button"
+                        class="btn btn-outline-primary waves-effect w-100 text-center">Send
+                        Feedback</button>
+                    </div>
+                    <div class="col-12 text-center justify-content-center">
+                      <button data-toggle="modal" button data-target="#suggestionModal" type="button"
+                        class="btn btn-outline-primary waves-effect w-100 text-center">Suggest Content</button>
+                    </div>
+                  </div>
+
                 </div>
-                <div class="col-12 text-center justify-content-center">
-                  <button data-toggle="modal" button data-target="#suggestionModal" type="button"
-                    class="btn btn-outline-primary waves-effect w-100 text-center">Suggest Content</button>
+
+              </div>
+              <!-- Grid column -->
+
+              <!-- Grid column -->
+              <div class="col-lg-6">
+
+                <div class="card-body contact text-center h-100 white-text">
+
+                  <h3 class="font-weight-bold my-4 pb-2">Contact information</h3>
+                  <ul class="text-lg-left list-unstyled ml-4">
+                    <li>
+                      <a><i class="fas fa-envelope pr-2"
+                          href="mailto:contactus@disasterconsult.org"></i>contactus@disasterconsult.org</a>
+                    </li>
+                  </ul>
+                  <hr class="hr-light my-4">
+                  <ul class="list-inline text-center list-unstyled">
+                    <li class="list-inline-item">
+                      <a class="p-2 fa-lg ins-ic" href="https://www.instagram.com/disasterconslt/">
+                        <i class="fab fa-instagram"> </i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="p-2 fa-lg tw-ic" href="https://twitter.com/disasterconslt">
+                        <i class="fab fa-twitter"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a class="p-2 fa-lg ins-ic" href="https://www.facebook.com/disasterconslt">
+                        <i class="fab fa-facebook"> </i>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
-
+              <!-- Grid column -->
             </div>
-
+            <!-- Grid row -->
           </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-lg-6">
-
-            <div class="card-body contact text-center h-100 white-text">
-
-              <h3 class="font-weight-bold my-4 pb-2">Contact information</h3>
-              <ul class="text-lg-left list-unstyled ml-4">
-                <li>
-                  <a><i class="fas fa-envelope pr-2"
-                      href="mailto:contactus@disasterconsult.org"></i>contactus@disasterconsult.org</a>
-                </li>
-              </ul>
-              <hr class="hr-light my-4">
-              <ul class="list-inline text-center list-unstyled">
-                <li class="list-inline-item">
-                  <a class="p-2 fa-lg ins-ic" href="https://www.instagram.com/disasterconslt/">
-                    <i class="fab fa-instagram"> </i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a class="p-2 fa-lg tw-ic" href="https://twitter.com/disasterconslt">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a class="p-2 fa-lg ins-ic" href="https://www.facebook.com/disasterconslt">
-                    <i class="fab fa-facebook"> </i>
-                  </a>
-                </li>
-              </ul>
-
-            </div>
-
-          </div>
-          <!-- Grid column -->
-
         </div>
-        <!-- Grid row -->
 
+        <!-- Application Testing Card -->
+        <div class="card z-depth-2 mb-3">
+          <div class="card-body mb-3">
+            <!-- Header -->
+            <div class="text-center">
+              <h3 class="font-weight-bold dark-grey-text mt-4">Test our iOS App</h3>
+            </div>
+
+            <div class="row h-100 w-100 justify-content-center">
+              <div class="col-12 col-md-5 col-md text-center">
+                <a class="btn btn-outline-primary waves-effect w-100 text-center"
+                  href="https://bit.ly/disasterconsult-app" target="_blank">
+                  Request Invitation
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- Contact us Card -->
+    </div>
 
-    </section>
-    <!--Section: Content-->
 
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
 
-{% block scripts_content %}
+  {% block scripts_content %}
 
-{% endblock %}
+  {% endblock %}
