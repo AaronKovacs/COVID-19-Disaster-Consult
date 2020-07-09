@@ -1,3 +1,4 @@
+{% from "components/general.html" import copyright_text %}
 <!doctype html>
 <html lang="en">
 
@@ -165,7 +166,7 @@
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3" style="background-color: #25353F !important;">
-      © 2020 Copyright: Disaster Consult LLC. All Rights Reserved 2020
+      {{copyright_text()}}
     </div>
     <!-- Copyright -->
 
@@ -253,7 +254,11 @@
   <script src="{{ url_for('static', filename = 'js/chart.min.js') }}"></script>
   <script src="{{ url_for('static', filename = 'js/tether.min.js') }}"></script>
   <script src="{{ url_for('static', filename = 'js/printThis.js') }}"></script>
+  
+  <!-- https://github.com/jeromeetienne/jquery-qrcode -->
   <script src="{{ url_for('static', filename = 'js/qrcode.js') }}"></script>
+
+  <!-- Custom JS -->
   <script src="{{ url_for('static', filename = 'js/main.js') }}"></script>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

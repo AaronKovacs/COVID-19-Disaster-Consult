@@ -208,6 +208,7 @@ class ViewCategory(Resource):
 class ViewSection(Resource):
     def get(self, sectionID, site):
         categoryID = request.args.get('categoryID', None)
+        postID = request.args.get('postID', None)
 
         session = Session()
 
@@ -257,7 +258,7 @@ class ViewSection(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, sites=sites, site=site), 200, headers)
+        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, postID=postID, sites=sites, site=site), 200, headers)
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):
