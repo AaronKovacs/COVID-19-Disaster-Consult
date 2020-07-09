@@ -1,6 +1,8 @@
 {% extends "base-pages/base-libraries.html" %}
 {% from "components/site_select.html" import site_select_navbar_dropdown %}
 {% from "components/table_of_contents.html" import table_of_contents_pane, table_of_contents_modal %}
+{% from "components/about_us_profiles.html" import team_modal %}
+
 
 
 {% block head %}
@@ -69,10 +71,45 @@
 
   <div class="container-fluid">
     <div class="row">
-      {{ table_of_contents_pane(table_contents, site, category) }}
       {{ table_of_contents_modal(table_contents, site, category) }}
 
-      <div class="{% if table_contents %}col-12 col-lg-9{% else %}col-12{% endif %} mt-1">
+      <div class="col-lg-3 d-none d-lg-block" style="margin-top: .1em;">
+        {{ table_of_contents_pane(table_contents, site, category) }}
+
+        {% if request.path == url_for('Pages_home', site='covid-19') %}
+        <div class="mt-2">
+          <div class="side-navbar-box scrollbar-custom">
+            <div class="sticky-top box-title">
+              <h4>Previous Reports</h4>
+              <div class="blueLine"></div>
+            </div>
+            <div class="">
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if team %}
+        <div class="mt-2">
+          <div class="side-navbar-box scrollbar-custom">
+            <div class="sticky-top box-title">
+              <h4>{{site | upper}} | Team</h4>
+              <div class="blueLine"></div>
+            </div>
+            <div class="row text-center justify-content-center mt-2">
+              <a class="btn btn-nav-color-outline waves-effect text-center" style="max-width:80%;" data-toggle="modal"
+                data-target="#modalTeam">
+                View Team
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+
+      <div class="col-12 col-lg-9 mt-0">
         {% block main_content %}{% endblock %}
       </div>
     </div>
@@ -80,8 +117,11 @@
   {% block secondary_content %}{% endblock %}
 </main>
 
-<div id="qrcode" class="d-none"></div>
-<!-- <canvas id="qrCanvas"></canvas> -->
+
+{% if team %}
+{{team_modal(site | upper, team)}}
+{% endif %}
+
 {% endblock %}
 
 
@@ -90,7 +130,6 @@
   $(document).ready(function () {
     // Needed for navbar disaster search to work
     $('#disaster-select-dropdown').mdbDropSearch();
-    // document.getElementById("qrImg").src = "http://api.qrserver.com/v1/create-qr-code/?data=" + window.location.href + "&size=100x100"
   });
 </script>
 {% block scripts_content %}{% endblock %}

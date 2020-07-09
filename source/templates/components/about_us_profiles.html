@@ -34,3 +34,71 @@
     {{profile.title}}
   {% endif %}
 {%- endmacro %}
+
+{% macro team_modal(title, team) %}
+
+<!--Modal: modalTeam-->
+<div class="modal fade" id="modalTeam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog cascading-modal modal-lg" role="document">
+    <!--Content-->
+    <div class="modal-content">
+
+      <!--Header-->
+      <div class="modal-header navbar-color white-text">
+        <h4 class="title"><i class="fas fa-users"></i> {{title}} | Team</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body mb-0 text-center">
+        <div class="container-fluid">
+
+          <div class="row justify-content-center">
+            {% if team %}
+            <div class="col-10 col-md-6">
+              <section>
+                <div class="row text-center justify-content-center">
+                  <h4 class="h4-responsive">Medical Content Team</h4>
+                </div>
+                <div class="row justify-content-center">
+                  {% for member in team if "Medical Content Team" in member.section %}
+                  <p class="pb-0 w-100">{{profile_link(member)}}</p>
+                  {% endfor %}
+                </div>
+              </section>
+            </div>
+
+            <div class="col-10 col-md-6">
+              <section>
+                <div class="row text-center justify-content-center">
+                  <h4 class="h4-responsive">Medical Review Panel</h4>
+                </div>
+                <div class="row justify-content-center">
+                  {% for member in team if "Medical Review Panel" in member.section %}
+                  <p class="pb-0 w-100">{{profile_link(member)}}</p>
+                  {% endfor %}
+                </div>
+              </section>
+
+              <section class="my-2">
+                <div class="row text-center justify-content-center">
+                  <h4 class="h4-responsive">Special Advisors & Creators</h4>
+                </div>
+                <div class="row justify-content-center">
+                  {% for member in team if "Special Advisors" in member.section or "Co-Creators" in member.section %}
+                  <p class="pb-0 w-100">{{profile_link(member)}}</p>
+                  {% endfor %}
+                </div>
+              </section>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalTeam-->
+{%- endmacro %}

@@ -10,9 +10,18 @@
     <div class="row">
 
       <div class="col-12 {% if useful_links %}col-lg-8{% endif %}">
-        <div class="row mt-3">
+        <div class="row {% if request.path == url_for('Pages_home', site='covid-19') %}mt-0{%else%}mt-2{%endif%}">
           <div class="text-center w-100">
+            {% if request.path == url_for('Pages_home', site='covid-19') %}
+            <h2 class="mb-0">Situation Report</h2>
+            <h6 class="h6-responsive text-muted">
+              Obtained from 
+              <a href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">Himmelfarb Library</a>
+               | Content accessed on 7/6/2020
+            </h6>
+            {% else %}
             <h2 class="mb-0">Background Information</h2>
+            {% endif %}
           </div>
           <div class="blueLine" style="margin-bottom: 1em;"></div>
           {% if main_content.home_page_content %}

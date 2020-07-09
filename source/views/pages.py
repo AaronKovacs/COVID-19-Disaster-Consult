@@ -102,12 +102,16 @@ class Home(Resource):
 
         info = get_site_info(['home_page_content'], site, session)
 
+        profilesJS = []
+        for profile in session.query(UserProfile).order_by(UserProfile.order, UserProfile.id).all():
+            profilesJS.append(profile.publicJSON())
+
         # Close database connection
         session.close()
 
         # Render HTML template with Jinja
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, main_content=info, sites=sites, site=site), 200, headers)
+        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, main_content=info, team=profilesJS, sites=sites, site=site), 200, headers)
 
 
 @api.route('/news')
