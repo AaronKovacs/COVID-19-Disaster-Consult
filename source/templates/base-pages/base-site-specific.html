@@ -76,6 +76,9 @@
   </div>
   {% block secondary_content %}{% endblock %}
 </main>
+
+<div id="qrcode" class="d-none"></div>
+<!-- <canvas id="qrCanvas"></canvas> -->
 {% endblock %}
 
 
@@ -84,6 +87,7 @@
   $(document).ready(function () {
     // Needed for navbar disaster search to work
     $('#disaster-select-dropdown').mdbDropSearch();
+    // document.getElementById("qrImg").src = "http://api.qrserver.com/v1/create-qr-code/?data=" + window.location.href + "&size=100x100"
   });
 </script>
 {% block scripts_content %}{% endblock %}

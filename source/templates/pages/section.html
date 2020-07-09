@@ -65,7 +65,9 @@
 {% block scripts_content %}
 <script>
   function printPostDiv(el, title) {
+    var url = window.location.href;
     var dateStr = getDateTimeString();
+    
     var htmlHeading = `<div class="container mt-4">
                           <div class="row justify-content-center">
                             <div class="col-12 text-center ">
@@ -87,8 +89,20 @@
                         </div>`;
 
 
+    var htmlFooter = `<div class="container mt-2">
+                        <div class="row justify-content-center">
+                          <div class="col-12 text-center ">
+                            <hr>
+                          </div>
+                          <div class="col-12 text-center ">
+                            <h1 class="h1-responsive mb-1">DisasterConsult.org</h1>
+                          </div>
+                        </div>
+                      </div>`;
     $(el).printThis({
-      header: htmlHeading
+      pageTitle: 'Disaster Consult | {{site}}',
+      header: htmlHeading,
+      footer: htmlFooter
     });
 
   }
