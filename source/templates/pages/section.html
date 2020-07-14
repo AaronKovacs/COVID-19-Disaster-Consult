@@ -9,7 +9,8 @@
         {{ section.title }}
         {% if current_user.is_authenticated %}
         <small class="text-muted">
-          <a class="" target="_blank" href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">
+          <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+            href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">
             <i class="fas fa-pencil-alt ml-2"></i>
           </a>
         </small>
@@ -111,7 +112,7 @@
 
           <div class="row text-center justify-content-center">
             <div class="col-10 pr-0">
-              <input id="shareLinkInput" class="form-control disabled" type="text">
+              <input id="shareLinkInput" class="form-control disabled" type="text" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="Link Copied!">
             </div>
             <div class="col-2 mt-0 d-flex justify-content-start pl-2">
               <button class="btn-outline-primary btn-sm" onclick="copyShareLink()"> <i class="far fa-copy"></i></button>
@@ -149,6 +150,8 @@
     shareLinkInput.select();
     shareLinkInput.setSelectionRange(0, 99999);
     document.execCommand("copy");
+
+    $('#shareLinkInput').popover('show');
   }
 
   function setupShareModal(postID) {
