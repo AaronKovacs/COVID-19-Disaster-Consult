@@ -59,7 +59,7 @@
             <div class="col-10 col-md-6">
               <section>
                 <div class="row text-center justify-content-center">
-                  <h4 class="h4-responsive">Medical Content Team</h4>
+                  <h4 class="h4-responsive mb-0">Medical Content Team</h4>
                 </div>
                 <div class="row justify-content-center">
                   {% for member in team if "Medical Content Team" in member.section %}
@@ -72,7 +72,7 @@
             <div class="col-10 col-md-6">
               <section>
                 <div class="row text-center justify-content-center">
-                  <h4 class="h4-responsive">Medical Review Panel</h4>
+                  <h4 class="h4-responsive mb-0">Medical Review Panel</h4>
                 </div>
                 <div class="row justify-content-center">
                   {% for member in team if "Medical Review Panel" in member.section %}
@@ -81,9 +81,9 @@
                 </div>
               </section>
 
-              <section class="my-2">
+              <section class="mt-3">
                 <div class="row text-center justify-content-center">
-                  <h4 class="h4-responsive">Special Advisors & Creators</h4>
+                  <h4 class="h4-responsive mb-0">Special Advisors & Creators</h4>
                 </div>
                 <div class="row justify-content-center">
                   {% for member in team if "Special Advisors" in member.section or "Co-Creators" in member.section %}
