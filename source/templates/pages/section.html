@@ -3,7 +3,7 @@
 {% block main_content %}
 
 <div class="row">
-  <div class="col-12" id="newsContainer">
+  <div class="col-12">
     <h2 class="mb-0">{{ section.title }}</h2>
     <h5 class="mb-2">{{ section.description }}</h5>
 
@@ -21,10 +21,10 @@
         <div class="card-header" role="tab" id="postHeading{{loop.index}}">
 
           <div class="dropdown float-left">
-            <button class="btn btn-info navbar-color-foreground btn-sm m-0 mr-3 p-2" type="button" data-toggle="dropdown" aria-haspopup="true"
+            <button class="btn btn-primary navbar-color-foreground btn-sm m-0 mr-3 p-2" type="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false"><i class="fas fa-ellipsis-v"></i>
             </button>
-            <div class="dropdown-menu dropdown-info">
+            <div class="dropdown-menu dropdown-primary">
               <a class="dropdown-item" href="javascript:setupShareModal('{{post.id}}');">Share</a>
               <a class="dropdown-item"
                 href="javascript:printPostDivFromHeader('#postCollapse{{loop.index}}', '{{post.title}}')">Print</a>
