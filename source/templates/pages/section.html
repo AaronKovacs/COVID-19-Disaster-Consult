@@ -4,75 +4,87 @@
 
 <div class="row">
   <div class="col-12">
-    <h2 class="mb-0">{{ section.title }}</h2>
-    <h5 class="mb-2">{{ section.description }}</h5>
+    <h2 class="mb-0">
+      <h2>
+        {{ section.title }}
+        {% if current_user.is_authenticated %}
+        <small class="text-muted">
+          <a class="" target="_blank" href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">
+            <i class="fas fa-pencil-alt ml-2"></i>
+          </a>
+        </small>
+        {% endif %}
+      </h2>
+      <h5 class="mb-2">{{ section.description }}</h5>
 
-    <div class="blueLine mb-2"></div>
+      <div class="blueLine mb-2"></div>
 
-    <!--Accordion wrapper-->
-    <div class="accordion md-accordion accordion-blocks posts-box" id="postsAccordion" role="tablist"
-      aria-multiselectable="true">
+      <!--Accordion wrapper-->
+      <div class="accordion md-accordion accordion-blocks posts-box" id="postsAccordion" role="tablist"
+        aria-multiselectable="true">
 
-      {% for post in posts %}
-      <!-- Accordion card -->
-      <div class="card" id="postCard{{loop.index}}">
+        {% for post in posts %}
+        <!-- Accordion card -->
+        <div class="card" id="postCard{{loop.index}}">
 
-        <!-- Card header -->
-        <div class="card-header" role="tab" id="postHeading{{loop.index}}">
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="postHeading{{loop.index}}">
 
-          <div class="dropdown float-left">
-            <button class="btn btn-primary navbar-color-foreground btn-sm m-0 mr-3 p-2" type="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i>
-            </button>
-            <div class="dropdown-menu dropdown-primary">
-              <a class="dropdown-item" href="javascript:setupShareModal('{{post.id}}');"><i class="fas fa-share-alt mr-3"> </i>Share</a>
-              <a class="dropdown-item"
-                href="javascript:printPostDivFromHeader('#postCollapse{{loop.index}}', '{{post.title}}')">
-                <i class="fas fa-print mr-3"> </i>Print
+            <div class="dropdown float-left">
+              <button class="btn btn-primary navbar-color-foreground btn-sm m-0 mr-3 p-2" type="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-menu dropdown-primary">
+                <a class="dropdown-item" href="javascript:setupShareModal('{{post.id}}');"><i
+                    class="fas fa-share-alt mr-3"> </i>Share</a>
+                <a class="dropdown-item"
+                  href="javascript:printPostDivFromHeader('#postCollapse{{loop.index}}', '{{post.title}}')">
+                  <i class="fas fa-print mr-3"> </i>Print
+                </a>
+
+                {% if current_user.is_authenticated %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" target="_blank" href="{{ url_for('Posts_view', id=post.id, site=site) }}"><i
+                    class="fas fa-pencil-alt mr-3"> </i>Edit</a>
+                {% endif %}
+
+              </div>
+            </div>
+
+            <!-- Heading -->
+            <a class="{% if posts|length > 1 %}collapsed{% endif %}" data-toggle="collapse"
+              data-parent="#postsAccordion" href="#postCollapse{{loop.index}}" aria-expanded="false"
+              aria-controls="postCollapse{{loop.index}}">
+              <h5 class="mt-1 mb-0">
+                <span>{{ post.title }}</span>
+                <i class="fas fa-angle-down rotate-icon"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="postCollapse{{loop.index}}"
+            class="collapse {% if posts|length == 1 or post.id == postID%}show{% endif %}" role="tabpanel"
+            aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion">
+            <div class="card-body">
+              <a class="float-right btn-floating btn-sm btn-primary noprint"
+                href="javascript:printPostDiv('#postCollapse{{loop.index}}', '{{post.title}}')">
+                <i class="fas fa-print noprint"></i>
               </a>
-
-              {% if current_user.is_authenticated %}
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" target="_blank"
-                href="{{ url_for('Posts_view', id=post.id, site=site) }}"><i class="fas fa-pencil-alt mr-3"> </i>Edit</a>
-              {% endif %}
-
+              {{ post.content|safe }}
+              <i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
             </div>
           </div>
-
-          <!-- Heading -->
-          <a class="{% if posts|length > 1 %}collapsed{% endif %}" data-toggle="collapse" data-parent="#postsAccordion"
-            href="#postCollapse{{loop.index}}" aria-expanded="false" aria-controls="postCollapse{{loop.index}}">
-            <h5 class="mt-1 mb-0">
-              <span>{{ post.title }}</span>
-              <i class="fas fa-angle-down rotate-icon"></i>
-            </h5>
-          </a>
         </div>
+        <!-- Accordion card -->
+        {% endfor %}
 
-        <!-- Card body -->
-        <div id="postCollapse{{loop.index}}"
-          class="collapse {% if posts|length == 1 or post.id == postID%}show{% endif %}" role="tabpanel"
-          aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion">
-          <div class="card-body">
-            <a class="float-right btn-floating btn-sm btn-primary noprint"
-              href="javascript:printPostDiv('#postCollapse{{loop.index}}', '{{post.title}}')">
-              <i class="fas fa-print noprint"></i>
-            </a>
-            {{ post.content|safe }}
-            <i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
-          </div>
-        </div>
       </div>
-      <!-- Accordion card -->
-      {% endfor %}
+      <!--/.Accordion wrapper-->
 
-    </div>
-    <!--/.Accordion wrapper-->
-
-    <center style="margin-top: 2em; font-size: 10pt;">
-      <i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
-    </center>
+      <center style="margin-top: 2em; font-size: 10pt;">
+        <i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
+      </center>
   </div>
 </div>
 
