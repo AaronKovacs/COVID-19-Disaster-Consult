@@ -1191,11 +1191,6 @@ blockquote p {
 }
 
 
-
-
-
-
-
 .custom-side-nav {
     z-index: 1040;
     height: 100%;
@@ -1207,8 +1202,8 @@ blockquote p {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    /* -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); */
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
     -webkit-backface-visibility: hidden;
@@ -1242,39 +1237,6 @@ blockquote p {
     list-style-type: none
 }
 
-.custom-side-nav .collapsible a {
-    height: 36px;
-    font-size: .8rem;
-    font-weight: 300;
-    line-height: 36px;
-}
-
-.custom-side-nav .collapsible a.active,
-.custom-side-nav .collapsible a:hover {
-    border-radius: 2px
-}
-
-.custom-side-nav .collapsible .fas,
-.custom-side-nav .collapsible .fab,
-.custom-side-nav .collapsible .far {
-    margin-right: 13px;
-    font-size: .8rem
-}
-
-.custom-side-nav .collapsible-body a {
-    height: 36px;
-    padding-left: 35px;
-    line-height: 36px;
-    background-color: #ffff;
-}
-
-.custom-side-nav a {
-    display: block;
-    height: 56px;
-    padding-left: 20px;
-    font-size: 1rem;
-    line-height: 56px
-}
 
 .custom-side-nav .fa-angle-down.rotate-icon {
     position: absolute;
