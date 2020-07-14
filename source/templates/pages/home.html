@@ -5,40 +5,36 @@
 {% block main_content %}
 <div class="row">
 
-  <div class="container-fluid">
+  <div class="col-12 {% if useful_links %}col-lg-8{% endif %}">
+    <div class="row {% if request.path == url_for('Pages_home', site='covid-19') %}mt-0{%else%}mt-2{%endif%}">
+      <div class="text-center w-100">
+        {% if request.path == url_for('Pages_home', site='covid-19') %}
+        <h2 class="mb-0">Intelligence Report</h2>
+        <h6 class="h6-responsive text-muted">
+          Obtained from
+          <a href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">Himmelfarb Library</a>
+          | Content accessed on 7/6/2020
+        </h6>
+        {% else %}
+        <h2 class="mb-0">Background Information</h2>
+        {% endif %}
+      </div>
+      <div class="blueLine" style="margin-bottom: 1em;"></div>
+      {% if main_content.home_page_content %}
+      {{ main_content.home_page_content|safe }}
 
-    <div class="row">
+      {% else %}
+      <div class="row w-100 justify-content-center">
+        <div class="alert alert-warning" role="alert">
+          <h4 class="alert-heading text-center">Hello!</h4>
+          <p>The background information for this disaster is still under construction.</p>
+          <p class="mb-0">Please use the Table of Contents to navigate to the category you would like</p>
+        </div>
+      </div>
+      {% endif %}
 
-      <div class="col-12 {% if useful_links %}col-lg-8{% endif %}">
-        <div class="row {% if request.path == url_for('Pages_home', site='covid-19') %}mt-0{%else%}mt-2{%endif%}">
-          <div class="text-center w-100">
-            {% if request.path == url_for('Pages_home', site='covid-19') %}
-            <h2 class="mb-0">Intelligence Report</h2>
-            <h6 class="h6-responsive text-muted">
-              Obtained from 
-              <a href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">Himmelfarb Library</a>
-               | Content accessed on 7/6/2020
-            </h6>
-            {% else %}
-            <h2 class="mb-0">Background Information</h2>
-            {% endif %}
-          </div>
-          <div class="blueLine" style="margin-bottom: 1em;"></div>
-          {% if main_content.home_page_content %}
-          {{ main_content.home_page_content|safe }}
-
-          {% else %}
-          <div class="row w-100 justify-content-center">
-            <div class="alert alert-warning" role="alert">
-              <h4 class="alert-heading text-center">Hello!</h4>
-              <p>The background information for this disaster is still under construction.</p>
-              <p class="mb-0">Please use the Table of Contents to navigate to the category you would like</p>
-            </div>
-          </div>
-          {% endif %}
-
-          <!-- Row & Card -->
-          <!-- <div class="row w-100 mb-2">
+      <!-- Row & Card -->
+      <!-- <div class="row w-100 mb-2">
               <div class="col-12 card z-depth-1">
                 <div class="card-body">
                   <h5 class="card-title text-center ">Epidemiology</h5>
@@ -69,8 +65,8 @@
                 </div>
               </div>
             </div> -->
-          <!-- Row & Card -->
-          <!-- <div class="row w-100 mb-2">
+      <!-- Row & Card -->
+      <!-- <div class="row w-100 mb-2">
             <div class="col-12 card z-depth-1">
               <div class="card-body">
                 <h5 class="card-title text-center ">Treatment</h5>
@@ -104,31 +100,31 @@
               </div>
             </div>
           </div> -->
-        </div>
-      </div>
-
-      {% if useful_links %}
-      <div class="col-12 col-lg-4">
-        <div class="sticky-top" style="top: 90px; z-index: 2;">
-          <div class="useful-links-box scrollbar-custom">
-            <div class="sticky-top box-title">
-              <h4>Useful Links</h4>
-              <div class="blueLine"></div>
-            </div>
-            {% for key, value in useful_links.items() %}
-            <h5 class="mb-0">{{key}}</h5>
-            <ul class="mb-1">
-              {% for link_item in value %}
-              <li class=""><a href="{{link_item.url}}" target="_blank">{{link_item.title}}</a></li>
-              {% endfor %}
-            </ul>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-      {% endif %}
     </div>
   </div>
+
+  {% if useful_links %}
+  <div class="col-12 col-lg-4 pr-0">
+    <div class="sticky-top" style="top: 90px; z-index: 2;">
+      <div class="useful-links-box scrollbar-custom">
+        <div class="sticky-top box-title">
+          <h4>Useful Links</h4>
+          <div class="blueLine"></div>
+        </div>
+        {% for key, value in useful_links.items() %}
+        <h5 class="mb-0">{{key}}</h5>
+        <ul class="mb-1">
+          {% for link_item in value %}
+          <li class=""><a href="{{link_item.url}}" target="_blank">{{link_item.title}}</a></li>
+          {% endfor %}
+        </ul>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
 </div>
+
 
 {% endblock %}

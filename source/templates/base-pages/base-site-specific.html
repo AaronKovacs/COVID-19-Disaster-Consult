@@ -73,7 +73,7 @@
     <div class="row">
       {{ table_of_contents_modal(table_contents, site, category) }}
 
-      <div class="col-lg-3 d-none d-lg-block" style="margin-top: .1em;">
+      <div class="col-lg-3 d-none d-lg-block pr-0" style="margin-top: .1em;">
         {{ table_of_contents_pane(table_contents, site, category) }}
 
         {% if request.path == url_for('Pages_home', site='covid-19') %}
@@ -110,7 +110,9 @@
 
 
       <div class="col-12 col-lg-9 mt-0">
-        {% block main_content %}{% endblock %}
+        <div class="container-fluid pl-0">
+          {% block main_content %}{% endblock %}
+        </div>
       </div>
     </div>
   </div>
