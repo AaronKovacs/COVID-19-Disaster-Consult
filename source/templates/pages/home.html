@@ -13,11 +13,13 @@
           <h2 class="mb-0">GW COVID-19 Intelligence Report</h2>
           <h5 class="h5-responsive text-muted mb-0">
             Obtained from 
-            <a href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb Library</a>
+            <a id="himmelPopOver" href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb Library</a>
             | Report generated on on 7/6/2020
           </h5>
-          <h6 class="h6-responsive text-muted">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident
-          Management Intelligence Unit</h6>
+          <!-- <h6 class="h6-responsive text-muted">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident -->
+          <!-- Management Intelligence Unit</h6> -->
+          <!-- <a id="himmelPopOver" class="btn btn-primary" data-toggle="popover-click">Hover -->
+            <!-- me</a> -->
           {% else %}
           <h2 class="mb-0">Background Information</h2>
           {% endif %}
@@ -129,4 +131,28 @@
 
   </div>
 </div>
+
+
+<div id="popover_content_wrapper" style="display: none">
+  <h6 class="h6-responsive">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident
+  Management Intelligence Unit</h6>
+</div>
+{% endblock %}
+
+
+{% block scripts_content %}
+<script>
+  $(function () {
+      $('#himmelPopOver').popover({
+      container: 'body',
+      html: true,
+      trigger: 'hover focus',
+      placement: 'bottom',
+      title: "GW COVID-19 Intelligence Report",
+      content: function () { return $('#popover_content_wrapper').html(); }
+    });
+
+   
+    })
+</script>
 {% endblock %}

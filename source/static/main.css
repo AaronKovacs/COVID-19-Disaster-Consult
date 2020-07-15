@@ -1424,3 +1424,7 @@ footer.page-footer a {
 .dropdown-content li:hover {
     background-color: #D9D9D9;
 }
+
+.popover{
+    max-width: 100%; /* Max Width of the popover (depending on the container!) */
+}
