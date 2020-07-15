@@ -10,18 +10,37 @@
       <div class="row {% if request.path == url_for('Pages_home', site='covid-19') %}mt-0{%else%}mt-2{%endif%}">
         <div class="text-center w-100">
           {% if request.path == url_for('Pages_home', site='covid-19') %}
-          <h2 class="mb-0">GW COVID-19 Intelligence Report</h2>
+          <h2 class="mb-0">
+            GW COVID-19 Intelligence Report
+            {% if current_user.is_authenticated and current_user.privilege > 300 %}
+            <small class="text-muted">
+              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+                href="{{ url_for('Info_list_info', site=site) }}">
+                <i class="fas fa-pencil-alt ml-2"></i>
+              </a>
+            </small>
+            {% endif %}
+          </h2>
           <h5 class="h5-responsive text-muted mb-0">
-            Obtained from 
-            <a id="himmelPopOver" href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb Library</a>
+            Obtained from
+            <a id="himmelPopOver" href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb
+              Library</a>
             | Report generated on on 7/6/2020
           </h5>
           <!-- <h6 class="h6-responsive text-muted">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident -->
           <!-- Management Intelligence Unit</h6> -->
-          <!-- <a id="himmelPopOver" class="btn btn-primary" data-toggle="popover-click">Hover -->
-            <!-- me</a> -->
           {% else %}
-          <h2 class="mb-0">Background Information</h2>
+          <h2 class="mb-0">
+            Background Information
+            {% if current_user.is_authenticated and current_user.privilege > 300 %}
+            <small class="text-muted">
+              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+                href="{{ url_for('Info_list_info', site=site) }}">
+                <i class="fas fa-pencil-alt ml-2"></i>
+              </a>
+            </small>
+            {% endif %}
+          </h2>
           {% endif %}
         </div>
         <div class="blueLine" style="margin-bottom: 1em;"></div>
@@ -113,7 +132,18 @@
       <div class="sticky-top" style="top: 90px; z-index: 2;">
         <div class="useful-links-box scrollbar-custom">
           <div class="sticky-top box-title">
-            <h4>Useful Links</h4>
+            <h4>
+              Useful Links
+              {% if current_user.is_authenticated and current_user.privilege > 300 %}
+              <small class="text-muted">
+                <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+                  href="{{ url_for('URLs_list_urls', site=site) }}">
+                  <i class="fas fa-pencil-alt ml-2"></i>
+                </a>
+              </small>
+              {% endif %}
+            </h4>
+
             <div class="blueLine"></div>
           </div>
           {% for key, value in useful_links.items() %}
@@ -134,8 +164,9 @@
 
 
 <div id="popover_content_wrapper" style="display: none">
-  <h6 class="h6-responsive">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident
-  Management Intelligence Unit</h6>
+  <h6 class="h6-responsive">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and
+    the GW Covid-19 Incident
+    Management Intelligence Unit</h6>
 </div>
 {% endblock %}
 
@@ -143,7 +174,7 @@
 {% block scripts_content %}
 <script>
   $(function () {
-      $('#himmelPopOver').popover({
+    $('#himmelPopOver').popover({
       container: 'body',
       html: true,
       trigger: 'hover focus',
@@ -152,7 +183,7 @@
       content: function () { return $('#popover_content_wrapper').html(); }
     });
 
-   
-    })
+
+  })
 </script>
 {% endblock %}
