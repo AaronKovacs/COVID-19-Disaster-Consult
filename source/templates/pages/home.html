@@ -10,12 +10,14 @@
       <div class="row {% if request.path == url_for('Pages_home', site='covid-19') %}mt-0{%else%}mt-2{%endif%}">
         <div class="text-center w-100">
           {% if request.path == url_for('Pages_home', site='covid-19') %}
-          <h2 class="mb-0">Intelligence Report</h2>
-          <h6 class="h6-responsive text-muted">
-            Obtained from
-            <a href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">Himmelfarb Library</a>
-            | Content accessed on 7/6/2020
-          </h6>
+          <h2 class="mb-0">GW COVID-19 Intelligence Report</h2>
+          <h5 class="h5-responsive text-muted">
+            Obtained from 
+            <a href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb Library</a>
+            | Report generated on on 7/6/2020
+          </h5>
+          <h6 class="h6-responsive">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident
+          Management Intelligence Unit</h6>
           {% else %}
           <h2 class="mb-0">Background Information</h2>
           {% endif %}
