@@ -14,7 +14,7 @@
             GW COVID-19 Intelligence Report
             {% if current_user.is_authenticated and current_user.privilege > 300 %}
             <small class="text-muted">
-              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Home Content | Admin"
                 href="{{ url_for('Info_list_info', site=site) }}">
                 <i class="fas fa-pencil-alt ml-2"></i>
               </a>
@@ -34,7 +34,7 @@
             Background Information
             {% if current_user.is_authenticated and current_user.privilege > 300 %}
             <small class="text-muted">
-              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Home Content | Admin"
                 href="{{ url_for('Info_list_info', site=site) }}">
                 <i class="fas fa-pencil-alt ml-2"></i>
               </a>
@@ -136,7 +136,7 @@
               Useful Links
               {% if current_user.is_authenticated and current_user.privilege > 300 %}
               <small class="text-muted">
-                <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+                <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Links | Admin"
                   href="{{ url_for('URLs_list_urls', site=site) }}">
                   <i class="fas fa-pencil-alt ml-2"></i>
                 </a>
