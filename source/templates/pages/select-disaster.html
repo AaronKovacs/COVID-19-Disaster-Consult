@@ -36,7 +36,7 @@
           </div>
         </div>
 
-      
+
         <section id="statsSection" class="pt-0">
           <div class="row">
             <div class="col-11 greyLine"></div>
@@ -173,7 +173,17 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">How to Use Disaster Consult</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">
+          How to Use Disaster Consult
+          {% if current_user.is_authenticated and current_user.privilege > 300 %}
+          <small class="text-muted">
+            <a class="" target="_blank" data-toggle="tooltip" data-placement="bottom"
+              title="Edit How to Use Content | Admin" href="{{ url_for('Info_list_info', site=site) }}">
+              <i class="fas fa-pencil-alt ml-2"></i>
+            </a>
+          </small>
+          {% endif %}
+        </h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -185,7 +195,7 @@
   </div>
 </div>
 
-{% endblock %} 
+{% endblock %}
 
 {% block scripts_content %}
 <script>
