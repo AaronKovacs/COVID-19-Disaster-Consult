@@ -47,6 +47,7 @@ from source.views.drafts import api as drafts
 from source.views.users import api as users
 from source.views.urls import api as urls
 from source.views.info import api as info
+from source.views.issues import api as issues
 
 from source.views.authentication import api as authentication
 
@@ -72,6 +73,8 @@ from source.models.site import Site
 from source.models.user_profile import UserProfile
 from source.models.site_info import SiteInfo
 from source.models.site_url import SiteURL
+from source.models.issue import Issue
+from source.models.issue_content import IssueContent
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
@@ -240,6 +243,7 @@ api.add_namespace(drafts, path='/<site>/drafts')
 api.add_namespace(users, path='/<site>/users')
 api.add_namespace(urls, path='/<site>/urls')
 api.add_namespace(info, path='/<site>/info')
+api.add_namespace(issues, path='/<site>/issues')
 
 api.add_namespace(mobileapi, path='/<site>/api/v1')
 

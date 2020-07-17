@@ -148,6 +148,12 @@
 								Site Info
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link {% block issueButton %}{% endblock %}" href="{{ url_for('Issues_list_issue', site=site) }}">
+								<span data-feather="list"></span>
+								Issues
+							</a>
+						</li>
 						{% endif %}
 					</ul>
 					{% endif %}
