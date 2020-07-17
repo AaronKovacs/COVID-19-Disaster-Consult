@@ -1437,3 +1437,7 @@ footer.page-footer a {
 .dropdown-item-private{
   color: red !important;
 }
+
+#toast-container.md-toast-top-center>div{
+  width:30vw;
+}
