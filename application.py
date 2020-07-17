@@ -199,7 +199,8 @@ def redirect_homoe():
 def select_screen():
     session = Session()
 
-    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.id).all()
+    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.title).all()
+    private_sites = session.query(Site).filter_by(public=False).order_by(Site.order, Site.title).all()
 
     if len(sites) == 1:
         if ENV_NAME() == 'prod':
@@ -216,7 +217,7 @@ def select_screen():
  
     session.close()
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('pages/select-disaster.html', sites=sites, info=info, site='covid-19'), 200, headers)
+    return make_response(render_template('pages/select-disaster.html', sites=sites, private_sites=private_sites, info=info, site='covid-19'), 200, headers)
 
     '''
     if ENV_NAME() == 'prod':

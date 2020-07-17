@@ -1,21 +1,31 @@
-{% macro site_select_dropdown(sites) %}
-<select id="site-select" class="mdb-select md-form mb-0 mt-3" searchable="Search here...">
+{% macro site_select_dropdown(sites, private_sites=None) %}
+<select id="site-select" class="mdb-select mb-0 mt-3" searchable="Search here...">
   <option class="mb-0" value="" disabled selected>Choose Disaster Type</option>
   {% for site in sites %}
   <option class="mb-0" value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}
   </option>
   {% endfor %}
+
+  {% if private_sites %}
+  <option value="" disabled>Admin | Private Disasters</option>
+  {% for site in private_sites %}
+  <option class="mb-0 private-dropdown-item" value="{{ url_for('Pages_home', site=site.slug) }}"
+    data-secondary-text="ADMIN">{{site.title}} | Private
+  </option>
+  {% endfor %}
+  {% endif %}
+
 </select>
 {%- endmacro %}
 
-{% macro site_select_card(sites) %}
+{% macro site_select_card(sites, private_sites=None) %}
 <div class="col-12 col-md-8 col-lg-6 wow fadeIn mb-3">
   <div class="card z-depth-5">
     <div class="card-body">
       <h5 class="card-title text-center mb-0">Disaster-Specific Resources</h5>
       <div class="row justify-content-center">
         <div class="col-12 col-md-7 col-lg-6">
-          {{ site_select_dropdown(sites) }}
+          {{ site_select_dropdown(sites, private_sites) }}
         </div>
       </div>
       <div class="row justify-content-center">
@@ -39,7 +49,7 @@
 </script>
 {%- endmacro %}
 
-{% macro site_select_navbar_dropdown(sites, current_site) %}
+{% macro site_select_navbar_dropdown(sites, current_site, filtered=true, private_sites=None) %}
 {% if sites %}
 <div class="dropdown">
   <li class="nav-item dropdown">
@@ -52,10 +62,24 @@
     <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
       <input class="form-control" type="text" placeholder="Search" aria-label="Search">
       {% for site in sites %}
+      {% if filtered %}
       {% if site.slug != current_site %}
       <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
+
       {% endif %}
+      {% else %}
+      <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
+      {% endif %}
+
       {% endfor %}
+
+      {% if private_sites %}
+      <div class="dropdown-divider"></div>
+      {% for site in private_sites %}
+      <a class="dropdown-item dropdown-item-private" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}} | Private</a>
+     
+      {% endfor %}
+      {% endif %}
     </div>
   </li>
 </div>

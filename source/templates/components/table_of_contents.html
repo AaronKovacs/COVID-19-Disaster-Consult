@@ -37,9 +37,9 @@ active
 
 {% macro table_of_contents_pane(table_contents, site, current_category) %}
 {% if table_contents %}
-<div class="col-lg-3 d-none d-lg-block" style="margin-top: .1em;">
-  <div class="sticky-top" style="top: 90px; z-index: 2;">
-    <div id="tocDiv" class="side-navbar-box scrollbar-custom">
+<!-- <div class="col-lg-3 d-none d-lg-block" style="margin-top: .1em;"> -->
+  <div class="sticky-top" style="top: 90px; z-index: 1022;">
+    <div id="tocDiv" class="side-navbar-box scrollbar-custom" style="background:white;">
       <div class="sticky-top box-title">
         <h4>Table of Contents</h4>
         <div class="blueLine"></div>
@@ -48,7 +48,7 @@ active
       {{ table_of_contents(table_contents, site, current_category) }}
     </div>
   </div>
-</div>
+<!-- </div> -->
 {% endif %}
 {%- endmacro %}
 

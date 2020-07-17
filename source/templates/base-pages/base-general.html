@@ -1,4 +1,5 @@
 {% extends "base-pages/base-libraries.html" %}
+{% from "components/site_select.html" import site_select_navbar_dropdown %}
 
 {% block head %}
 {% block head_content %}{% endblock %}
@@ -28,6 +29,14 @@
 
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
+
+        {% if request.path != url_for('select_screen') %}
+        {% if current_user.is_authenticated and current_user.privilege > 50 %}
+        {{ site_select_navbar_dropdown(sites, site, false, private_sites=private_sites) }}
+        {% else %}
+        {{ site_select_navbar_dropdown(sites, site, false) }}
+        {% endif %}
+        {% endif %}
 
         {% if current_user.is_authenticated %}
         <li class="nav-item">

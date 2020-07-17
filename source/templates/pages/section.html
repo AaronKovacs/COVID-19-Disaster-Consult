@@ -3,67 +3,89 @@
 {% block main_content %}
 
 <div class="row">
-  <div class="col-12" id="newsContainer">
-    <h2 class="mb-0">{{ section.title }}</h2>
-    <h5 class="mb-2">{{ section.description }}</h5>
+  <div class="col-12">
+    <h2 class="mb-0">
+      <h2>
+        {{ section.title }}
+        {% if current_user.is_authenticated %}
+        <small class="text-muted">
+          <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Section | Admin"
+            href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">
+            <i class="fas fa-pencil-alt ml-2"></i>
+          </a>
+        </small>
+        {% endif %}
+      </h2>
+      <h5 class="mb-2">{{ section.description }}</h5>
 
-    <div class="blueLine mb-2"></div>
+      <div class="blueLine mb-2"></div>
 
-    <!--Accordion wrapper-->
-    <div class="accordion md-accordion accordion-blocks posts-box" id="postsAccordion" role="tablist"
-      aria-multiselectable="true">
+      <!--Accordion wrapper-->
+      <div class="accordion md-accordion accordion-blocks posts-box" id="postsAccordion" role="tablist"
+        aria-multiselectable="true">
 
-      {% for post in posts %}
-      <!-- Accordion card -->
-      <div class="card" id="postCard{{loop.index}}">
+        {% for post in posts %}
+        <!-- Accordion card -->
+        <div class="card" id="postCard{{loop.index}}">
 
-        <!-- Card header -->
-        <div class="card-header" role="tab" id="postHeading{{loop.index}}">
+          <!-- Card header -->
+          <div class="card-header" role="tab" id="postHeading{{loop.index}}">
 
-          <div class="dropdown float-left">
-            <button class="btn btn-info navbar-color-foreground btn-sm m-0 mr-3 p-2" type="button" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false"><i class="fas fa-ellipsis-v"></i>
-            </button>
-            <div class="dropdown-menu dropdown-info">
-              <a class="dropdown-item" href="javascript:setupShareModal('{{post.id}}');">Share</a>
-              <a class="dropdown-item"
-                href="javascript:printPostDivFromHeader('#postCollapse{{loop.index}}', '{{post.title}}')">Print</a>
+            <div class="dropdown float-left">
+              <button class="btn btn-primary navbar-color-foreground btn-sm m-0 mr-3 p-2" type="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-menu dropdown-primary">
+                <a class="dropdown-item" href="javascript:setupShareModal('{{post.id}}');"><i
+                    class="fas fa-share-alt mr-3"> </i>Share</a>
+                <a class="dropdown-item"
+                  href="javascript:printPostDivFromHeader('#postCollapse{{loop.index}}', '{{post.title}}')">
+                  <i class="fas fa-print mr-3"> </i>Print
+                </a>
+
+                {% if current_user.is_authenticated %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" target="_blank" href="{{ url_for('Posts_view', id=post.id, site=site) }}"><i
+                    class="fas fa-pencil-alt mr-3"> </i>Edit</a>
+                {% endif %}
+
+              </div>
+            </div>
+
+            <!-- Heading -->
+            <a class="{% if posts|length > 1 %}collapsed{% endif %}" data-toggle="collapse"
+              data-parent="#postsAccordion" href="#postCollapse{{loop.index}}" aria-expanded="false"
+              aria-controls="postCollapse{{loop.index}}">
+              <h5 class="mt-1 mb-0">
+                <span>{{ post.title }}</span>
+                <i class="fas fa-angle-down rotate-icon"></i>
+              </h5>
+            </a>
+          </div>
+
+          <!-- Card body -->
+          <div id="postCollapse{{loop.index}}"
+            class="collapse {% if posts|length == 1 or post.id == postID%}show{% endif %}" role="tabpanel"
+            aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion">
+            <div class="card-body">
+              <a class="float-right btn-floating btn-sm btn-primary noprint"
+                href="javascript:printPostDiv('#postCollapse{{loop.index}}', '{{post.title}}')">
+                <i class="fas fa-print noprint"></i>
+              </a>
+              {{ post.content|safe }}
+              <i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
             </div>
           </div>
-
-          <!-- Heading -->
-          <a class="{% if posts|length > 1 %}collapsed{% endif %}" data-toggle="collapse" data-parent="#postsAccordion"
-            href="#postCollapse{{loop.index}}" aria-expanded="false" aria-controls="postCollapse{{loop.index}}">
-            <h5 class="mt-1 mb-0">
-              <span>{{ post.title }}</span>
-              <i class="fas fa-angle-down rotate-icon"></i>
-            </h5>
-          </a>
         </div>
+        <!-- Accordion card -->
+        {% endfor %}
 
-        <!-- Card body -->
-        <div id="postCollapse{{loop.index}}"
-          class="collapse {% if posts|length == 1 or post.id == postID%}show{% endif %}" role="tabpanel"
-          aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion">
-          <div class="card-body">
-            <a class="float-right btn-floating btn-sm btn-primary noprint"
-              href="javascript:printPostDiv('#postCollapse{{loop.index}}', '{{post.title}}')">
-              <i class="fas fa-print noprint"></i>
-            </a>
-            {{ post.content|safe }}
-            <i style="font-size: 8pt;">Last Updated {{ post.last_updated }}</i>
-          </div>
-        </div>
       </div>
-      <!-- Accordion card -->
-      {% endfor %}
+      <!--/.Accordion wrapper-->
 
-    </div>
-    <!--/.Accordion wrapper-->
-
-    <center style="margin-top: 2em; font-size: 10pt;">
-      <i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
-    </center>
+      <center style="margin-top: 2em; font-size: 10pt;">
+        <i>Missing content?<a data-toggle="modal" href="#suggestionModal"> Submit a content suggestion</a></i>
+      </center>
   </div>
 </div>
 
@@ -75,7 +97,7 @@
 
       <!--Header-->
       <div class="modal-header navbar-color white-text">
-        <h4 class="title"><i class="fas fa-users"></i> Spreed the word!</h4>
+        <h4 class="title"><i class="fas fa-share-alt"></i> Spread the word!</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
       </div>
@@ -84,19 +106,17 @@
       <div class="modal-body mb-0 text-center">
         <div class="container-fluid">
 
-          <div class="rowtext-center justify-content-center">
+          <div class="row text-center justify-content-center mb-1">
             <div id="qrcodeShareModal" class=""></div>
           </div>
 
           <div class="row text-center justify-content-center">
             <div class="col-10 pr-0">
-              <input id="shareLinkInput" class="form-control disabled" type="text">
+              <input id="shareLinkInput" class="form-control disabled" type="text" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="Link Copied!">
             </div>
             <div class="col-2 mt-0 d-flex justify-content-start pl-2">
               <button class="btn-outline-primary btn-sm" onclick="copyShareLink()"> <i class="far fa-copy"></i></button>
-
             </div>
-
           </div>
 
           <div class="row text-center justify-content-center">
@@ -109,7 +129,7 @@
               <i class="fab fa-twitter"></i>
             </a>
             <!--Email-->
-            <a id="emailShareLink" type="button" class="btn-floating btn-email" target="_blank">
+            <a id="emailShareLink" type="button" class="btn-floating btn-gplus" target="_blank">
               <i class="fas fa-envelope"></i>
             </a>
           </div>
@@ -121,16 +141,17 @@
   </div>
 </div>
 <!--Modal: modalSocial-->
-
 {% endblock %}
 
 {% block scripts_content %}
 <script>
-  function copyShareLink(){
+  function copyShareLink() {
     var shareLinkInput = document.getElementById("shareLinkInput");
     shareLinkInput.select();
     shareLinkInput.setSelectionRange(0, 99999);
     document.execCommand("copy");
+
+    $('#shareLinkInput').popover('show');
   }
 
   function setupShareModal(postID) {
@@ -202,7 +223,7 @@
     });
   }
 
-  function printPostDivFromHeader(el, title){
+  function printPostDivFromHeader(el, title) {
     $(el).addClass("show");
     printPostDiv(el, title);
   }

@@ -1,6 +1,9 @@
 {% extends "base-pages/base-libraries.html" %}
+<!-- {% from "components/general.html" import site_title_text %} -->
 {% from "components/site_select.html" import site_select_navbar_dropdown %}
 {% from "components/table_of_contents.html" import table_of_contents_pane, table_of_contents_modal %}
+{% from "components/about_us_profiles.html" import team_modal %}
+
 
 
 {% block head %}
@@ -18,7 +21,7 @@
           style="width: 90px; height: 50px;">
         <span style="font-weight: 700">
           Disaster Consult <br>
-          <b style="font-weight: 500">{{ site|upper }}</b>
+          <b style="font-weight: 500">{{site_title_text(site, siteJS)}}</b>
         </span>
 
       </a>
@@ -31,7 +34,12 @@
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
 
+        {% if current_user.is_authenticated and current_user.privilege > 50 %}
+        {{ site_select_navbar_dropdown(sites, site, private_sites=private_sites) }}
+        {% else %}
         {{ site_select_navbar_dropdown(sites, site) }}
+        {% endif %}
+
 
         {% if current_user.is_authenticated %}
         <li class="nav-item">
@@ -53,12 +61,12 @@
       <div class="col-12 col-md-3 align-content-center text-center">
         <a class="btn btn-nav-color-outline waves-effect text-center" style="max-width:80%; margin-top: -0.4em;"
           href="{{ url_for('Pages_home', site=site) }}">
-          {{site}} | Home
+          {% if siteJS %}{{ siteJS.title }}{% else %}{{ site|upper }}{% endif %} | Home
         </a>
       </div>
       {% endif %}
-      <div class="col-12 {% if request.path != url_for('Pages_home', site=site) %}col-md-6{% endif %} text-center">
-        <h1>{{ site|upper }}</h1>
+      <div class="col-12 {% if request.path != url_for('Pages_home', site=site) %}col-md-6{% endif %} text-center">  
+        <h1>{% if siteJS %}{{ siteJS.title }}{% else %}{{ site|upper }}{% endif %}</h1>       
       </div>
     </div>
 
@@ -69,19 +77,59 @@
 
   <div class="container-fluid">
     <div class="row">
-      {{ table_of_contents_pane(table_contents, site, category) }}
       {{ table_of_contents_modal(table_contents, site, category) }}
 
-      <div class="{% if table_contents %}col-12 col-lg-9{% else %}col-12{% endif %} mt-1">
-        {% block main_content %}{% endblock %}
+      <div class="col-lg-3 d-none d-lg-block pr-0" style="margin-top: .1em;">
+        {{ table_of_contents_pane(table_contents, site, category) }}
+
+        {% if request.path == url_for('Pages_home', site='covid-19') %}
+        <div class="mt-2">
+          <div class="side-navbar-box scrollbar-custom">
+            <div class="sticky-top box-title">
+              <h4>Previous Reports</h4>
+              <div class="blueLine"></div>
+            </div>
+            <div class="">
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if team %}
+        <div class="mt-2">
+          <div class="side-navbar-box scrollbar-custom">
+            <div class="sticky-top box-title">
+              <h4>{{site_title_text(site, siteJS)}} | Team</h4>
+              <div class="blueLine"></div>
+            </div>
+            <div class="row text-center justify-content-center mt-2">
+              <a class="btn btn-nav-color-outline waves-effect text-center" style="max-width:80%;" data-toggle="modal"
+                data-target="#modalTeam">
+                View Team
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+
+      <div class="col-12 col-lg-9 mt-0">
+        <div class="container-fluid pl-0">
+          {% block main_content %}{% endblock %}
+        </div>
       </div>
     </div>
   </div>
   {% block secondary_content %}{% endblock %}
 </main>
 
-<div id="qrcode" class="d-none"></div>
-<!-- <canvas id="qrCanvas"></canvas> -->
+
+{% if team %}
+{{team_modal(site | upper, team)}}
+{% endif %}
+
 {% endblock %}
 
 
@@ -90,7 +138,6 @@
   $(document).ready(function () {
     // Needed for navbar disaster search to work
     $('#disaster-select-dropdown').mdbDropSearch();
-    // document.getElementById("qrImg").src = "http://api.qrserver.com/v1/create-qr-code/?data=" + window.location.href + "&size=100x100"
   });
 </script>
 {% block scripts_content %}{% endblock %}

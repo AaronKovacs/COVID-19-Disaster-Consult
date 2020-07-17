@@ -165,9 +165,9 @@ class Post(Base):
 
                 caption_str = ""
                 if caption_match:
-                    caption_str = '<figcaption class="img-caption">{}</figcaption>'.format(caption_match[0])
+                    caption_str = '<figcaption class="img-caption figure-caption">{}</figcaption>'.format(caption_match[0])
 
-                lightbox_img = '<figure class="{0}"><a href="{1}" data-toggle="lightbox"><img src="{1}" class="img-fluid"></a>{2}</figure>'
+                lightbox_img = '<figure class="{0} text-center"><a href="{1}" data-toggle="lightbox"><img src="{1}" class="img-fluid hoverable"></a>{2}</figure>'
                 lightbox_img = lightbox_img.format(figure_class, src, caption_str)
                 edited_content = edited_content.replace(match, lightbox_img)
 

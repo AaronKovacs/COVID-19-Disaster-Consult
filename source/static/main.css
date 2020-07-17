@@ -6,7 +6,6 @@ body{
   font-family: "Roboto", "Montserrat", sans-serif;
   min-height: 2em;
   color: black;
-  width: 100%
 }
 
 h1{
@@ -40,7 +39,7 @@ p {
 }
 
 img {
-  width: 100%;
+  /* width: 100%; */
 }
 
 .about-us-profile-img {
@@ -348,20 +347,46 @@ img {
 .scrollbar-custom::-webkit-scrollbar-track {
 -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
 background-color: #F5F5F5;
-border-radius: 10px; }
+border-radius: 10px; 
+}
 
 .scrollbar-custom::-webkit-scrollbar {
-width: 12px;
-background-color: #F5F5F5; }
+width: 8px;
+height: 0px;
+background-color: #F5F5F5; 
+}
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
 border-radius: 10px;
 -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
-background-color: #25353F; }
+background-color: #25353F; 
+}
 
 .scrollbar-custom {
   scrollbar-color: #25353F;
 }
+/* 
+.scrollbar-custom-body::-webkit-scrollbar-track {
+-webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+background-color: transparent;
+border-radius: 10px; 
+}
+
+.scrollbar-custom-body::-webkit-scrollbar {
+width: 8px;
+height: 0px;
+background-color: transparent; 
+}
+
+.scrollbar-custom-body::-webkit-scrollbar-thumb {
+border-radius: 10px;
+-webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+background-color: transparent; 
+}
+
+.scrollbar-custom-body {
+  scrollbar-color: transparent;
+} */
 
 .useful-link {
   color: black;
@@ -1166,11 +1191,6 @@ blockquote p {
 }
 
 
-
-
-
-
-
 .custom-side-nav {
     z-index: 1040;
     height: 100%;
@@ -1182,8 +1202,8 @@ blockquote p {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    /* -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); */
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
     -webkit-backface-visibility: hidden;
@@ -1217,39 +1237,6 @@ blockquote p {
     list-style-type: none
 }
 
-.custom-side-nav .collapsible a {
-    height: 36px;
-    font-size: .8rem;
-    font-weight: 300;
-    line-height: 36px;
-}
-
-.custom-side-nav .collapsible a.active,
-.custom-side-nav .collapsible a:hover {
-    border-radius: 2px
-}
-
-.custom-side-nav .collapsible .fas,
-.custom-side-nav .collapsible .fab,
-.custom-side-nav .collapsible .far {
-    margin-right: 13px;
-    font-size: .8rem
-}
-
-.custom-side-nav .collapsible-body a {
-    height: 36px;
-    padding-left: 35px;
-    line-height: 36px;
-    background-color: #ffff;
-}
-
-.custom-side-nav a {
-    display: block;
-    height: 56px;
-    padding-left: 20px;
-    font-size: 1rem;
-    line-height: 56px
-}
 
 .custom-side-nav .fa-angle-down.rotate-icon {
     position: absolute;
@@ -1428,4 +1415,29 @@ footer.page-footer a {
    .noprint {
       visibility: hidden;
    }
+}
+
+.dropdown-content li>span {
+    color: black;
+}
+
+.dropdown-content li:hover {
+    background-color: #D9D9D9;
+}
+
+.popover{
+    max-width: 100%; /* Max Width of the popover (depending on the container!) */
+}
+
+
+.dropdown-content {
+  max-height: 14.5rem;
+}
+
+.dropdown-item-private{
+  color: red !important;
+}
+
+#toast-container.md-toast-top-center>div{
+  width:30vw;
 }
