@@ -27,8 +27,25 @@ from flask import render_template, make_response
 from ..models.activity_track import ActivityTrack
 from ..models.draft import Draft
 from ..models.site_info import SiteInfo
+from ..models.site import Site
 
 from ..configuration.config import SLACK_OATH_KEY
+
+
+def render_page(template, site, includeSite, **kwargs):
+
+    siteJSData = {}
+
+    if includeSite:
+        session = Session()
+        siteData = session.query(Site).filter_by(slug=site).first()
+        if siteData is not None:
+            siteJSData = siteData.publicJSON()
+        session.close()
+
+    headers = {'Content-Type': 'text/html'}
+    return make_response(render_template(template, site=site, siteJS=siteJSData, **kwargs), 200, headers)
+
 
 def get_site_info(info_keys, site, session):
     data = {}
