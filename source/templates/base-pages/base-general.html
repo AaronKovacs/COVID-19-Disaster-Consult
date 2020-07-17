@@ -31,7 +31,11 @@
       <ul class="navbar-nav ml-auto flex-nowrap">
 
         {% if request.path != url_for('select_screen') %}
+        {% if current_user.is_authenticated and current_user.privilege > 50 %}
+        {{ site_select_navbar_dropdown(sites, site, false, private_sites=private_sites) }}
+        {% else %}
         {{ site_select_navbar_dropdown(sites, site, false) }}
+        {% endif %}
         {% endif %}
 
         {% if current_user.is_authenticated %}

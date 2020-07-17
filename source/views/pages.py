@@ -63,6 +63,10 @@ class Home(Resource):
         # Create connection to database
         session = Session()
         sites = session.query(Site).filter_by(public=True)
+        private_sites = session.query(Site).filter_by(public=False)
+
+        siteJS = session.query(Site).filter_by(slug=site).one().publicJSON()
+
         # Fetch latest news links from database and convert to JSON
         linksJS = []
         links = session.query(Link).filter_by(site=site).order_by(desc(Link.created), Link.id).limit(2)
@@ -111,7 +115,7 @@ class Home(Resource):
 
         # Render HTML template with Jinja
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, main_content=info, team=profilesJS, sites=sites, site=site), 200, headers)
+        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, main_content=info, team=profilesJS, sites=sites, private_sites=private_sites, site=site, siteJS=siteJS), 200, headers)
 
 
 @api.route('/news')
@@ -217,6 +221,10 @@ class ViewSection(Resource):
         session = Session()
 
         sites = session.query(Site).filter_by(public=True)
+        private_sites = session.query(Site).filter_by(public=False)
+
+        siteJS = session.query(Site).filter_by(slug=site).one().publicJSON()
+
         category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = None
         if category is not None:
@@ -262,7 +270,7 @@ class ViewSection(Resource):
         session.close()
 
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, postID=postID, sites=sites, site=site), 200, headers)
+        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, postID=postID, sites=sites, private_sites=private_sites, site=site, siteJS=siteJS), 200, headers)
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):

@@ -1428,3 +1428,12 @@ footer.page-footer a {
 .popover{
     max-width: 100%; /* Max Width of the popover (depending on the container!) */
 }
+
+
+.dropdown-content {
+  max-height: 14.5rem;
+}
+
+.dropdown-item-private{
+  color: red !important;
+}

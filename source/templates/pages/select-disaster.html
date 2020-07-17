@@ -10,7 +10,11 @@
   <div class="mask rgba-blue-slight">
     <div class="container flex-center">
       <div class="row mt-5 w-100 text-center justify-content-center">
-        {{ site_select_card(sites) }}
+        {% if current_user.is_authenticated and current_user.privilege > 50 %}
+          {{ site_select_card(sites, private_sites) }}
+        {% else %}
+          {{ site_select_card(sites) }}
+        {% endif %}
       </div>
     </div>
   </div>
