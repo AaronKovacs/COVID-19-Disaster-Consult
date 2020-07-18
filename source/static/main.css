@@ -59,9 +59,7 @@ img {
   margin-bottom: 2em;
   border-radius: 4px;
 }
-.btn-link {
-  font-weight: 600;
-}
+
 
 .provider-btn-title {
   font-size: 2rem;
@@ -119,7 +117,7 @@ img {
 
 .btn{
   text-align: left;
-  background-color: #EBDFC1;
+  /* background-color: #EBDFC1; */
   border: none;
   color: #000000;
 }
@@ -444,6 +442,10 @@ background-color: transparent;
   padding-top: 2em;
 }
 
+/* .btn-link {
+  font-weight: 600;
+}
+
 .btn-link{
   border: 2px solid #e8d29b;
   padding: 16px;
@@ -455,7 +457,7 @@ background-color: transparent;
 
 .btn-link:focus{
   background-color: #EBDFC1!important;
-}
+} */
 
 .api-data {
   left: 30%;
