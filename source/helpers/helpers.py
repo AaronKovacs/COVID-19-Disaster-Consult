@@ -123,16 +123,17 @@ def post_to_slack(msg, channel='#web-feedback'):
 
 def send_slack_message_to_user(userid, msg):
     destination = "#web-feedback"
-    
+    msg_append = "\n\n"
     session = Session()
     user = session.query(User).filter_by(id=userid).first()
     if user is not None:
         profileJS = user.profile(session).publicJSON()
-        if profileJS['slack_id'] is not None:
+        if profileJS['slack_id'] is not "":
             destination = profileJS['slack_id']
+        else:
+            msg_append += "User does not have slack id: {}".format(userid)
+    else:
+        msg_append += "Could not find user: {}".format(userid)
     session.close()
 
-    post_to_slack(msg, destination)
-    
-    
-
+    post_to_slack(msg + msg_append, destination)
