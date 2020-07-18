@@ -28,6 +28,8 @@ from ..models.activity_track import ActivityTrack
 from ..models.draft import Draft
 from ..models.site_info import SiteInfo
 from ..models.site import Site
+from ..models.user import User
+from ..models.user_profile import UserProfile
 
 from ..configuration.config import SLACK_OATH_KEY
 
@@ -107,7 +109,7 @@ def list_json(rows):
             rowJS.append(row.publicJSON())
         return rowJS
 
-def post_to_slack(msg, channel='#website-bot'):
+def post_to_slack(msg, channel='#web-feedback'):
     api_url = 'https://slack.com/api/chat.postMessage'
 
     data = {
@@ -118,3 +120,19 @@ def post_to_slack(msg, channel='#website-bot'):
     }
 
     response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': SLACK_OATH_KEY})
+
+def send_slack_message_to_user(userid, msg):
+    destination = "#web-feedback"
+    
+    session = Session()
+    user = session.query(User).filter_by(id=userid).first()
+    if user is not None:
+        profileJS = user.profile(session).publicJSON()
+        if profileJS['slack_id'] is not None:
+            destination = profileJS['slack_id']
+    session.close()
+
+    post_to_slack(msg, destination)
+    
+    
+

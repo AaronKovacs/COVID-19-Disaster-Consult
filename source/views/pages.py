@@ -30,7 +30,7 @@ from sqlalchemy import desc
 
 from ..helpers.helpers import *
 from ..helpers.namespace import APINamespace
-from ..helpers.helpers import BError, get_site_info, post_to_slack, render_page
+from ..helpers.helpers import BError, get_site_info, post_to_slack, send_slack_message_to_user, render_page
 from ..database.database import Session
 from ..configuration.config import PASSWORD_SECRET_KEY
 
