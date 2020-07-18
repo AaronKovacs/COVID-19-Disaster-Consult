@@ -294,6 +294,28 @@ img {
   border: 4px solid #ACBBE6;
 }*/
 
+.side-previous-issues-box{
+  border: 2px solid #D7D7D7;
+  border-radius: 10px;
+  width: 95%;
+  padding: 1em;
+  padding-top: 0em;
+  padding-bottom: 0.5em;
+  text-align: left;
+  max-height: 14em;
+  overflow-y: hidden;
+}
+
+.side-previous-issues-box:hover {
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 800px) {
+  .side-previous-issues-box {
+    width: 100%;
+  }
+}
+
 
 .side-navbar-box{
   border: 2px solid #D7D7D7;

@@ -86,10 +86,12 @@
         {% if request.path == url_for('Pages_home', site='covid-19') %}
         {% if issues and issues|length > 1 and issue_id %}
         <div class="mt-2">
-          <div class="side-navbar-box scrollbar-custom">
+          <div class="side-previous-issues-box scrollbar-custom">
             <div class="sticky-top box-title">
               <h4>Previous Reports</h4>
               <div class="blueLine"></div>
+            </div>
+            <div>
               {{list_issues(issues, issue_id, site)}}
             </div>
           </div>
