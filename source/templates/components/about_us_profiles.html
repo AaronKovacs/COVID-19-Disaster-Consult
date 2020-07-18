@@ -70,23 +70,12 @@
             </div>
 
             <div class="col-10 col-md-6">
-              <section>
+              <section class="">
                 <div class="row text-center justify-content-center">
-                  <h4 class="h4-responsive mb-0">Medical Review Panel</h4>
+                  <h4 class="h4-responsive mb-0">Reviewers, Advisors & Creators</h4>
                 </div>
                 <div class="row justify-content-center">
-                  {% for member in team if "Medical Review Panel" in member.section %}
-                  <p class="pb-0 w-100">{{profile_link(member)}}</p>
-                  {% endfor %}
-                </div>
-              </section>
-
-              <section class="mt-3">
-                <div class="row text-center justify-content-center">
-                  <h4 class="h4-responsive mb-0">Special Advisors & Creators</h4>
-                </div>
-                <div class="row justify-content-center">
-                  {% for member in team if "Special Advisors" in member.section or "Co-Creators" in member.section %}
+                  {% for member in team if "Special Advisors" in member.section or "Co-Creators" in member.section or "Medical Review Panel" in member.section %}
                   <p class="pb-0 w-100">{{profile_link(member)}}</p>
                   {% endfor %}
                 </div>

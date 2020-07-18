@@ -108,9 +108,8 @@ class Home(Resource):
         info = get_site_info(['home_page_content'], site, session)
 
         profilesJS = []
-        for profile in session.query(UserProfile).order_by(UserProfile.order, UserProfile.id).all():
+        for profile in session.query(UserProfile).filter(UserProfile.disasters.contains(site)).order_by(UserProfile.order, UserProfile.id).all():
             profilesJS.append(profile.publicJSON())
-
 
         issueJS = {}
         issuesJS = []
