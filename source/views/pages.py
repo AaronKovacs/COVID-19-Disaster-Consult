@@ -50,6 +50,8 @@ from ..models.site import Site
 from ..models.site_url import SiteURL
 from ..models.site_info import SiteInfo
 from ..models.user_profile import UserProfile
+from ..models.issue import Issue
+from ..models.issue_content import IssueContent
 
 from itsdangerous import URLSafeTimedSerializer
 
@@ -60,6 +62,7 @@ api = APINamespace('Pages')#Api(blueprint)
 @api.route('/home')
 class Home(Resource):
     def get(self, site):
+        issue_id = request.args.get('issueID', None)
         # Create connection to database
         session = Session()
         sites = session.query(Site).filter_by(public=True)
@@ -108,11 +111,38 @@ class Home(Resource):
         for profile in session.query(UserProfile).order_by(UserProfile.order, UserProfile.id).all():
             profilesJS.append(profile.publicJSON())
 
+
+        issuesJS = []
+        issues = session.query(Issue).filter_by(site=site).order_by(desc(Issue.last_updated), Issue.id)
+        for issue in issues:     
+            issuesJS.append(issue.publicJSON())
+
+        issueContentJS = []
+        if len(issuesJS) > 0:
+            issue_id = request.args.get('issueID', issuesJS[0]['id'])
+            issueContents = session.query(IssueContent).filter_by(issue=issue_id).order_by(IssueContent.order, IssueContent.id).all()
+
+            for issueContent in issueContents:     
+                issueContentJS.append(issueContent.publicJSON())
+
         # Close database connection
         session.close()
 
         # Render HTML template with Jinja
-        return render_page('pages/home.html', site=site, includeSite=True, links=linksJS, literatures=litJS, table_contents=table_of_contents, useful_links=dict_urls, main_content=info, team=profilesJS, sites=sites, private_sites=private_sites)
+        return render_page('pages/home.html', 
+                            site=site, 
+                            includeSite=True, 
+                            links=linksJS, 
+                            literatures=litJS, 
+                            table_contents=table_of_contents, 
+                            useful_links=dict_urls, 
+                            main_content=info, 
+                            team=profilesJS, 
+                            sites=sites, 
+                            private_sites=private_sites, 
+                            issues=issuesJS, 
+                            issue_content=issueContentJS, 
+                            issue_id=issue_id)
       
 
 @api.route('/news')

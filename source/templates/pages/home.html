@@ -1,5 +1,5 @@
 {% extends "base-pages/base-site-specific.html" %}
-{% from "components/home_cards.html" import home_card %}
+{% from "components/issues.html" import display_issue_content %}
 
 
 {% block main_content %}
@@ -44,8 +44,8 @@
           {% endif %}
         </div>
         <div class="blueLine" style="margin-bottom: 1em;"></div>
-        {% if main_content.home_page_content %}
-        {{ main_content.home_page_content|safe }}
+        {% if issue_id %}
+        {{ display_issue_content(issue_content) }}
 
         {% else %}
         <div class="row w-100 justify-content-center">
