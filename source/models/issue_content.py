@@ -37,6 +37,7 @@ class IssueContent(Base):
     def publicJSON(self):
         return {
         'id': self.id,
+        'issue': self.issue,
         'title': self.title,
         'site': self.site,
         'order': self.order,
@@ -46,6 +47,7 @@ class IssueContent(Base):
     def blankJSON(self):
         return {
         'id': '',
+        'issue': '',
         'title': '',
         'site': '',
         'order': '',
