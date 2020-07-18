@@ -32,7 +32,7 @@
   <meta property="og:description" content="Your Consultant for Just-in-Time Information When Disasters Strike">
   <meta property="og:image" content="https://www.disasterconsult.org/static/images/logoWide.png">
 
-  <title>Disaster Consult | {{site_title_text(site, siteJS)}} </title>
+  <title>{% block title %}Disaster Consult | {{site_title_text(site, siteJS)}}{% endblock %}</title>
 
   <!-- FavIcon -->
   <link rel='icon' href='../../static/images/favicon.png' type='image/png'>
