@@ -20,9 +20,9 @@
             GW COVID-19 Intelligence Report
             {% if current_user.is_authenticated and current_user.privilege > 300 %}
             <small class="text-muted">
-              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
+              <a class="noprint" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
                 href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
-                <i class="fas fa-pencil-alt ml-2"></i>
+                <i class="fas fa-pencil-alt ml-2 noprint"></i>
               </a>
             </small>
             {% endif %}
@@ -41,9 +41,9 @@
               Background Information
               {% if current_user.is_authenticated and current_user.privilege > 300 %}
               <small class="text-muted">
-                <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
+                <a class="noprint" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
                   href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
-                  <i class="fas fa-pencil-alt ml-2"></i>
+                  <i class="fas fa-pencil-alt ml-2 noprint"></i>
                 </a>
               </small>
               {% endif %}
