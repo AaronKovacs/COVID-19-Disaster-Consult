@@ -3,11 +3,13 @@
 
 
 {% block main_content %}
+{% if issue_id %}
 <div class="fab" style="bottom: 30px; right: 50%;">
   <a class="btn-floating btn-sm btn-primary noprint" href="javascript:printIssue('#issueContentDiv');">
     <i class="fas fa-print noprint"></i>
   </a>
 </div>
+{% endif %}
 
 <div class="container-fluid">
   <div class="row">
@@ -21,7 +23,7 @@
             {% if current_user.is_authenticated and current_user.privilege > 300 %}
             <small class="text-muted">
               <a class="noprint" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
-                href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
+                href="{% if issue_id %}{{ url_for('Issues_view', id=issue.id, site=site) }}{% else %}{{ url_for('Issues_create_issue', site=site) }}{% endif %}">
                 <i class="fas fa-pencil-alt ml-2 noprint"></i>
               </a>
             </small>
@@ -42,7 +44,7 @@
               {% if current_user.is_authenticated and current_user.privilege > 300 %}
               <small class="text-muted">
                 <a class="noprint" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
-                  href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
+                  href="{% if issue_id %}{{ url_for('Issues_view', id=issue.id, site=site) }}{% else %}{{ url_for('Issues_create_issue', site=site) }}{% endif %}">
                   <i class="fas fa-pencil-alt ml-2 noprint"></i>
                 </a>
               </small>
