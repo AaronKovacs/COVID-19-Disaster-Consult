@@ -14,8 +14,8 @@
             GW COVID-19 Intelligence Report
             {% if current_user.is_authenticated and current_user.privilege > 300 %}
             <small class="text-muted">
-              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Home Content | Admin"
-                href="{{ url_for('Info_list_info', site=site) }}">
+              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
+                href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
                 <i class="fas fa-pencil-alt ml-2"></i>
               </a>
             </small>
@@ -23,19 +23,19 @@
           </h2>
           <h5 class="h5-responsive text-muted mb-0">
             Obtained from
-            <a id="himmelPopOver" href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb
+            <a id="himmelPopOver-unused" href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb
               Library</a>
-            | Report generated on on 7/6/2020
+            | Report generated on on {{issue.subtitle}}
           </h5>
-          <!-- <h6 class="h6-responsive text-muted">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident -->
+          <h6 class="h6-responsive text-muted">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident
           <!-- Management Intelligence Unit</h6> -->
           {% else %}
           <h2 class="mb-0">
             Background Information
             {% if current_user.is_authenticated and current_user.privilege > 300 %}
             <small class="text-muted">
-              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Home Content | Admin"
-                href="{{ url_for('Info_list_info', site=site) }}">
+              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
+                href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
                 <i class="fas fa-pencil-alt ml-2"></i>
               </a>
             </small>

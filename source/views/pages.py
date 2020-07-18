@@ -112,6 +112,7 @@ class Home(Resource):
             profilesJS.append(profile.publicJSON())
 
 
+        issueJS = {}
         issuesJS = []
         issues = session.query(Issue).filter_by(site=site).order_by(desc(Issue.last_updated), Issue.id)
         for issue in issues:     
@@ -121,6 +122,7 @@ class Home(Resource):
         if len(issuesJS) > 0:
             issue_id = request.args.get('issueID', issuesJS[0]['id'])
             issueContents = session.query(IssueContent).filter_by(issue=issue_id).order_by(IssueContent.order, IssueContent.id).all()
+            issueJS = session.query(Issue).filter_by(site=site, id=issue_id).one().publicJSON()
 
             for issueContent in issueContents:     
                 issueContentJS.append(issueContent.publicJSON())
@@ -141,6 +143,7 @@ class Home(Resource):
                             sites=sites, 
                             private_sites=private_sites, 
                             issues=issuesJS, 
+                            issue=issueJS,
                             issue_content=issueContentJS, 
                             issue_id=issue_id)
       
