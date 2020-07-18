@@ -293,10 +293,12 @@
       $('#onload').modal('show');
 
       // Inititalize all tooltips
-      $('[data-toggle="tooltip"]').tooltip()
+      $('[data-toggle="tooltip"]').tooltip();
 
       //Inititalize all popovers
-      $('[data-toggle="popover"]').popover()
+      $('[data-toggle="popover"]').popover();
+      
+
 
       {% if siteJS and not siteJS.public %}
         {% if not current_user or current_user.is_authenticated == False %}

@@ -3,11 +3,17 @@
 
 
 {% block main_content %}
+<div class="fab" style="bottom: 30px; right: 50%;">
+  <a class="btn-floating btn-sm btn-primary noprint" href="javascript:printIssue('#issueContentDiv');">
+    <i class="fas fa-print noprint"></i>
+  </a>
+</div>
+
 <div class="container-fluid">
   <div class="row">
-
     <div class="col-12 {% if useful_links %}col-lg-8{% endif %}">
-      <div class="row {% if request.path == url_for('Pages_home', site='covid-19') %}mt-0{%else%}mt-2{%endif%}">
+      <div id="issueContentDiv"
+        class="row {% if request.path == url_for('Pages_home', site='covid-19') %}mt-0{%else%}mt-2{%endif%}">
         <div class="text-center w-100">
           {% if request.path == url_for('Pages_home', site='covid-19') %}
           <h2 class="mb-0">
@@ -23,108 +29,42 @@
           </h2>
           <h5 class="h5-responsive text-muted mb-0">
             Obtained from
-            <a id="himmelPopOver-unused" href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW Himmelfarb
+            <a id="himmelPopOver-unused" href="https://guides.himmelfarb.gwu.edu/SituationReport" target="_blank">GW
+              Himmelfarb
               Library</a>
-            | Report generated on on {{issue.subtitle}}
+            | Report generated on {{issue.subtitle}}
           </h5>
-          <h6 class="h6-responsive text-muted">Created by GW School of Medicine and Health Sciences, Himmelfarb Health Sciences Library and the GW Covid-19 Incident
-          <!-- Management Intelligence Unit</h6> -->
-          {% else %}
-          <h2 class="mb-0">
-            Background Information
-            {% if current_user.is_authenticated and current_user.privilege > 300 %}
-            <small class="text-muted">
-              <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
-                href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
-                <i class="fas fa-pencil-alt ml-2"></i>
-              </a>
-            </small>
+          <h6 class="h6-responsive text-muted">Created by GW School of Medicine and Health Sciences, Himmelfarb Health
+            Sciences Library and the GW Covid-19 Incident Management Intelligence Unit</h6>
+            {% else %}
+            <h2 class="mb-0">
+              Background Information
+              {% if current_user.is_authenticated and current_user.privilege > 300 %}
+              <small class="text-muted">
+                <a class="" target="_blank" data-toggle="tooltip" data-placement="right" title="Edit Issue | Admin"
+                  href="{{ url_for('Issues_view', id=issue.id, site=site) }}">
+                  <i class="fas fa-pencil-alt ml-2"></i>
+                </a>
+              </small>
+              {% endif %}
+            </h2>
             {% endif %}
-          </h2>
-          {% endif %}
         </div>
         <div class="blueLine" style="margin-bottom: 1em;"></div>
         <div class="container-fluid">
-        {% if issue_id %}
-        {{ display_issue_content(issue_content) }}
-        {% else %}
-        <div class="row w-100 justify-content-center">
-          <div class="alert alert-warning" role="alert">
-            <h4 class="alert-heading text-center">Under Construction</h4>
-            <p>We are working hard to bring you relevant background information on this disaster.</p>
-            <p class="mb-0">In the meantime, please use the Table of Contents to navigate to the category you would like</p>
-          </div>
-        </div>
-        {% endif %}
-        </div>
-
-        <!-- Row & Card -->
-        <!-- <div class="row w-100 mb-2">
-              <div class="col-12 card z-depth-1">
-                <div class="card-body">
-                  <h5 class="card-title text-center ">Epidemiology</h5>
-                  <div class="row justify-content-center">
-                    <ul>
-                      <li>
-                        Multiple states set single day records as case counts and positivity rates increase:
-                      </li>
-                      <ul>
-                        <li>
-                          Florida breaks single day record for third day in a row
-                        </li>
-                        <li>
-                          In Arizona, health officials also reported a record, with 2,577 current hospitalizations.
-                        </li>
-                        <li>
-                          Texas set arecord for coronavirus-related hospitalizations for the 16th day in a row on
-                          Saturday,
-                          with 5,523 patients being treated. Following a record single-day increase of COVID-19 cases in
-                          the
-                          state, TX Gov. Greg Abbott has paused further phases of the state&#39;s reopening plan and
-                          halted
-                          elective surgeries in four counties.
-                        </li>
-                      </ul>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-        <!-- Row & Card -->
-        <!-- <div class="row w-100 mb-2">
-            <div class="col-12 card z-depth-1">
-              <div class="card-body">
-                <h5 class="card-title text-center ">Treatment</h5>
-                <div class="row justify-content-center">
-                  <ul>
-                    <li>
-                      Tocilizumab
-                    </li>
-                    <ul>
-                      <li>
-                        A retrospective case-control study of patients with severe COVID-19 found a non-statistically
-                        significant lower mortality in the treatment group (52% versus 62.1% P = 0.09). When excluding
-                        intubated patients, there was statistically significant lower mortality in patients treated with
-                        tocilizumab (6% vs. 27% P = 0.024).
-                      </li>
-                      <li>
-                        A 21-day observational study published in CHEST found that in tocilizumab-treated patients,
-                        oxygenation and inflammatory biomarkers (hsCRP and IL-6) improved. However, sIL-2R and D-Dimer
-                        levels increased. Survival of severe patients treated with tocilizumab was similar to non-severe
-                        patients: (83% vs 91%; p=0.11).
-                      </li>
-                      <li>
-                        A retrospective, observational cohort study found that in patients with severe COVID-19
-                        pneumonia, treatment with tocilizumab, whether administered intravenously or subcutaneously,
-                        might reduce the risk of invasive mechanical ventilation or death
-                      </li>
-                    </ul>
-
-                    
-                </div>
-              </div>
+          {% if issue_id %}
+          {{ display_issue_content(issue_content) }}
+          {% else %}
+          <div class="row w-100 justify-content-center">
+            <div class="alert alert-warning" role="alert">
+              <h4 class="alert-heading text-center">Under Construction</h4>
+              <p>We are working hard to bring you relevant background information on this disaster.</p>
+              <p class="mb-0">In the meantime, please use the Table of Contents to navigate to the category you would
+                like</p>
             </div>
-          </div> -->
+          </div>
+          {% endif %}
+        </div>
       </div>
     </div>
 
@@ -144,7 +84,6 @@
               </small>
               {% endif %}
             </h4>
-
             <div class="blueLine"></div>
           </div>
           {% for key, value in useful_links.items() %}
@@ -183,8 +122,46 @@
       title: "GW COVID-19 Intelligence Report",
       content: function () { return $('#popover_content_wrapper').html(); }
     });
-
-
   })
+
+  function printIssue(el) {
+    var dateStr = getDateTimeString();
+
+    var htmlHeading = `<div class="container mt-4">
+                          <div class="row justify-content-center">
+                            <div class="col-12 text-center ">
+                              <img src="../../static/images/logoWide.png" class="img-fluid" alt="Logo" style="max-width: 150px;">
+                            </div>
+                            <div class="col-12 text-center ">
+                              <h1 class="h1-responsive mb-0">Disaster Consult</h1>
+                            </div>
+                            <div class="col-12 text-center ">
+                              <small class="text-muted">Content Retrieved On ${dateStr} </small>
+                            </div>
+                            <div class="col-12 text-center ">
+                              <hr>
+                            </div>
+                          </div>
+                        </div>`;
+    var htmlFooter = `<div class="container mt-2">
+                        <div class="row justify-content-center">
+                          <div class="col-12 text-center ">
+                            <hr>
+                          </div>
+                          <div class="col-12 text-center ">
+                            <h1 class="h1-responsive mb-1">DisasterConsult.org</h1>
+                          </div>
+                          <div class="col-12 text-center ">
+                              <small class="text-muted">{{copyright_text()}}</small>
+                            </div>
+                        </div>
+                      </div>`;
+
+    $(el).printThis({
+      pageTitle: 'Disaster Consult | {{site}}',
+      header: htmlHeading,
+      footer: htmlFooter
+    });
+  }
 </script>
 {% endblock %}

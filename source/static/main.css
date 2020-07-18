@@ -1463,3 +1463,25 @@ footer.page-footer a {
 #toast-container.md-toast-top-center>div{
   width:30vw;
 }
+
+.fab {
+  position: fixed;
+  right: 35px;
+  bottom: 35px;
+  z-index: 998;
+  margin-bottom: 0;
+  overflow: hidden;
+  height: 110px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  padding: 15px 15px 15px 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  -webkit-transition: height 400ms;
+  transition: height 400ms;
+}
