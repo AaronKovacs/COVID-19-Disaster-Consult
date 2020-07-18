@@ -110,6 +110,38 @@
     var allToolbars = document.querySelectorAll('.document-editor__toolbar');
     var allTextAreas = document.querySelectorAll('.mytextarea');
 
+
+    var forms = $( ".document-editor" );
+    forms.each(function(index, element){
+        console.log(element);
+        var currentEditor = $( this ).find('.ckeditor')[0];
+        var currentToolbar = $( this ).find('#toolbar-container')[0];
+        DecoupledEditor
+        .create( currentEditor, {
+            allowedContent: true,
+            fontSize: {
+                options: [
+                'tiny',
+                'default',
+                'big'
+                ]
+            },
+            ckfinder: {
+                uploadUrl: '{{ url_for('Posts_upload_just_image', site=site) }}'
+            }} )
+        .then( editor => {
+            editors.push(editor);
+
+            currentToolbar.appendChild( editor.ui.view.toolbar.element );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+    });
+
+
+    /*
+
     for (var i = 0; i < allEditors.length; ++i) {
         DecoupledEditor
         .create( allEditors[i], {
@@ -136,7 +168,7 @@
             console.error( error );
         } );
     }
-
+    */
     
 
     function getDataFromTheEditor() {
