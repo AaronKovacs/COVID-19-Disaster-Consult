@@ -44,9 +44,9 @@
           {% endif %}
         </div>
         <div class="blueLine" style="margin-bottom: 1em;"></div>
+        <div class="container-fluid">
         {% if issue_id %}
         {{ display_issue_content(issue_content) }}
-
         {% else %}
         <div class="row w-100 justify-content-center">
           <div class="alert alert-warning" role="alert">
@@ -56,6 +56,7 @@
           </div>
         </div>
         {% endif %}
+        </div>
 
         <!-- Row & Card -->
         <!-- <div class="row w-100 mb-2">
@@ -128,7 +129,7 @@
     </div>
 
     {% if useful_links %}
-    <div class="col-12 col-lg-4 pr-0">
+    <div class="col-12 col-lg-4 pl-lg-4 pr-0">
       <div class="sticky-top" style="top: 90px; z-index: 2;">
         <div class="useful-links-box scrollbar-custom">
           <div class="sticky-top box-title">
