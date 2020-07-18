@@ -1,0 +1,35 @@
+{% macro home_card(title, content) %}
+<div class="row mb-2">
+  <div class="col-12 card z-depth-1">
+    <div class="card-body">
+      <h4 class="card-title text-center">{{title | safe}}</h4>
+      <div class="row justify-content-left">
+        {{content | safe}}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
+{% macro display_issue_content(issue_content) %}
+{% for post in issue_content %}
+{{ home_card(post.title, post.data) }}
+{% endfor %}
+{%- endmacro %}
+
+{% macro list_issues(issues, current_issue_id, site) %}
+<div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
+  <ul class="custom-scrollbar">
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        
+        {% for issue in issues %}
+        <li class="{% if  issue.id == current_issue_id | int %}mask rgba-blue-light{% endif %}">
+          <a class="waves-effect" href="{{ url_for('Pages_home', site=site, issueID=issue.id) }}">{{issue.title}}</a>
+        </li>
+        {% endfor %}
+        
+      </ul>
+    </li>
+</div>
+{%- endmacro %}
