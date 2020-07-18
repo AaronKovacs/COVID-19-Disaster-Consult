@@ -38,6 +38,9 @@ class UserProfile(Base):
     order = Column(Integer(), default=100)
     section = Column(String(255), default='')
 
+    slack_id = Column(String(255), default='')
+    disasters = Column(String(255), default='')
+
     last_updated = Column(DateTime(), onupdate=datetime.datetime.utcnow)
 
     def publicJSON(self):
@@ -48,5 +51,7 @@ class UserProfile(Base):
         'profile_image': self.profile_image,
         'website': self.website,
         'order': self.order,
+        'disasters': self.disasters,
+        'slack_id': self.slack_id,
         'section': self.section
         }
