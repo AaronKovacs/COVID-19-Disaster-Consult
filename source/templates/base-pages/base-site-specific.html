@@ -59,14 +59,14 @@
     <div id="siteTitle" class="row">
       {% if site %}
       {% if request.path != url_for('Pages_home', site=site) %}
-      <div class="col-12 col-md-3 align-content-center text-center">
+      <div class="col-12 col-lg-3 align-content-center text-center">
         <a class="btn btn-nav-color-outline waves-effect text-center" style="max-width:80%; margin-top: -0.4em;"
           href="{{ url_for('Pages_home', site=site) }}">
           {% if siteJS %}{{ siteJS.title }}{% else %}{{ site|upper }}{% endif %} | Home
         </a>
       </div>
       {% endif %}
-      <div class="col-12 {% if request.path != url_for('Pages_home', site=site) %}col-md-6{% endif %} text-center">
+      <div class="col-12 {% if request.path != url_for('Pages_home', site=site) %}col-lg-6{% endif %} text-center">
         <h1>{% if siteJS %}{{ siteJS.title }}{% else %}{{ site|upper }}{% endif %}</h1>
       </div>
     </div>
