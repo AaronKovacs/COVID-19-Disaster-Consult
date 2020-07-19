@@ -1505,3 +1505,14 @@ footer.page-footer a {
   -webkit-transition: height 400ms;
   transition: height 400ms;
 }
+
+.backdrop-container {
+  background: rgba(0,0,0,0.8);
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .backdrop-container {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
