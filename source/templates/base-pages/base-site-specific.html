@@ -79,29 +79,29 @@
   <div class="container-fluid">
     <div class="row">
       {{ table_of_contents_modal(table_contents, site, category) }}
+      <div class="col-lg-3 d-none d-lg-block pr-0" style="margin-top: .1em;" style="background:white;">
+        <div class="sticky-top" style="top: 90px; z-index: 1022;" style="background:white;">
+          {{ table_of_contents_pane(table_contents, site, category) }}
 
-      <div class="col-lg-3 d-none d-lg-block pr-0" style="margin-top: .1em;">
-        {{ table_of_contents_pane(table_contents, site, category) }}
-
-        {% if request.path == url_for('Pages_home', site='covid-19') %}
-        {% if issues and issues|length > 1 and issue_id %}
-        <div class="mt-2">
-          <div class="side-previous-issues-box scrollbar-custom">
-            <div class="sticky-top box-title">
-              <h4>Previous Reports</h4>
-              <div class="blueLine"></div>
-            </div>
-            <div>
-              {{list_issues(issues, issue_id, site)}}
+          {% if request.path == url_for('Pages_home', site='covid-19') %}
+          {% if issues and issues|length > 1 and issue_id %}
+          <div class="mt-2">
+            <div class="side-previous-issues-box scrollbar-custom" style="background:white;">
+              <div class="sticky-top box-title">
+                <h4>Previous Reports</h4>
+                <div class="blueLine"></div>
+              </div>
+              <div>
+                {{list_issues(issues, issue_id, site)}}
+              </div>
             </div>
           </div>
+          {% endif %}
+          {% endif %}
         </div>
-        {% endif %}
-        {% endif %}
-
         {% if team %}
         <div class="mt-2">
-          <div class="side-navbar-box scrollbar-custom">
+          <div class="side-navbar-box scrollbar-custom" style="background:white;">
             <div class="sticky-top box-title">
               <h4>{{site_title_text(site, siteJS)}} | Team</h4>
               <div class="blueLine"></div>

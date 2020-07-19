@@ -1,5 +1,6 @@
 body,html {
     height:100%;
+    zoom: 0.88;
 }
 
 body{
@@ -300,7 +301,7 @@ img {
   padding-top: 0em;
   padding-bottom: 0.5em;
   text-align: left;
-  max-height: 12em;
+  max-height: 11em;
   overflow-y: hidden;
 }
 
