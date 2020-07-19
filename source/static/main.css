@@ -1516,3 +1516,10 @@ footer.page-footer a {
     backdrop-filter: blur(10px);
   }
 }
+
+a.home-anchor {
+    display: block;
+    position: relative;
+    top: -100px;
+    visibility: hidden;
+}

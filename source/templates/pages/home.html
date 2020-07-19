@@ -172,12 +172,7 @@
 <script>
 
   $(document).ready(function () {
-    currentUrl = new URL(window.location.href);
-    if (currentUrl.searchParams.get('issueContentID')) {
-      $([document.documentElement, document.body]).animate({
-        scrollTop: $("#content" + currentUrl.searchParams.get('issueContentID') ).offset().top - 82
-      }, 1000);
-    }
+
   });
 
 
@@ -245,7 +240,7 @@
     // get URL and remove existing issueContentID
     var url = window.location.host + window.location.pathname;
     url += "?issueID=" + issue;
-    url += "&issueContentID=" + issueContentID;
+    url += "#contentID" + issueContentID;
 
     $("#qrcodeShareModal").empty();
     $("#qrcodeShareModal").qrcode({ width: 100, height: 100, text: url });
