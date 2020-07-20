@@ -1,0 +1,53 @@
+{% macro home_card(issue_content) %}
+<div class="row mb-2">
+  <a id="contentID{{issue_content.id}}" class="home-anchor"></a>
+  <div id="content{{issue_content.id}}" class="col-12 card z-depth-1">
+    <div class="card-body">
+
+      <div class="dropdown float-left noprint">
+        <button class="btn btn-link btn-lg m-0 mt-1 p-0 noprint" type="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i>
+        </button>
+        <div class="dropdown-menu dropdown-primary noprint">
+          <a class="dropdown-item noprint" href="javascript:setupShareModal('{{issue_content.issue}}', '{{issue_content.id}}');"><i class="fas fa-share-alt mr-3">
+            </i>Share</a>
+          <a class="dropdown-item noprint" href="javascript:printContentDiv('#content{{issue_content.id}}', '{{issue_content.title}}')">
+            <i class="fas fa-print mr-3"> </i>Print
+          </a>
+        </div>
+      </div>
+
+      <h4 class="card-title text-center">
+        {{issue_content.title | safe}}
+      </h4>
+      
+      <div class="row justify-content-left">
+        {{issue_content.data | safe}}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endmacro %}
+
+{% macro display_issue_content(issue_content) %}
+{% for post in issue_content %}
+{{ home_card(post) }}
+{% endfor %}
+{%- endmacro %}
+
+{% macro list_issues(issues, current_issue_id, site) %}
+<div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
+  <ul class="custom-scrollbar">
+    <li>
+      <ul class="collapsible collapsible-accordion">
+
+        {% for issue in issues %}
+        <li class="{% if  issue.id == current_issue_id | int %}mask rgba-blue-light{% endif %}">
+          <a class="waves-effect" href="{{ url_for('Pages_home', site=site, issueID=issue.id) }}">{{issue.title}}</a>
+        </li>
+        {% endfor %}
+
+      </ul>
+    </li>
+</div>
+{%- endmacro %}

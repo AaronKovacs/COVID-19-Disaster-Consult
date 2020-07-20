@@ -30,6 +30,7 @@ from sqlalchemy import desc
 
 from ..helpers.helpers import *
 from ..helpers.namespace import APINamespace
+from ..helpers.helpers import BError, get_site_info, post_to_slack, send_slack_message_to_user, render_page
 from ..database.database import Session
 from ..configuration.config import PASSWORD_SECRET_KEY
 
@@ -46,6 +47,12 @@ from ..models.literature import Literature
 from ..models.literature_link import LiteratureLink
 from ..models.feedback import Feedback
 from ..models.site import Site
+from ..models.site_url import SiteURL
+from ..models.site_info import SiteInfo
+from ..models.user_profile import UserProfile
+from ..models.issue import Issue
+from ..models.issue_content import IssueContent
+
 from itsdangerous import URLSafeTimedSerializer
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
@@ -55,9 +62,12 @@ api = APINamespace('Pages')#Api(blueprint)
 @api.route('/home')
 class Home(Resource):
     def get(self, site):
+        issue_id = request.args.get('issueID', None)
         # Create connection to database
         session = Session()
         sites = session.query(Site).filter_by(public=True)
+        private_sites = session.query(Site).filter_by(public=False)
+
         # Fetch latest news links from database and convert to JSON
         linksJS = []
         links = session.query(Link).filter_by(site=site).order_by(desc(Link.created), Link.id).limit(2)
@@ -87,13 +97,55 @@ class Home(Resource):
 
             table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
 
+
+        dict_urls = {}
+        urls = session.query(SiteURL).filter_by(site=site).order_by(desc(SiteURL.order), SiteURL.id).all()
+        for url in urls:
+            if url.section not in dict_urls:
+                dict_urls[url.section] = []
+            dict_urls[url.section].append(url.publicJSON())
+
+        info = get_site_info(['home_page_content'], site, session)
+
+        profilesJS = []
+        for profile in session.query(UserProfile).filter(UserProfile.disasters.contains(site)).order_by(UserProfile.order, UserProfile.id).all():
+            profilesJS.append(profile.publicJSON())
+
+        issueJS = {}
+        issuesJS = []
+        issues = session.query(Issue).filter_by(site=site).order_by(desc(Issue.last_updated), Issue.id)
+        for issue in issues:     
+            issuesJS.append(issue.publicJSON())
+
+        issueContentJS = []
+        if len(issuesJS) > 0:
+            issue_id = request.args.get('issueID', issuesJS[0]['id'])
+            issueContents = session.query(IssueContent).filter_by(issue=issue_id).order_by(IssueContent.order, IssueContent.id).all()
+            issueJS = session.query(Issue).filter_by(site=site, id=issue_id).one().publicJSON()
+
+            for issueContent in issueContents:     
+                issueContentJS.append(issueContent.publicJSON())
+
         # Close database connection
         session.close()
 
         # Render HTML template with Jinja
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/home.html', links=linksJS, literatures=litJS, table_contents=table_of_contents, sites=sites, site=site), 200, headers)
-
+        return render_page('pages/home.html', 
+                            site=site, 
+                            includeSite=True, 
+                            links=linksJS, 
+                            literatures=litJS, 
+                            table_contents=table_of_contents, 
+                            useful_links=dict_urls, 
+                            main_content=info, 
+                            team=profilesJS, 
+                            sites=sites, 
+                            private_sites=private_sites, 
+                            issues=issuesJS, 
+                            issue=issueJS,
+                            issue_content=issueContentJS, 
+                            issue_id=issue_id)
+      
 
 @api.route('/news')
 class ViewAllNews(Resource):
@@ -108,8 +160,7 @@ class ViewAllNews(Resource):
 
         session.close()
 
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/view_all_links.html', links=linksJS, site=site), 200, headers)
+        return render_page('pages/view_all_links.html', site=site, includeSite=False, links=linksJS)
 
 @api.route('/literature')
 class ViewAllLiterature(Resource):
@@ -124,8 +175,7 @@ class ViewAllLiterature(Resource):
 
         session.close()
 
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/view_all_literature.html', literatures=literatureJS, site=site), 200, headers)
+        return render_page('pages/view_all_literature.html', site=site, includeSite=False, literatures=literatureJS)
 
 
 @api.route('/other')
@@ -147,8 +197,7 @@ class Other(Resource):
 
         session.close()
 
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/other_information.html', section=sectionJS, posts=postsJS, site=site), 200, headers)
+        return render_page('pages/other_information.html', site=site, includeSite=False, section=sectionJS, posts=postsJS)
 
 
 @api.route('/categories')
@@ -162,8 +211,7 @@ class Categories(Resource):
 
         session.close()
 
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/provider_select.html', categories=catJS, site=site), 200, headers)
+        return render_page('pages/provider_select.html', site=site, includeSite=False, categories=catJS)
 
 @api.route('/categories/<categoryID>')
 class ViewCategory(Resource):
@@ -187,16 +235,19 @@ class ViewCategory(Resource):
 
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/provider_select.html', categories=catJS, sections=sectionsJS, category=categoryJS, site=site), 200, headers)
+        return render_page('pages/provider_select.html', site=site, includeSite=False, categories=catJS, sections=sectionsJS, category=categoryJS)
 
 @api.route('/section/<sectionID>')
 class ViewSection(Resource):
     def get(self, sectionID, site):
         categoryID = request.args.get('categoryID', None)
+        postID = request.args.get('postID', None)
 
         session = Session()
 
         sites = session.query(Site).filter_by(public=True)
+        private_sites = session.query(Site).filter_by(public=False)
+
         category = session.query(Category).filter_by(site=site).filter_by(id=categoryID).first()
         categoryJS = None
         if category is not None:
@@ -217,13 +268,13 @@ class ViewSection(Resource):
 
             table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
 
-        move_index = None
-        for i in table_of_contents:
-            if i['id'] == categoryID:
-                move_index = table_of_contents.index(i)
+        # move_index = None
+        # for i in table_of_contents:
+        #     if i['id'] == categoryID:
+        #         move_index = table_of_contents.index(i)
 
-        if move_index is not None:
-            table_of_contents.insert(0, table_of_contents.pop(move_index))
+        # if move_index is not None:
+        #     table_of_contents.insert(0, table_of_contents.pop(move_index))
 
 
         section = session.query(Section).filter_by(site=site).filter_by(id=sectionID).first()
@@ -241,8 +292,7 @@ class ViewSection(Resource):
 
         session.close()
 
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/section.html', section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, sites=sites, site=site), 200, headers)
+        return render_page('pages/section.html', site=site, includeSite=True, section=sectionJS, posts=postsJS, category=categoryJS, table_contents=table_of_contents, postID=postID, sites=sites, private_sites=private_sites)
 
 @api.route('/literature/<literatureID>')
 class ViewLiterature(Resource):
@@ -262,52 +312,54 @@ class ViewLiterature(Resource):
 
         session.close()
 
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/view_literature.html', literature=litJS, links=linksJS, site=site), 200, headers)
+        return render_page('pages/view_literature.html', site=site, includeSite=False, literature=litJS, links=linksJS)
 
 
 
 @api.route('/contact')
 class Contact(Resource):
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/contact.html', site=site), 200, headers)
+        return render_page('pages/contact.html', site=site, includeSite=False)
 
 @api.route('/privacy')
 class Privacy(Resource):
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/privacy.html', site=site), 200, headers)
+        return render_page('pages/privacy.html', site=site, includeSite=False)
 
 @api.route('/medical')
 class Medical(Resource):
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/medical.html', site=site), 200, headers)
+        return render_page('pages/medical.html', site=site, includeSite=False)
 
 @api.route('/tos')
 class TOS(Resource):
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/tos.html', site=site), 200, headers)
+        return render_page('pages/tos.html', site=site, includeSite=False)
 
 @api.route('/cookies')
 class Cookies(Resource):
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/cookies.html', site=site), 200, headers)
+        return render_page('pages/cookies.html', site=site, includeSite=False)
     
 @api.route('/sponsor')
 class Sponsor(Resource):
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/sponsor.html', site=site), 200, headers)
+        return render_page('pages/sponsor.html', site=site, includeSite=False)
 
 @api.route('/aboutus')
 class Aboutus(Resource):
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/about_us.html', site=site), 200, headers)
+        session = Session()
+
+        sites = session.query(Site).filter_by(public=True)
+
+        profilesJS = []
+        for profile in session.query(UserProfile).order_by(UserProfile.order, UserProfile.id).all():
+            profilesJS.append(profile.publicJSON())
+
+        session.close()
+
+        return render_page('pages/about_us.html', site=site, includeSite=False, user_profiles=profilesJS, sites=sites)
 
 
 @api.route('/feedback')
@@ -323,12 +375,14 @@ class SubmitFeedback(Resource):
         session.commit()
         session.close()
 
+        slack_msg = "*Email*: `{}`\n*Type*: `{}`\n*Content:* ```{}```".format(email, ftype, feedback)
+        post_to_slack(slack_msg)
+
         headers = {'Content-Type': 'text/html'}
         return redirect(url_for('Pages_submit_feedback', site=site))#make_response(render_template('pages/success_feedback.html'), 200, headers)
 
     def get(self, site):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('pages/success_feedback.html', site=site), 200, headers)       
+        return render_page('pages/success_feedback.html', site=site, includeSite=False)    
 
 
 # Mark file expose

@@ -21,6 +21,7 @@ from ..database.base import Base
 from ..database.database import Session
 
 from .literature import Literature
+from .link import Link
 
 def uniqueSiteID():
     possibleID = alphaNumericID()
@@ -62,3 +63,6 @@ class Site(Base):
 
     def hasLiterature(self, session):
         return session.query(Literature).filter_by(site=self.slug).first() != None
+
+    def hasNews(self, session):
+        return session.query(Link).filter_by(site=self.slug).first() != None

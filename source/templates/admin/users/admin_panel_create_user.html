@@ -25,6 +25,10 @@
                 <input name="email" type="text" placeholder="Email Address" class="form-control" value="{{ user.email }}" required/>
                 <label style="margin-top: 0.5em;">Privilege</label>
                 <input name="privilege" style="width: 150px;" class="form-control" type="number" value="{{ user.privilege }}" id="example-number-input">
+                <label style="margin-top: 0.5em;">Slack ID</label>
+                <input name="slack_id" type="text" placeholder="Slack ID" class="form-control" value="{{ profile.slack_id }}" required/>
+                <label style="margin-top: 0.5em;">Disasters</label>
+                <input name="disasters" type="text" placeholder="Comma , separated list of disaster slugs" class="form-control" value="{{ profile.disasters }}" required/>
             </div>
 
             <h4>User Profile</h4>

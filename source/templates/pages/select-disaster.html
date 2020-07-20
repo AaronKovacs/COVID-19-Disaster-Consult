@@ -1,38 +1,20 @@
 {% extends "base-pages/base-general.html" %}
+{% from "components/site_select.html" import site_select_card %}
 
 {% block head_content %}
 {% endblock %}
 
 {% block main_content %}
-<div class="view jarallax" style="height: 65vh;">
-  <img class="jarallax-img" src="{{ url_for('static', filename = 'images/ambulance.jpg') }}" alt="">
+<div class="view jarallax" style="height: 100vh; margin-top:-5.5em;">
+  <img id="paralaxImg" class="jarallax-img" src="{{ url_for('static', filename = 'images/boat1.jpg') }}" alt="">
   <div class="mask rgba-blue-slight">
     <div class="container flex-center">
       <div class="row mt-5 w-100 text-center justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6 wow fadeIn mb-3">
-          <div class="card z-depth-5">
-            <div class="card-body">
-              <h5 class="card-title text-center ">Disaster-Specific Resources</h5>
-              <div class="row justify-content-center">
-                <div class="col-12 col-md-7 col-lg-6">
-                  <select id="site-select" class="mdb-select md-form" searchable="Search here..">
-                    <option value="" disabled selected>Choose Disaster Type</option>
-                    {% for site in sites %}
-                    <option value="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}
-                    </option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="col-8 col-md-3">
-                  <a class="btn btn-outline-primary waves-effect btn-sm" role="button" aria-pressed="true"
-                    href="javascript:WinOpen();">Go</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% if current_user.is_authenticated and current_user.privilege > 50 %}
+          {{ site_select_card(sites, private_sites) }}
+        {% else %}
+          {{ site_select_card(sites) }}
+        {% endif %}
       </div>
     </div>
   </div>
@@ -42,104 +24,144 @@
   <div class="row text-center justify-content-center" style="margin-top: -75px;">
     <div class="col-12">
       <div class="card">
-        <div class="py-2 mt-4 mb-2">
+        <div class="py-2 mt-4">
           <h2>Our Mission</h2>
-          <h5 class="h5-responsive mx-2">Disaster Consult seeks to put relevant, accurate, and timely information in the hands of front
+          <h5 class="h5-responsive mx-2">Disaster Consult seeks to put relevant, accurate, and timely information in the
+            hands of front
             line healthcare workers when faced with the overwhelming challenge of responding to disasters.
           </h5>
         </div>
 
-        <!-- <div class="row justify-content-center mb-2">
+        <div class="row justify-content-center">
           <div class="col-10 col-md-5">
-            <a class="btn btn-outline-primary waves-effect btn-lg" role="button" aria-pressed="true" data-toggle="modal"
+            <a class="btn btn-outline-primary waves-effect btn-lg text-center" role="button" aria-pressed="true" data-toggle="modal"
               data-target="#howToUseSiteModal" href="#howToUseSiteModal">How to Use
               Disaster Consult</a>
           </div>
-        </div> -->
-
-        <div class="row">
-          <div class="col-11 greyLine"></div>
         </div>
 
-        <div class="row">
-          <div class="container-fluid pt-0">
-            <h2 id="numbersHere">Latest COVID-19 Numbers</h2>
-            <span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
+
+        <section id="statsSection" class="pt-0">
+          <div class="row">
+            <div class="col-11 greyLine"></div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="container-fluid pt-0">
-            <select id="select" class="custom-select" style="margin-top: 0.5em; display: none;"
-              onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
-            <center>
-              <iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA"
-                style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
-            </center>
-          </div>
-        </div>
-
-        <div class="row mt-2">
-          <div class="container-fluid pt-0">
-            <div class="country-specific-data">
-              <h3 id="currentcountry"></h3>
-              <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
-
-              <div class="row" id="stats">
-                <div class="col-md-4">
-                  <h1 id="currentcases"></h1>
-                  <h4>Cases</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="currentdeaths"></h1>
-                  <h4>Deaths</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="currentrecovered"></h1>
-                  <h4>Recovered</h4>
-                </div>
-
-              </div>
-              <!--row end-->
+          <div class="row">
+            <div class="container-fluid pt-0">
+              <h2 id="numbersHere">Latest COVID-19 Numbers</h2>
+              <span style="color: #5a5a5a"><i>Data provided by Johns Hopkins CSSE and Our World in Data</i></span>
             </div>
-            <!--country end-->
           </div>
-          <!-- select country end-->
-          <br>
-          <div class="greyLine" style="width: 50%;"></div>
-          <br>
-        </div>
 
-        <div class="row">
-          <div class="container-fluid pt-0">
-            <div class="global-data">
-              <h3>Global Data</h3>
-              <span style="color: #5a5a5a"><i>Updated Daily</i></span>
-              <div class="row" id="stats">
-
-                <div class="col-md-4">
-                  <h1 id="globalcases"></h1>
-                  <h4>Cases</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="globaldeaths"></h1>
-                  <h4>Deaths</h4>
-                </div>
-
-                <div class="col-md-4">
-                  <h1 id="globalrecovered"></h1>
-                  <h4>Recovered</h4>
-                </div>
-
-              </div>
-              <!--row end-->
+          <div class="row">
+            <div class="container-fluid pt-0">
+              <select id="select" class="custom-select" style="margin-top: 0.5em; display: none;"
+                onchange="getDataForCountry(document.getElementById('select').selectedIndex)"></select>
+              <center>
+                <iframe src="https://ourworldindata.org/grapher/covid-confirmed-cases-since-100th-case?country=USA"
+                  style="margin-top: 1em; width: 100%; height: 600px; border: 0px none;"></iframe>
+              </center>
             </div>
-            <!--global end-->
           </div>
-        </div>
+
+          <div class="row mt-2">
+            <div class="container-fluid pt-0">
+              <div class="country-specific-data">
+                <h3 id="currentcountry"></h3>
+                <span style="color: #5a5a5a"><i>Updated Hourly</i></span>
+
+                <div class="row" id="stats">
+                  <div class="col-md-4">
+                    <h2 class="h2-responsive" id="currentcases">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </h2>
+                    <h4>Cases</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h2 class="h2-responsive" id="currentdeaths">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </h2>
+                    <h4>Deaths</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h2 class="h2-responsive" id="currentrecovered">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </h2>
+                    <h4>Recovered</h4>
+                  </div>
+
+                </div>
+                <!--row end-->
+              </div>
+              <!--country end-->
+            </div>
+            <!-- select country end-->
+            <br>
+            <div class="greyLine" style="width: 50%;"></div>
+            <br>
+          </div>
+
+          <div class="row">
+            <div class="container-fluid pt-0">
+              <div class="global-data">
+                <h3>Global Data</h3>
+                <span style="color: #5a5a5a"><i>Updated Daily</i></span>
+                <div class="row" id="stats">
+
+                  <div class="col-md-4">
+                    <h2 class="h2-responsive" id="globalcases">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </h2>
+                    <h4>Cases</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h2 class="h2-responsive" id="globaldeaths">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </h2>
+                    <h4>Deaths</h4>
+                  </div>
+
+                  <div class="col-md-4">
+                    <h2 class="h2-responsive" id="globalrecovered">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                    </h2>
+                    <h4>Recovered</h4>
+                  </div>
+
+                </div>
+                <!--row end-->
+              </div>
+              <!--global end-->
+            </div>
+          </div>
+        </section>
 
         <div class="mb-4"></div>
 
@@ -149,35 +171,42 @@
 </div>
 
 
-
 <!-- Central Modal Large -->
 <div class="modal fade" id="howToUseSiteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title w-100" id="myModalLabel">How to Use Disaster Consult</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">
+          How to Use Disaster Consult
+          {% if current_user.is_authenticated and current_user.privilege > 300 %}
+          <small class="text-muted">
+            <a class="" target="_blank" data-toggle="tooltip" data-placement="bottom"
+              title="Edit How to Use Content | Admin" href="{{ url_for('Info_list_info', site=site) }}">
+              <i class="fas fa-pencil-alt ml-2"></i>
+            </a>
+          </small>
+          {% endif %}
+        </h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        {{ info.how_to_disaster_consult|safe }}
       </div>
     </div>
   </div>
 </div>
 
-{% endblock %} {% block scripts_content %}
+{% endblock %}
+
+{% block scripts_content %}
 <script>
-  function WinOpen() {
-    url = $("#site-select :selected").val();
-    if (!url) {
-      toastr.error('Please select a disaster to continue');
-      return false;
-    }
-    document.location.href = $("#site-select :selected").val();
-  }
+  hideOnIE("statsSection");
+</script>
+
+<script>
   // object-fit polyfill run
   objectFitImages();
   /* init Jarallax */
@@ -186,6 +215,7 @@
     keepImg: true
   });
 </script>
+
 <script>
   let requestOptions = {
     method: 'GET',

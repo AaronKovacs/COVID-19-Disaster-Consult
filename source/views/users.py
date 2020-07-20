@@ -121,6 +121,8 @@ class CreateUser(Resource):
         section = request.form['section']
         order = request.form['order']
         content = request.form['content']
+        disasters = request.form['disasters']
+        slack_id = request.form['slack_id']
 
         session = Session()
 
@@ -138,6 +140,8 @@ class CreateUser(Resource):
         profile.section = section
         profile.order = order
         profile.content = content
+        profile.slack_id = slack_id
+        profile.disasters = disasters
 
 
         session.commit()

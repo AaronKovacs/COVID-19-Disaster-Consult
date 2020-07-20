@@ -1,4 +1,11 @@
 {% extends "base-pages/base-libraries.html" %}
+<!-- {% from "components/general.html" import site_title_text %} -->
+{% from "components/site_select.html" import site_select_navbar_dropdown %}
+{% from "components/table_of_contents.html" import table_of_contents_pane, table_of_contents_modal %}
+{% from "components/about_us_profiles.html" import team_modal %}
+{% from "components/issues.html" import list_issues %}
+
+
 
 {% block head %}
 {% block head_content %}{% endblock %}
@@ -9,12 +16,13 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="d-flex flex-grow-1">
-      <a class="navbar-brand " href="{{ url_for('select_screen', site=site) }}" id="navtitle">
+      <a class="navbar-brand " style="margin-right: 5.5rem;" href="{{ url_for('select_screen', site=site) }}"
+        id="navtitle">
         <img id="logo" alt="Logo" src="../../static/images/logo.png" class="img-fluid"
           style="width: 90px; height: 50px;">
         <span style="font-weight: 700">
           Disaster Consult <br>
-          <b style="font-weight: 500">{{ site|upper }}</b>
+          <b style="font-weight: 500">{{site_title_text(site, siteJS)}}</b>
         </span>
 
       </a>
@@ -27,18 +35,11 @@
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
 
-        {% if sites %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">Select Disaster</a>
-          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-            {% for site in sites %}
-            <a class="dropdown-item" href="{{ url_for('Pages_home', site=site.slug) }}">{{site.title}}</a>
-            {% endfor %}
-          </div>
-        </li>
+        {% if current_user.is_authenticated and current_user.privilege > 50 %}
+        {{ site_select_navbar_dropdown(sites, site, private_sites=private_sites) }}
+        {% else %}
+        {{ site_select_navbar_dropdown(sites, site) }}
         {% endif %}
-
 
 
         {% if current_user.is_authenticated %}
@@ -54,121 +55,92 @@
 </header>
 
 <main style="padding-top:5.5rem;">
-  {% if site %}
-  <div class="text-center">
-    <h1>{{ site|upper }}</h1>
+  <div class="container-fluid">
+    <div id="siteTitle" class="row">
+      {% if site %}
+      {% if request.path != url_for('Pages_home', site=site) %}
+      <div class="col-12 col-lg-3 align-content-center text-center">
+        <a class="btn btn-nav-color-outline waves-effect text-center" style="max-width:80%; margin-top: -0.4em;"
+          href="{{ url_for('Pages_home', site=site) }}">
+          {% if siteJS %}{{ siteJS.title }}{% else %}{{ site|upper }}{% endif %} | Home
+        </a>
+      </div>
+      {% endif %}
+      <div class="col-12 {% if request.path != url_for('Pages_home', site=site) %}col-lg-6{% endif %} text-center">
+        <h1>{% if siteJS %}{{ siteJS.title }}{% else %}{{ site|upper }}{% endif %}</h1>
+      </div>
+    </div>
+
+    <hr class="mt-0">
+
+    {% endif %}
   </div>
-  <hr>
-  {% endif %}
 
   <div class="container-fluid">
     <div class="row">
-      {% if table_contents %}
-      <div class="col-lg-3 d-none d-lg-block">
-        <div class="sticky-top" style="top: 90px; z-index: 2;">
-          <div id="tocDiv" class="useful-links-box">
-            <h4>{% if table_contents %}Table of Contents{% endif %}</h4>
-            <div class="blueLine"></div>
+      {{ table_of_contents_modal(table_contents, site, category) }}
+      <div class="col-lg-3 d-none d-lg-block pr-0" style="margin-top: .1em;" style="background:white;">
+        <div class="sticky-top" style="top: 90px; z-index: 1022;" style="background:white;">
+          {{ table_of_contents_pane(table_contents, site, category) }}
 
-            <div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
-              <ul class="custom-scrollbar">
-                <!-- Side navigation links -->
-                <li>
-                  <ul class="collapsible collapsible-accordion">
-
-                    {% for cat in table_contents %}
-                    <li>
-                      <a class="collapsible-header waves-effect arrow-r">{{ cat.name }}
-                        <i class="fas fa-angle-down rotate-icon"></i>
-                      </a>
-                      <div class="collapsible-body">
-                        <ul>
-                          {% for sec in cat.sections %}
-                          <li><a
-                              href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}"
-                              class="waves-effect">{{ sec.name }}</a>
-                          </li>
-                          {% endfor %}
-                        </ul>
-                      </div>
-                    </li>
-                    {% endfor %}
-                  </ul>
-                </li>
-                <!--/. Side navigation links -->
-              </ul>
+          {% if request.path == url_for('Pages_home', site='covid-19') %}
+          {% if issues and issues|length > 1 and issue_id %}
+          <div class="mt-2">
+            <div class="side-previous-issues-box scrollbar-custom" style="background:white;">
+              <div class="sticky-top box-title">
+                <h4>Previous Reports</h4>
+                <div class="blueLine"></div>
+              </div>
+              <div>
+                {{list_issues(issues, issue_id, site)}}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endif %}
+        </div>
+        {% if team %}
+        <div class="mt-2">
+          <div class="side-navbar-box scrollbar-custom" style="background:white;">
+            <div class="sticky-top box-title">
+              <h4>{{site_title_text(site, siteJS)}} | Team</h4>
+              <div class="blueLine"></div>
+            </div>
+            <div class="row text-center justify-content-center mt-2">
+              <a class="btn btn-nav-color-outline waves-effect text-center" style="max-width:80%;" data-toggle="modal"
+                data-target="#modalTeam">
+                View Team
+              </a>
             </div>
           </div>
         </div>
+        {% endif %}
       </div>
-      {% endif %}
 
-      <div class="{% if table_contents %}col-12 col-lg-9{% else %}col-12{% endif %}">
-        {% block main_content %}{% endblock %}
+
+      <div class="col-12 col-lg-9 mt-0 pl-lg-0">
+        <div class="container-fluid pl-lg-0">
+          {% block main_content %}{% endblock %}
+        </div>
       </div>
     </div>
   </div>
   {% block secondary_content %}{% endblock %}
-
-  <!--Floating Catalog Button -->
-  <div class="fixed-action-btn d-lg-none" style="bottom: 15px; left: 15px;">
-    <a data-target="#leftContentModal" data-toggle="modal" class="button-collapse btn-sm btn-primary" id="tocButton"
-      href="#leftContentModal">Table of Contents</a>
-  </div>
-
-  <!-- Table of Content Modal - Full Height Modal Left -->
-  <div class="modal fade left" id="leftContentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-    <div class="modal-dialog modal-full-height modal-left" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title w-100" id="myModalLabel">Table of Contents</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div id="tocModal" class="modal-body">
-          <div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
-            <ul class="custom-scrollbar">
-              <!-- Side navigation links -->
-              <li>
-                <ul class="collapsible collapsible-accordion">
-
-                  {% for cat in table_contents %}
-                  <li>
-                    <a class="collapsible-header waves-effect arrow-r">{{ cat.name }}
-                      <i class="fas fa-angle-down rotate-icon"></i>
-                    </a>
-                    <div class="collapsible-body">
-                      <ul>
-                        {% for sec in cat.sections %}
-                        <li><a
-                            href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}"
-                            class="waves-effect">{{ sec.name }}</a>
-                        </li>
-                        {% endfor %}
-                      </ul>
-                    </div>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </li>
-              <!--/. Side navigation links -->
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </main>
+
+
+{% if team %}
+{{team_modal(site_title_text(site, siteJS), team)}}
+{% endif %}
+
 {% endblock %}
 
 
 {% block scripts %}
 <script>
   $(document).ready(function () {
-
+    // Needed for navbar disaster search to work
+    $('#disaster-select-dropdown').mdbDropSearch();
   });
 </script>
 {% block scripts_content %}{% endblock %}

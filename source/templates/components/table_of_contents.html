@@ -1,0 +1,82 @@
+{% macro toc_category_class(cat, current_category) %}
+{% if current_category %}
+{% if current_category.id == cat.id %}
+active
+{% endif %}
+{% endif %}
+{%- endmacro %}
+
+{% macro table_of_contents(table_contents, site, current_category) %}
+<div id="slide-out" class="custom-side-nav fixed" style="transform: translateX(0%);">
+  <ul class="custom-scrollbar">
+    <!-- Side navigation links -->
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        {% for cat in table_contents %}
+        <li>
+          <a class="collapsible-header waves-effect arrow-r {{toc_category_class(cat, current_category)}}">{{ cat.name }}
+            <i class="fas fa-angle-down rotate-icon"></i>
+          </a>
+          <div class="collapsible-body">
+            <ul>
+              {% for sec in cat.sections %}
+              <li><a href="{{ url_for('Pages_view_section', sectionID=sec.id, categoryID=cat.id, site=site) }}"
+                  class="waves-effect">{{ sec.name }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    <!--/. Side navigation links -->
+  </ul>
+</div>
+{%- endmacro %}
+
+{% macro table_of_contents_pane(table_contents, site, current_category) %}
+{% if table_contents %}
+<!-- <div class="col-lg-3 d-none d-lg-block" style="margin-top: .1em;"> -->
+  
+    <div id="tocDiv" class="side-navbar-box scrollbar-custom" style="background:white;">
+      <div class="sticky-top box-title">
+        <h4>Table of Contents</h4>
+        <div class="blueLine"></div>
+      </div>
+
+      {{ table_of_contents(table_contents, site, current_category) }}
+    </div>
+
+<!-- </div> -->
+{% endif %}
+{%- endmacro %}
+
+{% macro table_of_contents_modal(table_contents, site, current_category) %}
+{% if table_contents %}
+<!--Floating Catalog Button -->
+<div class="fixed-action-btn d-lg-none" style="bottom: 10px; left: 15px;">
+  <a data-target="#leftContentModal" data-toggle="modal" class="button-collapse btn-sm btn-primary" id="tocButton"
+    href="#leftContentModal">Table of Contents</a>
+</div>
+
+<!-- Table of Content Modal -->
+<div class="modal fade left" id="leftContentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+  <div class="modal-dialog modal-full-height modal-left" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Table of Contents</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="tocModal" class="modal-body">
+        {{ table_of_contents(table_contents, site, current_category) }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{%- endmacro %}

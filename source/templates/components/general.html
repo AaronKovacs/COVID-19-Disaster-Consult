@@ -1,0 +1,12 @@
+{% macro copyright_text() %}
+    <p class="mx-0 my-0 px-0 py-0">© 2020 Copyright: Disaster Consult LLC. All Rights Reserved 2020</p>
+{%- endmacro %}
+
+{% macro site_title_text(site=None, siteJS=None) %}
+{% if siteJS %}
+{{ siteJS.title }}
+{% else %}
+{{ site|upper }}
+{% endif %}
+{%- endmacro %}
+

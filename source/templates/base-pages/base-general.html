@@ -1,4 +1,10 @@
 {% extends "base-pages/base-libraries.html" %}
+{% from "components/site_select.html" import site_select_navbar_dropdown %}
+
+{% block title %}
+Disaster Consult {% block title_ext %}{% endblock %}
+{% endblock %}
+
 
 {% block head %}
 {% block head_content %}{% endblock %}
@@ -7,34 +13,91 @@
 
 {% block body %}
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="d-flex flex-grow-1">
-      <a class="navbar-brand " href="{{ url_for('select_screen', site=site) }}" id="navtitle">
+      <a class="navbar-brand " style="margin-right: 5.5rem;" href="{{ url_for('select_screen', site=site) }}" id="navtitle">
         <img id="logo" alt="Logo" src="../../static/images/logo.png" class="img-fluid"
-          style="width: 90px; height: 50px;">
+        style="width: 90px; height: 50px;">
         <span style="font-weight: 700">
-          Disaster Consult <br>
+          Disaster Consult 
+          <br>
           <b style="font-weight: 500">
-            <!--Title of Disaster type here--></b>
+            <!--Title of Disaster type here-->
+          </b>
         </span>
       </a>
-
+      
       <div class="w-100 text-right pt-2">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
     </div>
-
+    
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
-
+        
+        {% if 0==1 and request.path == url_for('select_screen') %}
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <!--Trigger-->
+            <a class="nav-link dropdown-toggle" id="navbarDisasterSelectDropDownBtn" data-toggle="dropdown">
+              Change Background
+            </a>
+            
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
+              <a class="dropdown-item" href="javascript:changeBackground('road.png');">Road</a>
+              <a class="dropdown-item" href="javascript:changeBackground('boat1.jpg');">Boat 1</a>
+              <a class="dropdown-item" href="javascript:changeBackground('boat2.jpg');">Boat 2</a>
+              <a class="dropdown-item" href="javascript:changeBackground('boat3.jpg');">Boat 3</a>
+              <a class="dropdown-item" href="javascript:changeBackground('1.png');">1</a>
+              <a class="dropdown-item" href="javascript:changeBackground('2.png');">2</a>
+              <a class="dropdown-item" href="javascript:changeBackground('3.png');">3</a>
+              <a class="dropdown-item" href="javascript:changeBackground('4.png');">4</a>
+              <a class="dropdown-item" href="javascript:changeBackground('5.png');">5</a>
+              <a class="dropdown-item" href="javascript:changeBackground('6.png');">6</a>
+              <a class="dropdown-item" href="javascript:changeBackground('7.png');">7</a>
+              <a class="dropdown-item" href="javascript:changeBackground('8.png');">8</a>
+              <a class="dropdown-item" href="javascript:changeBackground('9.png');">9</a>
+              <a class="dropdown-item" href="javascript:changeBackground('10.png');">10</a>
+              <a class="dropdown-item" href="javascript:changeBackground('11.png');">11</a>
+              <a class="dropdown-item" href="javascript:changeBackground('12.png');">12</a>
+              <a class="dropdown-item" href="javascript:changeBackground('13.png');">13</a>
+              <a class="dropdown-item" href="javascript:changeBackground('14.png');">14</a>
+            </div>
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <!--Trigger-->
+            <a class="nav-link dropdown-toggle" id="navbarDisasterSelectDropDownBtn" data-toggle="dropdown">
+              Middle Card Style
+            </a>
+        
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
+              <a class="dropdown-item" href="javascript:changeCard(1);">White Card</a>
+              <a class="dropdown-item" href="javascript:changeCard(2);">Translucent</a>
+            </div>
+          </li>
+        </div>
+        {% endif %}
+        
+        {% if request.path != url_for('select_screen') %}
+        {% if current_user.is_authenticated and current_user.privilege > 50 %}
+        {{ site_select_navbar_dropdown(sites, site, false, private_sites=private_sites) }}
+        {% else %}
+        {{ site_select_navbar_dropdown(sites, site, false) }}
+        {% endif %}
+        {% endif %}
+        
         {% if current_user.is_authenticated %}
         <li class="nav-item">
           <a href="{{ url_for('admin_select') }}" class="nav-link">Admin</a>
         </li>
         {% endif %}
-
+        
       </ul>
     </div>
   </nav>
@@ -47,5 +110,37 @@
 
 
 {% block scripts %}
+
+<!-- testing -->
+{% if 0==1 %} 
+<script>
+  function changeBackground(img) {
+    document.getElementById("paralaxImg").src = "/static/images/" + img;
+  }
+
+  function changeCard(style){
+    $("#select-card").removeClass();
+    $("#go-button").removeClass("btn-outline-warning");
+    $("#go-button").removeClass("btn-outline-primary");
+
+    if (style == 1){
+      $("#select-card").addClass("card z-depth-5");
+      $("#go-button").addClass("btn-outline-primary");
+      $(".select-dropdown").css("color", "black");
+      $('#navbar').removeClass("backdrop-container")
+
+
+    }
+
+    if (style == 2) {
+      $("#select-card").addClass("backdrop-container round-corner-panel navbar-color-foreground z-depth-5");
+      $("#go-button").addClass("btn-outline-warning");
+      $(".select-dropdown").css("color", "white");
+      $('#navbar').addClass("backdrop-container");
+    }
+  }
+</script>
+{% endif %}
+
 {% block scripts_content %}{% endblock %}
 {% endblock %}

@@ -32,7 +32,7 @@ except:
 
 from flask_login import LoginManager, login_required, login_user, logout_user 
 
-from source.helpers.helpers import BError
+from source.helpers.helpers import BError, get_site_info
 
 from source.configuration.config import PASSWORD_SECRET_KEY, ENV_NAME
 
@@ -45,6 +45,9 @@ from source.views.pages import api as pages
 from source.views.api import api as mobileapi
 from source.views.drafts import api as drafts
 from source.views.users import api as users
+from source.views.urls import api as urls
+from source.views.info import api as info
+from source.views.issues import api as issues
 
 from source.views.authentication import api as authentication
 
@@ -68,6 +71,10 @@ from source.models.feedback import Feedback
 from source.models.draft import Draft
 from source.models.site import Site
 from source.models.user_profile import UserProfile
+from source.models.site_info import SiteInfo
+from source.models.site_url import SiteURL
+from source.models.issue import Issue
+from source.models.issue_content import IssueContent
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
@@ -192,7 +199,8 @@ def redirect_homoe():
 def select_screen():
     session = Session()
 
-    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.id).all()
+    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.title).all()
+    private_sites = session.query(Site).filter_by(public=False).order_by(Site.order, Site.title).all()
 
     if len(sites) == 1:
         if ENV_NAME() == 'prod':
@@ -204,10 +212,12 @@ def select_screen():
     for site in sites:
         sitesJS.append(site.publicJSON())
 
+
+    info = get_site_info(['how_to_disaster_consult'], 'covid-19', session)
  
     session.close()
     headers = {'Content-Type': 'text/html'}
-    return make_response(render_template('pages/select-disaster.html', sites=sites, site='covid-19'), 200, headers)
+    return make_response(render_template('pages/select-disaster.html', sites=sites, private_sites=private_sites, info=info, site='covid-19'), 200, headers)
 
     '''
     if ENV_NAME() == 'prod':
@@ -219,7 +229,7 @@ def select_screen():
 
 @application.errorhandler(404) 
 def not_found(e): 
-    sites = session.query(Site).filter_by(public=True).order_by(Site.order, Site.id).all()
+    sites = session.query(Site).filter_by(public=True).all()
     return render_template("error/404.html", sites=sites, site=sites[0]) 
 
 
@@ -232,6 +242,9 @@ api.add_namespace(links, path='/<site>/links')
 api.add_namespace(literatures, path='/<site>/literatures')
 api.add_namespace(drafts, path='/<site>/drafts')
 api.add_namespace(users, path='/<site>/users')
+api.add_namespace(urls, path='/<site>/urls')
+api.add_namespace(info, path='/<site>/info')
+api.add_namespace(issues, path='/<site>/issues')
 
 api.add_namespace(mobileapi, path='/<site>/api/v1')
 
@@ -328,6 +341,7 @@ class SitesGet(Resource):
         for site in sites:
             js = site.publicJSON()
             js['has_literature'] = site.hasLiterature(session)
+            js['has_news'] = site.hasNews(session)
             sitesJS.append(js)
 
         session.close()
