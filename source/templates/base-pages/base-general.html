@@ -17,24 +17,55 @@ Disaster Consult {% block title_ext %}{% endblock %}
     <div class="d-flex flex-grow-1">
       <a class="navbar-brand " style="margin-right: 5.5rem;" href="{{ url_for('select_screen', site=site) }}" id="navtitle">
         <img id="logo" alt="Logo" src="../../static/images/logo.png" class="img-fluid"
-          style="width: 90px; height: 50px;">
+        style="width: 90px; height: 50px;">
         <span style="font-weight: 700">
-          Disaster Consult <br>
+          Disaster Consult 
+          <br>
           <b style="font-weight: 500">
-            <!--Title of Disaster type here--></b>
+            <!--Title of Disaster type here-->
+          </b>
         </span>
       </a>
-
+      
       <div class="w-100 text-right pt-2">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
     </div>
-
+    
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
-
+        
+        {% if request.path == url_for('select_screen') %}
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <!--Trigger-->
+            <a class="nav-link dropdown-toggle" id="navbarDisasterSelectDropDownBtn" data-toggle="dropdown">
+              Change Background
+            </a>
+            
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
+              <a class="dropdown-item" href="javascript:changeBackground(1);">1</a>
+              <a class="dropdown-item" href="javascript:changeBackground(2);">2</a>
+              <a class="dropdown-item" href="javascript:changeBackground(3);">3</a>
+              <a class="dropdown-item" href="javascript:changeBackground(4);">4</a>
+              <a class="dropdown-item" href="javascript:changeBackground(5);">5</a>
+              <a class="dropdown-item" href="javascript:changeBackground(6);">6</a>
+              <a class="dropdown-item" href="javascript:changeBackground(7);">7</a>
+              <a class="dropdown-item" href="javascript:changeBackground(8);">8</a>
+              <a class="dropdown-item" href="javascript:changeBackground(9);">9</a>
+              <a class="dropdown-item" href="javascript:changeBackground(10);">10</a>
+              <a class="dropdown-item" href="javascript:changeBackground(11);">11</a>
+              <a class="dropdown-item" href="javascript:changeBackground(12);">12</a>
+              <a class="dropdown-item" href="javascript:changeBackground(13);">13</a>
+              <a class="dropdown-item" href="javascript:changeBackground(14);">14</a>
+            </div>
+          </li>
+        </div>
+        {% endif %}
+        
         {% if request.path != url_for('select_screen') %}
         {% if current_user.is_authenticated and current_user.privilege > 50 %}
         {{ site_select_navbar_dropdown(sites, site, false, private_sites=private_sites) }}
@@ -42,13 +73,13 @@ Disaster Consult {% block title_ext %}{% endblock %}
         {{ site_select_navbar_dropdown(sites, site, false) }}
         {% endif %}
         {% endif %}
-
+        
         {% if current_user.is_authenticated %}
         <li class="nav-item">
           <a href="{{ url_for('admin_select') }}" class="nav-link">Admin</a>
         </li>
         {% endif %}
-
+        
       </ul>
     </div>
   </nav>
@@ -61,5 +92,10 @@ Disaster Consult {% block title_ext %}{% endblock %}
 
 
 {% block scripts %}
+<script>
+  function changeBackground(img) {
+    document.getElementById("paralaxImg").src = "/static/images/" + img + ".png"
+  }
+</script>
 {% block scripts_content %}{% endblock %}
 {% endblock %}
