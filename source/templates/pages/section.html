@@ -67,7 +67,7 @@
           <div id="postCollapse{{loop.index}}"
             class="collapse {% if posts|length == 1 or post.id == postID%}show{% endif %}" role="tabpanel"
             aria-labelledby="postHeading{{loop.index}}" data-parent="#postsAccordion">
-            <div class="card-body">
+            <div class="card-body font-regular">
               <a class="float-right btn-floating btn-sm btn-primary noprint"
                 href="javascript:printPostDiv('#postCollapse{{loop.index}}', '{{post.title}}')">
                 <i class="fas fa-print noprint"></i>

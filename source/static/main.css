@@ -1,6 +1,7 @@
 body,html {
   height:100%;
-  zoom: 0.88;
+  zoom: 0.95;
+  /* font-size: 1.1rem; */
 }
 
 body{
@@ -1321,7 +1322,7 @@ blockquote p {
 
 .custom-side-nav .collapsible a {
   height: 36px;
-  font-size: .8rem;
+  font-size: 1rem;
   font-weight: 300;
   line-height: 36px;
   color: black;
@@ -1535,4 +1536,8 @@ a.home-anchor {
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
+}
+
+.font-regular{
+  font-size: 1rem !important;
 }
