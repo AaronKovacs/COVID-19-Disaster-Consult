@@ -169,6 +169,17 @@
 
 
 {% block scripts_content %}
+
+{% if not issue_id %}
+<script>
+  $(document).ready(function () {
+    if ($(window).width() < 991){
+      $('#leftContentModal').modal();
+    }
+  });
+</script>
+{% endif %}
+
 <script>
 
   $(document).ready(function () {
