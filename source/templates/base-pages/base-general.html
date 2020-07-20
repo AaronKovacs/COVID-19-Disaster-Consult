@@ -47,20 +47,25 @@ Disaster Consult {% block title_ext %}{% endblock %}
             
             <!--Menu-->
             <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
-              <a class="dropdown-item" href="javascript:changeBackground(1);">1</a>
-              <a class="dropdown-item" href="javascript:changeBackground(2);">2</a>
-              <a class="dropdown-item" href="javascript:changeBackground(3);">3</a>
-              <a class="dropdown-item" href="javascript:changeBackground(4);">4</a>
-              <a class="dropdown-item" href="javascript:changeBackground(5);">5</a>
-              <a class="dropdown-item" href="javascript:changeBackground(6);">6</a>
-              <a class="dropdown-item" href="javascript:changeBackground(7);">7</a>
-              <a class="dropdown-item" href="javascript:changeBackground(8);">8</a>
-              <a class="dropdown-item" href="javascript:changeBackground(9);">9</a>
-              <a class="dropdown-item" href="javascript:changeBackground(10);">10</a>
-              <a class="dropdown-item" href="javascript:changeBackground(11);">11</a>
-              <a class="dropdown-item" href="javascript:changeBackground(12);">12</a>
-              <a class="dropdown-item" href="javascript:changeBackground(13);">13</a>
-              <a class="dropdown-item" href="javascript:changeBackground(14);">14</a>
+              <a class="dropdown-item" href="javascript:changeBackground('road.png');">Road</a>
+              <a class="dropdown-item" href="javascript:changeBackground('boat1.jpg');">Boat 1</a>
+              <a class="dropdown-item" href="javascript:changeBackground('boat2.jpg');">Boat 2</a>
+              <a class="dropdown-item" href="javascript:changeBackground('boat3.jpg');">Boat 3</a>
+
+              <a class="dropdown-item" href="javascript:changeBackground('1.png');">1</a>
+              <a class="dropdown-item" href="javascript:changeBackground('2.png');">2</a>
+              <a class="dropdown-item" href="javascript:changeBackground('3.png');">3</a>
+              <a class="dropdown-item" href="javascript:changeBackground('4.png');">4</a>
+              <a class="dropdown-item" href="javascript:changeBackground('5.png');">5</a>
+              <a class="dropdown-item" href="javascript:changeBackground('6.png');">6</a>
+              <a class="dropdown-item" href="javascript:changeBackground('7.png');">7</a>
+              <a class="dropdown-item" href="javascript:changeBackground('8.png');">8</a>
+              <a class="dropdown-item" href="javascript:changeBackground('9.png');">9</a>
+              <a class="dropdown-item" href="javascript:changeBackground('10.png');">10</a>
+              <a class="dropdown-item" href="javascript:changeBackground('11.png');">11</a>
+              <a class="dropdown-item" href="javascript:changeBackground('12.png');">12</a>
+              <a class="dropdown-item" href="javascript:changeBackground('13.png');">13</a>
+              <a class="dropdown-item" href="javascript:changeBackground('14.png');">14</a>
             </div>
           </li>
         </div>
@@ -109,7 +114,7 @@ Disaster Consult {% block title_ext %}{% endblock %}
 {% block scripts %}
 <script>
   function changeBackground(img) {
-    document.getElementById("paralaxImg").src = "/static/images/" + img + ".png"
+    document.getElementById("paralaxImg").src = "/static/images/" + img;
   }
 
   function changeCard(style){
