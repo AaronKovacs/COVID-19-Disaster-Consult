@@ -110,7 +110,7 @@ img {
 }
 
 .navbar{
-  background-color: #25353F !important;
+  background-color: #25353F;
 }
 
 .navbar-color{
@@ -1524,9 +1524,10 @@ a.home-anchor {
     visibility: hidden;
 }
 
-/* .select-dropdown{ 
-  color: white; 
-} */
+.select-dropdown{ 
+  /* color: white;  */
+  font-size: 125% !important;
+}
 
 .round-corner-panel{
   border-radius: .25rem;
