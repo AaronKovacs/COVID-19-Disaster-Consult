@@ -64,6 +64,21 @@ Disaster Consult {% block title_ext %}{% endblock %}
             </div>
           </li>
         </div>
+
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <!--Trigger-->
+            <a class="nav-link dropdown-toggle" id="navbarDisasterSelectDropDownBtn" data-toggle="dropdown">
+              Middle Card Style
+            </a>
+        
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-primary" id="disaster-select-dropdown">
+              <a class="dropdown-item" href="javascript:changeCard(1);">White Card</a>
+              <a class="dropdown-item" href="javascript:changeCard(2);">Translucent</a>
+            </div>
+          </li>
+        </div>
         {% endif %}
         
         {% if request.path != url_for('select_screen') %}
@@ -95,6 +110,24 @@ Disaster Consult {% block title_ext %}{% endblock %}
 <script>
   function changeBackground(img) {
     document.getElementById("paralaxImg").src = "/static/images/" + img + ".png"
+  }
+
+  function changeCard(style){
+    $("#select-card").removeClass();
+    $("#go-button").removeClass("btn-outline-warning");
+    $("#go-button").removeClass("btn-outline-primary");
+
+    if (style == 1){
+      $("#select-card").addClass("card z-depth-5");
+      $("#go-button").addClass("btn-outline-primary");
+      $(".select-dropdown").css("color", "black");
+    }
+
+    if (style == 2) {
+      $("#select-card").addClass("backdrop-container round-corner-panel navbar-color-foreground z-depth-5");
+      $("#go-button").addClass("btn-outline-warning");
+      $(".select-dropdown").css("color", "white");
+    }
   }
 </script>
 {% block scripts_content %}{% endblock %}

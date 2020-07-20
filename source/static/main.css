@@ -1507,7 +1507,7 @@ footer.page-footer a {
 }
 
 .backdrop-container {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.2);
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
@@ -1522,4 +1522,16 @@ a.home-anchor {
     position: relative;
     top: -100px;
     visibility: hidden;
+}
+
+/* .select-dropdown{ 
+  color: white; 
+} */
+
+.round-corner-panel{
+  border-radius: .25rem;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
 }
