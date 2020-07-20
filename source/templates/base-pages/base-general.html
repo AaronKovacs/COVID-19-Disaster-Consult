@@ -37,7 +37,7 @@ Disaster Consult {% block title_ext %}{% endblock %}
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
         
-        {% if request.path == url_for('select_screen') %}
+        {% if 0==1 and request.path == url_for('select_screen') %}
         <div class="dropdown">
           <li class="nav-item dropdown">
             <!--Trigger-->
@@ -51,7 +51,6 @@ Disaster Consult {% block title_ext %}{% endblock %}
               <a class="dropdown-item" href="javascript:changeBackground('boat1.jpg');">Boat 1</a>
               <a class="dropdown-item" href="javascript:changeBackground('boat2.jpg');">Boat 2</a>
               <a class="dropdown-item" href="javascript:changeBackground('boat3.jpg');">Boat 3</a>
-
               <a class="dropdown-item" href="javascript:changeBackground('1.png');">1</a>
               <a class="dropdown-item" href="javascript:changeBackground('2.png');">2</a>
               <a class="dropdown-item" href="javascript:changeBackground('3.png');">3</a>
@@ -69,7 +68,6 @@ Disaster Consult {% block title_ext %}{% endblock %}
             </div>
           </li>
         </div>
-
         <div class="dropdown">
           <li class="nav-item dropdown">
             <!--Trigger-->
@@ -112,6 +110,9 @@ Disaster Consult {% block title_ext %}{% endblock %}
 
 
 {% block scripts %}
+
+<!-- testing -->
+{% if 0==1 %} 
 <script>
   function changeBackground(img) {
     document.getElementById("paralaxImg").src = "/static/images/" + img;
@@ -139,5 +140,7 @@ Disaster Consult {% block title_ext %}{% endblock %}
     }
   }
 </script>
+{% endif %}
+
 {% block scripts_content %}{% endblock %}
 {% endblock %}
