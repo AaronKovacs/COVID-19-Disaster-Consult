@@ -137,3 +137,16 @@ def send_slack_message_to_user(userid, msg):
     session.close()
 
     post_to_slack(msg + msg_append, destination)
+
+def get_from_slack(method, data=None):
+    api_url = 'https://slack.com/api/{}'.format(method)
+    response = requests.get(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': SLACK_OATH_KEY})
+    return response.json()
+
+def get_slack_users():
+    slack_json = get_from_slack('users.list')
+    returned_list = []
+    for member in slack_json['members']:
+        returned_list.append({'name' : member['real_name'], 'id' : member['id']})
+    print(returned_list)
+    return returned_list
