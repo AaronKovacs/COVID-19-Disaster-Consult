@@ -124,30 +124,54 @@ class ApproveDraft(Resource):
 
         decision = ''
         if 'approvebutton' in request.form:
-            decision = 'approve'
+            decision = 'approved'
         if 'rejectbutton' in request.form:
-            decision = 'reject'
+            decision = 'rejected'
 
         draft = session.query(Draft).filter_by(id=draftID).first()
-
+        
         if draft is None:
+            abort(404) 
+        
+        draftJS = draft.publicJSON()
+
+        activity = session.query(ActivityTrack).filter_by(draft=draftID).first()
+
+        if activity is None:
             abort(404)
 
-        if decision == 'approve':
+        activityJS = activity.publicJSON(site)
+
+
+        if decision == 'approved':
             draft.approved = True
             draft.rejected = False
 
             older_drafts = session.query(Draft).filter_by(object_id=draft.object_id).filter(Draft.created < draft.created).all()
             for d in older_drafts:
+                dJS = d.publicJSON()
+                a = session.query(ActivityTrack).filter_by(draft=dJS['id']).first()
+
+                # Send other users who made unapproved drafts updates as well
+                if a and not d.approved and aJS['user']['id'] != activityJS['user']['id']:   
+                    aJS = a.publicJSON(site)
+                    slack_msg = "Hello, there are new updated content added to your draft!\n*Post Title*: {}\n*Final Draft Decision*: {}\n*Draft Comments*:```{}```\n*Post Link*: {}"
+                    slack_msg = slack_msg.format(dJS['new_content']['title'], decision.title(), comment,request.host + aJS["url"])
+                    send_slack_message_to_user(aJS['user']['id'], slack_msg)
+
                 d.approved = True
-                print('jere')
         else:
             draft.rejected = True
             draft.approved = False
 
         draft.comment = '%s \nReviewed by %s' % (comment, current_user.realname)
-
         session.commit()
+
+
+
+        slack_msg = "Hello, there has been an update to a draft you submitted!\n*Post Title*: {}\n*Draft Decision*: {}\n*Draft Comments*:```{}```\n*Post Link*: {}"
+        slack_msg = slack_msg.format(draftJS['new_content']['title'], decision.title(), comment,request.host + activityJS["url"])
+        send_slack_message_to_user(activityJS['user']['id'], slack_msg)
 
         session.close()
 
