@@ -122,7 +122,7 @@ def post_to_slack(msg, channel='#web-feedback'):
     response = requests.post(api_url, data=json.dumps(data), headers={'Content-Type': 'application/json', 'Authorization': SLACK_OATH_KEY})
 
 def send_slack_message_to_user(userid, msg):
-    destination = "#web-feedback"
+    destination = "#web-errors"
     msg_append = "\n\n"
     session = Session()
     user = session.query(User).filter_by(id=userid).first()
