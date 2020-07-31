@@ -55,6 +55,7 @@ from ..models.issue_content import IssueContent
 
 from itsdangerous import URLSafeTimedSerializer
 
+# from flask_wtf import Form, RecaptchaField
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 api = APINamespace('Pages')#Api(blueprint)
@@ -67,20 +68,6 @@ class Home(Resource):
         session = Session()
         sites = session.query(Site).filter_by(public=True)
         private_sites = session.query(Site).filter_by(public=False)
-
-        # Fetch latest news links from database and convert to JSON
-        linksJS = []
-        links = session.query(Link).filter_by(site=site).order_by(desc(Link.created), Link.id).limit(2)
-        for link in links:
-            if link.public:
-                linksJS.append(link.publicJSON())
-
-        # Fetch latest literature from database and convert to JSON
-        litJS = []
-        lits = session.query(Literature).filter_by(site=site).order_by(desc(Literature.created), Literature.id).limit(3)
-        for lit in lits:
-            if lit.public:
-                litJS.append(lit.publicJSON())
 
 
         table_of_contents = []
@@ -113,7 +100,7 @@ class Home(Resource):
 
         issueJS = {}
         issuesJS = []
-        issues = session.query(Issue).filter_by(site=site).order_by(desc(Issue.last_updated), Issue.id)
+        issues = session.query(Issue).filter_by(site=site, archived=False).order_by(desc(Issue.last_updated), Issue.id)
         for issue in issues:     
             issuesJS.append(issue.publicJSON())
 
@@ -133,8 +120,6 @@ class Home(Resource):
         return render_page('pages/home.html', 
                             site=site, 
                             includeSite=True, 
-                            links=linksJS, 
-                            literatures=litJS, 
                             table_contents=table_of_contents, 
                             useful_links=dict_urls, 
                             main_content=info, 
