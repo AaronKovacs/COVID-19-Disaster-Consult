@@ -148,5 +148,4 @@ def get_slack_users():
     returned_list = []
     for member in slack_json['members']:
         returned_list.append({'name' : member['real_name'], 'id' : member['id']})
-    print(returned_list)
     return returned_list
