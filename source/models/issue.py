@@ -38,7 +38,8 @@ class Issue(Base):
         'title': self.title,
         'subtitle': self.subtitle,
         'site': self.site, 
-        'last_updated': str(self.last_updated)
+        'last_updated': str(self.last_updated),
+        'archived': self.archived
         }
 
     def blankJSON(self):

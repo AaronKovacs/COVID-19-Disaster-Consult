@@ -114,16 +114,16 @@ class DeleteIssueContent(Resource):
 class View(Resource):
     @login_required
     def get(self, site):
-        infoID = request.args.get('id')
+        issueID = request.args.get('id')
         session = Session()
 
-        info = session.query(Issue).filter_by(site=site).filter_by(id=infoID).first()
+        info = session.query(Issue).filter_by(site=site).filter_by(id=issueID).first()
         if info is None:
             abort(404)
 
         js = info.publicJSON()
 
-        contents = session.query(IssueContent).filter_by(site=site, issue=infoID).order_by(IssueContent.order, IssueContent.id).all()
+        contents = session.query(IssueContent).filter_by(site=site, issue=issueID).order_by(IssueContent.order, IssueContent.id).all()
         contentsJS = []
         for content in contents:
             contentsJS.append(content.publicJSON())
@@ -140,7 +140,7 @@ class CreateIssue(Resource):
         title = request.form['title']
         subtitle = request.form['subtitle']
         archived = False
-        if request.form.get('public') != None:
+        if request.form.get('archived') == "on":
             archived = True
 
         session = Session()

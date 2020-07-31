@@ -55,6 +55,7 @@ from ..models.issue_content import IssueContent
 
 from itsdangerous import URLSafeTimedSerializer
 
+# from flask_wtf import Form, RecaptchaField
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 api = APINamespace('Pages')#Api(blueprint)
@@ -68,32 +69,17 @@ class Home(Resource):
         sites = session.query(Site).filter_by(public=True)
         private_sites = session.query(Site).filter_by(public=False)
 
-        # Fetch latest news links from database and convert to JSON
-        linksJS = []
-        links = session.query(Link).filter_by(site=site).order_by(desc(Link.created), Link.id).limit(2)
-        for link in links:
-            if link.public:
-                linksJS.append(link.publicJSON())
-
-        # Fetch latest literature from database and convert to JSON
-        litJS = []
-        lits = session.query(Literature).filter_by(site=site).order_by(desc(Literature.created), Literature.id).limit(3)
-        for lit in lits:
-            if lit.public:
-                litJS.append(lit.publicJSON())
-
 
         table_of_contents = []
-        all_categories = session.query(Category).filter_by(site=site).all()
+        all_categories = session.query(Category).filter_by(site=site, public=True).all()
         for cat in all_categories:
             use_sections = []
 
             category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
             for link in category_sections:
-                section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
+                section = session.query(Section).filter_by(site=site, public=True).filter_by(id=link.section).first()
                 if section is not None:
-                    if section.public:
-                        use_sections.append({ 'name': section.title, 'id': section.id })
+                    use_sections.append({ 'name': section.title, 'id': section.id })
 
             table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
 
@@ -113,7 +99,7 @@ class Home(Resource):
 
         issueJS = {}
         issuesJS = []
-        issues = session.query(Issue).filter_by(site=site).order_by(desc(Issue.last_updated), Issue.id)
+        issues = session.query(Issue).filter_by(site=site, archived=False).order_by(desc(Issue.last_updated), Issue.id)
         for issue in issues:     
             issuesJS.append(issue.publicJSON())
 
@@ -133,8 +119,6 @@ class Home(Resource):
         return render_page('pages/home.html', 
                             site=site, 
                             includeSite=True, 
-                            links=linksJS, 
-                            literatures=litJS, 
                             table_contents=table_of_contents, 
                             useful_links=dict_urls, 
                             main_content=info, 
