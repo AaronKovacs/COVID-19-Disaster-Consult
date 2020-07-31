@@ -103,29 +103,46 @@
 					{% if current_user.privilege >= 100 or current_user.privilege == 85 %}
 					<ul class="nav flex-column">
 						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-							<span>Monthly Issues</span>
+							<span>Home Page</span>
 						</h6>
 						<li class="nav-item">
 							<a class="nav-link {% block issueButton %}{% endblock %}" href="{{ url_for('Issues_list_issue', site=site) }}">
 								<span data-feather="list"></span>
-								Issues
+								Main Issues
 							</a>
 						</li>
+
+						{% if current_user.privilege >= 100 %}
+						<li class="nav-item">
+							<a class="nav-link {% block usefulLinksButton %}{% endblock %}" href="{{ url_for('URLs_list_urls', site=site) }}">
+								<span data-feather="external-link"></span>
+								Useful Links
+							</a>
+						</li>
+						{% endif %}
+
 					</ul>
 					{% endif %}
 
 					{% if current_user.privilege > 100 %}
 					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-						<span>Admin</span>
+						<span>Content Review</span>
 					</h6>
-
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="nav-link {% block draftsButton %}{% endblock %}" href="{{ url_for('Drafts_list_drafts', site=site) }}">
+							<a class="nav-link {% block draftsButton %}{% endblock %}"
+								href="{{ url_for('Drafts_list_drafts', site=site) }}">
 								<span data-feather="clipboard"></span>
 								Pending Drafts
 							</a>
 						</li>
+						</ul>
+
+
+					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<span>Admin</span>
+					</h6>
+					<ul class="nav flex-column">
 						<li class="nav-item">
 							<a class="nav-link {% block usersButton %}{% endblock %}" href="{{ url_for('Users_list_users', site=site) }}">
 								<span data-feather="user"></span>
@@ -133,12 +150,7 @@
 							</a>
 						</li>
 						{% if current_user.privilege > 300 %}
-						<li class="nav-item">
-							<a class="nav-link {% block usefulLinksButton %}{% endblock %}" href="{{ url_for('URLs_list_urls', site=site) }}">
-								<span data-feather="external-link"></span>
-								Useful Links
-							</a>
-						</li>
+						
 						<li class="nav-item">
 							<a class="nav-link {% block infoButton %}{% endblock %}" href="{{ url_for('Info_list_info', site=site) }}">
 								<span data-feather="info"></span>
