@@ -25,8 +25,14 @@
                 <input name="email" type="text" placeholder="Email Address" class="form-control" value="{{ user.email }}" required/>
                 <label style="margin-top: 0.5em;">Privilege</label>
                 <input name="privilege" style="width: 150px;" class="form-control" type="number" value="{{ user.privilege }}" id="example-number-input">
-                <label style="margin-top: 0.5em;">Slack ID</label>
-                <input name="slack_id" type="text" placeholder="Slack ID" class="form-control" value="{{ profile.slack_id }}" />
+                <label style="margin-top: 0.5em;">Slack User</label>
+                <select class="custom-select" name="slack_id">
+                    <option>Open this select menu</option>
+                    {% for slack_user in slack_users %}
+                    <option value="{{slack_user.id}}" {% if profile.slack_id == slack_user.id%}selected{%endif%}>{{slack_user.name}}
+                    </option>
+                    {% endfor %}
+                </select>
                 <label style="margin-top: 0.5em;">Disasters</label>
                 <input name="disasters" type="text" placeholder="Comma , separated list of disaster slugs" class="form-control" value="{{ profile.disasters }}" />
             </div>

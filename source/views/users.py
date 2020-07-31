@@ -159,10 +159,11 @@ class CreateUser(Resource):
 
         userJS = user.publicJSON()
         profileJS = user.profile(session).publicJSON()
+        slack_users = get_slack_users()
 
         session.close()
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('admin/users/admin_panel_create_user.html', user=userJS, profile=profileJS, site=site), 200, headers)
+        return make_response(render_template('admin/users/admin_panel_create_user.html', user=userJS, profile=profileJS, slack_users=slack_users, site=site), 200, headers)
 
 def cleanUsername(username):
     cleaned_string = ''
