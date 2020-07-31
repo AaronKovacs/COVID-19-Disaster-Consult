@@ -71,16 +71,15 @@ class Home(Resource):
 
 
         table_of_contents = []
-        all_categories = session.query(Category).filter_by(site=site).all()
+        all_categories = session.query(Category).filter_by(site=site, public=True).all()
         for cat in all_categories:
             use_sections = []
 
             category_sections = session.query(CategorySection).filter_by(site=site).filter_by(category=cat.id).order_by(CategorySection.order, CategorySection.id).all()
             for link in category_sections:
-                section = session.query(Section).filter_by(site=site).filter_by(id=link.section).first()
+                section = session.query(Section).filter_by(site=site, public=True).filter_by(id=link.section).first()
                 if section is not None:
-                    if section.public:
-                        use_sections.append({ 'name': section.title, 'id': section.id })
+                    use_sections.append({ 'name': section.title, 'id': section.id })
 
             table_of_contents.append({ 'name': cat.title, 'id': cat.id, 'sections': use_sections })
 
