@@ -74,6 +74,7 @@
 
 						
 					</ul>
+					{% if current_user.privilege >= 100 %}
 					<ul class="nav flex-column">
 						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>Content</span>
@@ -97,25 +98,21 @@
 							</a>
 						</li>
 					</ul>
+					{% endif %}
 
-					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-						<span>News</span>
-					</h6>
-
+					{% if current_user.privilege >= 100 or current_user.privilege == 85 %}
 					<ul class="nav flex-column">
+						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+							<span>Monthly Issues</span>
+						</h6>
 						<li class="nav-item">
-							<a class="nav-link {% block newsButton %}{% endblock %}" href="{{ url_for('Links_list_links', site=site) }}">
-								<span data-feather="link"></span>
-								Links
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link {% block literaturesButton %}{% endblock %}" href="{{ url_for('Literatures_list_literatures', site=site) }}">
-								<span data-feather="book"></span>
-								Literature
+							<a class="nav-link {% block issueButton %}{% endblock %}" href="{{ url_for('Issues_list_issue', site=site) }}">
+								<span data-feather="list"></span>
+								Issues
 							</a>
 						</li>
 					</ul>
+					{% endif %}
 
 					{% if current_user.privilege > 100 %}
 					<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -148,12 +145,7 @@
 								Site Info
 							</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link {% block issueButton %}{% endblock %}" href="{{ url_for('Issues_list_issue', site=site) }}">
-								<span data-feather="list"></span>
-								Issues
-							</a>
-						</li>
+
 						{% endif %}
 					</ul>
 					{% endif %}
