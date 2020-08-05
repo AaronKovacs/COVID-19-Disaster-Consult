@@ -103,10 +103,20 @@ class Post(Base):
         js['last_updated'] = self.last_updated_formatted()
         return js
 
+    # Since drafts was added after a lot of content on site was inputted, some valid posts don't have drafts. In that case we don't want to hide the post, like we would for a new post. This check can be removed once all posts have drafts.
+    def isLegacy(self):
+        elapsed = datetime.datetime.now() - self.created
+        if elapsed.days > 30:
+            return True
+        return False
+
     def siteJSON(self, session):
         draft = session.query(draft_c.Draft).filter_by(object_type='post', object_id=self.id, approved=True).order_by(desc(draft_c.Draft.created), draft_c.Draft.id).first()
         if draft is None:
-            return self.latestJSON(session)
+            if self.isLegacy():
+                return self.latestJSON(session)
+            else:
+                return {}
         js = json.loads(draft.new_content)
         js['content'] = self.process_content(js['content'])
         js['last_updated'] = self.last_updated_formatted()
