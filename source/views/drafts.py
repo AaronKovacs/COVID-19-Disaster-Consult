@@ -151,10 +151,9 @@ class ApproveDraft(Resource):
             for d in older_drafts:
                 dJS = d.publicJSON()
                 a = session.query(ActivityTrack).filter_by(draft=dJS['id']).first()
-
+                aJS = a.publicJSON(site)
                 # Send other users who made unapproved drafts updates as well
                 if a and not d.approved and aJS['user']['id'] != activityJS['user']['id']:   
-                    aJS = a.publicJSON(site)
                     slack_msg = "Hello, there are new updated content added to your draft!\n*Post Title*: {}\n*Final Draft Decision*: {}\n*Draft Comments*:```{}```\n*Post Link*: {}"
                     slack_msg = slack_msg.format(dJS['new_content']['title'], decision.title(), comment,request.host + aJS["url"])
                     send_slack_message_to_user(aJS['user']['id'], slack_msg)
