@@ -62,7 +62,9 @@ class Site(Base):
         }
 
     def hasLiterature(self, session):
-        return session.query(Literature).filter_by(site=self.slug).first() != None
+        return False
+        #return session.query(Literature).filter_by(site=self.slug).first() != None
 
     def hasNews(self, session):
-        return session.query(Link).filter_by(site=self.slug).first() != None
+        return False
+        #return session.query(Link).filter_by(site=self.slug).first() != None
