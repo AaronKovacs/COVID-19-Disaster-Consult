@@ -20,6 +20,7 @@ from passlib.hash import pbkdf2_sha256
 from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, BadData
 
 from ..database.base import Base
+from ..database.search import SearchableMixin
 from ..database.database import Session
 
 from . import draft as draft_c
@@ -37,8 +38,9 @@ def uniquePostID():
 def alphaNumericID():
     return 'p' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
 
-class Post(Base):
+class Post(Base, SearchableMixin):
     __tablename__ = 'posts'
+    __searchable__ = ['site', 'keywords', 'title']
     id = Column(String(255), default=uniquePostID, primary_key=True)
     title = Column(String(1000))
     content = Column(Text())
@@ -51,6 +53,12 @@ class Post(Base):
     created = Column(DateTime(), default=datetime.datetime.utcnow)
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
+    def should_index(self, session):
+        return True
+
+    def rank(self, session):
+        return 0
+
     def publicJSON(self):
         keywords_txt = self.keywords
         if self.keywords is None:
@@ -62,6 +70,7 @@ class Post(Base):
         'content': self.content,
         'public': self.public,
         'keywords': keywords_txt,
+        'site': self.site,
         'last_updated': self.last_updated_formatted()
         }
 
