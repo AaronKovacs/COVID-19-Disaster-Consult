@@ -436,6 +436,38 @@ class UploadImage(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('admin/posts/admin_panel_post_upload_image.html', id=postID, site=site), 200, headers)
 
+# Search
+
+@api.route('/search')
+class Search(Resource):
+    @login_required
+    def get(self, site):
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('admin/posts/admin_panel_search_posts.html', posts=[], site=site), 200, headers)
+
+    @login_required
+    def post(self, site):
+        query = request.form['query']
+        result = search_posts(query, site, include_private=True, page=1, per_page=10)
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('admin/posts/admin_panel_search_posts.html', posts=result, site=site, query=query), 200, headers)
+
+@api.route('/search/reindex')
+class SearchReindex(Resource):
+    @login_required
+    def get(self, site):
+        print('STARTING Elastic Search Cache Update')
+        session = Session()
+        Post.reindex(session)
+        Category.reindex(session)
+        Section.reindex(session)
+        session.close()
+        print('SUCCESSFUL Elastic Search Cache Update')
+
+        headers = {'Content-Type': 'text/html'}
+        return redirect(url_for('Posts_view', id=postID, site=site))
+
+
 # Image Upload Helpers
 
 def uploadImage(image, name):

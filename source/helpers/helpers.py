@@ -29,10 +29,64 @@ from ..models.draft import Draft
 from ..models.site_info import SiteInfo
 from ..models.site import Site
 from ..models.user import User
+from ..models.section import Section
+from ..models.category import Category
+from ..models.post import Post
+
 from ..models.user_profile import UserProfile
 
 from ..configuration.config import SLACK_OATH_KEY
 
+def search_posts(query, site, include_private, page=1, per_page=10):
+    return search_object(query, site, include_private, 'post', page, per_page)
+
+def search_sections(query, site, include_private, page=1, per_page=5):
+    return search_object(query, site, include_private, 'section', page, per_page)
+
+def search_categories(query, site, include_private, page=1, per_page=5):
+    return search_object(query, site, include_private, 'category', page, per_page)
+
+def search_object(querystr, site, include_private, object_type, page, per_page):
+    session = Session()
+
+    object_class = None
+    if object_type == 'post':
+        object_class = Post
+
+    if object_type == 'section':
+        object_class = Section
+
+    if object_type == 'category':
+        object_class = Category
+
+
+    query, total = None, None,
+    objsJS = []
+
+    print(page)
+    print('here')
+    print(query)
+    query, total = object_class.search(site, session, querystr, page, per_page)
+    
+    if query is None:
+        return objsJS
+
+    query_results = query.all()
+    for row in query.all():
+        if row.public == False and include_private == True:
+            js = row.publicJSON()
+            if type(row) == Post:
+                js['sections'] = row.sections(session)
+            objsJS.append(js)
+        elif row.public:
+            js = row.publicJSON()
+            if type(row) == Post:
+                js['sections'] = row.sections(session)
+            objsJS.append(js)
+
+
+    session.close()
+    return objsJS
 
 def render_page(template, site, includeSite, **kwargs):
 

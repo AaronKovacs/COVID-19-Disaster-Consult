@@ -11,11 +11,6 @@
 {% block panel_buttons %}
 <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a href="{{ url_for('Posts_search', site=site) }}" class="btn btn-sm btn-outline-secondary">Search Posts</a>
-    </div>
-</div>
-<div class="btn-toolbar mb-2 mb-md-0">
-    <div class="btn-group mr-2">
         <a href="{{ url_for('Posts_create_post', site=site) }}" class="btn btn-sm btn-outline-primary">Create Post</a>
     </div>
 </div>
@@ -33,13 +28,16 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-9">
-      <div class="card" >
+      <div class="card" style="width: 50rem; margin-left: auto; margin-right: auto;">
         <div class="card-body">
-            <table id="container" class="table table-hover table-normal">
+            <form class="form-inline" action="{{ url_for('Posts_search', site=site) }}" method="post" style="margin-bottom: 1em;">
+                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search" value="{{ query }}" aria-label="Search" style="width: 70%;">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="width: 28%;">Search</button>
+            </form>
+            <table id="container" class="table table-hover table-normal" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th scope="col">Status</th>
+                        <th scope="col">Site</th>
                         <th scope="col">Title</th>
                         <th scope="col">Sections</th>
                         <th scope="col">Updated</th>
@@ -48,13 +46,13 @@
                 <tbody id="container">
                     {% for post in posts %}
 
-                    <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
+                    <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=post.site) }}">
                         <a href="{{ url_for('Posts_create_post', id=post.id, site=site) }}">
-                            <td style="max-width: 4em;">
-                                {{ post_status(post.status) }}
+                            <td >
+                                {{ post.site }}
                             </td>
-                            <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
-                            <th scope="row" style="max-width: 100px;" style="color: #007bff;">
+                            <th scope="row" style="" style="color: #007bff;">{{ post.title }}</th>
+                            <th scope="row"  style="color: #007bff;">
 
                                 {% for section in post.sections %}
                                 <a href="{{ url_for('Sections_view_section', id=section.id, site=site) }}">{{section.title}}</a>
@@ -69,34 +67,10 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {{ pagination.links }}
         </div>
     </div>
 
-</div>
-<div class="col">
-    <div class="card" >
 
-        <div class="card-body">
-            <h4>Recently Edited</h4>
-            <table id="container" class="table table-hover table-normal">
-                <tbody id="container">
-                    {% for post in recents %}
-
-                    <tr style="cursor: pointer;" class='clickable-row' data-href="{{ url_for('Posts_view', id=post.id, site=site) }}">
-                        <td style="max-width: 12em;">
-                            {{ compact_post_status(post.status) }}
-                        </td>
-                        <th scope="row" style="max-width: 300px;" style="color: #007bff;">{{ post.title }}</th>
-                    </tr>
-
-
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 </div>
 </div>
 

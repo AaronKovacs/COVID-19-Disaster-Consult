@@ -12,6 +12,8 @@ from flask_limiter.util import get_remote_address
 from flask_cors import CORS,cross_origin
 from flask_paginate import Pagination, get_page_args
 
+from elasticsearch import Elasticsearch
+
 ssl_lify_en = True
 try:
     from flask_sslify import SSLify
@@ -34,7 +36,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user
 
 from source.helpers.helpers import BError, get_site_info
 
-from source.configuration.config import PASSWORD_SECRET_KEY, ENV_NAME
+from source.configuration.config import PASSWORD_SECRET_KEY, ENV_NAME, ELASTIC_SEARCH
 
 from source.views.posts import api as posts
 from source.views.sections import api as sections
@@ -93,7 +95,34 @@ application.config['DEBUG'] = True
 application.config['SECRET_KEY'] = PASSWORD_SECRET_KEY
 application.config['TEMPLATES_AUTO_RELOAD'] = True
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+application.elasticsearch = Elasticsearch(ELASTIC_SEARCH)
 
+
+def search_reindex():
+    print('STARTING Elastic Search Cache Update')
+
+    try:
+        session = Session()
+        Category.reindex(session)
+        session.close()
+    except:
+        print('FAILED Category SEARCH REINDEX')
+
+    try:
+        session = Session()
+        Section.reindex(session)
+        session.close()
+    except:
+        print('FAILED Section SEARCH REINDEX')
+
+    try:
+        session = Session()
+        Post.reindex(session)
+        session.close()
+    except:
+        print('FAILED POST SEARCH REINDEX')
+
+    print('SUCCESSFUL Elastic Search Cache Update')
 
 def cache_graph():
     print('Fetching Fresh US Graph Data')
@@ -176,6 +205,7 @@ if scheduler_enabled:
     session.close()
     sched = BackgroundScheduler(daemon=True)
     #sched.add_job(cache_graph,'interval',minutes=60)
+    sched.add_job(search_reindex,'interval',minutes=60 * 4)
     sched.add_job(cache_summary,'interval',minutes=10)
 
     sched.start()

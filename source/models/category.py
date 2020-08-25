@@ -19,6 +19,7 @@ from itsdangerous import Serializer, JSONWebSignatureSerializer, BadSignature, B
 
 from ..database.base import Base
 from ..database.database import Session
+from ..database.search import SearchableMixin
 
 def uniqueCategoryID():
     possibleID = alphaNumericID()
@@ -31,8 +32,9 @@ def uniqueCategoryID():
 def alphaNumericID():
     return 's' + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
 
-class Category(Base):
+class Category(Base, SearchableMixin):
     __tablename__ = 'category'
+    __searchable__ = ['site', 'title', 'description']
     id = Column(String(255), default=uniqueCategoryID, primary_key=True)
     title = Column(String(255))
     description = Column(String(1000))
@@ -42,6 +44,12 @@ class Category(Base):
     last_updated = Column(DateTime(), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
     site = Column(String(255))
     special_type = Column(String(255))
+
+    def should_index(self, session):
+        return self.public
+
+    def rank(self, session):
+        return self.order
 
     def publicJSON(self):
         return {
