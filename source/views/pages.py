@@ -110,7 +110,7 @@ class Home(Resource):
             issueJS = session.query(Issue).filter_by(site=site, id=issue_id).one().publicJSON()
 
             for issueContent in issueContents:     
-                issueContentJS.append(issueContent.publicJSON())
+                issueContentJS.append(issueContent.formattedJSON())
 
         # Close database connection
         session.close()
