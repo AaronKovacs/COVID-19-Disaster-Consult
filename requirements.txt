@@ -78,7 +78,7 @@ parso==0.6.2
 passlib==1.7.1
 pexpect==4.8.0
 pickleshare==0.7.5
-Pillow==6.0.0
+Pillow==8.1.1
 prompt-toolkit==3.0.3
 ptyprocess==0.6.0
 pushjack==1.6.0
