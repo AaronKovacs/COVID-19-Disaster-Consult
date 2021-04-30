@@ -100,7 +100,7 @@ pytz==2018.9
 requests==2.21.0
 requests-file==1.4.3
 requests-oauthlib==1.2.0
-rsa==4.0
+rsa==4.7
 s3transfer==0.2.0
 sentry-sdk==0.13.5
 six==1.12.0
