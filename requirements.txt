@@ -29,7 +29,7 @@ Flask==1.0.2
 Flask-BabelEx==0.9.3
 Flask-CKEditor==0.4.3
 Flask-Compress==1.4.0
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-Debug-API==0.1.0
 Flask-DebugToolbar==0.10.1
 Flask-DebugToolbar-LineProfilerPanel==1.0.2
